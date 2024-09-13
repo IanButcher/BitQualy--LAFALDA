@@ -13,6 +13,7 @@ body, html {
     display: flex;
     height: 100vh;
     width: 100%;
+    flex-direction: row; /* Cambia a columna en pantallas pequeñas */
 }
 
 /* Panel izquierdo con imagen de fondo */
@@ -45,8 +46,7 @@ body, html {
     width: 60%;
     background-image: url("./img/Fondo Login.png");
     background-size: cover;
-    background-position: -275px center; /* Mueve la imagen 50px más hacia la izquierda */
- /* Desplaza la imagen hacia la izquierda */
+    background-position: -210px center; /* Ajuste de la posición de la imagen de fondo */
     background-repeat: no-repeat;
     display: flex;
     justify-content: center;
@@ -56,23 +56,26 @@ body, html {
 
 .login-form {
     background-color: white;
-    padding: 60px;  /* Aumentamos el padding */
+    padding: 60px;
     border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 500px; /* Aumentamos el tamaño máximo del formulario */
+    max-width: 500px;
+    position: relative;
 }
 
+/* Fija la posición del título dentro del formulario */
 .login-titulo {
-    
     max-width: 300px;
     margin-bottom: 2px;
-    margin-left: 42px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-
+/* Ajusta la posición del ícono de ver contraseña */
 .input-group {
-    margin-bottom: 20px; /* Aumentamos el espacio entre los inputs */
+    margin-bottom: 20px;
     position: relative;
 }
 
@@ -82,31 +85,32 @@ body, html {
     margin-bottom: 5px;
 }
 
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    margin-right: 30px; /* Espacio para el ícono */
+}
+
 .toggle-password-eye {
     position: absolute;
-    right: 20px;
-    top: 48px;
+    right: 10px; /* Espacio de 10px a la derecha */
+    top: 67%;
     transform: translateY(-50%);
     cursor: pointer;
 }
 
-.input-group input {
-    width: 100%;
-    padding: 12px; /* Aumentamos el padding de los inputs */
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1.1rem; /* Ajustamos el tamaño de la fuente */
-    
-}
-
+/* Estilo del botón de inicio de sesión */
 .login-button {
     width: 100%;
-    padding: 15px;  /* Aumentamos el tamaño del botón */
+    padding: 15px;
     background-color: #e4002b;
     color: white;
     border: none;
     border-radius: 5px;
-    font-size: 1.3rem;  /* Aumentamos el tamaño de la fuente */
+    font-size: 1.3rem;
     cursor: pointer;
     transition: background-color 0.3s;
 }
@@ -115,4 +119,50 @@ body, html {
     background-color: #c20025;
 }
 
+/* Media queries para responsividad */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column; /* Cambia la dirección del contenedor a columna */
+    }
 
+    .left-panel, .right-panel {
+        width: 100%; /* Ambos paneles ocupan el 100% del ancho en pantallas pequeñas */
+        height: auto;
+    }
+
+    .right-panel {
+        background-position: center; /* Ajuste de la posición de la imagen de fondo */
+        padding: 10px; /* Reducir padding en pantallas más pequeñas */
+    }
+
+    .login-form {
+        padding: 40px;
+        max-width: 90%;
+    }
+
+    .login-titulo {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .input-group input {
+        margin-right: 30px; /* Mantiene el espacio para el ícono */
+    }
+}
+
+@media (max-width: 480px) {
+    .login-form {
+        padding: 30px;
+    }
+
+    .input-group input {
+        padding: 10px;
+        font-size: 1rem;
+        margin-right: 30px; /* Mantiene el espacio para el ícono */
+    }
+
+    .login-button {
+        padding: 12px;
+        font-size: 1.1rem;
+    }
+}
