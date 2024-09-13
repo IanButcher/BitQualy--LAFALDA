@@ -1,0 +1,118 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+/* Panel izquierdo con imagen de fondo */
+.left-panel {
+    width: 40%;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.left-panel .logo-section {
+    text-align: center;
+    color: white;
+}
+
+.logo {
+    max-width: 500px;
+    margin-bottom: 20px;
+}
+
+.brand-name {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+/* Panel derecho para el formulario */
+.right-panel {
+    width: 60%;
+    background-image: url("./img/Fondo Login.png");
+    background-size: cover;
+    background-position: -275px center; /* Mueve la imagen 50px más hacia la izquierda */
+ /* Desplaza la imagen hacia la izquierda */
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.login-form {
+    background-color: white;
+    padding: 60px;  /* Aumentamos el padding */
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px; /* Aumentamos el tamaño máximo del formulario */
+}
+
+.login-titulo {
+    
+    max-width: 300px;
+    margin-bottom: 2px;
+    margin-left: 42px;
+}
+
+
+.input-group {
+    margin-bottom: 20px; /* Aumentamos el espacio entre los inputs */
+    position: relative;
+}
+
+.input-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.toggle-password-eye {
+    position: absolute;
+    right: 20px;
+    top: 48px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px; /* Aumentamos el padding de los inputs */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1.1rem; /* Ajustamos el tamaño de la fuente */
+    
+}
+
+.login-button {
+    width: 100%;
+    padding: 15px;  /* Aumentamos el tamaño del botón */
+    background-color: #e4002b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.3rem;  /* Aumentamos el tamaño de la fuente */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-button:hover {
+    background-color: #c20025;
+}
+
+
