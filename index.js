@@ -1,6 +1,7 @@
 // Librerias
 const express = require('express')
 const ejs = require('ejs')
+const arrayEmpleados = require('./seedEmpleados')
 
 // Server config
 const app = express()
@@ -19,6 +20,10 @@ app.get('/', (req, res)=>{
 
 app.get('/login', (req,res)=>{
     res.render('login')
+})
+
+app.get('/empleados', (req, res)=>{
+    res.render('empleados/empleados', {arrayEmpleados})
 })
 
 
