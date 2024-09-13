@@ -1,12 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Empleados</title>
-    <link rel="stylesheet" href="/style.css">
+    <title>Gestión de Evaluaciones</title>
+    <link rel="stylesheet" href="empleados.css">
 </head>
 <body>
-    
+    <div class="container">
+        <!-- Panel lateral izquierdo -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="/img/Logo BitQualy Blanco.png" alt="BitQualy Logo">
+            </div>
+            <nav>
+                <div class="menu-item">
+                    <a href="empleados.ejs"><i class="icon empleados-icon"></i> Empleados</a>
+                </div>
+                <div class="menu-item">
+                    <a href="#"><i class="icon evaluadores-icon"></i> Evaluadores</a>
+                </div>
+                <div class="menu-item">
+                    <a href="#"><i class="icon reguladores-icon"></i> Reguladores</a>
+                </div>
+                <div class="gestion-section">
+                    <a href="#" class="dropdown-btn"><i class="icon"></i> GESTIÓN EVALUACIONES</a>
+                    <div class="dropdown-container">
+                        <div class="menu-item">
+                            <a href="#"><i class="icon evaluaciones-icon"></i> Evaluaciones</a>
+                        </div>
+                        <div class="menu-item">
+                            <a href="#"><i class="icon formularios-icon"></i> Formularios</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Colocar el botón de Ayuda al final -->
+                <div class="help-section menu-item">
+                    <a href="#"><i class="icon ayuda-icon"></i> Ayuda</a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Panel principal -->
+        <main class="main-content">
+            <header class="header">
+                <h1>Empleados</h1>
+                <div class="user-info">
+                    <h2>Carina Campo</h2>
+                    <p>Rol: Recursos Humanos</p>
+                </div>
+            </header>
+            <div class="search-section">
+                <input type="text" placeholder="Buscar empleados...">
+            </div>
+            <div class="filters">
+                <span>Filtrar por:</span>
+                <select>
+                    <option value="legajo">Legajo</option>
+                    <option value="nombre">Nombre</option>
+                </select>
+                <div class="sorting-options">
+                    <label><input type="radio" name="sort" checked> Más recientes</label>
+                    <label><input type="radio" name="sort"> Más antiguos</label>
+                </div>
+            </div>
+            <section class="employee-list">
+                <!-- Aquí se mostrarán los empleados -->
+                <div class="employee">
+                    <img src="empleado1.jpg" alt="Empleado">
+                    <div class="employee-info">
+                        <h3>Taylor Swift</h3>
+                        <p>Recursos Humanos</p>
+                    </div>
+                </div>
+                <div class="employee">
+                    <img src="empleado2.jpg" alt="Empleado">
+                    <div class="employee-info">
+                        <h3>Kendrick Lamar</h3>
+                        <p>Recursos Humanos</p>
+                    </div>
+                </div>
+                <!-- Repetir para más empleados -->
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // JavaScript para mostrar/ocultar el submenú
+        const dropdownBtn = document.querySelector('.dropdown-btn');
+        const dropdownContainer = document.querySelector('.dropdown-container');
+
+        dropdownBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            dropdownContainer.classList.toggle('active');
+        });
+    </script>
 </body>
 </html>
