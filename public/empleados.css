@@ -63,7 +63,14 @@ body, html {
     align-items: center;
     padding: 10px 0;
     cursor: pointer;
+    color: white; /* Asegúrate de que el color del texto sea blanco como los demás */
+    background-color: transparent; /* Evita que tenga un fondo azul */
     transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.sidebar .gestion-section .dropdown-btn:hover {
+    background-color: #575757; /* Agrega el mismo hover que los demás botones */
+    transform: scale(1.05); /* La misma transición de hover que los otros */
 }
 
 .sidebar .gestion-section .dropdown-btn i:last-child {
@@ -86,10 +93,7 @@ body, html {
     position: relative;
 }
 
-.sidebar .gestion-section .dropdown-container .menu-item i {
-    margin-right: 10px;
-}
-
+/* Mantén solo la línea vertical */
 .sidebar .gestion-section .dropdown-container .menu-item .line {
     position: absolute;
     left: 0;
@@ -98,11 +102,13 @@ body, html {
     background-color: white;
 }
 
+/* Elimina los puntitos eliminando la clase .dot */
 .sidebar .gestion-section .dropdown-container .menu-item .dot {
-    width: 5px;
-    height: 5px;
-    background-color: white;
-    border-radius: 50%;
+    display: none; /* O simplemente elimina esta clase si no la usas en otros lugares */
+}
+
+/* Asegúrate de que los íconos estén presentes y a la izquierda */
+.sidebar .gestion-section .dropdown-container .menu-item i {
     margin-right: 10px;
 }
 
