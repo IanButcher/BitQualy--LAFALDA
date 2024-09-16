@@ -44,9 +44,10 @@ body, html {
 /* Panel derecho para el formulario */
 .right-panel {
     width: 60%;
-    background-image: url("./img/Fondo Login.png");
+    background-image: url("./img/BolitasBackground\ Login.png");
     background-size: cover;
-    background-position: -210px center; /* Ajuste de la posición de la imagen de fondo */
+    background-position: -120px center; /* Ajuste de la posición de la imagen de fondo */
+
     background-repeat: no-repeat;
     display: flex;
     justify-content: center;
