@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="empleados.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body>
     <div class="container">
         <!-- Panel lateral izquierdo -->
@@ -49,7 +50,10 @@
             </header>
             <div class="search-section">
                 <input type="text" placeholder="Buscar empleados...">
+                <i class="fas fa-search search-icon"></i>
             </div>
+            
+            
             <div class="filters">
                 <span>Filtrar por:</span>
                 <select>
@@ -62,20 +66,16 @@
                 </div>
             </div>
             <section class="employee-list">
+            <% for (empleado of arrayEmpleados) { %>
                 <div class="employee">
                     <img src="empleado1.jpg" alt="Empleado">
                     <div class="employee-info">
-                        <h3>Taylor Swift</h3>
-                        <p>Recursos Humanos</p>
+                        <h3><%= empleado.nombre %> <%= empleado.apellido %></h3>
+                        <p>Rol: <%= empleado.rol %></p>
+                        <p>Legajo: <%= empleado.legajo %></p>
                     </div>
                 </div>
-                <div class="employee">
-                    <img src="empleado2.jpg" alt="Empleado">
-                    <div class="employee-info">
-                        <h3>Kendrick Lamar</h3>
-                        <p>Recursos Humanos</p>
-                    </div>
-                </div>
+            <% } %>               
             </section>
         </main>
     </div>
