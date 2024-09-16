@@ -29,12 +29,11 @@ body, html {
 
 .sidebar .logo img {
     max-width: 100%; 
-    height: auto;    
-    display: block;  
-    margin: 0 auto;  
+    height: auto;
+    display: block;
+    margin: 0 auto;
 }
 
-/* Estilos para los botones del menú */
 .sidebar nav .menu-item {
     margin-bottom: 20px;
 }
@@ -57,18 +56,22 @@ body, html {
     transform: scale(1.05);
 }
 
-/* Estilos para el botón desplegable */
 .sidebar .gestion-section .dropdown-btn {
     font-weight: bold;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     padding: 10px 0;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
+.sidebar .gestion-section .dropdown-btn i:last-child {
+    margin-left: 10px; 
+}
+
 .sidebar .gestion-section .dropdown-container {
-    display: none; 
+    display: none;
     padding-left: 20px;
 }
 
@@ -76,23 +79,31 @@ body, html {
     display: block;
 }
 
-.sidebar .gestion-section a {
-    color: white;
-    text-decoration: none;
-    display: block;
-    padding: 10px 0;
+.sidebar .gestion-section .dropdown-container .menu-item {
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    position: relative;
 }
 
-.sidebar .gestion-section a i {
+.sidebar .gestion-section .dropdown-container .menu-item i {
     margin-right: 10px;
 }
 
-/* Colocar el botón de Ayuda al final */
-.sidebar nav {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+.sidebar .gestion-section .dropdown-container .menu-item .line {
+    position: absolute;
+    left: 0;
+    width: 5px;
     height: 100%;
+    background-color: white;
+}
+
+.sidebar .gestion-section .dropdown-container .menu-item .dot {
+    width: 5px;
+    height: 5px;
+    background-color: white;
+    border-radius: 50%;
+    margin-right: 10px;
 }
 
 .help-section {

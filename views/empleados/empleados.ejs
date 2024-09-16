@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Evaluaciones</title>
     <link rel="stylesheet" href="empleados.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="container">
@@ -15,28 +16,27 @@
             </div>
             <nav>
                 <div class="menu-item">
-                    <a href="empleados.ejs"><i class="icon empleados-icon"></i> Empleados</a>
+                    <a href="empleados.ejs"><i class="fas fa-users"></i> Empleados</a>
                 </div>
                 <div class="menu-item">
-                    <a href="#"><i class="icon evaluadores-icon"></i> Evaluadores</a>
+                    <a href="#"><i class="fas fa-user-tie"></i> Evaluadores</a>
                 </div>
                 <div class="menu-item">
-                    <a href="#"><i class="icon reguladores-icon"></i> Reguladores</a>
+                    <a href="#"><i class="fas fa-clipboard-check"></i> Reguladores</a>
                 </div>
                 <div class="gestion-section">
-                    <a href="#" class="dropdown-btn"><i class="icon"></i> GESTIÓN EVALUACIONES</a>
+                    <a href="#" class="dropdown-btn"><i class="fas fa-tasks"></i> GESTIÓN EVALUACIONES <i class="fas fa-chevron-down"></i></a>
                     <div class="dropdown-container">
                         <div class="menu-item">
-                            <a href="#"><i class="icon evaluaciones-icon"></i> Evaluaciones</a>
+                            <div class="line"></div><i class="fas fa-file-alt"></i> <span class="dot"></span> Evaluaciones
                         </div>
                         <div class="menu-item">
-                            <a href="#"><i class="icon formularios-icon"></i> Formularios</a>
+                            <div class="line"></div><i class="fas fa-list-alt"></i> <span class="dot"></span> Formularios
                         </div>
                     </div>
                 </div>
-                <!-- Colocar el botón de Ayuda al final -->
                 <div class="help-section menu-item">
-                    <a href="#"><i class="icon ayuda-icon"></i> Ayuda</a>
+                    <a href="#"><i class="fas fa-question-circle"></i> Ayuda</a>
                 </div>
             </nav>
         </aside>
@@ -65,7 +65,6 @@
                 </div>
             </div>
             <section class="employee-list">
-                <!-- Aquí se mostrarán los empleados -->
                 <div class="employee">
                     <img src="empleado1.jpg" alt="Empleado">
                     <div class="employee-info">
@@ -80,7 +79,6 @@
                         <p>Recursos Humanos</p>
                     </div>
                 </div>
-                <!-- Repetir para más empleados -->
             </section>
         </main>
     </div>
