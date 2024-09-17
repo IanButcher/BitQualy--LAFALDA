@@ -28,9 +28,12 @@
                 <div class="gestion-section">
                     <a href="#" class="dropdown-btn"><i class="fas fa-tasks"></i> GESTIÓN EVALUACIONES <i class="fas fa-chevron-down"></i></a>
                     <div class="dropdown-container">
+                        <br>
                         <div class="menu-item">
+                            <br>
                             <a href="#" class="line"><i class="fas fa-file-alt"></i> <span class="dot"></span> Evaluaciones </a>
                         </div>
+                        <br>
                         <div class="menu-item">
                             <a href="#" class="line"><i class="fas fa-list-alt"></i> <span class="dot"></span> Formularios </a>
                         </div>
@@ -47,6 +50,7 @@
                     <h2>Carina Campo</h2>
                     <p>Rol: Recursos Humanos</p>
                 </div>
+                
             </header>
             <div class="search-section">
                 <input type="text" placeholder="Buscar empleados...">
@@ -54,17 +58,7 @@
             </div>
             
             
-            <div class="filters">
-                <span>Filtrar por:</span>
-                <select>
-                    <option value="legajo">Legajo</option>
-                    <option value="nombre">Nombre</option>
-                </select>
-                <div class="sorting-options">
-                    <label><input type="radio" name="sort" checked> Más recientes</label>
-                    <label><input type="radio" name="sort"> Más antiguos</label>
-                </div>
-            </div>
+            
             <section class="employee-list">
             <% for (empleado of arrayEmpleados) { %>
                 <div class="employee">

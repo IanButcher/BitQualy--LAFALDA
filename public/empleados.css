@@ -133,7 +133,7 @@ body, html {
 
 .main-content {
     flex-grow: 1;
-    padding: 20px;
+    padding: 50px;
     background-color: #fff;
     overflow-y: auto;
 }
@@ -227,5 +227,27 @@ body, html {
 .employee-info p {
     margin: 0;
     color: #555;
+}
+/* Eliminar cualquier borde en el menú desplegable */
+.dropdown-content {
+    border: none; /* Asegúrate de que no haya bordes */
+    padding: 0;
+    background-color: transparent; /* Fondo transparente si es necesario */
+}
+
+/* Ajuste del espaciado en los botones del submenú */
+.dropdown-btn{
+    text-decoration: none; /* Quitar subrayado en los enlaces */
+}
+
+/* Ajustar los íconos */
+.dropdown-content a i {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+/* Ajuste del último ítem para no tener espacio extra */
+.dropdown-content a:last-child {
+    margin-bottom: 0;
 }
 

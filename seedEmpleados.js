@@ -32,6 +32,12 @@ const dilan = {
     rol: "Limpieza y Mantenimiento",
     legajo: 622
 }
+const Luis = {
+    nombre: "Luis",
+    apellido: "Siccardi",
+    rol: "chef",
+    legajo: 001
+}
 
-const empleadosArray = [franco, taylor, kendrick, messi, dilan]
+const empleadosArray = [franco, taylor, kendrick, messi, dilan,Luis]
 module.exports = empleadosArray
