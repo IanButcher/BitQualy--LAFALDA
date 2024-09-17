@@ -22,10 +22,16 @@ app.get('/login', (req,res)=>{
     res.render('login')
 })
 
+<<<<<<< HEAD
 app.get('/empleados', (req, res)=>{
     res.render('empleados/empleados', {arrayEmpleados})
 })
 
+=======
+app.get('/home', (req,res)=>{
+    res.render('home')
+})
+>>>>>>> Home
 
 app.listen(puerto, ()=>{
     console.log('Servidor abierto')
