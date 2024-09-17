@@ -17,12 +17,14 @@ body, html {
     justify-content: center;
     height: 100vh;
     position: relative;
+    padding: 20px;
+    text-align: center;
 }
 
 .logo img {
-    max-width: 500px;
+    max-width: 40%; /* Asegura que la imagen del logo se ajuste al tamaño del contenedor */
     height: auto;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 .main-nav {
@@ -30,6 +32,7 @@ body, html {
     display: flex;
     justify-content: space-between;
     width: 80%;
+    flex-wrap: wrap; /* Permite que los elementos se muevan a una nueva línea en pantallas pequeñas */
 }
 
 .nav-item {
@@ -41,25 +44,68 @@ body, html {
     display: flex;
     flex-direction: column;
     align-items: center;
+    transition: transform 0.3s ease;
     position: relative;
-    border: 2px solid transparent;
+    border: 2px solid transparent; /* Borde invisible inicialmente */
     border-radius: 10px;
-    transition: all 0.3s ease; /* Elimina el crecimiento */
+    width: 150px;
+    margin: 10px;
 }
 
 .nav-item:hover {
-    border-color: white;
-    animation: border-animation 0.5s forwards;
+    transform: scale(1.1);
+    border-color: white; /* El borde cambia a blanco cuando pasas el mouse */
+    animation: border-animation 0.5s forwards; /* Animación al hacer hover */
 }
 
 .nav-item span {
     font-size: 12px;
     display: block;
-    margin-top: 5px;
+    margin-top: 5px; /* Asegura que el icono esté encima del texto */
 }
 
 .nav-item i {
     font-size: 24px;
+}
+
+/* Menú desplegable */
+.gestion-section {
+    position: relative;
+}
+
+.gestion-section.active .dropdown-container {
+    display: flex;
+}
+
+/* Estilo para el contenedor del dropdown (desplegable) */
+.dropdown-container {
+    display: none;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+/* Mostrar el dropdown cuando está activo */
+.gestion-section.active .dropdown-container {
+    display: flex;
+}
+
+/* Estilos individuales para cada item del dropdown */
+.dropdown-item {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border: 2px solid transparent; /* Borde inicialmente invisible */
+    border-radius: 10px;
+    font-size: 12px;
+    transition: all 0.3s ease;
+}
+
+.dropdown-item:hover {
+    border-color: white; /* Aplica borde solo a cada item cuando pasas el mouse */
+    animation: border-animation 0.5s forwards;
 }
 
 /* Animación del borde */
@@ -70,50 +116,6 @@ body, html {
     100% {
         border-color: white;
     }
-}
-
-/* Modifica el comportamiento del menú desplegable */
-.gestion-section {
-    position: relative;
-}
-
-.gestion-section.active {
-    border: 2px solid #ff5252; /* Borde estilizado cuando está activo */
-    border-radius: 15px; /* Borde redondeado más pronunciado */
-    box-shadow: 0 0 10px rgba(255, 82, 82, 0.7); /* Sombra para darle un efecto elegante */
-    transition: all 0.3s ease;
-}
-
-.dropdown-container {
-    display: none;
-    flex-direction: column;
-    margin-top: 10px;
-}
-
-.gestion-section.active .dropdown-container {
-    display: flex;
-}
-
-.dropdown-item {
-    color: white;
-    text-decoration: none;
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    border: 2px solid transparent;
-    border-radius: 10px;
-    font-size: 12px;
-    transition: all 0.3s ease;
-}
-
-.dropdown-item:hover {
-    border-color: white;
-    animation: border-animation 0.5s forwards;
-}
-
-.dropdown-item i {
-    margin-right: 10px;
 }
 
 .header-icons {
@@ -127,7 +129,61 @@ body, html {
     margin-left: 10px;
 }
 
-/* Desactivar el agrandamiento de otros botones */
-.nav-item:hover {
-    transform: none; /* Elimina el aumento de tamaño */
+/* Media queries para diferentes dispositivos */
+@media (max-width: 1200px) {
+    .main-nav {
+        width: 90%; /* Reduce el tamaño del contenedor principal */
+    }
+
+    .nav-item {
+        width: 130px; /* Ajusta el tamaño de los botones para pantallas más pequeñas */
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-nav {
+        width: 100%;
+        justify-content: center; /* Centra los botones */
+    }
+
+    .nav-item {
+        width: 120px;
+        margin: 5px;
+        font-size: 14px;
+    }
+
+    .nav-item i {
+        font-size: 20px; /* Ajusta el tamaño de los iconos */
+    }
+
+    .header-icons {
+        top: 10px;
+        right: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo img {
+        max-width: 80%; /* Ajusta el tamaño del logo en pantallas pequeñas */
+    }
+
+    .main-nav {
+        flex-direction: column; /* Coloca los botones en una columna en lugar de una fila */
+        align-items: center;
+    }
+
+    .nav-item {
+        width: 100%; /* Asegura que los botones ocupen todo el ancho en pantallas pequeñas */
+        font-size: 14px;
+        margin: 5px 0;
+    }
+
+    .nav-item i {
+        font-size: 18px; /* Reduce el tamaño de los iconos para móviles */
+    }
+
+    .dropdown-item {
+        font-size: 12px;
+    }
 }
