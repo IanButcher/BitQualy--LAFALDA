@@ -1,66 +1,133 @@
-body {
-            background-color: #1a1a1a;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-        .logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .logo img {
-            width: 200px;
-            height: 200px;
-        }
-        .logo-text {
-            font-size: 72px;
-            font-weight: bold;
-            margin-left: 20px;
-        }
-        .menu {
-            display: flex;
-            justify-content: center;
-            margin-top: 50px;
-        }
-        .menu-item {
-            margin: 0 20px;
-            text-align: center;
-        }
-        .menu-item i {
-            font-size: 24px;
-            display: block;
-            margin-bottom: 10px;
-        }
-        .submenu {
-            display: none;
-            text-align: left;
-            margin-top: 10px;
-        }
-        .menu-item:hover .submenu {
-            display: block;
-        }
-        .submenu-item {
-            margin-top: 5px;
-        }
-        .submenu-item i {
-            margin-right: 5px;
-        }
-        .top-icons {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-        }
-        .top-icons i {
-            font-size: 24px;
-            margin-left: 20px;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    font-family: Arial, sans-serif;
+    height: 100%;
+    background-color: #1a1a1a;
+}
+
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    position: relative;
+}
+
+.logo img {
+    max-width: 500px;
+    height: auto;
+    margin-bottom: 5px;
+}
+
+.main-nav {
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.nav-item {
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    font-size: 18px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    transition: all 0.3s ease; /* Elimina el crecimiento */
+}
+
+.nav-item:hover {
+    border-color: white;
+    animation: border-animation 0.5s forwards;
+}
+
+.nav-item span {
+    font-size: 12px;
+    display: block;
+    margin-top: 5px;
+}
+
+.nav-item i {
+    font-size: 24px;
+}
+
+/* Animación del borde */
+@keyframes border-animation {
+    0% {
+        border-color: transparent;
+    }
+    100% {
+        border-color: white;
+    }
+}
+
+/* Modifica el comportamiento del menú desplegable */
+.gestion-section {
+    position: relative;
+}
+
+.gestion-section.active {
+    border: 2px solid #ff5252; /* Borde estilizado cuando está activo */
+    border-radius: 15px; /* Borde redondeado más pronunciado */
+    box-shadow: 0 0 10px rgba(255, 82, 82, 0.7); /* Sombra para darle un efecto elegante */
+    transition: all 0.3s ease;
+}
+
+.dropdown-container {
+    display: none;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.gestion-section.active .dropdown-container {
+    display: flex;
+}
+
+.dropdown-item {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    font-size: 12px;
+    transition: all 0.3s ease;
+}
+
+.dropdown-item:hover {
+    border-color: white;
+    animation: border-animation 0.5s forwards;
+}
+
+.dropdown-item i {
+    margin-right: 10px;
+}
+
+.header-icons {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.icon {
+    color: white;
+    margin-left: 10px;
+}
+
+/* Desactivar el agrandamiento de otros botones */
+.nav-item:hover {
+    transform: none; /* Elimina el aumento de tamaño */
+}

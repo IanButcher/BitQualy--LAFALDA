@@ -1,76 +1,82 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>
-        Home
-    </title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BitQualy Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="home.css">
 </head>
- <body>
-  <div class="container">
-   <div class="logo">
-    <img alt="Red circle with a white smiley face" height="200" src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-Hh5RPsKhtBPsWCFSiEKnUJ6x/user-8qgiVpCV0U0b7zDjfFInHgjl/img-oyTnEKzdoIU6o516jrSMMUaS.png?st=2024-09-16T16%3A33%3A13Z&amp;se=2024-09-16T18%3A33%3A13Z&amp;sp=r&amp;sv=2024-08-04&amp;sr=b&amp;rscd=inline&amp;rsct=image/png&amp;skoid=d505667d-d6c1-4a0a-bac7-5c84a87759f8&amp;sktid=a48cca56-e6da-484e-a814-9c849652bcb3&amp;skt=2024-09-16T00%3A00%3A48Z&amp;ske=2024-09-17T00%3A00%3A48Z&amp;sks=b&amp;skv=2024-08-04&amp;sig=8la1TTA0rqIF1mswJfYScqHp73kuLtJDxah/yKAm2B0%3D" width="200"/>
-    <div class="logo-text">
-     Bit
-     <br/>
-     Qualy
+<body>
+    <div class="home-container">
+        <!-- Logo -->
+        <div class="logo">
+            <!-- Aquí colocas la imagen del logo de BitQualy -->
+            <img src="img/Logo BitQualy Blanco.png" alt="Logo BitQualy">
+        </div>
+
+         <!-- Botones de navegación principales -->
+         <nav class="main-nav">
+            <!-- Empleados -->
+            <a href="/empleados" class="nav-item">
+                <i class="fas fa-users"></i> <!-- Icono de empleados -->
+                <span>Empleados</span>
+            </a>
+
+            <!-- Evaluadores -->
+            <a href="/evaluadores" class="nav-item">
+                <i class="fas fa-user-check"></i> <!-- Icono de evaluadores -->
+                <span>Evaluadores</span>
+            </a>
+
+            <!-- Reguladores -->
+            <a href="/reguladores" class="nav-item">
+                <i class="fas fa-balance-scale"></i> <!-- Icono de reguladores -->
+                <span>Reguladores</span>
+            </a>
+
+            <!-- Gestión de Evaluaciones con menú desplegable -->
+            <div class="nav-item gestion-section">
+                <div class="dropdown-toggle">
+                    <i class="fas fa-tasks"></i> <!-- Icono de gestión de evaluaciones -->
+                    <span>Gestión <br> Evaluaciones</span>
+                </div>
+                <!-- Menú desplegable -->
+                <div class="dropdown-container">
+                    <!-- Evaluaciones -->
+                    <a href="/evaluaciones" class="dropdown-item">
+                        <i class="fas fa-clipboard-list"></i> <!-- Icono de evaluaciones -->
+                        Evaluaciones
+                    </a>
+                    <!-- Formularios -->
+                    <a href="/formularios" class="dropdown-item">
+                        <i class="fas fa-file-alt"></i> <!-- Icono de formularios -->
+                        Formularios
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Iconos en la esquina superior derecha -->
+        <div class="header-icons">
+            <i class="fas fa-comments icon"></i> <!-- Icono de comentarios -->
+            <i class="fas fa-bell icon"></i> <!-- Icono de notificaciones -->
+        </div>
     </div>
-   </div>
-   <div class="menu">
-    <div class="menu-item">
-     <i class="fas fa-users">
-     </i>
-     <div>
-      Empleados
-     </div>
-    </div>
-    <div class="menu-item">
-     <i class="fas fa-user-tie">
-     </i>
-     <div>
-      Evaluadores
-     </div>
-    </div>
-    <div class="menu-item">
-     <i class="fas fa-clipboard-list">
-     </i>
-     <div>
-      Reguladores
-     </div>
-    </div>
-    <div class="menu-item">
-     <i class="fas fa-tasks">
-     </i>
-     <div>
-      Gestión
-      <br/>
-      Evaluaciones
-     </div>
-     <div class="submenu">
-      <div class="submenu-item">
-       <i class="fas fa-check-square">
-       </i>
-       <span>
-        Evaluaciones
-       </span>
-      </div>
-      <div class="submenu-item">
-       <i class="fas fa-file-alt">
-       </i>
-       <span>
-        Formularios
-       </span>
-      </div>
-     </div>
-    </div>
-   </div>
-  </div>
-  <div class="top-icons">
-   <i class="fas fa-comments">
-   </i>
-   <i class="fas fa-bell">
-   </i>
-  </div>
+
+    <script>
+                // JavaScript para el menú desplegable
+                document.addEventListener("DOMContentLoaded", function() {
+            // Selecciona el botón que despliega el menú
+            const gestionToggle = document.querySelector('.dropdown-toggle');
+            const gestionSection = document.querySelector('.gestion-section');
+
+            // Agrega un listener para detectar el click en "Gestión Evaluaciones"
+            gestionToggle.addEventListener('click', function() {
+                // Alterna la clase 'active' para mostrar/ocultar el menú desplegable
+                gestionSection.classList.toggle('active');
+            });
+        });
+    </script>
 </body>
 </html>
