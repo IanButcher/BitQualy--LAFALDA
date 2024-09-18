@@ -250,6 +250,7 @@ body, html {
 .dropdown-content a i {
     font-size: 16px;
     margin-right: 10px;
+    padding-right:10px  ;
 }
 
 .dropdown-content a:last-child {
@@ -307,7 +308,7 @@ body, html {
     .sidebar {
         width: 100%;
         height: auto;
-        padding: 10px;
+        padding: 5px;
         display: flex;
         justify-content: space-between;
         flex-direction: row;
@@ -335,4 +336,20 @@ body, html {
     .employee-list {
         grid-template-columns: 1fr;
     }
+    .dropdown-container{
+        padding-bottom: 10px;
+    }
+     .busqueda{
+        width: 100%;
+        
+    } 
 }
+
+@media (min-width: 320px){
+    .busqueda{
+        max-width: 300px;
+        
+    }
+   
+}
+
