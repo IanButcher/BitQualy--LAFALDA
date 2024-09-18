@@ -9,17 +9,26 @@ const app = express()
 const puerto = 3000
 app.set('view engine', 'ejs')
 
-// Mongoose conect
+// Mongoose conection
 async function main() {
   await mongoose.connect('mongodb://127.0.0.1:27017/bitqualyPrueba')
+  console.log('Conection to mongodb Succsesful')
   // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
 }
-main().catch(err => console.log(err))
+main().catch(err => console.log(err, 'ERROR on conction to mongodb'))
 
 // Path configs (configuracion para no poner ./views/archivo.ejs)
 const path = require('path')
 app.set('views', path.join(__dirname, 'views'))
 app.use(express.static('public'))
+
+
+// Mongoose Models & Schemas
+const empleadoSchema = require('./Schemas/empleadoSchema')
+const evaluadorSchema = require('./Schemas/evaluadorSchema')
+const evaluacionSchema = require('./Schemas/evaluacionSchema')
+const formularioSchema = require('./Schemas/formularioSchema')
+const intermediarioSchema = require('./Schemas/intermediarioSchema')
 
 // Rutas
 app.get('/', (req, res)=>{

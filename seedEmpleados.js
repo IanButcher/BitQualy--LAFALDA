@@ -36,7 +36,7 @@ const Luis = {
     nombre: "Luis",
     apellido: "Siccardi",
     rol: "chef",
-    legajo: 001
+    legajo: 100
 }
 
 const empleadosArray = [franco, taylor, kendrick, messi, dilan,Luis]
