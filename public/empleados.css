@@ -258,24 +258,6 @@ body, html {
 }
 
 /* Responsive Design */
-/* @media (max-width: 1200px) {
-    .container {
-        flex-direction: column;
-    }
-    
-    .sidebar {
-        width: 200px;
-    }
-
-    .main-content {
-        padding: 40px;
-    }
-
-    .employee-list {
-        grid-template-columns: 1fr;
-    }
-} */
-
 @media (min-width: 768px) {
     .sidebar {
         width: 180px;
@@ -303,7 +285,12 @@ body, html {
     .container {
         flex-direction: column;
     }
-
+    .header{
+        display: grid;
+        grid-column: repeat(1fr,1fr);
+        gap: 2rem;
+        justify-content: center;
+    }
     /* Convert sidebar to navbar at the top */
     .sidebar {
         width: 100%;
@@ -343,6 +330,7 @@ body, html {
         width: 100%;
         
     } 
+    
 }
 
 @media (min-width: 320px){
@@ -353,3 +341,20 @@ body, html {
    
 }
 
+/* @media (max-width: 1200px) {
+    .container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 200px;
+    }
+
+    .main-content {
+        padding: 40px;
+    }
+
+    .employee-list {
+        grid-template-columns: 1fr;
+    }
+} */
