@@ -165,7 +165,7 @@ body, html {
     width: 400px;
     padding: 12px 45px 12px 15px;
     font-size: 18px;
-    border: 1px solid #ccc;
+    border: 1px solid rgb(216, 34, 34);
     border-radius: 25px;
     transition: width 0.3s ease;
 }
@@ -179,7 +179,7 @@ body, html {
     right: 15px;
     top: 50%;
     transform: translateY(-50%);
-    color: #888;
+    color: rgb(192, 4, 4);
     pointer-events: none;
 }
 
@@ -215,8 +215,8 @@ body, html {
     display: flex;
     background-color: #f9f9f9;
     padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(255, 0, 0, 0.1);
     align-items: center;
 }
 

@@ -27,8 +27,8 @@ const messi = {
 }
 
 const dilan = {
-    nombre: "Dilan",
-    apellido: "Perez Dias",
+    nombre: "Dillan",
+    apellido: "Perez Diaz",
     rol: "Limpieza y Mantenimiento",
     legajo: 622
 }
@@ -36,8 +36,9 @@ const Luis = {
     nombre: "Luis",
     apellido: "Siccardi",
     rol: "chef",
-    legajo: 001
+    legajo: 1112
 }
+
 
 const empleadosArray = [franco, taylor, kendrick, messi, dilan,Luis]
 module.exports = empleadosArray
