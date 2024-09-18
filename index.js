@@ -8,7 +8,7 @@ const app = express()
 const puerto = 3000
 app.set('view engine', 'ejs')
 
-// Path configs (configuracion para no poner ./views/archivo.ejs)
+// Path configs (configuracion para no poner ./views/archivo.ejs) 
 const path = require('path')
 app.set('views', path.join(__dirname, 'views'))
 app.use(express.static('public'))
@@ -23,7 +23,13 @@ app.get('/login', (req,res)=>{
 })
 
 app.get('/empleados', (req, res)=>{
-    res.render('empleados/empleados', {arrayEmpleados})
+    res.render('empleados', {arrayEmpleados})
+})
+
+app.get('/empleados/:id', (req,res)=>{
+    const id = req.params.id
+    const empleado = arrayEmpleados[id]
+    res.render('empleado', {empleado})
 })
 
 app.get('/home', (req,res)=>{
