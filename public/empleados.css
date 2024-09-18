@@ -257,7 +257,7 @@ body, html {
 }
 
 /* Responsive Design */
-@media (max-width: 1200px) {
+/* @media (max-width: 1200px) {
     .container {
         flex-direction: column;
     }
@@ -273,9 +273,9 @@ body, html {
     .employee-list {
         grid-template-columns: 1fr;
     }
-}
+} */
 
-@media (max-width: 768px) {
+@media (min-width: 768px) {
     .sidebar {
         width: 180px;
     }
