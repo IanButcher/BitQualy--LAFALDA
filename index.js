@@ -24,19 +24,15 @@ app.use(express.static('public'))
 
 
 // Mongoose Models & Schemas
-const empleadoSchema = require('./Schemas/empleadoSchema')
-const evaluadorSchema = require('./Schemas/evaluadorSchema')
-const evaluacionSchema = require('./Schemas/evaluacionSchema')
-const formularioSchema = require('./Schemas/formularioSchema')
-const intermediarioSchema = require('./Schemas/intermediarioSchema')
+const Empleado = require('./Schemas/empleadoSchema')
+const Evaluador = require('./Schemas/evaluadorSchema')
+const Evaluacion = require('./Schemas/evaluacionSchema')
+const Formulario = require('./Schemas/formularioSchema')
+const Intermediario = require('./Schemas/intermediarioSchema')
 
 // Rutas
 app.get('/', (req, res)=>{
     res.render('index')
-})
-
-app.get('/login', (req,res)=>{
-    res.render('login')
 })
 
 app.get('/empleados', (req, res)=>{

@@ -1,24 +1,32 @@
 const mongoose = require('mongoose')
 
+const campoSchema = new mongoose.Schema({
+    nombre: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    descripcion: {
+        type: String,
+        required: true,
+    },
+    valor: {
+        type: Number,
+        required: true,
+        trim: true
+    }
+})
 
-// MODIFICAR
 const formularioSchema = new mongoose.Schema({
     nombre: {
         type: String,
         required: true,
         trim: true
     },
-    legajo: {
-        type: Number,
-        required: true,
-        trim: true
-    },
-    rol: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    evaluacionesIntermediadas: [],
+    campos: [campoSchema] //Posteriormente se va a llenar con los campos
 })
 
-module.exports = formularioSchema
+
+const Formulario = mongoose.model('Formulario', formularioSchema)
+
+module.exports = Formulario

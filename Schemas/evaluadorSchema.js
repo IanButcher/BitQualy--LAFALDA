@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-// MODIFICAR
+
 const evaluadorSchema = new mongoose.Schema({
     nombre: {
         type: String,
@@ -17,7 +17,15 @@ const evaluadorSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    evaluacionesIntermediadas: [],
+    evaluacionesCompletadas: [],
+    password: {
+        type: String,
+        required: true,
+        min: 6,
+        max: 16
+    }
 })
 
-module.exports = evaluadorSchema
+const Evaluador = mongoose.model('Evaluador', evaluadorSchema)
+
+module.exports = Evaluador

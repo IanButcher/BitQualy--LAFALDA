@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
+const bcryptjs = require('bcryptjs')
 
-// MODIFICAR
+
 const empleadoSchema = new mongoose.Schema({
     nombre: {
         type: String,
@@ -17,7 +18,16 @@ const empleadoSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    evaluacionesIntermediadas: [],
+    evaluacionesAsignadas: [],
+    evaluacionesCompletadas: [],
+    password: {
+        type: String,
+        required: true,
+        min: 6,
+        max: 16
+    }
 })
 
-module.exports = empleadoSchema
+const Empleado = mongoose.model('Empleado', empleadoSchema)
+
+module.exports = Empleado

@@ -17,6 +17,14 @@ const intermediarioSchema = new mongoose.Schema({
         trim: true
     },
     evaluacionesIntermediadas: [],
+    password: {
+        type: String,
+        required: true,
+        min: 6,
+        max: 16
+    }
 })
 
-module.exports = intermediarioSchema
+const Intermediario = mongoose.model('Intermediario', intermediarioSchema)
+
+module.exports = Intermediario
