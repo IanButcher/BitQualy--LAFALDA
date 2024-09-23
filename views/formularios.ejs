@@ -39,31 +39,40 @@
         </aside>
 
         <!-- Panel principal -->
-        <main class="main-content">
-            <header class="header">
-                <h1>Gestión de Evaluaciones</h1>
-                <div class="user-info">
-                    <h2>Carina Campo</h2>
-                    <p>Rol: Recursos Humanos</p>
-                </div>
-            </header>
-            <section class="evaluation-section">
+        <div class="main-content">
+            <div class="header">
                 <div class="search-section">
-                    <input type="text" placeholder="Buscar Formularios...">
+                    <input type="text" placeholder="Encontrar Formularios..">
                     <i class="fas fa-search search-icon"></i>
                 </div>
-                <div class="form-list">
-                    <!-- Simulación de plantillas -->
-                    <select onchange="updatePreview(this.value)">
-                        <option value="template1">Plantilla 1</option>
-                        <option value="template2">Plantilla 2</option>
-                        <option value="template3">Plantilla 3</option>
-                    </select>
-                    <button onclick="modifyTemplate()">Modificar</button>
+                <div class="user-info">
+                    <img src="user-image.png" alt="User Image">
+                    <span>Carina Campo | Rol: Recursos Humanos</span>
                 </div>
-                <iframe id="previewFrame" src="template1.html" style="width:100%; height:400px;"></iframe>
-            </section>
-        </main>
+            </div>
+    
+            <div class="form-section">
+                <h2>Plantillas Formularios</h2>
+                <div class="form-list">
+                    <select id="form-templates">
+                        <option>Autoevaluación</option>
+                        <option>Evaluación 360</option>
+                        <option>Evaluación de Desempeño</option>
+                    </select>
+                    <button class="btn-filter">Filtrar</button>
+                </div>
+    
+                <div class="preview-section">
+                    <h3>Vista Previa</h3>
+                    <iframe src="preview-template.html" class="preview-frame"></iframe>
+                </div>
+    
+                <div class="modify-section">
+                    <button class="btn-modify">Modificar</button>
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
     <script>
         function updatePreview(template) {
