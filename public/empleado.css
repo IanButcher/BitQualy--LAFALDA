@@ -138,6 +138,7 @@ body, html {
     overflow-y: auto;
 }
 
+/* Nueva Sección Agregada */
 .header {
     display: flex;
     justify-content: space-between;
@@ -197,57 +198,136 @@ body, html {
     border-color: #888;
 }
 
-.employee-list {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+/* Estilos generales */
+body, html {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
 }
 
-.employee {
-    display: flex;
-    background-color: #f9f9f9;
-    padding: 15px;
-    border-radius: 8px;
+.main-content {
+    padding: 20px;
+    background-color: #ffffff;
+    margin: 0 20px;
+    border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Cabecera (Header) */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.user-section {
+    display: flex;
     align-items: center;
 }
 
-.employee img {
-    width: 60px;
-    height: 60px;
+.user-img {
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     margin-right: 15px;
+    border: 2px solid #ddd;
 }
 
-.employee-info h3 {
-    margin-bottom: 5px;
-    font-size: 18px;
-}
-
-.employee-info p {
+.user-info h2 {
     margin: 0;
+    font-size: 1.5em;
+    color: #333;
+}
+
+.user-info p {
+    margin: 5px 0;
+    color: #777;
+}
+
+.header-options {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.header-options i {
+    font-size: 1.5em;
+    color: #777;
+    cursor: pointer;
+}
+
+.profile-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+}
+
+/* Sección de Evaluaciones */
+.evaluation-section, .evaluation-finished {
+    margin-top: 20px;
+}
+
+.evaluation-section h2, .evaluation-finished h2 {
+    font-size: 1.3em;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.evaluation-card {
+    display: flex;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    min-height: 80px;
+    max-width: 550px; /* Ajusta el ancho máximo de la tarjeta */
+    width: 100%; /* Asegura que se ajuste al contenedor */
+}
+
+.evaluation-card:hover {
+    transform: translateY(-5px);
+}
+
+.eval-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 2px solid #ddd;
+}
+
+.eval-info p {
+    margin: 3px 0;
     color: #555;
 }
-/* Eliminar cualquier borde en el menú desplegable */
-.dropdown-content {
-    border: none; /* Asegúrate de que no haya bordes */
-    padding: 0;
-    background-color: transparent; /* Fondo transparente si es necesario */
+
+.eval-status {
+    color: #fff;
+    background-color: #007bff;
+    padding: 3px 8px;
+    border-radius: 15px;
+    font-size: 0.8em;
+    display: inline-block;
 }
 
-/* Ajuste del espaciado en los botones del submenú */
-.dropdown-btn{
-    text-decoration: none; /* Quitar subrayado en los enlaces */
+
+/* Sección de Evaluaciones Finalizadas */
+.progress-bar {
+    width: 100px;
+    height: 10px;
+    background-color: #e0e0e0;
+    border-radius: 25px;
+    margin-top: 10px;
 }
 
-/* Ajustar los íconos */
-.dropdown-content a i {
-    font-size: 16px;
-    margin-right: 10px;
+.progress {
+    height: 100%;
+    background-color: #28a745;
+    border-radius: 25px;
 }
-
-/* Ajuste del último ítem para no tener espacio extra */
-.dropdown-content a:last-child {
-    margin-bottom: 0;
-}
-

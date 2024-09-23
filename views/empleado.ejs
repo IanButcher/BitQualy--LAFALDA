@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Evaluaciones</title>
     <link rel="stylesheet" href="/empleado.css">
-
+   
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
@@ -46,29 +46,58 @@
         <!-- Panel principal -->
         <main class="main-content">
             <header class="header">
-                <h1>Empleados</h1>
-                <div class="user-info">
-                    <h2>Carina Campo</h2>
-                    <p>Rol: Recursos Humanos</p>
-                </div>
-                
-            </header>
-            <div class="search-section">
-                <input type="text" placeholder="Buscar empleados...">
-                <i class="fas fa-search search-icon"></i>
-            </div>
-            
-            
-            
-            <section class="employee-list">
-                <div class="employee">
-                    <img src="empleado1.jpg" alt="Empleado">
-                    <div class="employee-info">
-                        <h3><%= empleado.nombre %> <%= empleado.apellido %></h3>
-                        <p>Rol: <%= empleado.rol %></p>
-                        <p>Legajo: <%= empleado.legajo %></p>
+                <div class="user-section">
+                    <img src="/img/user.png" alt="Empleado" class="user-img">
+                    <div class="user-info">
+                        <h2>Franco Siccardi</h2>
+                        <p>Rol: Programador</p>
+                        <p>Número de legajo: xxxx | DNI: XXXX</p>
+                        <br>
                     </div>
-                </div>              
+                </div>
+                <div class="header-options">
+                    <i class="fas fa-bell"></i>
+                    <i class="fas fa-cog"></i>
+                    <img src="/img/profile.png" alt="Carina Campo" class="profile-img">
+                </div>
+            </header>
+
+            <section class="evaluation-section">
+                <h2>Evaluaciones Asignadas</h2>
+                <div class="evaluation-card">
+                    <img src="empleado1.jpg" alt="Franco Siccardi" class="eval-img">
+                    <div class="eval-info">
+                        <p><strong>Franco Siccardi</strong></p>
+                        <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
+                        <p class="eval-status">Autoevaluación</p>
+                        <br>
+                    </div>
+                </div>
+
+                <div class="evaluation-card">
+                    <img src="empleado1.jpg" alt="Franco Siccardi" class="eval-img">
+                    <div class="eval-info">
+                        <p><strong>Franco Siccardi</strong></p>
+                        <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
+                        <p class="eval-status">Evaluación de Análisis</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="evaluation-finished">
+                <h2>Evaluaciones Finalizadas</h2>
+                <div class="evaluation-card">
+                    <img src="empleado1.jpg" alt="Franco Siccardi" class="eval-img">
+                    <div class="eval-info">
+                        <p><strong>Franco Siccardi</strong></p>
+                        <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
+                        <p>Autoevaluación</p>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 40%;"></div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
             </section>
         </main>
     </div>
