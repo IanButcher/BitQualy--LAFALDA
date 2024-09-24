@@ -4,12 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modificar Formulario</title>
-    <link rel="stylesheet" href="/modify.css">
+    <link rel="stylesheet" href="/new.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+    <style>
+        /* Estilos adicionales para el Numeric Up Down */
+        .percentage-input {
+            width: auto;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <!-- Panel lateral izquierdo (igual que la página anterior) -->
+        <!-- Panel lateral izquierdo -->
         <aside class="sidebar">
             <div class="logo">
                 <img src="/img/Logo BitQualy Blanco.png" alt="Logo BitQualy">
@@ -25,8 +37,8 @@
                     <a href="/reguladores"><i class="fas fa-clipboard-check"></i> Reguladores</a>
                 </div>
                 <div class="gestion-section">
-                    <a href="#" class="dropdown-btn"><i class="fas fa-tasks"></i> GESTIÓN EVALUACIONES <i class="fas fa-chevron-down"></i></a>
-                    <div class="dropdown-container">
+                    <a href="#" class="dropdown-btn" id="dropdown-toggle"><i class="fas fa-tasks"></i> GESTIÓN <br> EVALUACIONES <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-container" id="dropdown-content" style="display: none;">
                         <div class="menu-item">
                             <a href="/evaluaciones"><i class="fas fa-file-alt"></i> Evaluaciones</a>
                         </div>
@@ -48,7 +60,7 @@
             </div>
 
             <div class="modify-form-section">
-                <h2>Modificar Formulario</h2>
+                <h2>Crear Formulario</h2>
 
                 <!-- Formulario para editar las preguntas y opciones -->
                 <div class="form-editor">
@@ -67,7 +79,7 @@
                         <button type="button" class="btn-add" id="add-question-btn">Añadir Pregunta</button>
 
                         <div class="modify-buttons">
-                            <button type="submit" class="btn-save">Guardar Cambios</button>
+                            <button type="submit" class="btn-save" id="save-changes-btn">Guardar Cambios</button>
                             <a href="/formularios" class="btn-cancel">Cancelar</a>
                         </div>
                     </form>
@@ -76,14 +88,23 @@
                 <!-- Vista previa del formulario -->
                 <div class="preview-section">
                     <h3>Vista Previa del Formulario</h3>
-                    <iframe id="preview-frame" src="https://cedec.intef.es/wp-content/uploads/2019/09/cedec-Plantilla-autoevaluacion-docente-ABP.pdf" 
-                            width="100%" height="400" frameborder="0"></iframe>
+                    <iframe id="preview-frame" src="" width="100%" height="400" frameborder="0" style="display: none;"></iframe>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
+        
+    document.getElementById('dropdown-toggle').addEventListener('click', function () {
+        const dropdownContent = document.getElementById('dropdown-content');
+        if (dropdownContent.style.display === 'block') {
+            dropdownContent.style.display = 'none';
+        } else {
+            dropdownContent.style.display = 'block';
+        }
+    });
+
         let questionCount = 1;
 
         const addQuestionBtn = document.getElementById('add-question-btn');
@@ -103,7 +124,7 @@
 
                     <!-- Porcentaje -->
                     <label for="percentage${questionNumber}">Porcentaje:</label>
-                    <input type="number" id="percentage${questionNumber}" name="percentage${questionNumber}" min="0" max="100" required>
+                    <input type="number" class="percentage-input" id="percentage${questionNumber}" name="percentage${questionNumber}" min="0" max="100" required oninput="updateColor(${questionNumber})">
 
                     <!-- Tipo de pregunta -->
                     <label for="type${questionNumber}">Tipo de Pregunta:</label>
@@ -169,27 +190,67 @@
             }
         }
 
-        // Selecciona todos los botones desplegables
-        const dropdownButtons = document.querySelectorAll('.dropdown-btn');
+        // Actualizar el color del porcentaje
+        function updateColor(questionNumber) {
+            const percentageInput = document.getElementById(`percentage${questionNumber}`);
+            const value = percentageInput.value;
 
-        // Agrega un evento de clic para cada botón desplegable
-        dropdownButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                // Alterna la clase 'active' para expandir o colapsar
-                this.classList.toggle('active');
-                
-                // Obtiene el contenedor de opciones correspondiente
-                const dropdownContent = this.nextElementSibling;
-                
-                // Si el contenedor está visible, lo oculta, si no, lo muestra
-                if (dropdownContent.style.display === 'block') {
-                    dropdownContent.style.display = 'none';
-                } else {
-                    dropdownContent.style.display = 'block';
-                }
-            });
+            if (value < 10) {
+                percentageInput.style.backgroundColor = "#f8d7da"; // Red
+            } else if (value <= 20) {
+                percentageInput.style.backgroundColor = "#f5c6cb"; // Light Red
+            } else if (value <= 30) {
+                percentageInput.style.backgroundColor = "#ffeeba"; // Yellow
+            } else if (value <= 40) {
+                percentageInput.style.backgroundColor = "#fff3cd"; // Light Yellow
+            } else if (value <= 50) {
+                percentageInput.style.backgroundColor = "#d4edda"; // Green
+            } else {
+                percentageInput.style.backgroundColor = "#c3e6cb"; // Dark Green
+            }
+        }
+
+        // Función para crear el PDF
+        document.getElementById('save-changes-btn').addEventListener('click', (event) => {
+            event.preventDefault(); // Prevenir el envío del formulario
+
+            // Crea un nuevo documento PDF
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Título del formulario
+            const title = document.getElementById('form-title').value;
+            doc.setFontSize(18);
+            doc.text(title, 20, 20);
+
+            // Agregar tabla con preguntas
+            const columns = ["Pregunta", "Descripción", "Porcentaje"];
+            const rows = [];
+
+            const questions = document.querySelectorAll('input[name^="question"], textarea[name^="description"], input[name^="percentage"]');
+            for (let i = 0; i < questions.length; i += 3) {
+                const questionText = questions[i].value;
+                const description = questions[i + 1].value;
+                const percentage = questions[i + 2].value;
+
+                rows.push([questionText, description, percentage]);
+            }
+
+            // Crear tabla en el PDF
+            doc.autoTable(columns, rows, { startY: 30 });
+
+            // Guardar PDF en la vista previa
+            const pdfBlob = doc.output('blob');
+            const pdfUrl = URL.createObjectURL(pdfBlob);
+
+            // Mostrar PDF en la vista previa
+            const previewFrame = document.getElementById('preview-frame');
+            previewFrame.src = pdfUrl;
+            previewFrame.style.display = 'block';
+
+            // Guardar PDF
+            doc.save(`${title}.pdf`);
         });
-
     </script>
 </body>
 </html>
