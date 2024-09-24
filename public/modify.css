@@ -1,0 +1,156 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    font-family: Arial, sans-serif;
+    height: 100%;
+    background-color: #f4f4f4;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+}
+
+.sidebar .logo img {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+}
+
+.sidebar nav .menu-item a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Main Content */
+.main-content {
+    flex-grow: 1;
+    padding: 40px;
+    background-color: #fff;
+    overflow-y: auto;
+}
+
+/* Modify Form Section */
+.modify-form-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-editor {
+    width: 60%;
+}
+
+.form-editor h3 {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.options-group {
+    margin-top: 10px;
+}
+
+.options-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.modify-buttons {
+    margin-top: 20px;
+}
+
+.btn-save, .btn-cancel {
+    padding: 10px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    color: white;
+}
+
+.btn-save {
+    background-color: green;
+    margin-right: 10px;
+}
+
+.btn-cancel {
+    background-color: red;
+}
+
+.preview-section {
+    width: 35%;
+    padding-left: 20px;
+}
+
+/* Estilos para los botones de agregar/eliminar */
+.btn-add-option, .btn-delete, .btn-delete-option {
+    margin-top: 10px;
+    background-color: #ff6347;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.btn-add-option:hover, .btn-delete:hover, .btn-delete-option:hover {
+    background-color: #ff4500;
+}
+
+/* Dropdown container hidden by default */
+.dropdown-container {
+    display: none;
+    padding-left: 15px;
+}
+
+/* Dropdown button style when active */
+.active .dropdown-container {
+    display: block;
+}
+
+.gestion-section .dropdown-btn {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #444;
+    color: white;
+    border: none;
+    outline: none;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.gestion-section .dropdown-btn:hover {
+    background-color: #555;
+}
