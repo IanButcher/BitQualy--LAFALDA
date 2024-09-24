@@ -50,7 +50,7 @@ baseUserSchema.methods.comparePassword = async function(candidatePassword) {
   try {
     return await bcryptjs.compare(candidatePassword, this.password) // Comparar hashed passwords
   } catch (error) {
-    throw new Error('Password comparison failed')
+    throw new Error('Comparación de contraseña fallida')
   }
 }
 
