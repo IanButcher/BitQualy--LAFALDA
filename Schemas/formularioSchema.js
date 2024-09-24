@@ -17,13 +17,21 @@ const campoSchema = new mongoose.Schema({
     }
 })
 
+const Campo = mongoose.model('Campo', campoSchema)
+
 const formularioSchema = new mongoose.Schema({
     nombre: {
         type: String,
         required: true,
         trim: true
     },
-    campos: [campoSchema] //Posteriormente se va a llenar con los campos
+    campos: {
+        type: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Campo' 
+        }],
+        required: true
+    } //Posteriormente se va a llenar con los campos
 })
 
 

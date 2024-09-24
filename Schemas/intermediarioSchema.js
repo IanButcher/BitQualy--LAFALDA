@@ -1,30 +1,34 @@
+// Modulos
 const mongoose = require('mongoose')
+const bcryptjs = require('bcryptjs')
+const BaseUser = require('./baseUserSchema')
 
+// Define el esquema para empleado
 const intermediarioSchema = new mongoose.Schema({
-    nombre: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    legajo: {
-        type: Number,
-        required: true,
-        trim: true
-    },
-    rol: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    evaluacionesIntermediadas: [],
-    password: {
-        type: String,
-        required: true,
-        min: 6,
-        max: 16
-    }
+    // Autoevaluaciones que le asignaron
+    evaluacionesAsignadas: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Evaluacion' 
+        }
+    ],
+    //Autoevaluaciones que completo
+    evaluacionesCompletadas: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Evaluacion' 
+        }
+    ],
+    // Evaluaciones que intermedio/aprobo/desaprobo
+    evaluaciones: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Evaluacion' 
+        }
+    ],
 })
 
-const Intermediario = mongoose.model('Intermediario', intermediarioSchema)
 
-module.exports = Intermediario
+const Intermediario = BaseUser.discriminator('Intermediario', intermediarioSchema)
+
+module.exports = Intermediario;

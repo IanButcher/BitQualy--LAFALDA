@@ -11,7 +11,7 @@ app.set('view engine', 'ejs')
 
 // Mongoose conection
 async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/bitqualyPrueba')
+  await mongoose.connect('mongodb://127.0.0.1:27017/bitqualyPrueba/bitqualy')
   console.log('Conection to mongodb Succsesful')
   // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
 }

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const comentariosSchema = new mongoose.Schema({
+const comentarioSchema = new mongoose.Schema({
     intermediario: {
         type: Object,
         required: true
@@ -11,8 +11,15 @@ const comentariosSchema = new mongoose.Schema({
     }
 })
 
+const Comentario = mongoose.model('Comentario', comentarioSchema)
+
 const evaluacionSchema = new mongoose.Schema({
-    comentarios: [], //Posteriormente se insertaran los comentarios
+    comentarios: {
+        type: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Comentario' 
+        }]
+    } , //Posteriormente se insertaran los comentarios
     formulario: {
         type: Object,
         required: true
