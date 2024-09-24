@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificar Formulario</title>
+    <link rel="stylesheet" href="/modify.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Panel lateral izquierdo (igual que la página anterior) -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="/img/Logo BitQualy Blanco.png" alt="Logo BitQualy">
+            </div>
+            <nav>
+                <div class="menu-item">
+                    <a href="/empleados"><i class="fas fa-users"></i> Empleados</a>
+                </div>
+                <div class="menu-item">
+                    <a href="/evaluadores"><i class="fas fa-user-tie"></i> Evaluadores</a>
+                </div>
+                <div class="menu-item">
+                    <a href="/reguladores"><i class="fas fa-clipboard-check"></i> Reguladores</a>
+                </div>
+                <div class="gestion-section">
+                    <a href="#" class="dropdown-btn"><i class="fas fa-tasks"></i> GESTIÓN EVALUACIONES <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-container">
+                        <div class="menu-item">
+                            <a href="/evaluaciones"><i class="fas fa-file-alt"></i> Evaluaciones</a>
+                        </div>
+                        <div class="menu-item">
+                            <a href="/formularios"><i class="fas fa-list-alt"></i> Formularios</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Panel principal -->
+        <div class="main-content">
+            <div class="header">
+                <div class="user-info">
+                    <img src="/img/user-image.png" alt="User Image">
+                    <span>Carina Campo | Rol: Recursos Humanos</span>
+                </div>
+            </div>
+
+            <div class="modify-form-section">
+                <h2>Modificar Formulario</h2>
+
+                <!-- Formulario para editar las preguntas y opciones -->
+                <div class="form-editor">
+                    <h3>Editor de Preguntas</h3>
+
+                    <form id="form-modification" method="POST" action="/save-form">
+                        <div class="form-group">
+                            <label for="form-title">Título del Formulario:</label>
+                            <input type="text" id="form-title" name="form-title" value="Autoevaluación" required>
+                        </div>
+
+                        <!-- Pregunta dinámica -->
+                        <div id="additional-questions"></div>
+
+                        <!-- Botón para agregar nuevas preguntas -->
+                        <button type="button" class="btn-add" id="add-question-btn">Añadir Pregunta</button>
+
+                        <div class="modify-buttons">
+                            <button type="submit" class="btn-save">Guardar Cambios</button>
+                            <a href="/formularios" class="btn-cancel">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Vista previa del formulario -->
+                <div class="preview-section">
+                    <h3>Vista Previa del Formulario</h3>
+                    <iframe id="preview-frame" src="https://cedec.intef.es/wp-content/uploads/2019/09/cedec-Plantilla-autoevaluacion-docente-ABP.pdf" 
+                            width="100%" height="400" frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let questionCount = 1;
+
+        const addQuestionBtn = document.getElementById('add-question-btn');
+        const additionalQuestions = document.getElementById('additional-questions');
+
+        addQuestionBtn.addEventListener('click', () => {
+            const questionNumber = questionCount++;
+
+            const newQuestion = `
+                <div class="form-group" id="question-group-${questionNumber}">
+                    <label for="question${questionNumber}">Pregunta ${questionNumber}:</label>
+                    <input type="text" id="question${questionNumber}" name="question${questionNumber}" required>
+
+                    <!-- Descripción de la pregunta -->
+                    <label for="description${questionNumber}">Descripción:</label>
+                    <textarea id="description${questionNumber}" name="description${questionNumber}"></textarea>
+
+                    <!-- Porcentaje -->
+                    <label for="percentage${questionNumber}">Porcentaje:</label>
+                    <input type="number" id="percentage${questionNumber}" name="percentage${questionNumber}" min="0" max="100" required>
+
+                    <!-- Tipo de pregunta -->
+                    <label for="type${questionNumber}">Tipo de Pregunta:</label>
+                    <select name="type${questionNumber}" id="type${questionNumber}" onchange="toggleOptions(${questionNumber})">
+                        <option value="texto">Texto</option>
+                        <option value="multiple">Opción Múltiple</option>
+                        <option value="checkbox">Checkbox</option>
+                    </select>
+
+                    <!-- Opciones dinámicas -->
+                    <div class="options-group" id="options${questionNumber}" style="display:none;">
+                        <div id="options-container-${questionNumber}">
+                            <div class="option-item">
+                                <label>Opción 1:</label>
+                                <input type="text" name="option${questionNumber}_1">
+                            </div>
+                        </div>
+                        <button type="button" class="btn-add-option" onclick="addOption(${questionNumber})">Añadir Opción</button>
+                    </div>
+
+                    <!-- Botón para eliminar pregunta -->
+                    <button type="button" class="btn-delete" onclick="deleteQuestion(${questionNumber})">Eliminar Pregunta</button>
+                </div>
+            `;
+            additionalQuestions.insertAdjacentHTML('beforeend', newQuestion);
+        });
+
+        // Función para agregar opciones dinámicas
+        function addOption(questionNumber) {
+            const optionsContainer = document.getElementById(`options-container-${questionNumber}`);
+            const optionCount = optionsContainer.querySelectorAll('.option-item').length + 1;
+
+            const newOption = `
+                <div class="option-item">
+                    <label>Opción ${optionCount}:</label>
+                    <input type="text" name="option${questionNumber}_${optionCount}">
+                    <button type="button" class="btn-delete-option" onclick="deleteOption(this)">Eliminar Opción</button>
+                </div>
+            `;
+            optionsContainer.insertAdjacentHTML('beforeend', newOption);
+        }
+
+        // Función para eliminar una pregunta
+        function deleteQuestion(questionNumber) {
+            const questionGroup = document.getElementById(`question-group-${questionNumber}`);
+            questionGroup.remove();
+        }
+
+        // Función para eliminar una opción
+        function deleteOption(optionElement) {
+            optionElement.parentElement.remove();
+        }
+
+        // Mostrar u ocultar opciones dependiendo del tipo de pregunta
+        function toggleOptions(questionNumber) {
+            const typeSelect = document.getElementById(`type${questionNumber}`);
+            const optionsGroup = document.getElementById(`options${questionNumber}`);
+
+            if (typeSelect.value === 'multiple' || typeSelect.value === 'checkbox') {
+                optionsGroup.style.display = 'block';
+            } else {
+                optionsGroup.style.display = 'none';
+            }
+        }
+
+        // Selecciona todos los botones desplegables
+        const dropdownButtons = document.querySelectorAll('.dropdown-btn');
+
+        // Agrega un evento de clic para cada botón desplegable
+        dropdownButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Alterna la clase 'active' para expandir o colapsar
+                this.classList.toggle('active');
+                
+                // Obtiene el contenedor de opciones correspondiente
+                const dropdownContent = this.nextElementSibling;
+                
+                // Si el contenedor está visible, lo oculta, si no, lo muestra
+                if (dropdownContent.style.display === 'block') {
+                    dropdownContent.style.display = 'none';
+                } else {
+                    dropdownContent.style.display = 'block';
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>

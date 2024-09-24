@@ -22,6 +22,14 @@ app.get('/login', (req,res)=>{
     res.render('login')
 })
 
+app.get('/formularios', (req,res)=>{
+    res.render('forms/formularios')
+})
+
+app.get('/formularios/modify', (req,res)=>{
+    res.render('forms/modify')
+})
+
 app.get('/empleados', (req, res)=>{
     res.render('empleados', {arrayEmpleados})
 })
