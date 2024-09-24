@@ -13,6 +13,7 @@ body, html {
 .container {
     display: flex;
     height: 100vh;
+    justify-content: space-between; /* Asegura que los paneles estén separados */
 }
 
 .sidebar {
@@ -136,6 +137,17 @@ body, html {
     padding: 50px;
     background-color: #fff;
     overflow-y: auto;
+    margin-right: 20px; /* Da espacio al panel derecho */
+}
+
+.right-panel {
+    width: 250px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin-left: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0; /* Evita que el panel derecho cambie de tamaño */
 }
 
 /* Nueva Sección Agregada */
@@ -331,3 +343,196 @@ body, html {
     background-color: #28a745;
     border-radius: 25px;
 }
+/* Right panel styling */
+.right-panel {
+    width: 250px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin-left: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Additional styles for the filter and buttons */
+.filter-section h3 {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.filter-select {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+/* Ajustes de la nueva clase contenedora para las evaluaciones y el panel derecho */
+.filter-panel-container {
+    display: flex;
+    justify-content: space-between; /* Coloca el contenido principal y el panel de filtro uno al lado del otro */
+}
+
+.evaluation-section {
+    flex-grow: 1; /* Permite que las evaluaciones ocupen todo el espacio disponible */
+    margin-right: 20px; /* Añade espacio entre las evaluaciones y el panel derecho */
+}
+
+/* Panel derecho (Right Panel) */
+.right-panel {
+    width: 100%;
+    max-width: 300px;
+    background-color: #f7f9fc;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    margin-left: 20px;
+    margin-right: 30px;
+    margin-top: 60px; /* Ajusta el valor según tus necesidades */
+    /* Otros estilos existentes */
+    
+}
+
+/* Título de la sección de filtro */
+.filter-section h3 {
+    font-size: 1.5em;
+    color: #000000;
+    margin-bottom: 15px;
+   
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* Estilo del select para filtros */
+.filter-select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+}
+
+.filter-select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Orden de filtros (Más reciente/antigua) */
+.filter-order {
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.filter-order label {
+    font-size: 0.9em;
+    color: #555;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+/* Estilos para los puntos de colores */
+.blue-dot, .yellow-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.blue-dot {
+    background-color: #007bff;
+}
+
+.yellow-dot {
+    background-color: #f1c40f;
+}
+
+/* Botones de estado */
+.status-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.status-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.status-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Botón de Pendientes */
+.status-button.pending {
+    border-left: 5px solid #ce1500;
+}
+
+.status-button.pending .red-dot {
+    background-color: #ce1500;
+}
+
+/* Botón de Evaluar */
+.status-button.evaluate {
+    border-left: 5px solid #28a745;
+}
+
+.status-button.evaluate .green-dot {
+    background-color: #28a745;
+}
+
+/* Estilos para los puntos de estado */
+.red-dot, .green-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+/* Contador de evaluaciones pendientes */
+.status-button .count {
+    background-color: #df1600;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.85em;
+    font-weight: bold;
+}
+
+.status-button.evaluate .triangle {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #28a745;
+    margin-left: 10px;
+}
+
+/* Responsive para dispositivos más pequeños */
+@media (max-width: 768px) {
+    .right-panel {
+        max-width: 100%;
+        margin: 0;
+    }
+}
+
+
