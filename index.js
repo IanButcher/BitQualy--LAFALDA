@@ -30,6 +30,10 @@ app.get('/home', (req,res)=>{
     res.render('home')
 })
 
+app.get('/evaluaciones', (req, res)=>{
+    res.render('evaluaciones/evaluaciones')
+})
+
 app.listen(puerto, ()=>{
     console.log('Servidor abierto')
     console.log(puerto)
