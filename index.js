@@ -31,13 +31,13 @@ app.get('/formularios/new', (req,res)=>{
 })
 
 app.get('/empleados', (req, res)=>{
-    res.render('empleados', {arrayEmpleados})
+    res.render('empls/empleados', {arrayEmpleados})
 })
 
 app.get('/empleados/:id', (req,res)=>{
     const id = req.params.id
     const empleado = arrayEmpleados[id]
-    res.render('empleado', {empleado})
+    res.render('empls/empleado', {empleado})
 })
 
 app.get('/home', (req,res)=>{
