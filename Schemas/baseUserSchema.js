@@ -43,7 +43,7 @@ baseUserSchema.pre('save', async function (next) {
   } else {
     next();  
   }
-});
+})
 
 // Metodo para comparar passwords (para login authentication)
 baseUserSchema.methods.comparePassword = async function(candidatePassword) {
