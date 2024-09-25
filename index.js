@@ -23,7 +23,7 @@ app.get('/login', (req,res)=>{
 })
 
 app.get('/formularios', (req,res)=>{
-    res.render('forms/formularios')
+    res.rende*r('forms/formularios')
 })
 
 app.get('/formularios/new', (req,res)=>{
