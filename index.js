@@ -2,22 +2,14 @@
 const express = require('express');
 const ejs = require('ejs');
 const arrayEmpleados = require('./seedEmpleados');
-const mongoose = require('mongoose');
+const path = require('path');
 
 // Server config
 const app = express();
 const puerto = 3000;
 app.set('view engine', 'ejs');
 
-// Mongoose conection
-async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/bitqualyPrueba/bitqualy');
-  console.log('Connection to MongoDB successful');
-}
-main().catch(err => console.log(err, 'ERROR on connection to MongoDB'));
-
-// Path configs 
-const path = require('path');
+// Path configs (configuracion para no poner ./views/archivo.ejs)
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static('public'));
 
@@ -25,32 +17,36 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Mongoose Models & Schemas
-const Empleado = require('./Schemas/empleadoSchema');
-const Evaluador = require('./Schemas/evaluadorSchema');
-const Evaluacion = require('./Schemas/evaluacionSchema');
-const Formulario = require('./Schemas/formularioSchema');
-const Intermediario = require('./Schemas/intermediarioSchema');
-
-// Import formularioRoutes
-const formularioRoutes = require('./routes/formularioRoutes');  // Importing the Formulario routes
+// Import Routes
+const formularioRoutes = require('./routes/formularioRoutes');  // Import the Formulario routes
 
 // Rutas
 app.get('/', (req, res) => {
-  res.render('index');
+    res.render('index');
+});
+
+app.get('/login', (req, res) => {
+    res.render('login');
 });
 
 app.get('/empleados', (req, res) => {
-  res.render('empleados/empleados', { arrayEmpleados });
+    res.render('empls/empleados', { arrayEmpleados });
+});
+
+app.get('/empleados/:id', (req, res) => {
+    const id = req.params.id;
+    const empleado = arrayEmpleados[id];
+    res.render('empls/empleado', { empleado });
 });
 
 app.get('/home', (req, res) => {
-  res.render('home');
+    res.render('home');
 });
 
-// Use the Formulario routes
-app.use('/', formularioRoutes);  // Register the Formulario routes
+// Use the Formulario routes (GET and POST for formularios)
+app.use('/', formularioRoutes);
 
+// Start the server
 app.listen(puerto, () => {
-  console.log('Servidor abierto en el puerto', puerto);
+    console.log(`Servidor abierto en el puerto ${puerto}`);
 });

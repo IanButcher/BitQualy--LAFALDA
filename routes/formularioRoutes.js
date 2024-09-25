@@ -1,10 +1,26 @@
-// Modules
+// Modulos
 const express = require('express');
 const router = express.Router();
-const Formulario = require('../Schemas/formularioSchema'); // Import the Formulario model
+const Formulario = require('../Schemas/formularioSchema');
 
-// POST route --> save/insert Formulario
-router.post('/save-form', async (req, res) => {
+// GET route --> Display all Formularios
+router.get('/formularios', async (req, res) => {
+    try {
+        const formularios = await Formulario.find();  
+        res.render('forms/formularios', { formularios });  
+    } catch (error) {
+        console.error('Error fetching formularios:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// GET route --> Show form to create a new Formulario
+router.get('/formularios/new', (req, res) => {
+    res.render('forms/new');  
+});
+
+// POST route --> Save/insert Formulario
+router.post('/formularios/save-form', async (req, res) => {
     try {
         // Obtener data del request
         const { 'form-title': title, ...formData } = req.body;
