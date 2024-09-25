@@ -63,12 +63,13 @@
                 <h2>Crear Formulario</h2>
 
                 <!-- Formulario para editar las preguntas y opciones -->
+                <!-- Formulario para editar las preguntas y opciones -->
                 <div class="form-editor">
                     <h3>Editor de Preguntas</h3>
 
-                    <form id="form-modification" method="POST" action="/save-form">
+                    <form id="form-modification" method="POST" action="/formularios/save-form">
                         <div class="form-group">
-                            <label for="form-title">Título del Formulario:</label>
+                            <label for="titulo">Título del Formulario:</label>
                             <input type="text" id="form-title" name="form-title" value="Autoevaluación" required>
                         </div>
 
@@ -79,11 +80,13 @@
                         <button type="button" class="btn-add" id="add-question-btn">Añadir Pregunta</button>
 
                         <div class="modify-buttons">
-                            <button type="submit" class="btn-save" id="save-changes-btn">Guardar Cambios</button>
+                            <button type="submit" class="btn-save" id="save-form-btn">Guardar Cambios</button> <!-- Submit button -->
+                            <button type="button" class="btn-download" id="download-pdf-btn">Descargar PDF</button> <!-- PDF download button -->
                             <a href="/formularios" class="btn-cancel">Cancelar</a>
                         </div>
                     </form>
                 </div>
+
 
                 <!-- Vista previa del formulario -->
                 <div class="preview-section">
