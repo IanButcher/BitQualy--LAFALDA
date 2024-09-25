@@ -18,29 +18,29 @@ router.get('/formularios', async (req, res) => {
 
 // GET route --> Show form to create a new Formulario
 router.get('/formularios/new', (req, res) => {
-    res.render('forms/new');  
+    res.render('forms/new') 
 })
 
 // POST route --> save/insert Formulario
 router.post('/formularios/save-form', async (req, res) => {
     try {
-        // Extract the form title
-        const { 'form-title': titulo, ...formData } = req.body;
+        // Extraer toda la informacion de
+        const { 'form-title': titulo, ...formData } = req.body
 
-        // Process the questions from the form data
-        const questions = [];
+        // Procesar preguntas
+        const questions = []
 
         let questionIndex = 1;
         while (formData[`question${questionIndex}`]) {
             const question = {
-                titulo: formData[`question${questionIndex}`],  // Question title (preguntaSchema.titulo)
-                descripcion: formData[`description${questionIndex}`],  // Question description (preguntaSchema.descripcion)
-                porcentaje: formData[`percentage${questionIndex}`],  // Question percentage (preguntaSchema.porcentaje)
-                tipo: formData[`type${questionIndex}`],  // Question type (preguntaSchema.tipo)
+                titulo: formData[`question${questionIndex}`],  // (preguntaSchema.titulo)
+                descripcion: formData[`description${questionIndex}`],  // (preguntaSchema.descripcion)
+                porcentaje: formData[`percentage${questionIndex}`],  //  (preguntaSchema.porcentaje)
+                tipo: formData[`type${questionIndex}`], // (preguntaSchema.tipo)
                 options: []
             };
 
-            // If the question type is 'multiple' or 'checkbox', extract the options
+            // Tipo multiple o checkbox
             if (question.tipo === 'multiple' || question.tipo === 'checkbox') {
                 let optionIndex = 1;
                 while (formData[`option${questionIndex}_${optionIndex}`]) {
@@ -49,24 +49,25 @@ router.post('/formularios/save-form', async (req, res) => {
                 }
             }
 
+            // Sumar al array
             questions.push(question);
             questionIndex++;
         }
 
-        // Create a new Formulario instance
+        // Crear instancia Formulario 
         const newFormulario = new Formulario({
-            titulo,  // Form title (formularioSchema.titulo)
-            questions  // Array of questions
+            titulo,  
+            questions  
         });
 
         // Save the Formulario to the database
-        await newFormulario.save();
+        await newFormulario.save()
 
         // Redirect to the formularios list after saving
-        res.redirect('/formularios');
+        res.redirect('/formularios')
     } catch (error) {
-        console.error('Error saving formulario:', error);
-        res.status(500).send('Internal Server Error');
+        console.error('Error saving formulario:', error)
+        res.status(500).send('Internal Server Error')
     }
 });
 
