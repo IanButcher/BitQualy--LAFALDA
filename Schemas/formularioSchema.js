@@ -1,40 +1,38 @@
+// Modulos
 const mongoose = require('mongoose')
 
-const campoSchema = new mongoose.Schema({
-    nombre: {
+const preguntaSchema = new mongoose.Schema({
+    titulo: {
         type: String,
-        required: true,
-        trim: true,
+        required: true 
     },
     descripcion: {
-        type: String,
-        required: true,
+        type: String, 
+        required: true
     },
-    valor: {
+    porcentaje: {
         type: Number,
         required: true,
-        trim: true
-    }
-})
-
-const Campo = mongoose.model('Campo', campoSchema)
-
-const formularioSchema = new mongoose.Schema({
-    nombre: {
+        min: 0,
+        max: 100
+    },
+    tipo: {
         type: String,
         required: true,
-        trim: true
+        enum: ['texto', 'multiple', 'checkbox']
     },
-    campos: {
-        type: [{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Campo' 
-        }],
+    options: [String]  // Opcional para multiple y checkbox
+});
+
+const formularioSchema = new mongoose.Schema({
+    titulo: {
+        type: String,
         required: true
-    } //Posteriormente se va a llenar con los campos
+    },
+    questions: [preguntaSchema],  // Array con las preguntas
 })
 
-
+// Create and export the Formulario model
 const Formulario = mongoose.model('Formulario', formularioSchema)
 
-module.exports = Formulario
+module.exports = Formulario;
