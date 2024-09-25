@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Evaluaciones</title>
+    <link rel="stylesheet" href="formularios.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Panel lateral izquierdo -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="img/Logo BitQualy Blanco.png" alt="Logo BitQualy">
+            </div>
+            <nav>
+                <div class="menu-item">
+                    <a href="empleados.html"><i class="fas fa-users"></i> Empleados</a>
+                </div>
+                <div class="menu-item">
+                    <a href="evaluadores.html"><i class="fas fa-user-tie"></i> Evaluadores</a>
+                </div>
+                <div class="menu-item">
+                    <a href="reguladores.html"><i class="fas fa-clipboard-check"></i> Reguladores</a>
+                </div>
+                <div class="gestion-section">
+                    <a href="#" class="dropdown-btn"><i class="fas fa-tasks"></i> GESTIÓN EVALUACIONES <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-container">
+                        <div class="menu-item">
+                            <a href="evaluaciones.html"><i class="fas fa-file-alt"></i> Evaluaciones</a>
+                        </div>
+                        <div class="menu-item">
+                            <a href="/formularios.html"><i class="fas fa-list-alt"></i> Formularios</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Panel principal -->
+        <div class="main-content">
+            <div class="header">
+                <div class="search-section">
+                    <input type="text" placeholder="Encontrar Formularios..">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <div class="user-info">
+                    <img src="user-image.png" alt="User Image">
+                    <span>Carina Campo | Rol: Recursos Humanos</span>
+                </div>
+            </div>
+    
+            <div class="form-section">
+                <h2>Plantillas Formularios</h2>
+                <div class="form-list">
+                    <select id="form-templates">
+                        <option>Autoevaluación</option>
+                        <option>Evaluación 360</option>
+                        <option>Evaluación de Desempeño</option>
+                    </select>
+                    <button class="btn-filter">Filtrar</button>
+                </div>
+    
+                <div class="preview-section">
+                    <h3>Vista Previa</h3>
+                    <iframe src="https://cedec.intef.es/wp-content/uploads/2019/09/cedec-Plantilla-autoevaluacion-docente-ABP.pdf" tabindex="0" data-auto-height="true" data-aspect-ratio="0.7729220222793488" scrolling="no" width="100%" height="600" frameborder="0"  class="preview-frame" ></iframe>
+                </div>
+    
+                <div class="modify-section">
+                    <a href="/formularios/new" class="btn-modify"> New</a>
+                </div>
+             
+            </div>
+        </div>
+    </div>
+    </div>
+    <script>
+        function updatePreview(template) {
+            document.getElementById('previewFrame').src = template + ".html";
+        }
+
+        function modifyTemplate() {
+            var template = document.getElementById('previewFrame').src.split('/').pop().split('.').shift();
+            window.location.href = 'edit_' + template + '.html'; // Lleva a una página de edición
+
+        }
+
+             // JavaScript para mostrar/ocultar el submenú
+        const dropdownBtn = document.querySelector('.dropdown-btn');
+        const dropdownContainer = document.querySelector('.dropdown-container');
+
+        dropdownBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            dropdownContainer.classList.toggle('active');
+        });
+
+        
+    </script>
+</body>
+</html>
