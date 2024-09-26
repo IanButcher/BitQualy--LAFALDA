@@ -30,6 +30,10 @@ const formularioSchema = new mongoose.Schema({
         required: true
     },
     questions: [preguntaSchema],  // Array con las preguntas
+    isActive: {
+        type: Boolean,
+        default: true
+    }
 })
 
 // Create and export the Formulario model
