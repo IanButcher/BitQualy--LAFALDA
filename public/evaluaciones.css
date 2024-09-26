@@ -155,7 +155,8 @@ body, html {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 5px;
+    margin-bottom: -15px;
+    margin-top: -28px;
 }
 
 .header .user-info {
@@ -241,12 +242,7 @@ body, html {
 }
 
 /* Cabecera (Header) */
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-}
+
 
 .user-section {
     display: flex;
