@@ -11,7 +11,6 @@ const puerto = 3000
 app.set('view engine', 'ejs')
 
 // Path configs 
-const path = require('path')
 app.set('views', path.join(__dirname, 'views'))
 app.use(express.static('public'))
 
