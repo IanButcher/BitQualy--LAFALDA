@@ -1,8 +1,10 @@
 // Modulos
 const express = require('express')
+const app = express()
 const router = express.Router()
 const Formulario = require('../Schemas/formularioSchema')
 const mongoose = require('mongoose')
+app.use(express.urlencoded({ extended: true }))
 
 // GET route --> Display all Formularios
 router.get('/formularios', async (req, res) => {
@@ -19,6 +21,17 @@ router.get('/formularios', async (req, res) => {
 // GET route --> Show form to create a new Formulario
 router.get('/formularios/new', (req, res) => {
     res.render('forms/new') 
+})
+
+router.get('/formularios/preview/:id', async (req, res)=>{
+    const { id } = req.params
+    const formulario = await Formulario.findById(id)
+    if (formulario) {
+        res.render('forms/update', { formulario })
+    } else {
+        res.status(404).send('No se encontro el formulario');
+    }
+    
 })
 
 // POST route --> save/insert Formulario
