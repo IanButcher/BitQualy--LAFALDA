@@ -9,7 +9,7 @@ app.use(express.urlencoded({ extended: true }))
 // GET route --> Display all Formularios
 router.get('/formularios', async (req, res) => {
     try {
-        const formularios = await Formulario.find()
+        const formularios = await Formulario.find({ isActive: true })
         res.render('forms/formularios', { formularios: formularios })
         console.log(formularios)
     } catch (error) {
@@ -31,7 +31,6 @@ router.get('/formularios/preview/:id', async (req, res)=>{
     } else {
         res.status(404).send('No se encontro el formulario');
     }
-    
 })
 
 // POST route --> save/insert Formulario
