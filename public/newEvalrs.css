@@ -1,0 +1,373 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    font-family: Arial, sans-serif;
+    height: 100%;
+    background-color: #f4f4f4;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+}
+
+.sidebar .logo {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.sidebar .logo img {
+    max-width: 100%; 
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.sidebar nav .menu-item {
+    margin-bottom: 20px;
+}
+
+.sidebar nav .menu-item a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.sidebar nav .menu-item a i {
+    margin-right: 10px;
+}
+
+.sidebar nav .menu-item a:hover {
+    background-color: #575757;
+    transform: scale(1.05);
+}
+
+/* Ajustes de los botones de la sección de gestión */
+.sidebar .gestion-section .dropdown-btn {
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    cursor: pointer;
+    color: white;
+    background-color: transparent;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.sidebar .gestion-section .dropdown-btn:hover {
+    background-color: #575757;
+    transform: scale(1.05);
+}
+
+.sidebar .gestion-section .dropdown-btn i:last-child {
+    margin-left: 10px;
+}
+
+/* Estilo de los ítems del dropdown */
+.sidebar .gestion-section .dropdown-container {
+    display: none;
+    padding-left: 20px;
+}
+
+.sidebar .gestion-section .dropdown-container.active {
+    display: block;
+}
+
+.sidebar .gestion-section .dropdown-container .menu-item {
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    position: relative;
+}
+
+.sidebar .gestion-section .dropdown-container .menu-item a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.sidebar .gestion-section .dropdown-container .menu-item a i {
+    margin-right: 10px;
+}
+
+.sidebar .gestion-section .dropdown-container .menu-item a:hover {
+    background-color: #575757;
+    transform: scale(1.05);
+}
+
+/* Mantén solo la línea vertical */
+.sidebar .gestion-section .dropdown-container .menu-item .line {
+    position: absolute;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background-color: white;
+}
+
+/* Elimina los puntos eliminando la clase .dot */
+.sidebar .gestion-section .dropdown-container .menu-item .dot {
+    display: none;
+}
+
+.help-section {
+    margin-top: auto;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 50px;
+    background-color: #fff;
+    overflow-y: auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header .user-info {
+    text-align: right;
+}
+
+.search-section {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 30px;
+}
+
+.search-section input {
+    width: 400px;
+    padding: 12px 45px 12px 15px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    transition: width 0.3s ease;
+}
+
+.search-section input:focus {
+    width: 450px;
+}
+
+.search-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    pointer-events: none;
+}
+
+.filters {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filters select {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.filters select:focus {
+    border-color: #888;
+}
+
+.employee-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.employee {
+    display: flex;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    align-items: center;
+}
+
+.employee img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.employee-info h3 {
+    margin-bottom: 5px;
+    font-size: 18px;
+}
+
+.employee-info p {
+    margin: 0;
+    color: #555;
+}
+/* Eliminar cualquier borde en el menú desplegable */
+.dropdown-content {
+    border: none; /* Asegúrate de que no haya bordes */
+    padding: 0;
+    background-color: transparent; /* Fondo transparente si es necesario */
+}
+
+/* Ajuste del espaciado en los botones del submenú */
+.dropdown-btn{
+    text-decoration: none; /* Quitar subrayado en los enlaces */
+}
+
+/* Ajustar los íconos */
+.dropdown-content a i {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+/* Ajuste del último ítem para no tener espacio extra */
+.dropdown-content a:last-child {
+    margin-bottom: 0;
+}
+
+/* Estilos del formulario */
+.form-section {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="file"]:focus {
+    border-color: #888;
+}
+
+.form-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-submit {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: #218838;
+}
+
+.btn-cancel {
+    display: inline-block;
+    background-color: #dc3545;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-cancel:hover {
+    background-color: #c82333;
+}
+
+/* Contenedor de contraseña con el icono de ojo */
+.password-container {
+    position: relative;
+    width: 100%;
+}
+
+.password-container input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+.password-container .toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+}
+
+.password-container .fa-eye-slash {
+    color: #000;
+}
+
+/* Estilos para el mensaje de error */
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* Estilos para la vista previa de la imagen */
+.image-preview {
+    margin-top: 10px;
+    width: 150px;
+    height: 150px;
+    border: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    display: none;
+}
