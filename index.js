@@ -37,13 +37,6 @@ app.get('/login', (req, res) => {
     res.render('login')
 })
 
-app.get('/formularios', (req,res)=>{
-    res.render('forms/formularios')
-})
-
-app.get('/formularios/new', (req,res)=>{
-    res.render('forms/new')
-})
 
 app.get('/empleados', (req, res)=>{
     res.render('empls/empleados', {arrayEmpleados})
