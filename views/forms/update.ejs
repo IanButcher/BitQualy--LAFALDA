@@ -70,11 +70,50 @@
                     <form id="form-modification" method="POST" action="/formularios/save-form">
                         <div class="form-group">
                             <label for="titulo">Título del Formulario:</label>
-                            <input type="text" id="form-title" name="form-title" value="Autoevaluación" required>
+                            <input type="text" id="form-title" name="form-title" value="Autoevaluación" placeholder="<%= formulario.titulo %>" required>
                         </div>
 
                         <!-- Pregunta dinámica -->
-                        <div id="additional-questions"></div>
+                        <div id="additional-questions">
+                            <% let questionIndex = 1 %>
+                            <% for (pregunta of formulario.questions) {%>
+                                <div class="form-group" id="question-group-<%= pregunta._id %>">
+                                    <label for="question<%= pregunta._id %>">Pregunta <%= questionIndex %>:</label>
+                                    <input type="text" id="question<%= pregunta._id %>" name="question<%= pregunta._id %>" value="<%= pregunta.titulo %>" required>
+                                     <!-- Descripción de la pregunta -->
+                                    <label for="description<%= pregunta._id %>">Descripción:</label>
+                                    <textarea id="description<%= pregunta._id %>" name="description<%= pregunta._id %>"><%= pregunta.descripcion %></textarea>
+                                    <!-- Porcentaje -->
+                                    <label for="percentage<%= pregunta._id %>">Porcentaje:</label>
+                                    <input type="number" class="percentage-input" id="percentage${questionNumber}" name="percentage<%= pregunta._id %>" min="0" max="100" required oninput="updateColor('<%= pregunta.porcentaje %>')" value="<%= pregunta.porcentaje %>">
+                                    <!-- Tipo de pregunta -->
+                                    <label for="type<%= pregunta._id %>">Tipo de Pregunta:</label>
+                                    <select name="type<%= pregunta._id %>" id="type<%= pregunta._id %>" onchange="toggleOptions('<%= pregunta._id %>')">
+                                        <option value="texto" <%= pregunta.tipo === 'texto' ? 'selected' : '' %>>Texto</option>
+                                        <option value="multiple" <%= pregunta.tipo === 'multiple' ? 'selected' : '' %>>Opción Múltiple</option>
+                                        <option value="checkbox" <%= pregunta.tipo === 'checkbox' ? 'selected' : '' %>>Checkbox</option>
+                                    </select>
+                                    <!-- Opciones dinámicas -->
+                                    <% let opcionIndex = 1 %>
+                                    <div class="options-group" id="options<%= pregunta._id %>" style="display: <%= (pregunta.tipo === 'multiple' || pregunta.tipo === 'checkbox') ? 'block' : 'none' %>;">
+                                        <div id="options-container-<%= pregunta._id %>">
+                                            <% for (opcion of pregunta.options) {%>
+                                                <div class="option-item">
+                                                    <label>Opción <%= opcionIndex %>:</label>
+                                                    <input type="text" name="option<%= pregunta._id %>_<%= opcionIndex %>" value="<%= opcion %>"> <!-- Use correct value for option -->
+                                                </div>
+                                                <% opcionIndex++ %>
+                                            <% } %>
+                                        </div>
+                                        <button type="button" class="btn-add-option" onclick="addOption('<%= pregunta._id %>')">Añadir Opción</button>
+                                    </div>
+                                    <!-- Botón para eliminar pregunta -->
+                                    <button type="button" class="btn-delete" onclick="deleteQuestion('<%= pregunta._id %>')">Eliminar Pregunta</button>
+                                </div>
+                                <% questionIndex++ %>
+                            <% } %>
+
+                        </div>
 
                         <!-- Botón para agregar nuevas preguntas -->
                         <button type="button" class="btn-add" id="add-question-btn">Añadir Pregunta</button>
@@ -86,6 +125,7 @@
                         </div>
                     </form>
                 </div>
+
 
                 <!-- Vista previa del formulario -->
                 <div class="preview-section">
@@ -150,7 +190,7 @@
                     <!-- Botón para eliminar pregunta -->
                     <button type="button" class="btn-delete" onclick="deleteQuestion(${questionNumber})">Eliminar Pregunta</button>
                 </div>
-            `;
+            `
             additionalQuestions.insertAdjacentHTML('beforeend', newQuestion);
         });
 
@@ -170,9 +210,11 @@
         }
 
         // Función para eliminar una pregunta
-        function deleteQuestion(questionNumber) {
-            const questionGroup = document.getElementById(`question-group-${questionNumber}`);
-            questionGroup.remove();
+        function deleteQuestion(questionId) {
+            const questionGroup = document.getElementById(`question-group-${questionId}`);
+            if (questionGroup) {
+                questionGroup.remove();
+            }
         }
 
         // Función para eliminar una opción
@@ -192,25 +234,25 @@
             }
         }
 
-        // Actualizar el color del porcentaje
-        function updateColor(questionNumber) {
-            const percentageInput = document.getElementById(`percentage${questionNumber}`);
-            const value = percentageInput.value;
+    // Actualizar el color del porcentaje
+    function updateColor(id) {
+        const percentageInput = document.getElementById(`percentage${id}`);
+        const value = percentageInput.value;
 
-            if (value < 10) {
-                percentageInput.style.backgroundColor = "#f8d7da"; // Red
-            } else if (value <= 20) {
-                percentageInput.style.backgroundColor = "#f5c6cb"; // Light Red
-            } else if (value <= 30) {
-                percentageInput.style.backgroundColor = "#ffeeba"; // Yellow
-            } else if (value <= 40) {
-                percentageInput.style.backgroundColor = "#fff3cd"; // Light Yellow
-            } else if (value <= 50) {
-                percentageInput.style.backgroundColor = "#d4edda"; // Green
-            } else {
-                percentageInput.style.backgroundColor = "#c3e6cb"; // Dark Green
-            }
+        if (value < 10) {
+            percentageInput.style.backgroundColor = "#f8d7da"; // Red
+        } else if (value <= 20) {
+            percentageInput.style.backgroundColor = "#f5c6cb"; // Light Red
+        } else if (value <= 30) {
+            percentageInput.style.backgroundColor = "#ffeeba"; // Yellow
+        } else if (value <= 40) {
+            percentageInput.style.backgroundColor = "#fff3cd"; // Light Yellow
+        } else if (value <= 50) {
+            percentageInput.style.backgroundColor = "#d4edda"; // Green
+        } else {
+            percentageInput.style.backgroundColor = "#c3e6cb"; // Dark Green
         }
+    }
 
         // Función para crear el PDF
         document.getElementById('save-changes-btn').addEventListener('click', (event) => {

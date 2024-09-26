@@ -16,22 +16,22 @@
             </div>
             <nav>
                 <div class="menu-item">
-                    <a href="empleados.html"><i class="fas fa-users"></i> Empleados</a>
+                    <a href="/empleados"><i class="fas fa-users"></i> Empleados</a>
                 </div>
                 <div class="menu-item">
-                    <a href="evaluadores.html"><i class="fas fa-user-tie"></i> Evaluadores</a>
+                    <a href="/evaluadores"><i class="fas fa-user-tie"></i> Evaluadores</a>
                 </div>
                 <div class="menu-item">
-                    <a href="reguladores.html"><i class="fas fa-clipboard-check"></i> Reguladores</a>
+                    <a href="/reguladores"><i class="fas fa-clipboard-check"></i> Reguladores</a>
                 </div>
                 <div class="gestion-section">
                     <a href="#" class="dropdown-btn"><i class="fas fa-tasks"></i> GESTIÓN EVALUACIONES <i class="fas fa-chevron-down"></i></a>
                     <div class="dropdown-container">
                         <div class="menu-item">
-                            <a href="evaluaciones.html"><i class="fas fa-file-alt"></i> Evaluaciones</a>
+                            <a href="/evaluaciones"><i class="fas fa-file-alt"></i> Evaluaciones</a>
                         </div>
                         <div class="menu-item">
-                            <a href="/formularios.html"><i class="fas fa-list-alt"></i> Formularios</a>
+                            <a href="/formularios"><i class="fas fa-list-alt"></i> Formularios</a>
                         </div>
                     </div>
                 </div>
@@ -55,11 +55,18 @@
                 <h2>Plantillas Formularios</h2>
                 <div class="form-list">
                     <select id="form-templates">
-                        <option>Autoevaluación</option>
-                        <option>Evaluación 360</option>
-                        <option>Evaluación de Desempeño</option>
+                        <% for (formulario of formularios) { %>
+                            <option class="getOptionsForScript" value="<% formulario.id %>"><%= formulario.titulo %></option>
+                        <% } %>
                     </select>
                     <button class="btn-filter">Filtrar</button>
+                </div>
+
+                <div>
+                    <% for (formulario of formularios) { %>
+                        <h3><%= formulario.titulo %></h3>
+                        <a href="/formularios/preview/<%= formulario._id %>" class="btn-preview">Vista Previa</a>
+                    <% } %>
                 </div>
     
                 <div class="preview-section">
@@ -77,25 +84,24 @@
     </div>
     <script>
         function updatePreview(template) {
-            document.getElementById('previewFrame').src = template + ".html";
+            document.getElementById('previewFrame').src = template + ".html"
         }
 
         function modifyTemplate() {
-            var template = document.getElementById('previewFrame').src.split('/').pop().split('.').shift();
-            window.location.href = 'edit_' + template + '.html'; // Lleva a una página de edición
+            var template = document.getElementById('previewFrame').src.split('/').pop().split('.').shift()
+            window.location.href = 'edit_' + template + '.html' // Lleva a una página de edición
 
         }
 
              // JavaScript para mostrar/ocultar el submenú
-        const dropdownBtn = document.querySelector('.dropdown-btn');
-        const dropdownContainer = document.querySelector('.dropdown-container');
+        const dropdownBtn = document.querySelector('.dropdown-btn')
+        const dropdownContainer = document.querySelector('.dropdown-container')
 
         dropdownBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            dropdownContainer.classList.toggle('active');
-        });
+            e.preventDefault()
+            dropdownContainer.classList.toggle('active')
+        })
 
-        
     </script>
 </body>
 </html>
