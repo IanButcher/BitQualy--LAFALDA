@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true }))
 router.get('/formularios', async (req, res) => {
     try {
         const formularios = await Formulario.find()
-        res.render('forms/formularios', { formularios })
+        res.render('forms/formularios', { formularios: formularios })
         console.log(formularios)
     } catch (error) {
         console.error('Error fetching formularios:', error)
