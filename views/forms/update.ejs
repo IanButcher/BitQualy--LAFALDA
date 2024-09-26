@@ -67,10 +67,10 @@
                 <div class="form-editor">
                     <h3>Editor de Preguntas</h3>
 
-                    <form id="form-modification" method="POST" action="/formularios/save-form">
+                    <form id="form-modification" method="POST" action="/formularios/<%= formulario._id %>?_method=PUT">
                         <div class="form-group">
                             <label for="titulo">Título del Formulario:</label>
-                            <input type="text" id="form-title" name="form-title" value="Autoevaluación" placeholder="<%= formulario.titulo %>" required>
+                            <input type="text" id="form-title" name="form-title" value="<%= formulario.titulo %>" required>
                         </div>
 
                         <!-- Pregunta dinámica -->

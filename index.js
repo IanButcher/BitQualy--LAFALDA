@@ -5,6 +5,10 @@ const arrayEmpleados = require('./seedEmpleados')
 const path = require('path')
 const mongoose = require('mongoose')
 
+// Method Over-ride
+const methodOverride = require('method-override');
+app.use(methodOverride('_method'));
+
 // Server config
 const app = express()
 const puerto = 3000
