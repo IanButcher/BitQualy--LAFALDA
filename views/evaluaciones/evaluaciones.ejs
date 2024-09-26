@@ -43,14 +43,11 @@
         <!-- Panel principal -->
         <main class="main-content">
             <header class="header">
-                <div class="user-section">
-                    <img src="/img/user.png" alt="Empleado" class="user-img">
-                    <div class="user-info">
-                        <h2>Franco Siccardi</h2>
-                        <p>Rol: Programador</p>
-                        <p>Número de legajo: xxxx | DNI: XXXX</p>
-                    </div>
+                <div class="search-section">
+                    <input class="busqueda" type="text" placeholder="Buscar ...">
+                    <i class="fas fa-search search-icon"></i>
                 </div>
+                
                 <div class="header-options">
                     <i class="fas fa-bell"></i>
                     <i class="fas fa-cog"></i>
@@ -66,8 +63,10 @@
                         <div class="eval-info">
                             <p><strong>Franco Siccardi</strong></p>
                             <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
-                            <p class="eval-status">Autoevaluación</p>
-                        </div>
+                            <br>
+                            <p class="eval-status">Autoevaluacion</p>
+                        </div> 
+                        
                     </div>
 
                     <div class="evaluation-card">
@@ -75,6 +74,7 @@
                         <div class="eval-info">
                             <p><strong>Franco Siccardi</strong></p>
                             <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
+                            <br>
                             <p class="eval-status">Evaluación de Análisis</p>
                         </div>
                     </div>
@@ -91,14 +91,17 @@
                             <label><span class="yellow-dot"></span> Más antigua</label>
                         </div>
                         <div class="status-buttons">
-                            <div class="status-button pending">
-                                <span class="red-dot"></span>
-                                <span>Pendientes</span>
-                                <span class="count">0</span>
-                            </div>
                             <div class="status-button evaluate">
                                 <span class="green-dot"></span>
-                                <span>Evaluar</span>
+                                <span>Completas</span>
+                                <span class="triangle"></span>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="status-buttons">
+                            <div class="status-button evaluate">
+                                <span class="red-dot"></span>
+                                <span>Incompletas </span>
                                 <span class="triangle"></span>
                             </div>
                         </div>
@@ -109,17 +112,40 @@
             <section class="evaluation-finished">
                 <h2>Evaluaciones Finalizadas</h2>
                 <div class="evaluation-card">
-                    <img src="empleado1.jpg" alt="Franco Siccardi" class="eval-img">
-                    <div class="eval-info">
-                        <p><strong>Franco Siccardi</strong></p>
-                        <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
-                        <p>Autoevaluación</p>
-                        <div class="progress-bar">
-                            <div class="progress" style="width: 40%;"></div>
+                    
+                        <img src="empleado1.jpg" alt="Luis miguel" class="eval-img">
+                        <div class="eval-info">
+                            <p><strong>Luis Miguel</strong></p>
+                            <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
+                            <br>
+                            <p class="eval-status">Evaluación de Análisis</p>
                         </div>
-                    </div>
+                        <div class="eval-ratings">
+                            <span class="rating-dot red"></span>
+                            <span class="rating-dot red"></span>
+                            <span class="rating-dot red"></span>
+                            <span class="rating-dot red"></span>
+                        </div>
+                        
+                        <div class="eval-summary">
+                            <p>Autoevaluación</p>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 90%;"></div>
+                                <span class="progress-label">90%</span>
+                            </div>
+                            <div class="eval-icons">
+                                <i class="fas fa-download download-icon"></i>
+                                <i class="fas fa-filter filter-icon"></i>
+                            </div>
+                        </div>
+                   
+                    
+
+                    
                 </div>
+                
             </section>
+           
         </main>
     </div>
 

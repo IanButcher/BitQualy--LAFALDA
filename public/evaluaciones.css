@@ -150,32 +150,46 @@ body, html {
     flex-shrink: 0; /* Evita que el panel derecho cambie de tamaño */
 }
 
-/* Nueva Sección Agregada */
+
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
 .header .user-info {
     text-align: right;
 }
 
-.search-section {
+.search-container {
     position: relative;
     display: inline-block;
-    margin-bottom: 30px;
+    margin: 0;  /* Elimina cualquier margen adicional */
 }
 
-.search-section input {
-    width: 400px;
-    padding: 12px 45px 12px 15px;
-    font-size: 18px;
-    border: 1px solid #ccc;
+input[type="search"] {
+    width: 400px;  /* Ancho del campo */
+    height: 40px;  /* Altura del campo */
+    padding-left: 15px;  /* Espaciado interno a la izquierda */
+    padding-right: 40px; /* Espaciado interno a la derecha */
+    border: 2px solid red;
     border-radius: 25px;
-    transition: width 0.3s ease;
+    font-size: 16px;
+    box-sizing: border-box;
+    margin: 0;  /* Elimina cualquier margen adicional */
 }
+
+.search-icon {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: red;
+    cursor: pointer;
+}
+
 
 .search-section input:focus {
     width: 450px;
@@ -290,68 +304,145 @@ body, html {
 
 .evaluation-card {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    background-color: #f9f9f9;
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    min-height: 80px;
-    max-width: 550px; /* Ajusta el ancho máximo de la tarjeta */
-    width: 100%; /* Asegura que se ajuste al contenedor */
+    padding: 15px;
+    border-radius: 12px;
+    background-color: #f7f7f7;
+    width: 600px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
 }
 
-.evaluation-card:hover {
-    transform: translateY(-5px);
+/* Sección de perfil e información */
+/* Contenedor principal de la evaluación */
+
+
+/* Imagen del evaluado */
+.eval-photo img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; /* Para que la imagen sea redonda */
+    object-fit: cover; /* Asegura que la imagen se ajuste correctamente al contenedor */
+    margin-right: 15px; /* Espacio entre la imagen y el texto */
 }
 
-.eval-img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 10px;
-    border: 2px solid #ddd;
+/* Contenedor de los detalles de la evaluación */
+
+
+/* Nombre del evaluado */
+.eval-name {
+    font-size: 1em;
+    color: #333;
+    margin: 0;
 }
 
-.eval-info p {
-    margin: 3px 0;
-    color: #555;
+/* Fechas de la evaluación */
+.eval-dates {
+    font-size: 0.9em;
+    color: #666;
+    margin: 5px 0;
 }
 
+/* Estado de la evaluación */
 .eval-status {
-    color: #fff;
-    background-color: #007bff;
-    padding: 3px 8px;
-    border-radius: 15px;
-    font-size: 0.8em;
-    display: inline-block;
+    font-size: 0.85em;
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* Ajuste de responsive para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .eval-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .eval-photo {
+        margin-bottom: 10px;
+    }
 }
 
 
-/* Sección de Evaluaciones Finalizadas */
-.progress-bar {
-    width: 100px;
+.evaluator {
+    font-weight: bold;
+}
+
+/* Fechas */
+.start-date,
+.end-date {
+    font-size: 12px;
+    color: gray;
+}
+
+/* Puntos de calificación */
+
+
+
+
+.rating-dot {
+    width: 10px;
     height: 10px;
+    background-color: gray;
+    border-radius: 50%;
+    margin-left: 3px;
+}
+
+.rating-dot.red {
+    background-color: red;
+}
+
+.eval-summary {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.progress-bar {
+    position: relative;
+    width: 120px;
+    height: 25px;
     background-color: #e0e0e0;
-    border-radius: 25px;
-    margin-top: 10px;
+    border-radius: 50px;
+    overflow: hidden;
+    margin-bottom: 5px;
 }
 
 .progress {
     height: 100%;
-    background-color: #28a745;
-    border-radius: 25px;
+    background-color: black;
+    border-radius: 50px;
 }
-/* Right panel styling */
-.right-panel {
-    width: 250px;
-    background-color: #f9f9f9;
-    padding: 20px;
-    margin-left: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+.progress-label {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    color: white;
+    top: 4px;
 }
+
+.eval-icons {
+    display: flex;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.download-icon {
+    cursor: pointer;
+}
+
+.filter-icon {
+    cursor: pointer;
+}
+
+.eval-summary p {
+    font-size: 14px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
 
 /* Additional styles for the filter and buttons */
 .filter-section h3 {
@@ -380,29 +471,26 @@ body, html {
     margin-right: 20px; /* Añade espacio entre las evaluaciones y el panel derecho */
 }
 
-/* Panel derecho (Right Panel) */
+/* Panel derecho (Right Panel) ajustado */
 .right-panel {
     width: 100%;
-    max-width: 300px;
+    max-width: 300px; /* Ajuste de ancho para hacerlo más compacto */
     background-color: #f7f9fc;
-    padding: 20px;
-    border-radius: 12px;
+    padding: 15px; /* Reducir el padding */
+    border-radius: 10px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
     font-family: 'Arial', sans-serif;
     color: #333;
-    margin-left: 20px;
-    margin-right: 30px;
-    margin-top: 60px; /* Ajusta el valor según tus necesidades */
-    /* Otros estilos existentes */
-    
+    margin-left: 15px; /* Ajusta los márgenes */
+    margin-right: 20px; /* Ajusta los márgenes */
+    margin-top: 80px; /* Ajusta el margen superior */
 }
 
 /* Título de la sección de filtro */
 .filter-section h3 {
-    font-size: 1.5em;
+    font-size: 1.2em; /* Ajusta el tamaño del título para hacerlo más pequeño */
     color: #000000;
-    margin-bottom: 15px;
-   
+    margin-bottom: 10px;
     font-weight: 600;
     letter-spacing: 1px;
 }
@@ -410,11 +498,11 @@ body, html {
 /* Estilo del select para filtros */
 .filter-select {
     width: 100%;
-    padding: 10px;
-    font-size: 1em;
+    padding: 8px; /* Reducir el padding */
+    font-size: 0.9em; /* Ajustar el tamaño de fuente */
     color: #333;
     border: 1px solid #ddd;
-    border-radius: 8px;
+    border-radius: 12px; /* Reducir el border-radius */
     background-color: #fff;
     transition: border-color 0.3s ease;
 }
@@ -427,7 +515,7 @@ body, html {
 
 /* Orden de filtros (Más reciente/antigua) */
 .filter-order {
-    margin: 20px 0;
+    margin: 15px 0; /* Reducir el espacio entre filtros */
     display: flex;
     justify-content: space-between;
 }
@@ -492,7 +580,7 @@ body, html {
 
 /* Botón de Evaluar */
 .status-button.evaluate {
-    border-left: 5px solid #28a745;
+    border-left: 5px solid #a72828;
 }
 
 .status-button.evaluate .green-dot {
@@ -500,14 +588,23 @@ body, html {
 }
 
 /* Estilos para los puntos de estado */
-.red-dot, .green-dot {
+.green-dot {
     width: 10px;
     height: 10px;
     border-radius: 50%;
     display: inline-block;
     margin-right: 10px;
 }
-
+.status-button.evaluate .red-dot {
+    background-color: #f11616;
+}
+.red-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 10px;
+}
 /* Contador de evaluaciones pendientes */
 .status-button .count {
     background-color: #df1600;
@@ -534,3 +631,34 @@ body, html {
         margin: 0;
     }
 }
+/* search seccion */
+.search-section {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 30px;
+    margin-top: 50px;
+}
+
+.search-section input {
+    width: 500px;
+    padding: 12px 45px 12px 15px;
+    font-size: 18px;
+    border: 1px solid rgb(255, 0, 0);
+    border-radius: 25px;
+    transition: width 0.3s ease;
+    height: 50px;
+}
+
+.search-section input:focus {
+    width: 450px;
+}
+
+.search-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgb(228, 0, 0);
+    pointer-events: none;
+}
+ 
