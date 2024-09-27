@@ -154,33 +154,39 @@ body, html {
 }
 
 /* Search section */
-.search-section {
-    position: relative;
-    display: inline-block;
-    margin-bottom: 30px;
+.search-container {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border: 2px solid #000000;  /* Borde */
+    border-radius: 25px;  /* Bordes redondeados */
+    padding: 5px 10px;  /* Espaciado interno */
+    transition: border-color 0.3s ease;  /* Transición suave */
+    width: 300px;  /* Ancho fijo más grande */
 }
 
-.search-section input {
-    width: 400px;
-    padding: 12px 45px 12px 15px;
-    font-size: 18px;
-    border: 1px solid #ccc;
-    border-radius: 25px;
-    transition: width 0.3s ease;
-}
-
-.search-section input:focus {
-    width: 450px;
+input[type="search"] {
+    flex-grow: 1;  /* Ocupa todo el espacio disponible */
+    border: none;  /* Sin borde interno */
+    outline: none;  /* Sin contorno */
+    font-size: 16px;  /* Tamaño de la fuente */
+    padding-left: 10px; /* Para separar el texto del borde izquierdo */
 }
 
 .search-icon {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #888;
-    pointer-events: none;
+    font-size: 18px;  /* Tamaño del ícono */
+    color: #000000;  /* Color del ícono */
+    cursor: pointer;
+    padding: 0;  /* Sin espaciado adicional */
+    margin-left: 10px; /* Espaciado a la izquierda del ícono */
 }
+
+.search-container:hover {
+    border-color: #000000;  /* Color del borde al pasar el mouse */
+}
+
+
+
 
 /* Filters */
 .filters {
@@ -208,6 +214,8 @@ body, html {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
+    margin-top:30px ;
+    overflow-y: auto;    /* Aplica scroll vertical cuando sea necesario */
 }
 
 .employee {
@@ -217,6 +225,8 @@ body, html {
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     align-items: center;
+    opacity: 1;  /* Opacidad inicial de los elementos */
+    transition: opacity 0.3s ease-in-out;  /* Suaviza el cambio de opacidad */
 }
 
 .employee img {
@@ -260,7 +270,7 @@ body, html {
 /* Responsive Design */
 @media (min-width: 768px) {
     .sidebar {
-        width: 180px;
+        width: 250px;
     }
 
     .search-section input {
