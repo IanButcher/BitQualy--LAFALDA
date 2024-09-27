@@ -2,6 +2,7 @@
 const express = require('express')
 const ejs = require('ejs')
 const arrayEmpleados = require('./seedEmpleados')
+const arrayEvaluadores = require('./seedEvaluadores')
 const path = require('path')
 const mongoose = require('mongoose')
 
@@ -41,6 +42,13 @@ app.get('/login', (req, res) => {
     res.render('login')
 })
 
+app.get('/evaluadores', (req, res) => {
+    res.render('evalrs/evaluadores', {arrayEvaluadores})
+})
+
+app.get('/newEvalrs', (req, res) => {
+    res.render('evalrs/newEvalrs')
+})
 
 app.get('/empleados', (req, res)=>{
     res.render('empls/empleados', {arrayEmpleados})
