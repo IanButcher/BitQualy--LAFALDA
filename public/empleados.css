@@ -260,7 +260,7 @@ body, html {
 /* Responsive Design */
 @media (min-width: 768px) {
     .sidebar {
-        width: 180px;
+        width: 190px;
     }
 
     .search-section input {
@@ -279,6 +279,11 @@ body, html {
     .employee-info h3 {
         font-size: 16px;
     }
+    .employee-info p{
+      margin-bottom: 5px;
+
+    }  
+    
 }
 
 @media (max-width: 480px) {
