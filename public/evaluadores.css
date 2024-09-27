@@ -246,6 +246,7 @@ body, html {
     margin-right: 10px;
 }
 
+
 /* Ajuste del último ítem para no tener espacio extra */
 .dropdown-content a:last-child {
     margin-bottom: 0;

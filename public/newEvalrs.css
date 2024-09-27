@@ -272,6 +272,7 @@ body, html {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
     margin-top: 20px;
+    
 }
 
 /* Estilo para cada grupo de entrada */
@@ -318,7 +319,7 @@ body, html {
     margin-right: 20px; /* Espacio entre la imagen y los campos */
     width: 150px; /* Tamaño del círculo */
     height: 150px; /* Tamaño del círculo */
-    border: 2px solid #ccc; /* Borde opcional */
+    border: 2px solid #575757; /* Borde opcional */
     border-radius: 50%; /* Hacer que sea redondo */
     display: flex;
     justify-content: center;
@@ -330,7 +331,11 @@ body, html {
 .change-photo-text {
     position: absolute; /* Posiciona el texto sobre la imagen */
     color: white; /* Color del texto */
-    background-color: rgba(0, 0, 0, 0.2); /* Fondo semitransparente */
+
+    background-color: #575757;/*fondo nuevo*/
+
+    /* background-color: rgba(0, 0, 0, 0.2); Fondo semitransparente */
+
     padding: 5px; /* Espaciado alrededor del texto */
     border-radius: 5px; /* Bordes redondeados */
     font-size: 14px; /* Tamaño de fuente */
