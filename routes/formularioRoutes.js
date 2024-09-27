@@ -5,6 +5,7 @@ const router = express.Router()
 const Formulario = require('../Schemas/formularioSchema')
 const mongoose = require('mongoose')
 app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 
 // GET route --> Display all Formularios
 router.get('/formularios', async (req, res) => {
@@ -85,7 +86,7 @@ router.post('/formularios/save-form', async (req, res) => {
 })
 
 // PUT route --> Delete Form
-router.put('/formularios/eliminar/:id', async (req, res) => {
+router.post('/formularios/eliminar/:id', async (req, res) => {
     try {
         const formularioId = req.params.id
         console.log('Formulario ID:', formularioId) 
@@ -97,6 +98,7 @@ router.put('/formularios/eliminar/:id', async (req, res) => {
         } else {
             res.status(404).send('Formulario no encontrado')
         }
+        res.redirect('/formularios')
     } catch (error) {
         console.error('Error deleting formulario:', error)
         res.status(500).send('Internal Server Error')

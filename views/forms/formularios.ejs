@@ -66,7 +66,7 @@
                     <% for (formulario of formularios) { %>
                         <h3><%= formulario.titulo %></h3>
                         <a href="/formularios/preview/<%= formulario._id %>" class="btn-preview">Vista Previa</a>
-                        <form id="deleteForm" method="PUT" style="display:none;">
+                        <form id="deleteForm" method="POST" style="display:none;">
                             <input type="hidden" name="_method" value="PUT">
                         </form>
                         <button onclick="popupEliminar('<%= formulario._id %>')">Eliminar</button>
