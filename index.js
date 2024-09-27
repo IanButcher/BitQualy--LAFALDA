@@ -36,7 +36,7 @@ app.use(express.json())
 
 // Import Routes
 const formularioRoutes = require('./routes/formularioRoutes')
-
+const evaluacionRoutes = require('./routes/evaluacionRoutes')
 // Rutas
 app.get('/', (req, res) => {
     res.render('index')
@@ -81,6 +81,8 @@ app.get('/home', (req, res) => {
 
 // Rutas Formulario
 app.use('/', formularioRoutes)
+app.use('/', evaluacionRoutes)
+
 
 // Start the server
 app.listen(puerto, () => {
