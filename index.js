@@ -11,8 +11,8 @@ const puerto = 3000
 app.set('view engine', 'ejs')
 
 // Method Over-ride
-const methodOverride = require('method-override');
-app.use(methodOverride('_method'));
+const methodOverride = require('method-override')
+app.use(methodOverride('_method'))
 
 // Path configs 
 app.set('views', path.join(__dirname, 'views'))

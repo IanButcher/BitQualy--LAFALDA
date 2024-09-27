@@ -12,6 +12,11 @@ const baseUserSchema = new mongoose.Schema({
     required: true,
     trim: true 
   },
+  apellido: { 
+    type: String, 
+    required: true,
+    trim: true 
+  },
   legajo: {
     type: Number,
     required: true,

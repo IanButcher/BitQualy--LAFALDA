@@ -72,7 +72,8 @@
                             <label for="titulo">Título del Formulario:</label>
                             <input type="text" id="form-title" name="form-title" value="<%= formulario.titulo %>" required>
                         </div>
-
+                        <!-- Input para guardar preguntas borradas -->
+                        <input type="hidden" id="deleted-questions" name="deleted-questions">
                         <!-- Pregunta dinámica -->
                         <div id="additional-questions">
                             <% let questionIndex = 1 %>
@@ -147,7 +148,7 @@
         }
     });
 
-        let questionCount = 1;
+        let questionCount = 1
 
         const addQuestionBtn = document.getElementById('add-question-btn');
         const additionalQuestions = document.getElementById('additional-questions');
@@ -157,7 +158,7 @@
 
             const newQuestion = `
                 <div class="form-group" id="question-group-${questionNumber}">
-                    <label for="question${questionNumber}">Pregunta ${questionNumber}:</label>
+                    <label for="question${questionNumber}">Nueva Pregunta ${questionNumber}:</label>
                     <input type="text" id="question${questionNumber}" name="question${questionNumber}" required>
 
                     <!-- Descripción de la pregunta -->
@@ -210,11 +211,14 @@
         }
 
         // Función para eliminar una pregunta
+        const deletedQuestions = [];  
         function deleteQuestion(questionId) {
             const questionGroup = document.getElementById(`question-group-${questionId}`);
             if (questionGroup) {
-                questionGroup.remove();
+                questionGroup.remove();  
+                deletedQuestions.push(questionId);  
             }
+            document.getElementById('deleted-questions').value = deletedQuestions.join(',');
         }
 
         // Función para eliminar una opción
