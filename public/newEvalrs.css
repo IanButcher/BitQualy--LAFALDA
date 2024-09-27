@@ -252,39 +252,121 @@ body, html {
 }
 
 /* Estilos del formulario */
-.form-section {
+/* Formato en dos columnas para los campos */
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.form-group select:focus {
+    border-color: #888;
+}
+
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
     margin-top: 20px;
 }
 
+/* Estilo para cada grupo de entrada */
 .form-group {
-    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 .form-group label {
-    display: block;
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 8px;
 }
 
 .form-group input[type="text"],
-.form-group input[type="file"] {
+.form-group input[type="password"],
+.form-group select {
     width: 100%;
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    box-sizing: border-box;
 }
 
 .form-group input[type="text"]:focus,
-.form-group input[type="file"]:focus {
+.form-group input[type="password"]:focus {
     border-color: #888;
 }
 
+/* Contenedor de imagen */
+.image-container {
+    margin-bottom: 20px;
+}
+
+.image-and-fields {
+    display: flex; /* Usar flexbox para alinear los elementos */
+    align-items: flex-start; /* Alinear los elementos en la parte superior */
+    margin-bottom: 20px; /* Espacio inferior */
+}
+
+.image-preview {
+    position: relative; /* Permitir el posicionamiento de los elementos hijos */
+    margin-right: 20px; /* Espacio entre la imagen y los campos */
+    width: 150px; /* Tamaño del círculo */
+    height: 150px; /* Tamaño del círculo */
+    border: 2px solid #ccc; /* Borde opcional */
+    border-radius: 50%; /* Hacer que sea redondo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Ocultar el desbordamiento de la imagen */
+    cursor: pointer; /* Cambiar el cursor a pointer para indicar que es clickeable */
+}
+
+.change-photo-text {
+    position: absolute; /* Posiciona el texto sobre la imagen */
+    color: white; /* Color del texto */
+    background-color: rgba(0, 0, 0, 0.2); /* Fondo semitransparente */
+    padding: 5px; /* Espaciado alrededor del texto */
+    border-radius: 5px; /* Bordes redondeados */
+    font-size: 14px; /* Tamaño de fuente */
+    text-align: center; /* Centrar texto */
+}
+
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block; /* Asegurarse de que la imagen se muestre como un bloque */
+    border-radius: 50%; /* Hacer que la imagen también sea redonda */
+}
+
+.form-fields {
+    display: flex; /* Usar flexbox para alinear los campos */
+    flex-direction: column; /* Colocar los campos uno encima del otro */
+}
+
+.form-group {
+    margin-bottom: 10px; /* Espacio entre los grupos de entrada */
+}
+
+
+/* Ocultar el input de tipo file */
+input[type="file"] {
+    display: none; /* Ocultar el botón de carga de archivos */
+}
+
+
+/* Estilos para los botones del formulario */
 .form-buttons {
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
+    grid-column: 1 / -1; /* Que los botones ocupen las dos columnas */
 }
 
 .btn-submit {
@@ -304,7 +386,6 @@ body, html {
 }
 
 .btn-cancel {
-    display: inline-block;
     background-color: #dc3545;
     color: white;
     padding: 10px 20px;
@@ -319,55 +400,42 @@ body, html {
     background-color: #c82333;
 }
 
-/* Contenedor de contraseña con el icono de ojo */
+/* Para pantallas pequeñas */
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr; /* Cambiar a una columna en pantallas pequeñas */
+    }
+
+    .image-preview {
+        grid-column: 1 / -1; /* Mantener la imagen ocupando todo el ancho */
+    }
+
+    .form-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
 .password-container {
-    position: relative;
-    width: 100%;
+    position: relative; /* Permitir posicionamiento absoluto dentro de este contenedor */
 }
 
 .password-container input {
     width: 100%;
-    padding: 10px;
+    padding: 10px 40px 10px 15px; /* Espacio a la derecha para el icono */
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    box-sizing: border-box;
 }
 
-
-.password-container .toggle-password {
+.eye-icon {
     position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #888;
+    right: 15px; /* Espacio a la derecha del campo */
+    top: 50%; /* Centrar verticalmente */
+    transform: translateY(-50%); /* Ajuste para centrar el ícono */
+    cursor: pointer; /* Cambiar el cursor para indicar que es clickeable */
+    color: #888; /* Color del icono */
+    font-size: 18px; /* Tamaño del icono */
 }
 
-.password-container .fa-eye-slash {
-    color: #000;
-}
-
-/* Estilos para el mensaje de error */
-.error-message {
-    color: red;
-    font-size: 14px;
-    margin-top: 5px;
-}
-
-/* Estilos para la vista previa de la imagen */
-.image-preview {
-    margin-top: 10px;
-    width: 150px;
-    height: 150px;
-    border: 1px solid #ccc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-}
-
-.image-preview img {
-    max-width: 100%;
-    max-height: 100%;
-    display: none;
-}
