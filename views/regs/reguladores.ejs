@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Evaluaciones</title>
+    <link rel="stylesheet" href="reguladores.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Panel lateral izquierdo -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="/img/Logo BitQualy Blanco.png" alt="BitQualy Logo">
+            </div>
+            <nav>
+                <div class="menu-item">
+                    <a href="empleados.ejs"><i class="fas fa-users"></i> Empleados</a>
+                </div>
+                <div class="menu-item">
+                    <a href="#"><i class="fas fa-user-tie"></i> Evaluadores</a>
+                </div>
+                <div class="menu-item">
+                    <a href="#"><i class="fas fa-clipboard-check"></i> Reguladores</a>
+                </div>
+                <div class="gestion-section">
+                    <a href="#" class="dropdown-btn"><i class="fas fa-tasks"></i> GESTIÓN EVALUACIONES <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-container">
+                        <br>
+                        <div class="menu-item">
+                            <br>
+                            <a href="#" class="line"><i class="fas fa-file-alt"></i> <span class="dot"></span> Evaluaciones </a>
+                        </div>
+                        <br>
+                        <div class="menu-item">
+                            <a href="#" class="line"><i class="fas fa-list-alt"></i> <span class="dot"></span> Formularios </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Panel principal -->
+        <main class="main-content">
+            <header class="header">
+                <h1>Reguladores</h1>
+                <div class="user-info">
+                    <h2>Carina Campo</h2>
+                    <p>Rol: Recursos Humanos</p>
+                </div>
+                
+            </header>
+            <div class="search-container">
+                <div class="search-wrapper">
+                    <input class="busqueda" type="search" placeholder="Buscar empleados...">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+            </div>
+            
+            
+            
+            <section class="employee-list">
+                <% for (empleado of arrayReguladores) { %>
+                    <div class="employee">
+                        <a href="/empleaos/1/<%= empleado.id %>">
+                            <img src="empleado1.jpg" alt="Empleado">
+                            <div class="employee-info">
+                                <h3><%= empleado.nombre %> <%= empleado.apellido %></h3>
+                                <p>Rol: <%= empleado.rol %></p>
+                                <p>Legajo: <%= empleado.legajo %></p>
+                            </div>
+                        </a>
+                    </div>
+                <% } %>               
+            </section>
+            
+        </main>
+    </div>
+
+    <script>
+        // JavaScript para mostrar/ocultar el submenú
+        const dropdownBtn = document.querySelector('.dropdown-btn');
+        const dropdownContainer = document.querySelector('.dropdown-container');
+    
+        dropdownBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            dropdownContainer.classList.toggle('active');
+        });
+    
+        // JavaScript para desvanecer los empleados al hacer scroll
+        const employeeList = document.getElementById('employeeList');
+        const employees = employeeList.querySelectorAll('.employee');
+    
+        employeeList.addEventListener('scroll', () => {
+            // Obtenemos el valor de desplazamiento vertical del contenedor
+            const scrollTop = employeeList.scrollTop;
+            
+            employees.forEach(employee => {
+                // Obtenemos la distancia del empleado con respecto al top de la lista
+                const employeeTop = employee.offsetTop - scrollTop;
+                
+                // Ajustamos la opacidad basado en la posición del empleado
+                if (employeeTop < 50) {
+                    employee.style.opacity = 0;  // Desaparece cuando sube por completo
+                } else if (employeeTop < 150) {
+                    employee.style.opacity = (employeeTop - 50) / 100;  // Se desvanece gradualmente
+                } else {
+                    employee.style.opacity = 1;  // Totalmente visible
+                }
+            });
+        });
+    </script>
+    
+</body>
+</html>
