@@ -14,6 +14,9 @@ app.set('view engine', 'ejs')
 // Method Over-ride
 const methodOverride = require('method-override')
 app.use(methodOverride('_method'))
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
+
 
 // Path configs 
 app.set('views', path.join(__dirname, 'views'))

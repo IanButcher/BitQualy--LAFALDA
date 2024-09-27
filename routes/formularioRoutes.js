@@ -5,6 +5,7 @@ const router = express.Router()
 const Formulario = require('../Schemas/formularioSchema')
 const mongoose = require('mongoose')
 app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 
 // GET route --> Display Formularios
 router.get('/formularios', async (req, res) => {
@@ -84,6 +85,25 @@ router.post('/formularios/save-form', async (req, res) => {
     }
 })
 
+// PUT route --> Delete Form
+router.post('/formularios/eliminar/:id', async (req, res) => {
+    try {
+        const formularioId = req.params.id
+        console.log('Formulario ID:', formularioId) 
+        const result = await Formulario.findByIdAndUpdate(formularioId, { isActive: false })
+        console.log('Update result:', result)
+
+        if (result) {
+            res.redirect('/formularios')
+        } else {
+            res.status(404).send('Formulario no encontrado')
+        }
+    } catch (error) {
+        console.error('Error deleting formulario:', error)
+        res.status(500).send('Internal Server Error')
+    }
+})
+
 // PUT route --> Update Formulario
 router.put('/formularios/:id', async (req, res) => {
     try {
@@ -102,7 +122,7 @@ router.put('/formularios/:id', async (req, res) => {
 
         let questionIndex = 1;
         while (formData[`question${questionIndex}`]) {
-            const questionId = formData[`question${questionIndex}_id`];  // Get the _id if present
+            const questionId = formData[`question${questionIndex}_id`]  // Get the _id if present
 
             const question = {
                 titulo: formData[`question${questionIndex}`],
@@ -139,7 +159,7 @@ router.put('/formularios/:id', async (req, res) => {
         // Remove deleted preguntas
         if (deletedQuestionIds) {
             const idsToDelete = deletedQuestionIds.split(',');  // Convert string into array de IDs
-            updatedQuestions = updatedQuestions.filter(q => !idsToDelete.includes(q._id.toString()));
+            updatedQuestions = updatedQuestions.filter(q => !idsToDelete.includes(q._id.toString()))
         }
 
         // Update the Formulario
@@ -148,13 +168,13 @@ router.put('/formularios/:id', async (req, res) => {
 
         await formulario.save();  // Save the updated Formulario
 
-        res.redirect('/formularios');
+        res.redirect('/formularios')
     } catch (error) {
-        console.error('Error updating formulario:', error);
-        res.status(500).send('Internal Server Error');
+        console.error('Error updating formulario:', error)
+        res.status(500).send('Internal Server Error')
     }
-});
+})
 
 
-module.exports = router;
+module.exports = router
 
