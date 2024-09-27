@@ -82,7 +82,7 @@ router.post('/formularios/save-form', async (req, res) => {
         console.error('Error saving formulario:', error)
         res.status(500).send('Internal Server Error')
     }
-});
+})
 
 module.exports = router;
 
