@@ -92,6 +92,18 @@
             window.location.href = 'edit_' + template + '.html' // Lleva a una página de edición
 
         }
+        function popupEliminar() {
+            let isActive = formulario.isActive 
+            
+            if (confirm("prueba")){
+                    isActive == false
+                    alert("isActive = false")
+            }
+            else{
+                alert("isActive = true")
+            }
+            
+        }
 
              // JavaScript para mostrar/ocultar el submenú
         const dropdownBtn = document.querySelector('.dropdown-btn')
