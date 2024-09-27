@@ -20,6 +20,7 @@ body, html {
     background-color: #333;
     color: white;
     padding: 20px;
+    transition: width 0.3s ease;
 }
 
 .sidebar .logo {
@@ -28,7 +29,7 @@ body, html {
 }
 
 .sidebar .logo img {
-    max-width: 100%; 
+    max-width: 100%;
     height: auto;
     display: block;
     margin: 0 auto;
@@ -56,7 +57,7 @@ body, html {
     transform: scale(1.05);
 }
 
-/* Ajustes de los botones de la sección de gestión */
+/* Dropdown section */
 .sidebar .gestion-section .dropdown-btn {
     font-weight: bold;
     display: flex;
@@ -78,7 +79,7 @@ body, html {
     margin-left: 10px;
 }
 
-/* Estilo de los ítems del dropdown */
+/* Dropdown items */
 .sidebar .gestion-section .dropdown-container {
     display: none;
     padding-left: 20px;
@@ -113,7 +114,7 @@ body, html {
     transform: scale(1.05);
 }
 
-/* Mantén solo la línea vertical */
+/* Vertical line */
 .sidebar .gestion-section .dropdown-container .menu-item .line {
     position: absolute;
     left: 0;
@@ -122,15 +123,17 @@ body, html {
     background-color: white;
 }
 
-/* Elimina los puntos eliminando la clase .dot */
+/* Remove dots */
 .sidebar .gestion-section .dropdown-container .menu-item .dot {
     display: none;
 }
 
+/* Help section */
 .help-section {
     margin-top: auto;
 }
 
+/* Main content */
 .main-content {
     flex-grow: 1;
     padding: 50px;
@@ -138,6 +141,7 @@ body, html {
     overflow-y: auto;
 }
 
+/* Header */
 .header {
     display: flex;
     justify-content: space-between;
@@ -149,34 +153,42 @@ body, html {
     text-align: right;
 }
 
-.search-section {
-    position: relative;
-    display: inline-block;
-    margin-bottom: 30px;
+/* Search section */
+.search-container {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border: 2px solid #000000;  /* Borde */
+    border-radius: 25px;  /* Bordes redondeados */
+    padding: 5px 10px;  /* Espaciado interno */
+    transition: border-color 0.3s ease;  /* Transición suave */
+    width: 300px;  /* Ancho fijo más grande */
 }
 
-.search-section input {
-    width: 400px;
-    padding: 12px 45px 12px 15px;
-    font-size: 18px;
-    border: 1px solid #ccc;
-    border-radius: 25px;
-    transition: width 0.3s ease;
-}
-
-.search-section input:focus {
-    width: 450px;
+input[type="search"] {
+    flex-grow: 1;  /* Ocupa todo el espacio disponible */
+    border: none;  /* Sin borde interno */
+    outline: none;  /* Sin contorno */
+    font-size: 16px;  /* Tamaño de la fuente */
+    padding-left: 10px; /* Para separar el texto del borde izquierdo */
 }
 
 .search-icon {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #888;
-    pointer-events: none;
+    font-size: 18px;  /* Tamaño del ícono */
+    color: #000000;  /* Color del ícono */
+    cursor: pointer;
+    padding: 0;  /* Sin espaciado adicional */
+    margin-left: 10px; /* Espaciado a la izquierda del ícono */
 }
 
+.search-container:hover {
+    border-color: #000000;  /* Color del borde al pasar el mouse */
+}
+
+
+
+
+/* Filters */
 .filters {
     margin-top: 20px;
     display: flex;
@@ -197,10 +209,13 @@ body, html {
     border-color: #888;
 }
 
+/* Employee list */
 .employee-list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
+    margin-top:30px ;
+    overflow-y: auto;    /* Aplica scroll vertical cuando sea necesario */
 }
 
 .employee {
@@ -210,6 +225,8 @@ body, html {
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     align-items: center;
+    opacity: 1;  /* Opacidad inicial de los elementos */
+    transition: opacity 0.3s ease-in-out;  /* Suaviza el cambio de opacidad */
 }
 
 .employee img {
@@ -228,26 +245,126 @@ body, html {
     margin: 0;
     color: #555;
 }
-/* Eliminar cualquier borde en el menú desplegable */
+
+/* Dropdown content adjustments */
 .dropdown-content {
-    border: none; /* Asegúrate de que no haya bordes */
+    border: none;
     padding: 0;
-    background-color: transparent; /* Fondo transparente si es necesario */
+    background-color: transparent;
 }
 
-/* Ajuste del espaciado en los botones del submenú */
-.dropdown-btn{
-    text-decoration: none; /* Quitar subrayado en los enlaces */
+.dropdown-btn {
+    text-decoration: none;
 }
 
-/* Ajustar los íconos */
 .dropdown-content a i {
     font-size: 16px;
     margin-right: 10px;
+    padding-right:10px  ;
 }
 
-/* Ajuste del último ítem para no tener espacio extra */
 .dropdown-content a:last-child {
     margin-bottom: 0;
 }
 
+/* Responsive Design */
+@media (min-width: 768px) {
+    .sidebar {
+        width: 250px;
+    }
+
+    .search-section input {
+        width: 300px;
+    }
+
+    .search-section input:focus {
+        width: 350px;
+    }
+
+    .employee img {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .employee-info h3 {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        flex-direction: column;
+    }
+    .header{
+        display: grid;
+        grid-column: repeat(1fr,1fr);
+        gap: 2rem;
+        justify-content: center;
+    }
+    /* Convert sidebar to navbar at the top */
+    .sidebar {
+        width: 100%;
+        height: auto;
+        padding: 5px;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        align-items: center;
+        position: relative;
+    }
+
+    .sidebar .logo {
+        margin-bottom: 0;
+        text-align: left;
+    }
+
+    .sidebar nav .menu-item {
+        margin: 0 10px;
+    }
+
+    .sidebar nav .menu-item a {
+        padding: 10px;
+    }
+
+    .main-content {
+        padding: 20px;
+    }
+
+    .employee-list {
+        grid-template-columns: 1fr;
+    }
+    .dropdown-container{
+        padding-bottom: 10px;
+    }
+     .busqueda{
+        width: 100%;
+        
+    } 
+    
+}
+
+@media (min-width: 320px){
+    .busqueda{
+        max-width: 300px;
+        
+    }
+   
+}
+
+/* @media (max-width: 1200px) {
+    .container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 200px;
+    }
+
+    .main-content {
+        padding: 40px;
+    }
+
+    .employee-list {
+        grid-template-columns: 1fr;
+    }
+} */

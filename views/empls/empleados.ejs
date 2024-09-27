@@ -53,9 +53,11 @@
                 </div>
                 
             </header>
-            <div class="search-section">
-                <input type="text" placeholder="Buscar empleados...">
-                <i class="fas fa-search search-icon"></i>
+            <div class="search-container">
+                <div class="search-wrapper">
+                    <input class="busqueda" type="search" placeholder="Buscar empleados...">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
             </div>
             
             
@@ -63,12 +65,15 @@
             <section class="employee-list">
             <% for (empleado of arrayEmpleados) { %>
                 <div class="employee">
-                    <img src="empleado1.jpg" alt="Empleado">
+                    <a href="/empleados/<%= empleado._id %>">
+                        <img src="empleado1.jpg" alt="Empleado">
                     <div class="employee-info">
                         <h3><%= empleado.nombre %> <%= empleado.apellido %></h3>
                         <p>Rol: <%= empleado.rol %></p>
                         <p>Legajo: <%= empleado.legajo %></p>
                     </div>
+                    </a>
+                    
                 </div>
             <% } %>               
             </section>
@@ -79,11 +84,35 @@
         // JavaScript para mostrar/ocultar el submenú
         const dropdownBtn = document.querySelector('.dropdown-btn');
         const dropdownContainer = document.querySelector('.dropdown-container');
-
+    
         dropdownBtn.addEventListener('click', function(e) {
             e.preventDefault();
             dropdownContainer.classList.toggle('active');
         });
+    
+        // JavaScript para desvanecer los empleados al hacer scroll
+        const employeeList = document.getElementById('employeeList');
+        const employees = employeeList.querySelectorAll('.employee');
+    
+        employeeList.addEventListener('scroll', () => {
+            // Obtenemos el valor de desplazamiento vertical del contenedor
+            const scrollTop = employeeList.scrollTop;
+            
+            employees.forEach(employee => {
+                // Obtenemos la distancia del empleado con respecto al top de la lista
+                const employeeTop = employee.offsetTop - scrollTop;
+                
+                // Ajustamos la opacidad basado en la posición del empleado
+                if (employeeTop < 50) {
+                    employee.style.opacity = 0;  // Desaparece cuando sube por completo
+                } else if (employeeTop < 150) {
+                    employee.style.opacity = (employeeTop - 50) / 100;  // Se desvanece gradualmente
+                } else {
+                    employee.style.opacity = 1;  // Totalmente visible
+                }
+            });
+        });
     </script>
+    
 </body>
 </html>
