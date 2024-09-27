@@ -82,6 +82,15 @@ router.post('/formularios/save-form', async (req, res) => {
         console.error('Error saving formulario:', error)
         res.status(500).send('Internal Server Error')
     }
+
+router.post('/formularios/eliminar/:id', async (req, res) => {
+    const formularioId = req.params.id;
+
+    await  Formulario.findByIdAndUpdate(formularioid, { isActive: false})
+    
+})
+
+
 });
 
 module.exports = router;

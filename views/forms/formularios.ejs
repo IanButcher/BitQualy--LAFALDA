@@ -66,6 +66,7 @@
                     <% for (formulario of formularios) { %>
                         <h3><%= formulario.titulo %></h3>
                         <a href="/formularios/preview/<%= formulario._id %>" class="btn-preview">Vista Previa</a>
+                        <button onclick="popupEliminar ('<%= formulario._id %>')">Eliminar</button>
                     <% } %>
                 </div>
     
@@ -93,16 +94,27 @@
 
         }
         function popupEliminar() {
-            let isActive = formulario.isActive 
-            
-            if (confirm("prueba")){
-                    isActive == false
-                    alert("isActive = false")
+            if (confirm('test 1')){
+                fetch(`/formularios/eliminar/${idFormulario}`/* ian necesito ayuda para esto : `/formularios/eliminar/${idFormulario}` o '/formulariosSchema/isActive' se supone que esto seria la ruta para solicitar la informacion pero no estoy seguro de como hacerlo*/ , {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ isActive: false})
+                    })
+                .then(Response =>{
+                    if (Response.ok) {
+                        alert("form desabled")
+                        window.location.reload(); //recarga de pagina
+                    }
+                    else{
+                        alert("form activated")
+                    }
+                })
+                .catch(error => {
+                    alert("Error");
+                })
             }
-            else{
-                alert("isActive = true")
-            }
-            
         }
 
              // JavaScript para mostrar/ocultar el submenú
