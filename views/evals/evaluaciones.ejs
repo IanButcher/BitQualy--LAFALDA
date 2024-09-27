@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <% for (evaluacion of evaluaciones) { %>
+            <h3><%= evaluacion.formulario.titulo %></h3>
+            <!--<a href="/formularios/preview/<%= formulario._id %>" class="btn-preview">Vista Previa</a>
+            <form id="deleteForm" method="POST" style="display:none;">
+                <input type="hidden" name="_method" value="PUT">
+            </form>
+            <button onclick="popupEliminar('<%= formulario._id %>')">Eliminar</button>-->
+            <p>evaluacion.empleado</p>
+        <% } %>
+    </div>
+</body>
+</html>
