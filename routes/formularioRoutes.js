@@ -84,5 +84,25 @@ router.post('/formularios/save-form', async (req, res) => {
     }
 })
 
-module.exports = router;
+// PUT route --> Delete Form
+router.put('/formularios/eliminar/:id', async (req, res) => {
+    try {
+        const formularioId = req.params.id
+        console.log('Formulario ID:', formularioId) 
+        const result = await Formulario.findByIdAndUpdate(formularioId, { isActive: false })
+        console.log('Update result:', result)
+
+        if (result) {
+            res.status(200).send('Formulario desactivado')
+        } else {
+            res.status(404).send('Formulario no encontrado')
+        }
+    } catch (error) {
+        console.error('Error deleting formulario:', error)
+        res.status(500).send('Internal Server Error')
+    }
+});
+
+
+module.exports = router
 
