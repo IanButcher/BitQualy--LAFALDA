@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva Evaluación</title>
+    <link rel="stylesheet" href="/formularios.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Crear Nueva Evaluación</h2>
+
+        <!-- Combobox para seleccionar el formulario -->
+        <label for="formulario">Seleccionar Formulario:</label>
+        <select id="formularioSelect" name="formulario" onchange="mostrarPreguntas()">
+            <option value="">--Seleccionar Formulario--</option>
+            <% formularios.forEach(formulario => { %>
+                <option value="<%= formulario._id %>"><%= formulario.titulo %></option>
+            <% }) %>
+        </select>
+
+        <!-- Formulario para responder preguntas -->
+        <form id="evaluacionForm" method="POST" action="/evaluaciones/save-evaluacion">
+            <div id="preguntasContainer">
+                <!-- Aquí se cargarán las preguntas dinámicamente -->
+            </div>
+
+            <!-- Campo para el nombre del empleado -->
+            <label for="empleado">Nombre del Empleado:</label>
+            <input type="text" name="empleado" id="empleado" required>
+
+            <!-- Botón para guardar la evaluación -->
+            <button type="submit">Guardar Evaluación</button>
+        </form>
+    </div>
+
+    <script>
+        // Cargar preguntas al seleccionar formulario
+        function mostrarPreguntas() {
+            const formularioId = document.getElementById('formularioSelect').value;
+            if (formularioId) {
+                fetch(`/formularios/preguntas/${formularioId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const preguntasContainer = document.getElementById('preguntasContainer');
+                        preguntasContainer.innerHTML = ''; // Limpiar preguntas previas
+
+                        data.questions.forEach((pregunta, index) => {
+                            let preguntaHTML = `<div>
+                                <h3>${pregunta.titulo}</h3>
+                                <p>${pregunta.descripcion}</p>`;
+
+                            // Si es texto
+                            if (pregunta.tipo === 'texto') {
+                                preguntaHTML += `<input type="text" name="respuestas[${index}][respuesta]" required>`;
+                            }
+                            // Si es multiple choice
+                            else if (pregunta.tipo === 'multiple') {
+                                pregunta.options.forEach((option, optIndex) => {
+                                    preguntaHTML += `<label><input type="radio" name="respuestas[${index}][respuesta]" value="${option}"> ${option}</label>`;
+                                });
+                            }
+                            // Si es checkbox
+                            else if (pregunta.tipo === 'checkbox') {
+                                pregunta.options.forEach((option, optIndex) => {
+                                    preguntaHTML += `<label><input type="checkbox" name="respuestas[${index}][respuesta][]" value="${option}"> ${option}</label>`;
+                                });
+                            }
+
+                            preguntaHTML += `<input type="hidden" name="respuestas[${index}][pregunta]" value="${pregunta.titulo}"></div>`;
+                            preguntasContainer.innerHTML += preguntaHTML;
+                        });
+                    });
+            } else {
+                document.getElementById('preguntasContainer').innerHTML = '';
+            }
+        }
+    </script>
+</body>
+</html>

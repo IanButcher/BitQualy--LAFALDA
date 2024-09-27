@@ -3,39 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evaluación de Formulario</title>
+    <title>Ver Evaluación</title>
     <link rel="stylesheet" href="/formularios.css">
 </head>
 <body>
     <div class="container">
-        <h2>Evaluación: <%= formulario.titulo %></h2>
-        <form action="/formularios/evaluacion/<%= formulario._id %>" method="POST">
-            <input type="hidden" name="empleado" value="ID_del_empleado"> <!-- Asigna aquí el empleado real -->
-            
-            <% formulario.questions.forEach((pregunta, index) => { %>
-                <div class="pregunta">
-                    <h3><%= pregunta.titulo %></h3>
-                    <p><%= pregunta.descripcion %></p>
+        <h2>Evaluación: <%= evaluacion.formulario.titulo %></h2>
+        <p>Empleado: <%= evaluacion.empleado %></p>
 
-                    <!-- Mostrar input según el tipo de pregunta -->
-                    <% if (pregunta.tipo === 'texto') { %>
-                        <input type="text" name="respuestas[<%= index %>][respuesta]" required>
-                    <% } else if (pregunta.tipo === 'multiple') { %>
-                        <% pregunta.options.forEach((option, optIndex) => { %>
-                            <input type="radio" name="respuestas[<%= index %>][respuesta]" value="<%= option %>"> <%= option %><br>
-                        <% }) %>
-                    <% } else if (pregunta.tipo === 'checkbox') { %>
-                        <% pregunta.options.forEach((option, optIndex) => { %>
-                            <input type="checkbox" name="respuestas[<%= index %>][respuesta][]" value="<%= option %>"> <%= option %><br>
-                        <% }) %>
-                    <% } %>
-
-                    <input type="hidden" name="respuestas[<%= index %>][pregunta]" value="<%= pregunta.titulo %>">
+        <!-- Mostrar preguntas y respuestas -->
+        <div>
+            <% evaluacion.respuestas.forEach((respuesta, index) => { %>
+                <div>
+                    <h3><%= respuesta.pregunta %></h3>
+                    <p><%= respuesta.respuesta.join(', ') %></p>
                 </div>
             <% }) %>
-            
-            <button type="submit">Enviar Evaluación</button>
-        </form>
+        </div>
     </div>
 </body>
 </html>
