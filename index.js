@@ -57,6 +57,7 @@ app.get('/reguladores', (req, res)=>{
 })
 
 app.get('/reguladores/:id', (req, res)=>{
+    const id = req.params.id
     const regulador = arrayReguladores[id]
     res.render('regs/ReguladoresEsp', {regulador})
 })
