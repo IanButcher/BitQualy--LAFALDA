@@ -40,6 +40,7 @@ app.get('/login', (req, res) => {
 
 app.get('/evaluadores', (req, res) => {
     res.render('evalrs/evaluadores', {arrayEvaluadores})
+
 })
 
 app.get('/newEvalrs', (req, res) => {
@@ -54,8 +55,18 @@ app.get('/empleados/:id', (req,res)=>{
     const id = req.params.id
     const empleado = arrayEmpleados[id]
     res.render('empls/empleado', {empleado})
+
 })
 
+app.get('/evaluador', (req, res)=>{
+    res.render('evalrs/evaluador', {arrayEvaluadores})
+})
+
+app.get('/evaluador/:id', (req,res)=>{
+    const id = req.params.id
+    const empleado = arrayEvaluador[id]
+    res.render('evalrs/evaluador', {evaluador})
+})
 
 app.get('/home', (req, res) => {
     res.render('home')
