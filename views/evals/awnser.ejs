@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responder Evaluación</title>
+    <link rel="stylesheet" href="/formularios.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Formulario: <%= formulario.titulo %></h2>
+
+        <!-- Formulario para responder preguntas -->
+        <form method="POST" action="/evaluaciones/save-evaluacion">
+            <input type="hidden" name="formulario" value="<%= formulario._id %>">
+            <input type="hidden" name="empleado" value="<%= empleado %>">
+
+            <!-- Render each pregunta -->
+            <div id="preguntasContainer">
+                <% formulario.questions.forEach((pregunta, index) => { %>
+                    <div>
+                        <h3><%= pregunta.titulo %></h3>
+                        <p><%= pregunta.descripcion %></p>
+
+                        <% if (pregunta.tipo === 'texto') { %>
+                            <input type="text" name="respuestas[<%= index %>][respuesta]" required>
+                        <% } else if (pregunta.tipo === 'multiple') { %>
+                            <% pregunta.options.forEach(option => { %>
+                                <label><input type="radio" name="respuestas[<%= index %>][respuesta]" value="<%= option %>"> <%= option %></label>
+                            <% }) %>
+                        <% } else if (pregunta.tipo === 'checkbox') { %>
+                            <% pregunta.options.forEach(option => { %>
+                                <label><input type="checkbox" name="respuestas[<%= index %>][respuesta][]" value="<%= option %>"> <%= option %></label>
+                            <% }) %>
+                        <% } %>
+
+                        <input type="hidden" name="respuestas[<%= index %>][pregunta]" value="<%= pregunta.titulo %>">
+                    </div>
+                <% }) %>
+            </div>
+
+            <!-- Mostrar el empleado seleccionado -->
+            <h4>Empleado: <%= empleado %></h4>
+
+            <!-- Botón para guardar la evaluación -->
+            <button type="submit">Guardar Evaluación</button>
+        </form>
+    </div>
+</body>
+</html>
