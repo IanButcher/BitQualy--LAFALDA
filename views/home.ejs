@@ -11,16 +11,21 @@
     <div class="home-container">
         <!-- Logo -->
         <div class="logo">
-            <!-- Aquí colocas la imagen del logo de BitQualy -->
             <img src="img/Logo BitQualy Blanco.png" alt="Logo BitQualy">
         </div>
 
-         <!-- Botones de navegación principales -->
-         <nav class="main-nav">
+        <!-- Botones de navegación principales -->
+        <nav class="main-nav">
             <!-- Empleados -->
             <a href="/empleados" class="nav-item">
                 <i class="fas fa-users"></i> <!-- Icono de empleados -->
                 <span>Empleados</span>
+            </a>
+
+            <!-- Crear Empleado -->
+            <a href="/crear-empleado" class="nav-item">
+                <i class="fas fa-user-plus"></i> <!-- Icono para crear empleado -->
+                <span>Crear Empleado</span>
             </a>
 
             <!-- Evaluadores -->
@@ -65,15 +70,12 @@
     </div>
 
     <script>
-                // JavaScript para el menú desplegable
-                document.addEventListener("DOMContentLoaded", function() {
-            // Selecciona el botón que despliega el menú
+        // JavaScript para el menú desplegable
+        document.addEventListener("DOMContentLoaded", function() {
             const gestionToggle = document.querySelector('.dropdown-toggle');
             const gestionSection = document.querySelector('.gestion-section');
 
-            // Agrega un listener para detectar el click en "Gestión Evaluaciones"
             gestionToggle.addEventListener('click', function() {
-                // Alterna la clase 'active' para mostrar/ocultar el menú desplegable
                 gestionSection.classList.toggle('active');
             });
         });

@@ -25,6 +25,10 @@
                 <div class="menu-item">
                     <a href="#"><i class="fas fa-clipboard-check"></i> Reguladores</a>
                 </div>
+                <!-- Nuevo botón de Crear Empleado -->
+                <div class="menu-item">
+                    <a href="/newEvalrs"><i class="fas fa-user-plus"></i> Crear Empleado</a>
+                </div>
                 <div class="gestion-section">
                     <a href="#" class="dropdown-btn"><i class="fas fa-tasks"></i> GESTIÓN EVALUACIONES <i class="fas fa-chevron-down"></i></a>
                     <div class="dropdown-container">
@@ -53,7 +57,6 @@
             </header>
 
             <!-- Formulario de Creación de Evaluador -->
-            <!-- Sección de la imagen y los campos de texto -->
             <div class="image-and-fields">
                 <!-- Vista previa de la imagen -->
                 <div class="image-preview" onclick="document.getElementById('foto').click();">
@@ -62,18 +65,15 @@
                 </div>
                 <input type="file" id="foto" name="foto" accept="image/*" onchange="previewImage(event);" style="display: none;"> <!-- Asegúrate de que este input esté presente -->
 
-
                 <!-- Campos de Nombre y Apellido -->
                 <div class="form-fields">
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
-                        <input type="text" id="nombre" name="nombre" placeholder="Ingresa el nombre" required
-                        required minlength="4" maxlength="16" size="16">
+                        <input type="text" id="nombre" name="nombre" placeholder="Ingresa el nombre" required minlength="4" maxlength="16" size="16">
                     </div>
                     <div class="form-group">
                         <label for="apellido">Apellido</label>
-                        <input type="text" id="apellido" name="apellido" placeholder="Ingresa el apellido" required
-                        required minlength="4" maxlength="16" size="16">
+                        <input type="text" id="apellido" name="apellido" placeholder="Ingresa el apellido" required minlength="4" maxlength="16" size="16">
                     </div>
                 </div>
             </div>
@@ -82,8 +82,7 @@
             <div class="form-grid">
                 <div class="form-group">
                     <label for="legajo">Legajo</label>
-                    <input type="text" id="legajo" name="legajo" placeholder="Ingresa el legajo" required
-                    required minlength="4" maxlength="16" size="25">
+                    <input type="text" id="legajo" name="legajo" placeholder="Ingresa el legajo" required minlength="4" maxlength="16" size="25">
                 </div>
                 <div class="form-group">
                     <label for="rol">Rol</label>
@@ -94,38 +93,35 @@
                         <option value="evaluador">Evaluador</option>
                     </select>
                 </div>
-                
+
                 <!-- Campo de Contraseña -->
-              <!-- Campo de Contraseña -->
                 <div class="form-group">
                     <label for="password">Contraseña</label>
                     <div class="password-container">
                         <input type="password" id="password" name="password" placeholder="Ingresa la contraseña" required minlength="6" maxlength="8">
-                        <i class="fas fa-eye toggle-password eye-icon"></i> <!-- Agregar clase eye-icon aquí -->
+                        <i class="fas fa-eye toggle-password eye-icon"></i>
                     </div>
                 </div>
+
                 <!-- Campo para Confirmar Contraseña -->
                 <div class="form-group">
                     <label for="confirm-password">Confirmar Contraseña</label>
                     <div class="password-container">
                         <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirma la contraseña" required minlength="6" maxlength="8">
-                        <i class="fas fa-eye toggle-password eye-icon"></i> <!-- Agregar clase eye-icon aquí -->
+                        <i class="fas fa-eye toggle-password eye-icon"></i>
                     </div>
                     <p id="error-message" class="error-message"></p>
                 </div>
-
 
                 <div class="form-buttons">
                     <button type="submit" class="btn-submit">Crear Evaluador</button>
                     <a href="/evaluadores" class="btn-cancel">Cancelar</a>
                 </div>
             </div>
-
         </main>
     </div>
 
     <script>
-        // JavaScript para mostrar/ocultar el submenú
         const dropdownBtn = document.querySelector('.dropdown-btn');
         const dropdownContainer = document.querySelector('.dropdown-container');
 
@@ -134,7 +130,6 @@
             dropdownContainer.classList.toggle('active');
         });
 
-        // Mostrar/Ocultar Contraseña
         const togglePassword = document.querySelectorAll('.toggle-password');
         togglePassword.forEach(toggle => {
             toggle.addEventListener('click', function() {
@@ -146,7 +141,6 @@
             });
         });
 
-        // Validar que las contraseñas sean iguales
         const form = document.getElementById('crear-evaluador-form');
         const passwordInput = document.getElementById('password');
         const confirmPasswordInput = document.getElementById('confirm-password');
@@ -161,17 +155,15 @@
             }
         });
 
-        // Vista previa de la imagen
         function previewImage(event) {
             const reader = new FileReader();
             reader.onload = function() {
                 const output = document.getElementById('image-preview-img');
                 output.src = reader.result;
-                output.style.display = 'block'; // Mostrar la imagen
+                output.style.display = 'block';
             }
             reader.readAsDataURL(event.target.files[0]);
         }
-
     </script>
 </body>
 </html>

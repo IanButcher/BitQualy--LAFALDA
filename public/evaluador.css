@@ -57,6 +57,11 @@ body, html {
     transform: scale(1.05);
 }
 
+/* Botón de Crear Empleado */
+.sidebar nav .menu-item a[href="crear-empleado"] i {
+    color: #28a745;
+}
+
 /* Ajustes de los botones de la sección de gestión */
 .sidebar .gestion-section .dropdown-btn {
     font-weight: bold;
@@ -114,7 +119,6 @@ body, html {
     transform: scale(1.05);
 }
 
-/* Mantén solo la línea vertical */
 .sidebar .gestion-section .dropdown-container .menu-item .line {
     position: absolute;
     left: 0;
@@ -123,7 +127,6 @@ body, html {
     background-color: white;
 }
 
-/* Elimina los puntos eliminando la clase .dot */
 .sidebar .gestion-section .dropdown-container .menu-item .dot {
     display: none;
 }
@@ -343,6 +346,7 @@ body, html {
     background-color: #28a745;
     border-radius: 25px;
 }
+
 /* Right panel styling */
 .right-panel {
     width: 250px;
@@ -393,8 +397,6 @@ body, html {
     margin-left: 20px;
     margin-right: 30px;
     margin-top: 60px; /* Ajusta el valor según tus necesidades */
-    /* Otros estilos existentes */
-    
 }
 
 /* Título de la sección de filtro */
@@ -534,5 +536,3 @@ body, html {
         margin: 0;
     }
 }
-
-
