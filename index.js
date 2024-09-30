@@ -72,9 +72,6 @@ app.get('/reguladores/:id', (req, res)=>{
     res.render('regs/ReguladoresEsp', {regulador})
 })
 
-
-
-
 app.get('/home', (req, res) => {
     res.render('home')
 })
@@ -87,4 +84,12 @@ app.use('/', evaluacionRoutes)
 // Start the server
 app.listen(puerto, () => {
     console.log(`Servidor abierto en el puerto ${puerto}`)
+})
+app.get('/evaluaciones1', (req, res)=>{
+    res.render('evaluaciones/evaluaciones')
+})
+
+app.listen(puerto, ()=>{
+    console.log('Servidor abierto')
+    console.log(puerto)
 })
