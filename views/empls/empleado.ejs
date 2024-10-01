@@ -18,22 +18,22 @@
             </div>
             <nav>
                 <div class="menu-item">
-                    <a href="/empleados"><i class="fas fa-users"></i> Empleados</a>
+                    <a href="empleados.ejs"><i class="fas fa-users"></i> Empleados</a>
                 </div>
                 <div class="menu-item">
-                    <a href="/evaluadores"><i class="fas fa-user-tie"></i> Evaluadores</a>
+                    <a href="#"><i class="fas fa-user-tie"></i> Evaluadores</a>
                 </div>
                 <div class="menu-item">
-                    <a href="/reguladores"><i class="fas fa-clipboard-check"></i> Reguladores</a>
+                    <a href="#"><i class="fas fa-clipboard-check"></i> Reguladores</a>
                 </div>
                 <div class="gestion-section">
                     <a href="#" class="dropdown-btn"><i class="fas fa-tasks"></i> GESTIÓN EVALUACIONES <i class="fas fa-chevron-down"></i></a>
                     <div class="dropdown-container">
                         <div class="menu-item">
-                            <a href="/evaluaciones" class="line"><i class="fas fa-file-alt"></i> Evaluaciones</a>
+                            <a href="#" class="line"><i class="fas fa-file-alt"></i> Evaluaciones</a>
                         </div>
                         <div class="menu-item">
-                            <a href="/formularios" class="line"><i class="fas fa-list-alt"></i> Formularios</a>
+                            <a href="#" class="line"><i class="fas fa-list-alt"></i> Formularios</a>
                         </div>
                     </div>
                 </div>
@@ -51,6 +51,16 @@
                         <p>Número de legajo: xxxx | DNI: XXXX</p>
                     </div>
                 </div>
+
+                <div class="combobox-container">
+                    <label for="employee-options">Designar como:</label>
+                    <select id="employee-options">
+                        <option value="option1">Empleado regular</option>
+                        <option value="option2">Evaluador</option>
+                        <option value="option3">Intermediario</option>
+                    </select>
+                </div>
+
                 <div class="header-options">
                     <i class="fas fa-bell"></i>
                     <i class="fas fa-cog"></i>
@@ -135,4 +145,3 @@
 </body>
 
 </html>
-
