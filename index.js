@@ -73,6 +73,7 @@ app.get('/reguladores/:id', (req, res)=>{
     const id = req.params.id
     const regulador = arrayReguladores[id]
     res.render('regs/ReguladoresEsp', {regulador})
+})
 app.get('/evaluador', (req, res)=>{
     res.render('evalrs/evaluador', {arrayEvaluadores})
 })
@@ -100,7 +101,7 @@ app.get('/evaluaciones1', (req, res)=>{
     res.render('evaluaciones/evaluaciones')
 })
 
-app.listen(puerto, ()=>{
+app.listen(puerto, () => {
     console.log('Servidor abierto')
     console.log(puerto)
 })
