@@ -1,4 +1,4 @@
-// Librerias
+// Modulos
 const express = require('express')
 const ejs = require('ejs')
 const arrayEmpleados = require('./seedEmpleados')
@@ -6,13 +6,18 @@ const arrayEvaluadores = require('./seedEvaluadores')
 const path = require('path')
 const mongoose = require('mongoose')
 const arrayReguladores = require('./seedReguladores')
+const session = require('express-session')
+const passport = require('passport')
+const LocalStrategy = require('passport-local').Strategy
+const { initializePassportSession } = require('./middleware/passportConfig')
+const { auth } = require('./middleware/roleAuth')
 
 // Server config
 const app = express()
 const puerto = 3000
 app.set('view engine', 'ejs')
 
-// Method Over-ride
+// Method Over-ride (put & delete methods)
 const methodOverride = require('method-override')
 app.use(methodOverride('_method'))
 app.use(express.urlencoded({ extended: true }))
@@ -34,16 +39,27 @@ main().catch(err => console.log(err, 'ERROR on conction to mongodb'))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
+// Middlewares
+initializePassportSession(app)
+
 // Import Routes
 const formularioRoutes = require('./routes/formularioRoutes')
 const evaluacionRoutes = require('./routes/evaluacionRoutes')
+
+
 // Rutas
 app.get('/', (req, res) => {
     res.render('index')
 })
 
-app.get('/login', (req, res) => {
-    res.render('login')
+app.post('/login', passport.authenticate('local', {
+    successRedirect: '/home',
+    failureRedirect: '/',
+    failureFlash: true
+}))
+
+app.get('/home', roleAuthorization(['Empleado', 'Evaluador', 'Intermediario', 'Administrador']), (req, res) => {
+    res.render('home')
 })
 
 app.get('/evaluadores', (req, res) => {
