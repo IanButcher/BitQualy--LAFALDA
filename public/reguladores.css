@@ -158,11 +158,11 @@ body, html {
     display: flex;
     align-items: center;
     background-color: #fff;
-    border: 2px solid #000000;  /* Borde */
+    border: 2px solid #d80000;  /* Borde */
     border-radius: 25px;  /* Bordes redondeados */
     padding: 5px 10px;  /* Espaciado interno */
     transition: border-color 0.3s ease;  /* Transición suave */
-    width: 300px;  /* Ancho fijo más grande */
+    width: 350px;  /* Ancho fijo más grande */
 }
 
 input[type="search"] {
@@ -175,7 +175,7 @@ input[type="search"] {
 
 .search-icon {
     font-size: 18px;  /* Tamaño del ícono */
-    color: #000000;  /* Color del ícono */
+    color: #ff0000;  /* Color del ícono */
     cursor: pointer;
     padding: 0;  /* Sin espaciado adicional */
     margin-left: 10px; /* Espaciado a la izquierda del ícono */
@@ -210,40 +210,108 @@ input[type="search"] {
 }
 
 /* Employee list */
+/* Contenedor de la lista de empleados */
+/* Contenedor de la lista de empleados */
+/* Contenedor de la lista de empleados */
+/* Contenedor de la lista de empleados */
 .employee-list {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    margin-top:30px ;
-    overflow-y: auto;    /* Aplica scroll vertical cuando sea necesario */
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas */
+    gap: 20px; /* Espacio entre tarjetas */
+    margin-top: 30px;
+    padding: 20px;
+    overflow-y: auto;  /* Scroll vertical si es necesario */
 }
 
+/* Cada empleado (tarjeta) */
 .employee {
     display: flex;
-    background-color: #f9f9f9;
-    padding: 15px;
+    align-items: center;   /* Alinea el contenido verticalmente */
+    background-color: #fff;
+    padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    align-items: center;
-    opacity: 1;  /* Opacidad inicial de los elementos */
-    transition: opacity 0.3s ease-in-out;  /* Suaviza el cambio de opacidad */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: left;  /* Alinea el contenido a la izquierda */
+    width: 100%;  /* Asegura que las tarjetas ocupen todo el ancho disponible */
+    max-width: 600px; /* Define un ancho máximo para hacerlas más largas */
 }
 
+.employee:hover {
+    transform: translateY(-5px);  /* Efecto hover: eleva ligeramente la tarjeta */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Imagen del empleado */
 .employee img {
     width: 60px;
     height: 60px;
     border-radius: 50%;
     margin-right: 15px;
+    object-fit: cover;
+}
+
+/* Información del empleado */
+.employee-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinea todo a la izquierda */
 }
 
 .employee-info h3 {
     margin-bottom: 5px;
     font-size: 18px;
+    color: #333;
+    font-weight: bold;
 }
 
 .employee-info p {
-    margin: 0;
+    margin: 3px 0;
+    font-size: 14px;
     color: #555;
+}
+
+/* Efecto de color en el nombre */
+.employee-info h3:hover {
+    color: #1a73e8;  /* Cambia el color del nombre al hacer hover */
+}
+
+/* Pequeño detalle adicional: estilo del enlace */
+.employee a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+/* Media Query para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .employee-list {
+        grid-template-columns: 1fr;  /* Una columna en pantallas pequeñas */
+    }
+
+    .employee {
+        max-width: 100%;  /* Ajusta el ancho para pantallas más pequeñas */
+    }
+}
+
+/* Media Query para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .employee-list {
+        grid-template-columns: 1fr;  /* Una columna en pantallas pequeñas */
+    }
+
+    .employee {
+        max-width: 100%;  /* Ajusta el ancho para pantallas más pequeñas */
+    }
+}
+
+/* Media Query para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .employee-list {
+        grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+    }
 }
 
 /* Dropdown content adjustments */
@@ -289,11 +357,6 @@ input[type="search"] {
     .employee-info h3 {
         font-size: 16px;
     }
-    .employee-info p{
-      margin-bottom: 5px;
-
-    }  
-    
 }
 
 @media (max-width: 480px) {

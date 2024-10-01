@@ -2,10 +2,12 @@ const Julia = {
     nombre: "Julia",
     apellido: "Ferreiro",
     rol: "CEO",
-    legajo: 14
+    legajo: 14,
+    id: 1
 }
 
 const franco = {
+    id: 2,
     nombre: "Franco",
     apellido: "Siccardi",
     rol: "Recursos Humanos",
@@ -13,6 +15,7 @@ const franco = {
 }
 
 const taylor = {
+    id: 3,
     nombre: "Taylor",
     apellido: "Swift",
     rol: "Developer",
@@ -20,6 +23,7 @@ const taylor = {
 }
 
 const kendrick = {
+    id: 4,
     nombre: "Kendrick",
     apellido: "Lamar",
     rol: "Scrum Master",
@@ -27,6 +31,7 @@ const kendrick = {
 }
 
 const messi = {
+    id: 5,
     nombre: "Leo",
     apellido: "Messi",
     rol: "Developer",
@@ -40,40 +45,46 @@ const dilan = {
     legajo: 622
 }
 const Luis = {
+    id: 6,
     nombre: "Luis",
     apellido: "Siccardi",
     rol: "chef",
     legajo: 1112
 }
 const Juan = {
+    id: 7,
     nombre: "Juan",
     apellido: "Siccardi",
     rol: "Recursos Humanos",
     legajo: 89
 }
 const Leonardo = {
+    id: 8,
     nombre: "Leonardo",
     apellido: "Di Caprio",
     rol: "Recursos Humanos",
     legajo: 7
 }
 const Nacho = {
+    id: 9,
     nombre: "Profe ",
     apellido: "nacho",
     rol: "tester",
     legajo: 777
 }
 const Sofi = {
+    id: 10,
     nombre: "Sofia",
     apellido: "Ruiz",
     rol: "Developer",
     legajo: 9
 }
 const Nereo = {
+    id: 11,
     nombre: "Nereo",
     apellido: "Soria",
     rol: "Diseño",
     legajo: 27
 }
-const empleadosArray = [Julia,franco, taylor, kendrick, messi, dilan,Luis,Juan,Leonardo,Nacho,Sofi,Nereo]
-module.exports = empleadosArray
+const reguladoresArray = [Julia,franco, taylor, kendrick, messi, dilan,Luis,Juan,Leonardo,Nacho,Sofi,Nereo]
+module.exports = reguladoresArray

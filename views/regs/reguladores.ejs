@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Evaluaciones</title>
-    <link rel="stylesheet" href="/empleados.css">
-   
+    <link rel="stylesheet" href="reguladores.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
@@ -18,13 +17,13 @@
             </div>
             <nav>
                 <div class="menu-item">
-                    <a href="/empleados"><i class="fas fa-users"></i> Empleados</a>
+                    <a href="empleados.ejs"><i class="fas fa-users"></i> Empleados</a>
                 </div>
                 <div class="menu-item">
-                    <a href="/evaluadores"><i class="fas fa-user-tie"></i> Evaluadores</a>
+                    <a href="#"><i class="fas fa-user-tie"></i> Evaluadores</a>
                 </div>
                 <div class="menu-item">
-                    <a href="/reguladores"><i class="fas fa-clipboard-check"></i> Reguladores</a>
+                    <a href="#"><i class="fas fa-clipboard-check"></i> Reguladores</a>
                 </div>
                 <div class="gestion-section">
                     <a href="#" class="dropdown-btn"><i class="fas fa-tasks"></i> GESTIÓN EVALUACIONES <i class="fas fa-chevron-down"></i></a>
@@ -32,11 +31,11 @@
                         <br>
                         <div class="menu-item">
                             <br>
-                            <a href="/evaluaciones" class="line"><i class="fas fa-file-alt"></i> <span class="dot"></span> Evaluaciones </a>
+                            <a href="#" class="line"><i class="fas fa-file-alt"></i> <span class="dot"></span> Evaluaciones </a>
                         </div>
                         <br>
                         <div class="menu-item">
-                            <a href="/formularios" class="line"><i class="fas fa-list-alt"></i> <span class="dot"></span> Formularios </a>
+                            <a href="#" class="line"><i class="fas fa-list-alt"></i> <span class="dot"></span> Formularios </a>
                         </div>
                     </div>
                 </div>
@@ -46,7 +45,7 @@
         <!-- Panel principal -->
         <main class="main-content">
             <header class="header">
-                <h1>Empleados</h1>
+                <h1>Reguladores</h1>
                 <div class="user-info">
                     <h2>Carina Campo</h2>
                     <p>Rol: Recursos Humanos</p>
@@ -63,20 +62,20 @@
             
             
             <section class="employee-list">
-            <% for (empleado of arrayEmpleados) { %>
-                <div class="employee">
-                    <a href="/empleados/<%= empleado._id %>">
-                        <img src="empleado1.jpg" alt="Empleado">
-                    <div class="employee-info">
-                        <h3><%= empleado.nombre %> <%= empleado.apellido %></h3>
-                        <p>Rol: <%= empleado.rol %></p>
-                        <p>Legajo: <%= empleado.legajo %></p>
+                <% for (empleado of arrayReguladores) { %>
+                    <div class="employee">
+                        <a href="/empleaos/1/<%= empleado.id %>">
+                            <img src="empleado1.jpg" alt="Empleado">
+                            <div class="employee-info">
+                                <h3><%= empleado.nombre %> <%= empleado.apellido %></h3>
+                                <p>Rol: <%= empleado.rol %></p>
+                                <p>Legajo: <%= empleado.legajo %></p>
+                            </div>
+                        </a>
                     </div>
-                    </a>
-                    
-                </div>
-            <% } %>               
+                <% } %>               
             </section>
+            
         </main>
     </div>
 

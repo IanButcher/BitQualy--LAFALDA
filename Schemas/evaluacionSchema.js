@@ -1,3 +1,4 @@
+// evaluationSchema.js
 const mongoose = require('mongoose')
 
 const comentarioSchema = new mongoose.Schema({
@@ -13,25 +14,30 @@ const comentarioSchema = new mongoose.Schema({
 
 const Comentario = mongoose.model('Comentario', comentarioSchema)
 
-const evaluacionSchema = new mongoose.Schema({
-    comentarios: {
-        type: [{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Comentario' 
-        }]
-    } , //Posteriormente se insertaran los comentarios
-    formulario: {
-        type: Object,
+const respuestaSchema = new mongoose.Schema({
+    pregunta: {
+        type: String,
         required: true
     },
-    estado: {
-        type: Boolean,
+    respuesta: {
+        type: [String],  //Array en caso de ser multiple o checkbox
         required: true
     }
-})
+});
 
+const evaluacionSchema = new mongoose.Schema({
+    formulario: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Formulario',
+        required: true
+    },
+    empleado: {
+        type: String, // Id
+        required: true
+    },
+    respuestas: [respuestaSchema],
+    comentarios: [comentarioSchema]
+});
 
-
-const Evaluacion = mongoose.model('Evaluacion', evaluacionSchema)
-
-module.exports = Evaluacion
+const Evaluacion = mongoose.model('Evaluacion', evaluacionSchema);
+module.exports = Evaluacion;

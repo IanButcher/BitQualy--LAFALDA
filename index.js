@@ -5,11 +5,19 @@ const arrayEmpleados = require('./seedEmpleados')
 const arrayEvaluadores = require('./seedEvaluadores')
 const path = require('path')
 const mongoose = require('mongoose')
+const arrayReguladores = require('./seedReguladores')
 
 // Server config
 const app = express()
 const puerto = 3000
 app.set('view engine', 'ejs')
+
+// Method Over-ride
+const methodOverride = require('method-override')
+app.use(methodOverride('_method'))
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
+
 
 // Path configs 
 app.set('views', path.join(__dirname, 'views'))
@@ -28,7 +36,7 @@ app.use(express.json())
 
 // Import Routes
 const formularioRoutes = require('./routes/formularioRoutes')
-
+const evaluacionRoutes = require('./routes/evaluacionRoutes')
 // Rutas
 app.get('/', (req, res) => {
     res.render('index')
@@ -55,7 +63,14 @@ app.get('/empleados/:id', (req,res)=>{
     const empleado = arrayEmpleados[id]
     res.render('empls/empleado', {empleado})
 })
+app.get('/reguladores', (req, res)=>{
+    res.render('regs/reguladores', {arrayReguladores})
+})
 
+app.get('/reguladores/:id', (req, res)=>{
+    const regulador = arrayReguladores[id]
+    res.render('regs/ReguladoresEsp', {regulador})
+})
 
 app.get('/home', (req, res) => {
     res.render('home')
@@ -63,8 +78,18 @@ app.get('/home', (req, res) => {
 
 // Rutas Formulario
 app.use('/', formularioRoutes)
+app.use('/', evaluacionRoutes)
+
 
 // Start the server
 app.listen(puerto, () => {
     console.log(`Servidor abierto en el puerto ${puerto}`)
+})
+app.get('/evaluaciones1', (req, res)=>{
+    res.render('evaluaciones/evaluaciones')
+})
+
+app.listen(puerto, ()=>{
+    console.log('Servidor abierto')
+    console.log(puerto)
 })
