@@ -62,7 +62,7 @@ router.get('/evaluaciones/answer/:id', async (req, res) => {
 
 
 // POST route --> Enviar nueva ev
-router.post('/evaluacion/save-evaluacion', async (req, res) => {
+router.post('/evaluaciones/save-evaluacion', async (req, res) => {
     try {
         const { id } = req.params
         const { empleado, respuestas } = req.body
@@ -71,15 +71,16 @@ router.post('/evaluacion/save-evaluacion', async (req, res) => {
         if (!formulario) {
             return res.status(404).send('Formulario no encontrado')
         }
-
+        const respuestasFormateadas = Object.keys(respuestas).map(index => {
+            const respuesta = respuestas[index];
+            return Array.isArray(respuesta) ? respuesta.join(', ') : respuesta;
+        });
         // Crear instancia evaluacion
         const nuevaEvaluacion = new Evaluacion({
             formulario: formulario._id,
             empleado: empleado,  
-            respuestas: respuestas.map(respuesta => ({
-                pregunta: respuesta.pregunta,
-                respuesta: Array.isArray(respuesta.respuesta) ? respuesta.respuesta : [respuesta.respuesta]
-            }))
+            respuestas: respuestasFormateadas 
+            
         })
 
         // Save evaluacion
