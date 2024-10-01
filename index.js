@@ -94,9 +94,7 @@ app.use('/', evaluacionRoutes)
 
 
 // Start the server
-app.listen(puerto, () => {
-    console.log(`Servidor abierto en el puerto ${puerto}`)
-})
+
 app.get('/evaluaciones1', (req, res)=>{
     res.render('evaluaciones/evaluaciones')
 })

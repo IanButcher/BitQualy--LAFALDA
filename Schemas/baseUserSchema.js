@@ -1,6 +1,6 @@
 // Modulos
 const mongoose = require('mongoose');
-const bcryptjs = require('bcryptjs');
+const bcryptjs = require('bcryptjs')
 
 // Discriminator Key (campo rol)
 const options = { discriminatorKey: 'rol', collection: 'users' };
