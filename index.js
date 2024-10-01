@@ -48,6 +48,7 @@ app.get('/login', (req, res) => {
 
 app.get('/evaluadores', (req, res) => {
     res.render('evalrs/evaluadores', {arrayEvaluadores})
+
 })
 
 app.get('/newEvalrs', (req, res) => {
@@ -62,6 +63,7 @@ app.get('/empleados/:id', (req,res)=>{
     const id = req.params.id
     const empleado = arrayEmpleados[id]
     res.render('empls/empleado', {empleado})
+
 })
 app.get('/reguladores', (req, res)=>{
     res.render('regs/reguladores', {arrayReguladores})
@@ -70,6 +72,14 @@ app.get('/reguladores', (req, res)=>{
 app.get('/reguladores/:id', (req, res)=>{
     const regulador = arrayReguladores[id]
     res.render('regs/ReguladoresEsp', {regulador})
+app.get('/evaluador', (req, res)=>{
+    res.render('evalrs/evaluador', {arrayEvaluadores})
+})
+
+app.get('/evaluador/:id', (req,res)=>{
+    const id = req.params.id
+    const empleado = arrayEvaluador[id]
+    res.render('evalrs/evaluador', {evaluador})
 })
 
 app.get('/home', (req, res) => {
