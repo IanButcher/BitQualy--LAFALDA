@@ -12,18 +12,20 @@ body, html {
 }
 h2{
     margin-bottom: 20px;
+    
 }
 .container {
-    display:  flex;
+    display: flex;
+    min-height: 100vh; /* Se asegura que ocupe al menos el 100% del viewport */
 }
 
 /* Sidebar Styles */
 .sidebar {
     width: 250px;
-    background-color: #343a40;
+    background-color: #333333;
     color: white;
     padding: 15px;
-    
+    min-height: 100vh; /* Asegura que el sidebar se extienda hasta el fondo */
 }
 
 .logo img {
@@ -74,6 +76,7 @@ h2{
 .main-content {
     flex: 1;
     padding: 20px;
+    
 }
 
 .header {
