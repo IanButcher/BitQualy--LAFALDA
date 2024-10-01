@@ -276,3 +276,36 @@ body, html {
     background-color: #218838;
     transform: scale(1.05);
 }
+
+.combobox-container {
+    margin-left: 50px; /* Ajusta este valor para moverlo más a la izquierda o derecha */
+    margin-right: 50px; /* Mantenerlo cerca del centro sin ir completamente a la derecha */
+    margin-top: 50px; /* Ajusta este valor para moverlo más abajo */
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espacio entre el label y el select */
+}
+
+
+.combobox-container label {
+    font-size: 14px;
+    color: #555;
+}
+
+#employee-options {
+    padding: 8px 16px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 25px; /* Bordes redondeados para look moderno */
+    background-color: #fff;
+    color: #333;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: all 0.3s ease; /* Transición para hover */
+}
+
+/* Efecto hover para el select */
+#employee-options:hover {
+    border-color: #aaa;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Mayor sombra en hover */
+}
