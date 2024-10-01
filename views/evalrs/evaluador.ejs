@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Evaluaciones</title>
-    <link rel="stylesheet" href="/empleado.css">
+    <link rel="stylesheet" href="/evaluador.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
@@ -18,13 +18,13 @@
             </div>
             <nav>
                 <div class="menu-item">
-                    <a href="/empleados"><i class="fas fa-users"></i> Empleados</a>
+                    <a href="empleados.ejs"><i class="fas fa-users"></i> Empleados</a>
                 </div>
                 <div class="menu-item">
-                    <a href="/evaluadores"><i class="fas fa-user-tie"></i> Evaluadores</a>
+                    <a href="#"><i class="fas fa-user-tie"></i> Evaluadores</a>
                 </div>
                 <div class="menu-item">
-                    <a href="/reguladores"><i class="fas fa-clipboard-check"></i> Reguladores</a>
+                    <a href="#"><i class="fas fa-clipboard-check"></i> Reguladores</a>
                 </div>
                 <!-- Nuevo botón de Crear Empleado -->
                 <div class="menu-item">
@@ -34,10 +34,10 @@
                     <a href="#" class="dropdown-btn"><i class="fas fa-tasks"></i> GESTIÓN EVALUACIONES <i class="fas fa-chevron-down"></i></a>
                     <div class="dropdown-container">
                         <div class="menu-item">
-                            <a href="/evaluaciones" class="line"><i class="fas fa-file-alt"></i> Evaluaciones</a>
+                            <a href="#" class="line"><i class="fas fa-file-alt"></i> Evaluaciones</a>
                         </div>
                         <div class="menu-item">
-                            <a href="/formularios" class="line"><i class="fas fa-list-alt"></i> Formularios</a>
+                            <a href="#" class="line"><i class="fas fa-list-alt"></i> Formularios</a>
                         </div>
                     </div>
                 </div>
@@ -50,8 +50,8 @@
                 <div class="user-section">
                     <img src="/img/user.png" alt="Empleado" class="user-img">
                     <div class="user-info">
-                        <h2>Franco Siccardi</h2>
-                        <p>Rol: Programador</p>
+                        <h2>Pepito</h2>
+                        <p>Rol: Evaluador</p>
                         <p>Número de legajo: xxxx | DNI: XXXX</p>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
 
             <div class="filter-panel-container">
                 <section class="evaluation-section">
-                    <h2>Evaluaciones Asignadas</h2>
+                    <h2>Evaluaciones Enviadas</h2>
                     <div class="evaluation-card">
                         <img src="empleado1.jpg" alt="Franco Siccardi" class="eval-img">
                         <div class="eval-info">
@@ -75,11 +75,21 @@
                     </div>
 
                     <div class="evaluation-card">
-                        <img src="empleado1.jpg" alt="Franco Siccardi" class="eval-img">
+                        <img src="empleado1.jpg" alt="Dillan Perez Diaz" class="eval-img">
                         <div class="eval-info">
-                            <p><strong>Franco Siccardi</strong></p>
+                            <p><strong>Dillan Perez Diaz</strong></p>
                             <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
                             <p class="eval-status">Evaluación de Análisis</p>
+                        </div>
+                    </div>
+
+                    <h2>Evaluaciones Asignadas</h2>
+                    <div class="evaluation-card">
+                        <img src="empleado1.jpg" alt="Franco Siccardi" class="eval-img">
+                        <div class="eval-info">
+                            <p><strong>Nombre Evaluador</strong></p>
+                            <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
+                            <p class="eval-status">Autoevaluación</p>
                         </div>
                     </div>
                 </section>

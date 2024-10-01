@@ -29,7 +29,7 @@ body, html {
 }
 
 .sidebar .logo img {
-    max-width: 100%;
+    max-width: 100%; 
     height: auto;
     display: block;
     margin: 0 auto;
@@ -84,6 +84,7 @@ body, html {
     margin-left: 10px;
 }
 
+/* Estilo de los ítems del dropdown */
 .sidebar .gestion-section .dropdown-container {
     display: none;
     padding-left: 20px;
@@ -212,6 +213,74 @@ body, html {
     border-color: #888;
 }
 
+/* Estilos generales */
+body, html {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.main-content {
+    padding: 20px;
+    background-color: #ffffff;
+    margin: 0 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Cabecera (Header) */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.user-section {
+    display: flex;
+    align-items: center;
+}
+
+.user-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 15px;
+    border: 2px solid #ddd;
+}
+
+.user-info h2 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #333;
+}
+
+.user-info p {
+    margin: 5px 0;
+    color: #777;
+}
+
+.header-options {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.header-options i {
+    font-size: 1.5em;
+    color: #777;
+    cursor: pointer;
+}
+
+.profile-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+}
+
+/* Sección de Evaluaciones */
 .evaluation-section, .evaluation-finished {
     margin-top: 20px;
 }
@@ -232,8 +301,8 @@ body, html {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
     min-height: 80px;
-    max-width: 550px;
-    width: 100%;
+    max-width: 550px; /* Ajusta el ancho máximo de la tarjeta */
+    width: 100%; /* Asegura que se ajuste al contenedor */
 }
 
 .evaluation-card:hover {
@@ -262,6 +331,8 @@ body, html {
     display: inline-block;
 }
 
+
+/* Sección de Evaluaciones Finalizadas */
 .progress-bar {
     width: 100px;
     height: 10px;
@@ -286,6 +357,7 @@ body, html {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Additional styles for the filter and buttons */
 .filter-section h3 {
     font-size: 1.2em;
     color: #333;
@@ -301,16 +373,18 @@ body, html {
     margin-bottom: 15px;
 }
 
+/* Ajustes de la nueva clase contenedora para las evaluaciones y el panel derecho */
 .filter-panel-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Coloca el contenido principal y el panel de filtro uno al lado del otro */
 }
 
 .evaluation-section {
-    flex-grow: 1;
-    margin-right: 20px;
+    flex-grow: 1; /* Permite que las evaluaciones ocupen todo el espacio disponible */
+    margin-right: 20px; /* Añade espacio entre las evaluaciones y el panel derecho */
 }
 
+/* Panel derecho (Right Panel) */
 .right-panel {
     width: 100%;
     max-width: 300px;
@@ -322,17 +396,20 @@ body, html {
     color: #333;
     margin-left: 20px;
     margin-right: 30px;
-    margin-top: 60px;
+    margin-top: 60px; /* Ajusta el valor según tus necesidades */
 }
 
+/* Título de la sección de filtro */
 .filter-section h3 {
     font-size: 1.5em;
     color: #000000;
     margin-bottom: 15px;
+   
     font-weight: 600;
     letter-spacing: 1px;
 }
 
+/* Estilo del select para filtros */
 .filter-select {
     width: 100%;
     padding: 10px;
@@ -350,6 +427,7 @@ body, html {
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
+/* Orden de filtros (Más reciente/antigua) */
 .filter-order {
     margin: 20px 0;
     display: flex;
@@ -364,6 +442,7 @@ body, html {
     align-items: center;
 }
 
+/* Estilos para los puntos de colores */
 .blue-dot, .yellow-dot {
     width: 10px;
     height: 10px;
@@ -380,6 +459,7 @@ body, html {
     background-color: #f1c40f;
 }
 
+/* Botones de estado */
 .status-buttons {
     display: flex;
     flex-direction: column;
@@ -403,6 +483,7 @@ body, html {
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
+/* Botón de Pendientes */
 .status-button.pending {
     border-left: 5px solid #ce1500;
 }
@@ -411,6 +492,7 @@ body, html {
     background-color: #ce1500;
 }
 
+/* Botón de Evaluar */
 .status-button.evaluate {
     border-left: 5px solid #28a745;
 }
@@ -419,6 +501,7 @@ body, html {
     background-color: #28a745;
 }
 
+/* Estilos para los puntos de estado */
 .red-dot, .green-dot {
     width: 10px;
     height: 10px;
@@ -427,6 +510,7 @@ body, html {
     margin-right: 10px;
 }
 
+/* Contador de evaluaciones pendientes */
 .status-button .count {
     background-color: #df1600;
     color: white;
@@ -445,6 +529,7 @@ body, html {
     margin-left: 10px;
 }
 
+/* Responsive para dispositivos más pequeños */
 @media (max-width: 768px) {
     .right-panel {
         max-width: 100%;
