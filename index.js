@@ -48,6 +48,7 @@ app.get('/login', (req, res) => {
 
 app.get('/evaluadores', (req, res) => {
     res.render('evalrs/evaluadores', {arrayEvaluadores})
+
 })
 
 app.get('/newEvalrs', (req, res) => {
@@ -62,18 +63,26 @@ app.get('/empleados/:id', (req,res)=>{
     const id = req.params.id
     const empleado = arrayEmpleados[id]
     res.render('empls/empleado', {empleado})
+
 })
 app.get('/reguladores', (req, res)=>{
     res.render('regs/reguladores', {arrayReguladores})
 })
 
 app.get('/reguladores/:id', (req, res)=>{
+    const id = req.params.id
     const regulador = arrayReguladores[id]
     res.render('regs/ReguladoresEsp', {regulador})
 })
+app.get('/evaluador', (req, res)=>{
+    res.render('evalrs/evaluador', {arrayEvaluadores})
+})
 
-
-
+app.get('/evaluador/:id', (req,res)=>{
+    const id = req.params.id
+    const empleado = arrayEvaluador[id]
+    res.render('evalrs/evaluador', {evaluador})
+})
 
 app.get('/home', (req, res) => {
     res.render('home')
@@ -87,4 +96,12 @@ app.use('/', evaluacionRoutes)
 // Start the server
 app.listen(puerto, () => {
     console.log(`Servidor abierto en el puerto ${puerto}`)
+})
+app.get('/evaluaciones1', (req, res)=>{
+    res.render('evaluaciones/evaluaciones')
+})
+
+app.listen(puerto, () => {
+    console.log('Servidor abierto')
+    console.log(puerto)
 })

@@ -56,6 +56,11 @@ body, html {
     transform: scale(1.05);
 }
 
+/* Botón de Crear Empleado */
+.sidebar nav .menu-item a[href="crear-empleado"] i {
+    color: #28a745;
+}
+
 /* Ajustes de los botones de la sección de gestión */
 .sidebar .gestion-section .dropdown-btn {
     font-weight: bold;
@@ -113,7 +118,6 @@ body, html {
     transform: scale(1.05);
 }
 
-/* Mantén solo la línea vertical */
 .sidebar .gestion-section .dropdown-container .menu-item .line {
     position: absolute;
     left: 0;
@@ -122,7 +126,6 @@ body, html {
     background-color: white;
 }
 
-/* Elimina los puntos eliminando la clase .dot */
 .sidebar .gestion-section .dropdown-container .menu-item .dot {
     display: none;
 }
@@ -228,30 +231,26 @@ body, html {
     margin: 0;
     color: #555;
 }
-/* Eliminar cualquier borde en el menú desplegable */
+
 .dropdown-content {
-    border: none; /* Asegúrate de que no haya bordes */
+    border: none;
     padding: 0;
-    background-color: transparent; /* Fondo transparente si es necesario */
+    background-color: transparent;
 }
 
-/* Ajuste del espaciado en los botones del submenú */
-.dropdown-btn{
-    text-decoration: none; /* Quitar subrayado en los enlaces */
+.dropdown-btn {
+    text-decoration: none;
 }
 
-/* Ajustar los íconos */
 .dropdown-content a i {
     font-size: 16px;
     margin-right: 10px;
 }
 
-/* Ajuste del último ítem para no tener espacio extra */
 .dropdown-content a:last-child {
     margin-bottom: 0;
 }
 
-/* Estilo del botón Crear */
 .create-section {
     margin: 20px 0;
     text-align: right;

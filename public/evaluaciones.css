@@ -29,7 +29,7 @@ body, html {
 }
 
 .sidebar .logo img {
-    max-width: 100%;
+    max-width: 100%; 
     height: auto;
     display: block;
     margin: 0 auto;
@@ -57,11 +57,6 @@ body, html {
     transform: scale(1.05);
 }
 
-/* Botón de Crear Empleado */
-.sidebar nav .menu-item a[href="crear-empleado"] i {
-    color: #28a745;
-}
-
 /* Ajustes de los botones de la sección de gestión */
 .sidebar .gestion-section .dropdown-btn {
     font-weight: bold;
@@ -84,6 +79,7 @@ body, html {
     margin-left: 10px;
 }
 
+/* Estilo de los ítems del dropdown */
 .sidebar .gestion-section .dropdown-container {
     display: none;
     padding-left: 20px;
@@ -118,6 +114,7 @@ body, html {
     transform: scale(1.05);
 }
 
+/* Mantén solo la línea vertical */
 .sidebar .gestion-section .dropdown-container .menu-item .line {
     position: absolute;
     left: 0;
@@ -126,6 +123,7 @@ body, html {
     background-color: white;
 }
 
+/* Elimina los puntos eliminando la clase .dot */
 .sidebar .gestion-section .dropdown-container .menu-item .dot {
     display: none;
 }
@@ -152,32 +150,47 @@ body, html {
     flex-shrink: 0; /* Evita que el panel derecho cambie de tamaño */
 }
 
-/* Nueva Sección Agregada */
+
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: -15px;
+    margin-top: -28px;
 }
 
 .header .user-info {
     text-align: right;
 }
 
-.search-section {
+.search-container {
     position: relative;
     display: inline-block;
-    margin-bottom: 30px;
+    margin: 0;  /* Elimina cualquier margen adicional */
 }
 
-.search-section input {
-    width: 400px;
-    padding: 12px 45px 12px 15px;
-    font-size: 18px;
-    border: 1px solid #ccc;
+input[type="search"] {
+    width: 400px;  /* Ancho del campo */
+    height: 40px;  /* Altura del campo */
+    padding-left: 15px;  /* Espaciado interno a la izquierda */
+    padding-right: 40px; /* Espaciado interno a la derecha */
+    border: 2px solid red;
     border-radius: 25px;
-    transition: width 0.3s ease;
+    font-size: 16px;
+    box-sizing: border-box;
+    margin: 0;  /* Elimina cualquier margen adicional */
 }
+
+.search-icon {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: red;
+    cursor: pointer;
+}
+
 
 .search-section input:focus {
     width: 450px;
@@ -212,6 +225,69 @@ body, html {
     border-color: #888;
 }
 
+/* Estilos generales */
+body, html {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.main-content {
+    padding: 20px;
+    background-color: #ffffff;
+    margin: 0 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Cabecera (Header) */
+
+
+.user-section {
+    display: flex;
+    align-items: center;
+}
+
+.user-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 15px;
+    border: 2px solid #ddd;
+}
+
+.user-info h2 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #333;
+}
+
+.user-info p {
+    margin: 5px 0;
+    color: #777;
+}
+
+.header-options {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.header-options i {
+    font-size: 1.5em;
+    color: #777;
+    cursor: pointer;
+}
+
+.profile-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+}
+
+/* Sección de Evaluaciones */
 .evaluation-section, .evaluation-finished {
     margin-top: 20px;
 }
@@ -224,68 +300,147 @@ body, html {
 
 .evaluation-card {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    background-color: #f9f9f9;
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    min-height: 80px;
-    max-width: 550px;
-    width: 100%;
+    padding: 15px;
+    border-radius: 12px;
+    background-color: #f7f7f7;
+    width: 600px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
 }
 
-.evaluation-card:hover {
-    transform: translateY(-5px);
+/* Sección de perfil e información */
+/* Contenedor principal de la evaluación */
+
+
+/* Imagen del evaluado */
+.eval-photo img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; /* Para que la imagen sea redonda */
+    object-fit: cover; /* Asegura que la imagen se ajuste correctamente al contenedor */
+    margin-right: 15px; /* Espacio entre la imagen y el texto */
 }
 
-.eval-img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 10px;
-    border: 2px solid #ddd;
+/* Contenedor de los detalles de la evaluación */
+
+
+/* Nombre del evaluado */
+.eval-name {
+    font-size: 1em;
+    color: #333;
+    margin: 0;
 }
 
-.eval-info p {
-    margin: 3px 0;
-    color: #555;
+/* Fechas de la evaluación */
+.eval-dates {
+    font-size: 0.9em;
+    color: #666;
+    margin: 5px 0;
 }
 
+/* Estado de la evaluación */
 .eval-status {
-    color: #fff;
-    background-color: #007bff;
-    padding: 3px 8px;
-    border-radius: 15px;
-    font-size: 0.8em;
-    display: inline-block;
+    font-size: 0.85em;
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* Ajuste de responsive para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .eval-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .eval-photo {
+        margin-bottom: 10px;
+    }
+}
+
+
+.evaluator {
+    font-weight: bold;
+}
+
+/* Fechas */
+.start-date,
+.end-date {
+    font-size: 12px;
+    color: gray;
+}
+
+/* Puntos de calificación */
+
+
+
+
+.rating-dot {
+    width: 10px;
+    height: 10px;
+    background-color: gray;
+    border-radius: 50%;
+    margin-left: 3px;
+}
+
+.rating-dot.red {
+    background-color: red;
+}
+
+.eval-summary {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .progress-bar {
-    width: 100px;
-    height: 10px;
+    position: relative;
+    width: 120px;
+    height: 25px;
     background-color: #e0e0e0;
-    border-radius: 25px;
-    margin-top: 10px;
+    border-radius: 50px;
+    overflow: hidden;
+    margin-bottom: 5px;
 }
 
 .progress {
     height: 100%;
-    background-color: #28a745;
-    border-radius: 25px;
+    background-color: black;
+    border-radius: 50px;
 }
 
-/* Right panel styling */
-.right-panel {
-    width: 250px;
-    background-color: #f9f9f9;
-    padding: 20px;
-    margin-left: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+.progress-label {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    color: white;
+    top: 4px;
 }
 
+.eval-icons {
+    display: flex;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.download-icon {
+    cursor: pointer;
+}
+
+.filter-icon {
+    cursor: pointer;
+}
+
+.eval-summary p {
+    font-size: 14px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+
+/* Additional styles for the filter and buttons */
 .filter-section h3 {
     font-size: 1.2em;
     color: #333;
@@ -301,45 +456,49 @@ body, html {
     margin-bottom: 15px;
 }
 
+/* Ajustes de la nueva clase contenedora para las evaluaciones y el panel derecho */
 .filter-panel-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Coloca el contenido principal y el panel de filtro uno al lado del otro */
 }
 
 .evaluation-section {
-    flex-grow: 1;
-    margin-right: 20px;
+    flex-grow: 1; /* Permite que las evaluaciones ocupen todo el espacio disponible */
+    margin-right: 20px; /* Añade espacio entre las evaluaciones y el panel derecho */
 }
 
+/* Panel derecho (Right Panel) ajustado */
 .right-panel {
     width: 100%;
-    max-width: 300px;
+    max-width: 300px; /* Ajuste de ancho para hacerlo más compacto */
     background-color: #f7f9fc;
-    padding: 20px;
-    border-radius: 12px;
+    padding: 15px; /* Reducir el padding */
+    border-radius: 10px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
     font-family: 'Arial', sans-serif;
     color: #333;
-    margin-left: 20px;
-    margin-right: 30px;
-    margin-top: 60px;
+    margin-left: 15px; /* Ajusta los márgenes */
+    margin-right: 20px; /* Ajusta los márgenes */
+    margin-top: 80px; /* Ajusta el margen superior */
 }
 
+/* Título de la sección de filtro */
 .filter-section h3 {
-    font-size: 1.5em;
+    font-size: 1.2em; /* Ajusta el tamaño del título para hacerlo más pequeño */
     color: #000000;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     font-weight: 600;
     letter-spacing: 1px;
 }
 
+/* Estilo del select para filtros */
 .filter-select {
     width: 100%;
-    padding: 10px;
-    font-size: 1em;
+    padding: 8px; /* Reducir el padding */
+    font-size: 0.9em; /* Ajustar el tamaño de fuente */
     color: #333;
     border: 1px solid #ddd;
-    border-radius: 8px;
+    border-radius: 12px; /* Reducir el border-radius */
     background-color: #fff;
     transition: border-color 0.3s ease;
 }
@@ -350,8 +509,9 @@ body, html {
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
+/* Orden de filtros (Más reciente/antigua) */
 .filter-order {
-    margin: 20px 0;
+    margin: 15px 0; /* Reducir el espacio entre filtros */
     display: flex;
     justify-content: space-between;
 }
@@ -364,6 +524,7 @@ body, html {
     align-items: center;
 }
 
+/* Estilos para los puntos de colores */
 .blue-dot, .yellow-dot {
     width: 10px;
     height: 10px;
@@ -380,6 +541,7 @@ body, html {
     background-color: #f1c40f;
 }
 
+/* Botones de estado */
 .status-buttons {
     display: flex;
     flex-direction: column;
@@ -403,6 +565,7 @@ body, html {
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
+/* Botón de Pendientes */
 .status-button.pending {
     border-left: 5px solid #ce1500;
 }
@@ -411,22 +574,34 @@ body, html {
     background-color: #ce1500;
 }
 
+/* Botón de Evaluar */
 .status-button.evaluate {
-    border-left: 5px solid #28a745;
+    border-left: 5px solid #a72828;
 }
 
 .status-button.evaluate .green-dot {
     background-color: #28a745;
 }
 
-.red-dot, .green-dot {
+/* Estilos para los puntos de estado */
+.green-dot {
     width: 10px;
     height: 10px;
     border-radius: 50%;
     display: inline-block;
     margin-right: 10px;
 }
-
+.status-button.evaluate .red-dot {
+    background-color: #f11616;
+}
+.red-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 10px;
+}
+/* Contador de evaluaciones pendientes */
 .status-button .count {
     background-color: #df1600;
     color: white;
@@ -445,45 +620,41 @@ body, html {
     margin-left: 10px;
 }
 
+/* Responsive para dispositivos más pequeños */
 @media (max-width: 768px) {
     .right-panel {
         max-width: 100%;
         margin: 0;
     }
 }
-
-/* Posicionar el combobox un poco hacia el centro */
-/* Posicionar el combobox un poco hacia el centro y más abajo */
-.combobox-container {
-    margin-left: 50px; /* Ajusta este valor para moverlo más a la izquierda o derecha */
-    margin-right: 50px; /* Mantenerlo cerca del centro sin ir completamente a la derecha */
-    margin-top: 50px; /* Ajusta este valor para moverlo más abajo */
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Espacio entre el label y el select */
+/* search seccion */
+.search-section {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 30px;
+    margin-top: 50px;
 }
 
-
-.combobox-container label {
-    font-size: 14px;
-    color: #555;
+.search-section input {
+    width: 500px;
+    padding: 12px 45px 12px 15px;
+    font-size: 18px;
+    border: 1px solid rgb(255, 0, 0);
+    border-radius: 25px;
+    transition: width 0.3s ease;
+    height: 50px;
 }
 
-#employee-options {
-    padding: 8px 16px;
-    font-size: 14px;
-    border: 1px solid #ddd;
-    border-radius: 25px; /* Bordes redondeados para look moderno */
-    background-color: #fff;
-    color: #333;
-    outline: none;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    transition: all 0.3s ease; /* Transición para hover */
+.search-section input:focus {
+    width: 450px;
 }
 
-/* Efecto hover para el select */
-#employee-options:hover {
-    border-color: #aaa;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Mayor sombra en hover */
+.search-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgb(228, 0, 0);
+    pointer-events: none;
 }
-
+ 

@@ -3,11 +3,11 @@ const Julia = {
     apellido: "Ferreiro",
     rol: "CEO",
     legajo: 14,
-    id: 1
+    id: 0
 }
 
 const franco = {
-    id: 2,
+    id: 1,
     nombre: "Franco",
     apellido: "Siccardi",
     rol: "Recursos Humanos",
@@ -15,7 +15,7 @@ const franco = {
 }
 
 const taylor = {
-    id: 3,
+    id: 2,
     nombre: "Taylor",
     apellido: "Swift",
     rol: "Developer",
@@ -23,7 +23,7 @@ const taylor = {
 }
 
 const kendrick = {
-    id: 4,
+    id: 3,
     nombre: "Kendrick",
     apellido: "Lamar",
     rol: "Scrum Master",
@@ -31,7 +31,7 @@ const kendrick = {
 }
 
 const messi = {
-    id: 5,
+    id: 4,
     nombre: "Leo",
     apellido: "Messi",
     rol: "Developer",
@@ -42,7 +42,8 @@ const dilan = {
     nombre: "Dillan",
     apellido: "Perez Diaz",
     rol: "Limpieza y Mantenimiento",
-    legajo: 622
+    legajo: 622,
+    id: 5
 }
 const Luis = {
     id: 6,
