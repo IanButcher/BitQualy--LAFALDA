@@ -1,5 +1,6 @@
 // evaluationSchema.js
 const mongoose = require('mongoose')
+const Formulario = require('./formularioSchema')
 
 const comentarioSchema = new mongoose.Schema({
     intermediario: {
@@ -14,16 +15,6 @@ const comentarioSchema = new mongoose.Schema({
 
 const Comentario = mongoose.model('Comentario', comentarioSchema)
 
-const respuestaSchema = new mongoose.Schema({
-    pregunta: {
-        type: String,
-        required: true
-    },
-    respuesta: {
-        type: [String],  //Array en caso de ser multiple o checkbox
-        required: true
-    }
-});
 
 const evaluacionSchema = new mongoose.Schema({
     formulario: {
@@ -35,7 +26,10 @@ const evaluacionSchema = new mongoose.Schema({
         type: String, // Id
         required: true
     },
-    respuestas: [respuestaSchema],
+    respuestas: {
+        type: [String],
+        required: true
+    },
     comentarios: [comentarioSchema]
 });
 
