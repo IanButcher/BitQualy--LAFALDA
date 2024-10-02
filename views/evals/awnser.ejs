@@ -14,37 +14,61 @@
         <form method="POST" action="/evaluaciones/save-evaluacion">
             <input type="hidden" name="formulario" value="<%= formulario._id %>">
             <input type="hidden" name="empleado" value="<%= empleado %>">
-
-            <!-- Render each pregunta -->
+        
+            <!-- Questions and responses -->
             <div id="preguntasContainer">
                 <% formulario.questions.forEach((pregunta, index) => { %>
                     <div>
                         <h3><%= pregunta.titulo %></h3>
                         <p><%= pregunta.descripcion %></p>
-
+        
                         <% if (pregunta.tipo === 'texto') { %>
-                            <input type="text" name="respuestas[<%= index %>][respuesta%>]" required>
+                            <input type="text" name="respuestas[]" required>
                         <% } else if (pregunta.tipo === 'multiple') { %>
                             <% pregunta.options.forEach(option => { %>
-                                <label><input type="radio" name="respuestas[<%=  index %>][respuesta%>]" value="<%= option %>"> <%= option %></label>
+                                <label><input type="radio" name="respuestas[<%= index %>]" value="<%= option %>"> <%= option %></label>
                             <% }) %>
                         <% } else if (pregunta.tipo === 'checkbox') { %>
                             <% pregunta.options.forEach(option => { %>
-                                <label><input type="checkbox" name="respuestas[<%=  index %>][respuesta%>][]" value="<%= option %>"> <%= option %></label>
+                                <label><input type="checkbox" name="respuestas[<%= index %>][]" value="<%= option %>"> <%= option %></label>
                             <% }) %>
                         <% } %>
-
+        
                         <input type="hidden" name="respuestas[<%= index %>][pregunta]" value="<%= pregunta.titulo %>">
                     </div>
                 <% }) %>
             </div>
-
-            <!-- Mostrar el empleado seleccionado -->
+        
+            <!-- Show the selected employee -->
             <h4>Empleado: <%= empleado %></h4>
-
-            <!-- Botón para guardar la evaluación -->
+        
+            <!-- Submit the form -->
             <button type="submit">Guardar Evaluación</button>
         </form>
+        
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.querySelector('form');
+
+            form.addEventListener('submit', (event) => {
+                // Get all radio button groups and checkboxes in the form
+                const radioButtons = form.querySelectorAll('input[type="radio"]:checked');
+                const checkboxes = form.querySelectorAll('input[type="checkbox"]:checked');
+
+                // Convert selected radio buttons into strings
+                radioButtons.forEach((radio) => {
+                    console.log(`Selected Radio Value: ${radio.value}`);
+                });
+
+                // Convert selected checkboxes into strings
+                checkboxes.forEach((checkbox) => {
+                    console.log(`Selected Checkbox Value: ${checkbox.value}`);
+                });
+
+                // Allow the form to submit after the handling
+            });
+        });
+    </script>
 </body>
 </html>

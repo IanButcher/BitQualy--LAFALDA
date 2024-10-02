@@ -1,0 +1,104 @@
+opcion 1 :Formulario ID: 66f6c76158dfd6a9061602b6, Empleado: Maria
+Error guardando la evaluación: Error: Evaluacion validation failed: respuestas.1
+.respuesta: Cast to string failed for value "{ pregunta: [ 'JSjhdjashdjasd', 'Mu
+ltiple' ] }" (type Object) at path "respuesta"
+    at ValidationError.inspect (C:\Users\ProA La Falda\Desktop\Bitsion\BitQualy-
+-LAFALDA\node_modules\mongoose\lib\error\validation.js:50:26)
+    at formatValue (node:internal/util/inspect:806:19)
+    at inspect (node:internal/util/inspect:365:10)
+    at formatWithOptionsInternal (node:internal/util/inspect:2273:40)
+    at formatWithOptions (node:internal/util/inspect:2135:10)
+    at console.value (node:internal/console/constructor:349:14)
+    at console.warn (node:internal/console/constructor:382:61)
+    at C:\Users\ProA La Falda\Desktop\Bitsion\BitQualy--LAFALDA\routes\evaluacio
+nRoutes.js:99:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5
+) {
+  errors: {
+    'respuestas.1.respuesta': CastError: Cast to string failed for value "{ preg
+unta: [ 'JSjhdjashdjasd', 'Multiple' ] }" (type Object) at path "respuesta"
+        at SchemaString.cast (C:\Users\ProA La Falda\Desktop\Bitsion\BitQualy--L
+AFALDA\node_modules\mongoose\lib\schema\string.js:606:11)
+        at SchemaType.applySetters (C:\Users\ProA La Falda\Desktop\Bitsion\BitQu
+aly--LAFALDA\node_modules\mongoose\lib\schemaType.js:1236:12)
+        at EmbeddedDocument.$set (C:\Users\ProA La Falda\Desktop\Bitsion\BitQual
+y--LAFALDA\node_modules\mongoose\lib\document.js:1432:22)
+        at EmbeddedDocument.$set (C:\Users\ProA La Falda\Desktop\Bitsion\BitQual
+y--LAFALDA\node_modules\mongoose\lib\document.js:1128:16)
+        at EmbeddedDocument.Document (C:\Users\ProA La Falda\Desktop\Bitsion\Bit
+Qualy--LAFALDA\node_modules\mongoose\lib\document.js:177:12)
+        at EmbeddedDocument.Subdocument (C:\Users\ProA La Falda\Desktop\Bitsion\
+BitQualy--LAFALDA\node_modules\mongoose\lib\types\subdocument.js:34:12)
+        at EmbeddedDocument.ArraySubdocument [as constructor] (C:\Users\ProA La
+Falda\Desktop\Bitsion\BitQualy--LAFALDA\node_modules\mongoose\lib\types\arraySub
+document.js:44:15)
+        at new EmbeddedDocument (C:\Users\ProA La Falda\Desktop\Bitsion\BitQualy
+--LAFALDA\node_modules\mongoose\lib\schema\documentArray.js:130:17)
+        at SchemaDocumentArray.cast (C:\Users\ProA La Falda\Desktop\Bitsion\BitQ
+ualy--LAFALDA\node_modules\mongoose\lib\schema\documentArray.js:495:22)
+        at SchemaType.applySetters (C:\Users\ProA La Falda\Desktop\Bitsion\BitQu
+aly--LAFALDA\node_modules\mongoose\lib\schemaType.js:1236:12) {
+      stringValue: `"{ pregunta: [ 'JSjhdjashdjasd', 'Multiple' ] }"`,
+      messageFormat: undefined,
+      kind: 'string',
+      value: [Object],
+      path: 'respuesta',
+      reason: null,
+      valueType: 'Object'
+    }
+  },
+  _message: 'Evaluacion validation failed'
+}
+Option 2: Formulario ID: 66f6c76158dfd6a9061602b6, Empleado: Maria
+Error guardando la evaluación: Error: Evaluacion validation failed: respuestas.1
+: Cast to [string] failed for value "[ 'asdasd', { pregunta: [ 'JSjhdjashdjasd',
+ 'Multiple' ] } ]" (type string) at path "respuestas.1" because of "CastError"
+    at ValidationError.inspect (C:\Users\ProA La Falda\Desktop\Bitsion\BitQualy-
+-LAFALDA\node_modules\mongoose\lib\error\validation.js:50:26)
+    at formatValue (node:internal/util/inspect:806:19)
+    at inspect (node:internal/util/inspect:365:10)
+    at formatWithOptionsInternal (node:internal/util/inspect:2273:40)
+    at formatWithOptions (node:internal/util/inspect:2135:10)
+    at console.value (node:internal/console/constructor:349:14)
+    at console.warn (node:internal/console/constructor:382:61)
+    at C:\Users\ProA La Falda\Desktop\Bitsion\BitQualy--LAFALDA\routes\evaluacio
+nRoutes.js:96:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5
+) {
+  errors: {
+    'respuestas.1': CastError: Cast to [string] failed for value "[ 'asdasd', {
+pregunta: [ 'JSjhdjashdjasd', 'Multiple' ] } ]" (type string) at path "respuesta
+s.1" because of "CastError"
+        at SchemaArray.cast (C:\Users\ProA La Falda\Desktop\Bitsion\BitQualy--LA
+FALDA\node_modules\mongoose\lib\schema\array.js:401:15)
+        at SchemaType.applySetters (C:\Users\ProA La Falda\Desktop\Bitsion\BitQu
+aly--LAFALDA\node_modules\mongoose\lib\schemaType.js:1236:12)
+        at model.$set (C:\Users\ProA La Falda\Desktop\Bitsion\BitQualy--LAFALDA\
+node_modules\mongoose\lib\document.js:1432:22)
+        at model.$set (C:\Users\ProA La Falda\Desktop\Bitsion\BitQualy--LAFALDA\
+node_modules\mongoose\lib\document.js:1128:16)
+        at model.Document (C:\Users\ProA La Falda\Desktop\Bitsion\BitQualy--LAFA
+LDA\node_modules\mongoose\lib\document.js:177:12)
+        at model.Model (C:\Users\ProA La Falda\Desktop\Bitsion\BitQualy--LAFALDA
+\node_modules\mongoose\lib\model.js:124:12)
+        at new model (C:\Users\ProA La Falda\Desktop\Bitsion\BitQualy--LAFALDA\n
+ode_modules\mongoose\lib\model.js:4574:15)
+        at C:\Users\ProA La Falda\Desktop\Bitsion\BitQualy--LAFALDA\routes\evalu
+acionRoutes.js:84:33
+        at process.processTicksAndRejections (node:internal/process/task_queues:
+95:5) {
+      stringValue: `"[ 'asdasd', { pregunta: [ 'JSjhdjashdjasd', 'Multiple' ] }
+]"`,
+      messageFormat: undefined,
+      kind: '[string]',
+      value: "[ 'asdasd', { pregunta: [ 'JSjhdjashdjasd', 'Multiple' ] } ]",
+      path: 'respuestas.1',
+      reason: [CastError],
+      valueType: 'string'
+    }
+  },
+  _message: 'Evaluacion validation failed'
+}
+
+
+

@@ -61,32 +61,35 @@ router.get('/evaluaciones/answer/:id', async (req, res) => {
 });
 
 
-// POST route --> Enviar nueva ev
+// POST route --> Enviar nueva evaluación
 router.post('/evaluaciones/save-evaluacion', async (req, res) => {
     try {
-        const { id } = req.params
-        const { empleado, respuestas } = req.body
+        const { formulario: formularioId, empleado, respuestas } = req.body
 
-        const formulario = await Formulario.findById(id)
+        const formulario = await Formulario.findById(formularioId).populate('questions')
         if (!formulario) {
             return res.status(404).send('Formulario no encontrado')
         }
-        const respuestasFormateadas = Object.keys(respuestas).map(index => {
-            const respuesta = respuestas[index];
-            return Array.isArray(respuesta) ? respuesta.join(', ') : respuesta;
-        });
-        // Crear instancia evaluacion
+        //let respuestasFormateadas = []
+        //for (respuesta of respuestas){
+        //    respuestasFormateadas.push(respuesta)
+        //}
+        const respuestasFormateadas = formulario.questions.map((question, index) => {
+            const respuesta = respuestas[index]
+            return Array.isArray(respuesta) ? respuesta.join(', ') : respuesta 
+        })
+
+        // Crear instancia Evaluacion
         const nuevaEvaluacion = new Evaluacion({
             formulario: formulario._id,
-            empleado: empleado,  
-            respuestas: respuestasFormateadas 
-            
+            empleado: empleado,
+            respuestas: respuestasFormateadas  
         })
 
         // Save evaluacion
         await nuevaEvaluacion.save()
 
-        
+        // Redirect to the evaluations page after saving
         res.redirect('/evaluaciones')
     } catch (error) {
         console.error('Error guardando la evaluación:', error)
@@ -94,20 +97,6 @@ router.post('/evaluaciones/save-evaluacion', async (req, res) => {
     }
 })
 
-// GET route --> Evaluacion Especifica
-router.get('/evaluaciones/preview/:id', async (req, res) => {
-    try {
-        const evaluacion = await Evaluacion.findById(req.params.id).populate('formulario')
-        if (!evaluacion) {
-            return res.status(404).send('Evaluación no encontrada')
-        }
-
-        res.render('evals/evaluacion', { evaluacion })
-    } catch (error) {
-        console.error('Error fetching evaluation:', error)
-        res.status(500).send('Error interno del servidor')
-    }
-})
 
 
 module.exports = router
