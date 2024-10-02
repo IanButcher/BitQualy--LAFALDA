@@ -149,7 +149,11 @@ body, html {
     border: none;
     padding: 10px 20px;
     border-radius: 25px;
+    transition: background-color 0.5s ease;
     cursor: pointer;
+}
+.btn-filter button:hover {
+    background-color: hwb(113 11% 0%); 
 }
 
 .preview-section {
@@ -180,6 +184,7 @@ body, html {
 /* Estilos para el contenedor eliminar */
 .eliminar {
     background-color: #d4d4d4; /* Fondo rojo suave */
+background-color:     #e9e8e8; 
     padding: 20px;
     border-radius: 8px;
     margin: 20px 0;
