@@ -126,7 +126,6 @@
 
                     <!-- Porcentaje -->
                     <label for="percentage${questionNumber}">Porcentaje:</label>
-                    <input type="number" class="percentage-input" id="percentage${questionNumber}" name="percentage${questionNumber}" min="0" max="100" required oninput="updateColor(${questionNumber})">
                     <input type="number" class="percentage-input" id="percentage${questionNumber}" name="percentage${questionNumber}" min="0" max="100" required oninput="updateColor(${questionNumber}), maxPorcentage(${questionNumber}) ">
 
                     <!-- Tipo de pregunta -->
@@ -219,11 +218,11 @@
                 percentageInput.value = 0;  
             }
             else {
-                if (!TotalMaxPorcentaje())
+                if (TotalMaxPorcentaje() === false)
                 percentageInput.value = 0;  
             }
         } else {
-            percentageInput.value = 0;
+            
         }
     }
         
