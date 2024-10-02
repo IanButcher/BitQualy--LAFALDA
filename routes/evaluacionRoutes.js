@@ -49,14 +49,14 @@ router.get('/evaluaciones/answer/:id', async (req, res) => {
         console.log(`Formulario ID: ${id}, Empleado: ${empleado}`)
         const formulario = await Formulario.findById(id).populate('questions')
         if (!formulario || formulario.isActive != true) {
-            return res.status(404).send('Formulario no encontrado');
+            return res.status(404).send('Formulario no encontrado')
         }
 
         // Render a new page with the preguntas and the selected empleado
-        res.render('evals/awnser', { formulario, empleado });
+        res.render('evals/awnser', { formulario, empleado })
     } catch (error) {
-        console.error('Error fetching formulario:', error);
-        res.status(500).send('Error interno del servidor');
+        console.error('Error fetching formulario:', error)
+        res.status(500).send('Error interno del servidor')
     }
 });
 
@@ -70,26 +70,34 @@ router.post('/evaluaciones/save-evaluacion', async (req, res) => {
         if (!formulario) {
             return res.status(404).send('Formulario no encontrado')
         }
-        //let respuestasFormateadas = []
-        //for (respuesta of respuestas){
-        //    respuestasFormateadas.push(respuesta)
-        //}
+
+        // Format the answers to ensure they are strings
         const respuestasFormateadas = formulario.questions.map((question, index) => {
             const respuesta = respuestas[index]
-            return Array.isArray(respuesta) ? respuesta.join(', ') : respuesta 
-        })
+            
+            if (Array.isArray(respuesta)) {
+                // If respuesta is an array (for checkboxes), join the values as a string
+                return respuesta.join(', ')
+            } else if (typeof respuesta === 'object' && respuesta !== null) {
+                // If respuesta is an object, extract the value or stringify it
+                return JSON.stringify(respuesta)  // Optional: Customize how to handle objects
+            } else {
+                // Ensure single responses are returned as strings
+                return respuesta.toString()
+            }
+        });
 
-        // Crear instancia Evaluacion
+        // Create a new Evaluacion instance
         const nuevaEvaluacion = new Evaluacion({
             formulario: formulario._id,
             empleado: empleado,
-            respuestas: respuestasFormateadas  
-        })
+            respuestas: respuestasFormateadas
+        });
 
-        // Save evaluacion
+        // Save the evaluation
         await nuevaEvaluacion.save()
 
-        // Redirect to the evaluations page after saving
+        // Redirect after saving
         res.redirect('/evaluaciones')
     } catch (error) {
         console.error('Error guardando la evaluación:', error)
@@ -97,6 +105,8 @@ router.post('/evaluaciones/save-evaluacion', async (req, res) => {
     }
 })
 
-
+router.get('/evaluaciones/preview/:id', async (req, res)=>{
+    
+})
 
 module.exports = router
