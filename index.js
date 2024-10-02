@@ -2,49 +2,104 @@
 const express = require('express')
 const ejs = require('ejs')
 const arrayEmpleados = require('./seedEmpleados')
+const arrayEvaluadores = require('./seedEvaluadores')
+const path = require('path')
+const mongoose = require('mongoose')
+const arrayReguladores = require('./seedReguladores')
 
 // Server config
 const app = express()
 const puerto = 3000
 app.set('view engine', 'ejs')
 
-// Path configs (configuracion para no poner ./views/archivo.ejs) 
-const path = require('path')
+// Method Over-ride
+const methodOverride = require('method-override')
+app.use(methodOverride('_method'))
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
+
+
+// Path configs 
 app.set('views', path.join(__dirname, 'views'))
 app.use(express.static('public'))
 
+// Mongoose conection
+async function main() {
+    await mongoose.connect('mongodb://127.0.0.1:27017/bitqualyPrueba')
+    console.log('Conection to mongodb Succsesful')
+    // use await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test'); if your database has auth enabled
+}
+main().catch(err => console.log(err, 'ERROR on conction to mongodb'))
+// Body parser middleware
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
+
+// Import Routes
+const formularioRoutes = require('./routes/formularioRoutes')
+const evaluacionRoutes = require('./routes/evaluacionRoutes')
 // Rutas
-app.get('/', (req, res)=>{
+app.get('/', (req, res) => {
     res.render('index')
 })
 
-app.get('/login', (req,res)=>{
+app.get('/login', (req, res) => {
     res.render('login')
 })
 
-app.get('/formularios', (req,res)=>{
-    res.render('forms/formularios')
+app.get('/evaluadores', (req, res) => {
+    res.render('evalrs/evaluadores', {arrayEvaluadores})
+
 })
 
-app.get('/formularios/new', (req,res)=>{
-    res.render('forms/new')
+app.get('/newEvalrs', (req, res) => {
+    res.render('evalrs/newEvalrs')
 })
 
 app.get('/empleados', (req, res)=>{
-    res.render('empleados', {arrayEmpleados})
+    res.render('empls/empleados', {arrayEmpleados})
 })
 
 app.get('/empleados/:id', (req,res)=>{
     const id = req.params.id
     const empleado = arrayEmpleados[id]
-    res.render('empleado', {empleado})
+    res.render('empls/empleado', {empleado})
+
+})
+app.get('/reguladores', (req, res)=>{
+    res.render('regs/reguladores', {arrayReguladores})
 })
 
-app.get('/home', (req,res)=>{
+app.get('/reguladores/:id', (req, res)=>{
+    const id = req.params.id
+    const regulador = arrayReguladores[id]
+    res.render('regs/ReguladoresEsp', {regulador})
+})
+app.get('/evaluador', (req, res)=>{
+    res.render('evalrs/evaluador', {arrayEvaluadores})
+})
+
+app.get('/evaluador/:id', (req,res)=>{
+    const id = req.params.id
+    const empleado = arrayEvaluador[id]
+    res.render('evalrs/evaluador', {evaluador})
+})
+
+app.get('/home', (req, res) => {
     res.render('home')
 })
 
-app.listen(puerto, ()=>{
+// Rutas Formulario
+app.use('/', formularioRoutes)
+app.use('/', evaluacionRoutes)
+
+
+// Start the server
+
+app.get('/evaluaciones1', (req, res)=>{
+    res.render('evaluaciones/evaluaciones')
+})
+
+app.listen(puerto, () => {
     console.log('Servidor abierto')
     console.log(puerto)
 })

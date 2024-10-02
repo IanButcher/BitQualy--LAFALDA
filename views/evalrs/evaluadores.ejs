@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Evaluaciones</title>
-    <link rel="stylesheet" href="/empleados.css">
-   
+    <title>Gestión de Evaluadores</title>
+    <link rel="stylesheet" href="/evaluadores.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
@@ -18,13 +17,17 @@
             </div>
             <nav>
                 <div class="menu-item">
-                    <a href="empleados.ejs"><i class="fas fa-users"></i> Empleados</a>
+                    <a href="/empleados"><i class="fas fa-users"></i> Empleados</a>
                 </div>
                 <div class="menu-item">
-                    <a href="#"><i class="fas fa-user-tie"></i> Evaluadores</a>
+                    <a href="/evaluadores"><i class="fas fa-user-tie"></i> Evaluadores</a>
                 </div>
                 <div class="menu-item">
-                    <a href="#"><i class="fas fa-clipboard-check"></i> Reguladores</a>
+                    <a href="/reguladores"><i class="fas fa-clipboard-check"></i> Reguladores</a>
+                </div>
+                <div class="menu-item">
+                    <!-- Nuevo botón de Crear Empleado -->
+                    <a href="/newEvalrs"><i class="fas fa-user-plus"></i> Crear Empleado</a>
                 </div>
                 <div class="gestion-section">
                     <a href="#" class="dropdown-btn"><i class="fas fa-tasks"></i> GESTIÓN EVALUACIONES <i class="fas fa-chevron-down"></i></a>
@@ -32,11 +35,11 @@
                         <br>
                         <div class="menu-item">
                             <br>
-                            <a href="#" class="line"><i class="fas fa-file-alt"></i> <span class="dot"></span> Evaluaciones </a>
+                            <a href="/evaluaciones" class="line"><i class="fas fa-file-alt"></i> <span class="dot"></span> Evaluaciones </a>
                         </div>
                         <br>
                         <div class="menu-item">
-                            <a href="#" class="line"><i class="fas fa-list-alt"></i> <span class="dot"></span> Formularios </a>
+                            <a href="/formularios" class="line"><i class="fas fa-list-alt"></i> <span class="dot"></span> Formularios </a>
                         </div>
                     </div>
                 </div>
@@ -46,31 +49,39 @@
         <!-- Panel principal -->
         <main class="main-content">
             <header class="header">
-                <h1>Empleados</h1>
+                <h1>Evaluadores</h1>
                 <div class="user-info">
                     <h2>Carina Campo</h2>
                     <p>Rol: Recursos Humanos</p>
                 </div>
-                
             </header>
-            <div class="search-section">
-                <input type="text" placeholder="Buscar empleados...">
-                <i class="fas fa-search search-icon"></i>
+
+            <div class="combobox-container">
+                <label for="employee-options">Designar como:</label>
+                <select id="employee-options">
+                    <option value="option1">Empleado regular</option>
+                    <option value="option2">Evaluador</option>
+                    <option value="option3">Intermediario</option>
+                </select>
             </div>
             
-            
-            
+            <!-- Sección de búsqueda -->
+            <div class="search-section">
+                <input type="text" placeholder="Buscar Evaluadores...">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+
             <section class="employee-list">
-            <% for (empleado of arrayEmpleados) { %>
-                <div class="employee">
-                    <img src="empleado1.jpg" alt="Empleado">
-                    <div class="employee-info">
-                        <h3><%= empleado.nombre %> <%= empleado.apellido %></h3>
-                        <p>Rol: <%= empleado.rol %></p>
-                        <p>Legajo: <%= empleado.legajo %></p>
+                <% for (empleado of arrayEvaluadores) { %>
+                    <div class="employee">
+                        <img src="empleado1.jpg" alt="Empleado">
+                        <div class="employee-info">
+                            <h3><%= empleado.nombre %> <%= empleado.apellido %></h3>
+                            <p>Rol: <%= empleado.rol %></p>
+                            <p>Legajo: <%= empleado.legajo %></p>
+                        </div>
                     </div>
-                </div>
-            <% } %>               
+                <% } %>               
             </section>
         </main>
     </div>

@@ -1,0 +1,311 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    font-family: Arial, sans-serif;
+    height: 100%;
+    background-color: #f4f4f4;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+}
+
+.sidebar .logo {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.sidebar .logo img {
+    max-width: 100%; 
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.sidebar nav .menu-item {
+    margin-bottom: 20px;
+}
+
+.sidebar nav .menu-item a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.sidebar nav .menu-item a i {
+    margin-right: 10px;
+}
+
+.sidebar nav .menu-item a:hover {
+    background-color: #575757;
+    transform: scale(1.05);
+}
+
+/* Botón de Crear Empleado */
+.sidebar nav .menu-item a[href="crear-empleado"] i {
+    color: #28a745;
+}
+
+/* Ajustes de los botones de la sección de gestión */
+.sidebar .gestion-section .dropdown-btn {
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    cursor: pointer;
+    color: white;
+    background-color: transparent;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.sidebar .gestion-section .dropdown-btn:hover {
+    background-color: #575757;
+    transform: scale(1.05);
+}
+
+.sidebar .gestion-section .dropdown-btn i:last-child {
+    margin-left: 10px;
+}
+
+/* Estilo de los ítems del dropdown */
+.sidebar .gestion-section .dropdown-container {
+    display: none;
+    padding-left: 20px;
+}
+
+.sidebar .gestion-section .dropdown-container.active {
+    display: block;
+}
+
+.sidebar .gestion-section .dropdown-container .menu-item {
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    position: relative;
+}
+
+.sidebar .gestion-section .dropdown-container .menu-item a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.sidebar .gestion-section .dropdown-container .menu-item a i {
+    margin-right: 10px;
+}
+
+.sidebar .gestion-section .dropdown-container .menu-item a:hover {
+    background-color: #575757;
+    transform: scale(1.05);
+}
+
+.sidebar .gestion-section .dropdown-container .menu-item .line {
+    position: absolute;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background-color: white;
+}
+
+.sidebar .gestion-section .dropdown-container .menu-item .dot {
+    display: none;
+}
+
+.help-section {
+    margin-top: auto;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 50px;
+    background-color: #fff;
+    overflow-y: auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header .user-info {
+    text-align: right;
+}
+
+.search-section {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 30px;
+}
+
+.search-section input {
+    width: 400px;
+    padding: 12px 45px 12px 15px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    transition: width 0.3s ease;
+}
+
+.search-section input:focus {
+    width: 450px;
+}
+
+.search-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    pointer-events: none;
+}
+
+.filters {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filters select {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.filters select:focus {
+    border-color: #888;
+}
+
+.employee-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.employee {
+    display: flex;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    align-items: center;
+}
+
+.employee img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.employee-info h3 {
+    margin-bottom: 5px;
+    font-size: 18px;
+}
+
+.employee-info p {
+    margin: 0;
+    color: #555;
+}
+
+.dropdown-content {
+    border: none;
+    padding: 0;
+    background-color: transparent;
+}
+
+.dropdown-btn {
+    text-decoration: none;
+}
+
+.dropdown-content a i {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.dropdown-content a:last-child {
+    margin-bottom: 0;
+}
+
+.create-section {
+    margin: 20px 0;
+    text-align: right;
+}
+
+.btn-create {
+    display: inline-block;
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-create i {
+    margin-right: 5px;
+}
+
+.btn-create:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}
+
+.combobox-container {
+    margin-left: 50px; /* Ajusta este valor para moverlo más a la izquierda o derecha */
+    margin-right: 50px; /* Mantenerlo cerca del centro sin ir completamente a la derecha */
+    margin-top: 50px; /* Ajusta este valor para moverlo más abajo */
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espacio entre el label y el select */
+}
+
+
+.combobox-container label {
+    font-size: 14px;
+    color: #555;
+}
+
+#employee-options {
+    padding: 8px 16px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 25px; /* Bordes redondeados para look moderno */
+    background-color: #fff;
+    color: #333;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: all 0.3s ease; /* Transición para hover */
+}
+
+/* Efecto hover para el select */
+#employee-options:hover {
+    border-color: #aaa;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Mayor sombra en hover */
+}

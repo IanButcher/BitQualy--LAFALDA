@@ -16,22 +16,25 @@
             </div>
             <nav>
                 <div class="menu-item">
-                    <a href="empleados.html"><i class="fas fa-users"></i> Empleados</a>
+                    <a href="/empleados"><i class="fas fa-users"></i> Empleados</a>
                 </div>
                 <div class="menu-item">
-                    <a href="evaluadores.html"><i class="fas fa-user-tie"></i> Evaluadores</a>
+                    <a href="/evaluadores"><i class="fas fa-user-tie"></i> Evaluadores</a>
                 </div>
                 <div class="menu-item">
-                    <a href="reguladores.html"><i class="fas fa-clipboard-check"></i> Reguladores</a>
+                    <a href="/reguladores"><i class="fas fa-clipboard-check"></i> Reguladores</a>
+                </div>
+                <div class="menu-item"></div>
+                    <a href="/newEvalrs"><i class="fas fa-user-plus"></i> Crear Empleado</a>
                 </div>
                 <div class="gestion-section">
                     <a href="#" class="dropdown-btn"><i class="fas fa-tasks"></i> GESTIÓN EVALUACIONES <i class="fas fa-chevron-down"></i></a>
                     <div class="dropdown-container">
                         <div class="menu-item">
-                            <a href="evaluaciones.html"><i class="fas fa-file-alt"></i> Evaluaciones</a>
+                            <a href="/evaluaciones"><i class="fas fa-file-alt"></i> Evaluaciones</a>
                         </div>
                         <div class="menu-item">
-                            <a href="/formularios.html"><i class="fas fa-list-alt"></i> Formularios</a>
+                            <a href="/formularios"><i class="fas fa-list-alt"></i> Formularios</a>
                         </div>
                     </div>
                 </div>
@@ -55,47 +58,87 @@
                 <h2>Plantillas Formularios</h2>
                 <div class="form-list">
                     <select id="form-templates">
-                        <option>Autoevaluación</option>
-                        <option>Evaluación 360</option>
-                        <option>Evaluación de Desempeño</option>
+                        <% for (formulario of formularios) { %>
+                            <option class="getOptionsForScript" value="<% formulario.id %>"><%= formulario.titulo %></option>
+                        <% } %>
                     </select>
                     <button class="btn-filter">Filtrar</button>
+                </div>
+
+                <div>
+                    <% for (formulario of formularios) { %>
+                        <h3><%= formulario.titulo %></h3>
+                        <a href="/formularios/preview/<%= formulario._id %>" class="btn-preview">Vista Previa</a>
+                        <form id="deleteForm" method="POST" style="display:none;">
+                            <input type="hidden" name="_method" value="PUT">
+                        </form>
+                        <button onclick="popupEliminar('<%= formulario._id %>')">Eliminar</button>
+
+                    <% } %>
                 </div>
     
                 <div class="preview-section">
                     <h3>Vista Previa</h3>
-                    <iframe src="https://cedec.intef.es/wp-content/uploads/2019/09/cedec-Plantilla-autoevaluacion-docente-ABP.pdf" tabindex="0" data-auto-height="true" data-aspect-ratio="0.7729220222793488" scrolling="no" width="100%" height="600" frameborder="0"  class="preview-frame" ></iframe>
+                    <iframe src="https://cedec.intef.es/wp-content/uploads/2019/09/cedec-Plantilla-autoevaluacion-docente-ABP.pdf" tabindex="0" data-auto-height="true" data-aspect-ratio="0.7729220222793488" scrolling="no" width="100%" height="600" frameborder="0" class="preview-frame"></iframe>
                 </div>
     
                 <div class="modify-section">
-                    <a href="/formularios/new" class="btn-modify"> New</a>
+                    <a href="/formularios/new" class="btn-modify">New</a>
                 </div>
-             
             </div>
         </div>
     </div>
-    </div>
+
     <script>
-        function updatePreview(template) {
-            document.getElementById('previewFrame').src = template + ".html";
+        function popupEliminar(idFormulario) {
+            // Ensure the form exists before trying to set the action
+            const deleteForm = document.getElementById('deleteForm');
+            
+            if (deleteForm && confirm('¿Estás seguro de que deseas eliminar este formulario?')) {
+                // Set the action dynamically based on the id
+                deleteForm.action = `/formularios/eliminar/${idFormulario}`;
+                deleteForm.submit();  // Submit the form
+            } else {
+                console.error('Delete form not found!');
+            }
         }
 
-        function modifyTemplate() {
-            var template = document.getElementById('previewFrame').src.split('/').pop().split('.').shift();
-            window.location.href = 'edit_' + template + '.html'; // Lleva a una página de edición
-
+    
+        function popupEliminar1(idFormulario) {
+            // Crear un popup de confirmación
+            if (confirm('¿Estás seguro de que deseas eliminar este formulario?')) {
+                // Si se confirma, hacer una solicitud PUT a la ruta de eliminación
+                fetch(`/formularios/eliminar/${idFormulario}`, {
+                    method: 'PUT',  // Cambiar a PUT en lugar de POST
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({})
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert("Formulario desactivado");
+                        window.location.reload(); // Recargar la página después de la eliminación
+                    } else {
+                        alert("Error al desactivar el formulario");
+                    }
+                })
+                .catch(error => {
+                    alert("Ocurrió un error");
+                    console.error("Error:", error);
+                });
+            }
         }
-
-             // JavaScript para mostrar/ocultar el submenú
+    
+        // JavaScript para mostrar/ocultar el submenú
         const dropdownBtn = document.querySelector('.dropdown-btn');
         const dropdownContainer = document.querySelector('.dropdown-container');
-
+    
         dropdownBtn.addEventListener('click', function(e) {
             e.preventDefault();
             dropdownContainer.classList.toggle('active');
         });
-
-        
     </script>
+    
 </body>
 </html>

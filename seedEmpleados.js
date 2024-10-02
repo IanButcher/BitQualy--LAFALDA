@@ -1,3 +1,10 @@
+const Julia = {
+    nombre: "Julia",
+    apellido: "Ferreiro",
+    rol: "CEO",
+    legajo: 14
+}
+
 const franco = {
     nombre: "Franco",
     apellido: "Siccardi",
@@ -27,8 +34,8 @@ const messi = {
 }
 
 const dilan = {
-    nombre: "Dilan",
-    apellido: "Perez Dias",
+    nombre: "Dillan",
+    apellido: "Perez Diaz",
     rol: "Limpieza y Mantenimiento",
     legajo: 622
 }
@@ -36,8 +43,37 @@ const Luis = {
     nombre: "Luis",
     apellido: "Siccardi",
     rol: "chef",
-    legajo: 001
+    legajo: 1112
 }
-
-const empleadosArray = [franco, taylor, kendrick, messi, dilan,Luis]
+const Juan = {
+    nombre: "Juan",
+    apellido: "Siccardi",
+    rol: "Recursos Humanos",
+    legajo: 89
+}
+const Leonardo = {
+    nombre: "Leonardo",
+    apellido: "Di Caprio",
+    rol: "Recursos Humanos",
+    legajo: 7
+}
+const Nacho = {
+    nombre: "Profe ",
+    apellido: "nacho",
+    rol: "tester",
+    legajo: 777
+}
+const Sofi = {
+    nombre: "Sofia",
+    apellido: "Ruiz",
+    rol: "Developer",
+    legajo: 9
+}
+const Nereo = {
+    nombre: "Nereo",
+    apellido: "Soria",
+    rol: "Diseño",
+    legajo: 27
+}
+const empleadosArray = [Julia,franco, taylor, kendrick, messi, dilan,Luis,Juan,Leonardo,Nacho,Sofi,Nereo]
 module.exports = empleadosArray
