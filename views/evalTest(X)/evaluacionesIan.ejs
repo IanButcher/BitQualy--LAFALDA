@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluaciones</title>
+    <link rel="stylesheet" href="/formularios.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Lista de Evaluaciones</h2>
+
+        <!-- Mostrar todas las evaluaciones -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Título del Formulario</th>
+                    <th>Empleado</th>
+                    <th>Puntaje</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% evaluaciones.forEach(evaluacion => { %>
+                    <tr>
+                        <td><%= evaluacion.formulario.titulo %></td>
+                        <td><%= evaluacion.empleado %></td>
+                        <td> <!-- Aquí podrías calcular el puntaje --> </td>
+                        <td>
+                            <a href="/evaluaciones/<%= evaluacion._id %>" class="btn">Ver Evaluación</a>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+
+        <!-- Botón para crear una nueva evaluación -->
+        <button id="nuevaEvaluacionBtn">Crear Nueva Evaluación</button>
+    </div>
+
+    <script>
+        document.getElementById('nuevaEvaluacionBtn').addEventListener('click', function() {
+            window.location.href = '/evaluaciones/new';
+        });
+    </script>
+</body>
+</html>

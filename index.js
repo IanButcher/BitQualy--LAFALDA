@@ -51,6 +51,11 @@ app.get('/evaluadores', (req, res) => {
 
 })
 
+app.get('/evaluacion', (req, res) => {
+    res.render('evals/evaluacion')
+})
+
+
 app.get('/newEvalrs', (req, res) => {
     res.render('evalrs/newEvalrs')
 })
@@ -95,8 +100,8 @@ app.use('/', evaluacionRoutes)
 
 // Start the server
 
-app.get('/evaluaciones1', (req, res)=>{
-    res.render('evaluaciones/evaluaciones')
+app.get('/evalTest', (req, res)=>{
+    res.render('evalText(X)/evaluacionesian')
 })
 
 app.listen(puerto, () => {
