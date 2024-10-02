@@ -68,19 +68,18 @@
             
             
             <section class="employee-list">
-            <% for (empleado of arrayEmpleados) { %>
-                <div class="employee">
-                    <a href="/empleados/<%= empleado._id %>">
-                        <img src="empleado1.jpg" alt="Empleado">
-                    <div class="employee-info">
-                        <h3><%= empleado.nombre %> <%= empleado.apellido %></h3>
-                        <p>Rol: <%= empleado.rol %></p>
-                        <p>Legajo: <%= empleado.legajo %></p>
+                <% for (empleado of arrayEmpleados) { %>
+                    <div class="employee">
+                        <a href="/empleados/<%= empleado.id %>">
+                            <img src="empleado1.jpg" alt="Empleado">
+                            <div class="employee-info">
+                                <h3><%= empleado.nombre %> <%= empleado.apellido %></h3>
+                                <p>Rol: <%= empleado.rol %></p>
+                                <p>Legajo: <%= empleado.legajo %></p>
+                            </div>
+                        </a>
                     </div>
-                    </a>
-                    
-                </div>
-            <% } %>               
+                <% } %>               
             </section>
         </main>
     </div>

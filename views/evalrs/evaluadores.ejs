@@ -66,13 +66,16 @@
 
             <section class="employee-list">
                 <% for (empleado of arrayEvaluadores) { %>
+                    
                     <div class="employee">
-                        <img src="empleado1.jpg" alt="Empleado">
-                        <div class="employee-info">
-                            <h3><%= empleado.nombre %> <%= empleado.apellido %></h3>
-                            <p>Rol: <%= empleado.rol %></p>
-                            <p>Legajo: <%= empleado.legajo %></p>
-                        </div>
+                        <a href="/evaluador/<%= empleado.id %>">
+                            <img src="empleado1.jpg" alt="Empleado">
+                            <div class="employee-info">
+                                <h3><%= empleado.nombre %> <%= empleado.apellido %></h3>
+                                <p>Rol: <%= empleado.rol %></p>
+                                <p>Legajo: <%= empleado.legajo %></p>
+                            </div>
+                        </a>  
                     </div>
                 <% } %>               
             </section>
