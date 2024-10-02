@@ -1,25 +1,42 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ver Evaluación</title>
-    <link rel="stylesheet" href="/formularios.css">
+    <title>Preview Evaluación</title>
 </head>
 <body>
-    <div class="container">
-        <h2>Evaluación: <%= evaluacion.formulario.titulo %></h2>
-        <p>Empleado: <%= evaluacion.empleado %></p>
+    <h1>Preview de la Evaluación</h1>
 
-        <!-- Mostrar preguntas y respuestas -->
-        <div>
-            <% evaluacion.respuestas.forEach((respuesta, index) => { %>
-                <div>
-                    <h3><%= respuesta.pregunta %></h3>
-                    <p><%= respuesta.respuesta.join(', ') %></p>
-                </div>
+    <h2>Formulario: <%= evaluacion.formulario.name %></h2>
+    <h3>Empleado: <%= evaluacion.empleado %></h3>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Pregunta</th>
+                <th>Respuesta</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% evaluacion.formulario.questions.forEach((question, index) => { %>
+                <tr>
+                    <td><%= question.text %></td>
+                    <td>
+                        <!-- Display formatted answer, differentiating between single and multiple answers -->
+                        <% if (typeof evaluacion.respuestas[index] === 'string') { %>
+                            <%= evaluacion.respuestas[index] %>  <!-- Display the string response -->
+                        <% } else if (Array.isArray(evaluacion.respuestas[index])) { %>
+                            Seleccionado(s): <%= evaluacion.respuestas[index].join(', ') %>  <!-- Display multiple selections -->
+                        <% } else { %>
+                            <%= JSON.stringify(evaluacion.respuestas[index]) %> <!-- Fallback: Handle unexpected formats -->
+                        <% } %>
+                    </td>
+                </tr>
             <% }) %>
-        </div>
-    </div>
+        </tbody>
+    </table>
+
+    <a href="/evaluaciones">Volver a las evaluaciones</a>
 </body>
 </html>

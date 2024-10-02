@@ -73,17 +73,17 @@ router.post('/evaluaciones/save-evaluacion', async (req, res) => {
 
         // Format the answers to ensure they are strings
         const respuestasFormateadas = formulario.questions.map((question, index) => {
-            const respuesta = respuestas[index]
-            
+            const respuesta = respuestas[index];
+
             if (Array.isArray(respuesta)) {
-                // If respuesta is an array (for checkboxes), join the values as a string
-                return respuesta.join(', ')
+                // If the respuesta is an array (for checkboxes), format them as a list of values
+                return `Seleccionado(s): ${respuesta.join(', ')}`;
             } else if (typeof respuesta === 'object' && respuesta !== null) {
-                // If respuesta is an object, extract the value or stringify it
-                return JSON.stringify(respuesta)  // Optional: Customize how to handle objects
+                // If respuesta is an object (e.g., multiple-choice), format the object's values
+                return `Seleccionado(s): ${Object.values(respuesta).join(', ')}`;
             } else {
                 // Ensure single responses are returned as strings
-                return respuesta.toString()
+                return `Respuesta: ${respuesta.toString()}`;
             }
         });
 
@@ -105,8 +105,28 @@ router.post('/evaluaciones/save-evaluacion', async (req, res) => {
     }
 })
 
-router.get('/evaluaciones/preview/:id', async (req, res)=>{
-    
-})
+// GET route --> Preview evaluacion
+router.get('/evaluaciones/preview/:id', async (req, res) => {
+    try {
+        const { id } = req.params;  // Evaluation ID
+        
+        // Find the evaluation by ID and populate the associated form and questions
+        const evaluacion = await Evaluacion.findById(id).populate({
+            path: 'formulario',
+            populate: { path: 'questions' }  // Populate questions within the form
+        });
+        
+        if (!evaluacion) {
+            return res.status(404).send('Evaluación no encontrada');
+        }
+
+        // Render a view for displaying the evaluation (non-editable)
+        res.render('evals/evaluacion', { evaluacion });
+    } catch (error) {
+        console.error('Error fetching evaluation:', error);
+        res.status(500).send('Error interno del servidor');
+    }
+});
+
 
 module.exports = router
