@@ -56,14 +56,7 @@
                 </div>
             </header>
 
-            <div class="combobox-container">
-                <label for="employee-options">Designar como:</label>
-                <select id="employee-options">
-                    <option value="option1">Empleado regular</option>
-                    <option value="option2">Evaluador</option>
-                    <option value="option3">Intermediario</option>
-                </select>
-            </div>
+            
             
             <!-- Sección de búsqueda -->
             <div class="search-section">
@@ -73,13 +66,16 @@
 
             <section class="employee-list">
                 <% for (empleado of arrayEvaluadores) { %>
+                    
                     <div class="employee">
-                        <img src="empleado1.jpg" alt="Empleado">
-                        <div class="employee-info">
-                            <h3><%= empleado.nombre %> <%= empleado.apellido %></h3>
-                            <p>Rol: <%= empleado.rol %></p>
-                            <p>Legajo: <%= empleado.legajo %></p>
-                        </div>
+                        <a href="/evaluador/<%= empleado.id %>">
+                            <img src="empleado1.jpg" alt="Empleado">
+                            <div class="employee-info">
+                                <h3><%= empleado.nombre %> <%= empleado.apellido %></h3>
+                                <p>Rol: <%= empleado.rol %></p>
+                                <p>Legajo: <%= empleado.legajo %></p>
+                            </div>
+                        </a>  
                     </div>
                 <% } %>               
             </section>

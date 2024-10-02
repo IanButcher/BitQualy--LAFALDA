@@ -202,34 +202,122 @@ body, html {
 
 .employee-list {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas */
+    gap: 20px; /* Espacio entre tarjetas */
+    margin-top: 30px;
+    padding: 20px;
+    overflow-y: auto;  /* Scroll vertical si es necesario */
 }
 
+/* Cada empleado (tarjeta) */
 .employee {
     display: flex;
-    background-color: #f9f9f9;
-    padding: 15px;
+    align-items: center;   /* Alinea el contenido verticalmente */
+    background-color: #fff;
+    padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: left;  /* Alinea el contenido a la izquierda */
+    width: 100%;  /* Asegura que las tarjetas ocupen todo el ancho disponible */
+    max-width: 600px; /* Define un ancho máximo para hacerlas más largas */
 }
 
+.employee:hover {
+    transform: translateY(-5px);  /* Efecto hover: eleva ligeramente la tarjeta */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Imagen del empleado */
 .employee img {
     width: 60px;
     height: 60px;
     border-radius: 50%;
     margin-right: 15px;
+    object-fit: cover;
+}
+
+/* Información del empleado */
+.employee-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinea todo a la izquierda */
 }
 
 .employee-info h3 {
     margin-bottom: 5px;
     font-size: 18px;
+    color: #333;
+    font-weight: bold;
 }
 
 .employee-info p {
-    margin: 0;
+    margin: 3px 0;
+    font-size: 14px;
     color: #555;
+}
+
+/* Efecto de color en el nombre */
+.employee-info h3:hover {
+    color: #1a73e8;  /* Cambia el color del nombre al hacer hover */
+}
+
+/* Pequeño detalle adicional: estilo del enlace */
+.employee a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+/* Dropdown content adjustments */
+.dropdown-content {
+    border: none;
+    padding: 0;
+    background-color: transparent;
+}
+
+.dropdown-btn {
+    text-decoration: none;
+}
+
+.dropdown-content a i {
+    font-size: 16px;
+    margin-right: 10px;
+    padding-right:10px  ;
+}
+
+.dropdown-content a:last-child {
+    margin-bottom: 0;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+    .sidebar {
+        width: 250px;
+    }
+
+    .search-section input {
+        width: 300px;
+    }
+
+    .search-section input:focus {
+        width: 350px;
+    }
+
+    .employee img {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .employee-info h3 {
+        font-size: 16px;
+    }
+    .employee-info p{
+      margin-bottom: 5px;
+
+    }  
+    
 }
 
 .dropdown-content {
@@ -277,35 +365,3 @@ body, html {
     transform: scale(1.05);
 }
 
-.combobox-container {
-    margin-left: 50px; /* Ajusta este valor para moverlo más a la izquierda o derecha */
-    margin-right: 50px; /* Mantenerlo cerca del centro sin ir completamente a la derecha */
-    margin-top: 50px; /* Ajusta este valor para moverlo más abajo */
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Espacio entre el label y el select */
-}
-
-
-.combobox-container label {
-    font-size: 14px;
-    color: #555;
-}
-
-#employee-options {
-    padding: 8px 16px;
-    font-size: 14px;
-    border: 1px solid #ddd;
-    border-radius: 25px; /* Bordes redondeados para look moderno */
-    background-color: #fff;
-    color: #333;
-    outline: none;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    transition: all 0.3s ease; /* Transición para hover */
-}
-
-/* Efecto hover para el select */
-#employee-options:hover {
-    border-color: #aaa;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Mayor sombra en hover */
-}
