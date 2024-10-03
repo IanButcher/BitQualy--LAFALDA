@@ -26,8 +26,8 @@ app.use(express.static('public'))
 // Mongoose conection
 async function main() {
     await mongoose.connect('mongodb://127.0.0.1:27017/bitqualyPrueba')
-    const mongoURI = process.env.MONGODB_URI || "mongodb://mongodb:27017/mydatabase";  
-    await mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
+    //const mongoURI = process.env.MONGODB_URI || "mongodb://mongodb:27017/mydatabase";  
+    //await mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
     console.log('Conection to mongodb Succsesful')
     // use await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test'); if your database has auth enabled
 }
