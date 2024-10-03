@@ -5,6 +5,7 @@ const arrayEmpleados = require('./seedEmpleados')
 const arrayEvaluadores = require('./seedEvaluadores')
 const path = require('path')
 const mongoose = require('mongoose')
+const arrayReguladores = require('./seedReguladores')
 
 // Server config
 const app = express()
@@ -47,7 +48,13 @@ app.get('/login', (req, res) => {
 
 app.get('/evaluadores', (req, res) => {
     res.render('evalrs/evaluadores', {arrayEvaluadores})
+
 })
+
+app.get('/evaluacion', (req, res) => {
+    res.render('evals/evaluacion')
+})
+
 
 app.get('/newEvalrs', (req, res) => {
     res.render('evalrs/newEvalrs')
@@ -61,8 +68,26 @@ app.get('/empleados/:id', (req,res)=>{
     const id = req.params.id
     const empleado = arrayEmpleados[id]
     res.render('empls/empleado', {empleado})
+
+})
+app.get('/reguladores', (req, res)=>{
+    res.render('regs/reguladores', {arrayReguladores})
 })
 
+app.get('/reguladores/:id', (req, res)=>{
+    const id = req.params.id
+    const regulador = arrayReguladores[id]
+    res.render('regs/ReguladoresEsp', {regulador})
+})
+app.get('/evaluador', (req, res)=>{
+    res.render('evalrs/evaluador', {arrayEvaluadores})
+})
+
+app.get('/evaluador/:id', (req,res)=>{
+    const id = req.params.id
+    const empleado = arrayEvaluador[id]
+    res.render('evalrs/evaluador', {evaluador})
+})
 
 app.get('/home', (req, res) => {
     res.render('home')
@@ -74,6 +99,12 @@ app.use('/', evaluacionRoutes)
 
 
 // Start the server
+
+app.get('/evalTest', (req, res)=>{
+    res.render('evalText(X)/evaluacionesian')
+})
+
 app.listen(puerto, () => {
-    console.log(`Servidor abierto en el puerto ${puerto}`)
+    console.log('Servidor abierto')
+    console.log(puerto)
 })

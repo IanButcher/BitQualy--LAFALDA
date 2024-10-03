@@ -28,7 +28,7 @@ body, html {
 }
 
 .sidebar .logo img {
-    max-width: 100%; 
+    max-width: 100%;
     height: auto;
     display: block;
     margin: 0 auto;
@@ -56,6 +56,11 @@ body, html {
     transform: scale(1.05);
 }
 
+/* Botón de Crear Empleado */
+.sidebar nav .menu-item a[href="crear-empleado"] i {
+    color: #28a745;
+}
+
 /* Ajustes de los botones de la sección de gestión */
 .sidebar .gestion-section .dropdown-btn {
     font-weight: bold;
@@ -78,7 +83,6 @@ body, html {
     margin-left: 10px;
 }
 
-/* Estilo de los ítems del dropdown */
 .sidebar .gestion-section .dropdown-container {
     display: none;
     padding-left: 20px;
@@ -113,7 +117,6 @@ body, html {
     transform: scale(1.05);
 }
 
-/* Mantén solo la línea vertical */
 .sidebar .gestion-section .dropdown-container .menu-item .line {
     position: absolute;
     left: 0;
@@ -122,7 +125,6 @@ body, html {
     background-color: white;
 }
 
-/* Elimina los puntos eliminando la clase .dot */
 .sidebar .gestion-section .dropdown-container .menu-item .dot {
     display: none;
 }
@@ -149,142 +151,88 @@ body, html {
     text-align: right;
 }
 
-.search-section {
-    position: relative;
-    display: inline-block;
-    margin-bottom: 30px;
-}
-
-.search-section input {
-    width: 400px;
-    padding: 12px 45px 12px 15px;
-    font-size: 18px;
-    border: 1px solid #ccc;
-    border-radius: 25px;
-    transition: width 0.3s ease;
-}
-
-.search-section input:focus {
-    width: 450px;
-}
-
-.search-icon {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #888;
-    pointer-events: none;
-}
-
-.filters {
-    margin-top: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.filters select {
-    padding: 8px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 25px;
-    outline: none;
-    transition: border-color 0.3s ease;
-}
-
-.filters select:focus {
-    border-color: #888;
-}
-
-.employee-list {
+.form-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-}
-
-.employee {
-    display: flex;
-    background-color: #f9f9f9;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    align-items: center;
-}
-
-.employee img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    margin-right: 15px;
-}
-
-.employee-info h3 {
-    margin-bottom: 5px;
-    font-size: 18px;
-}
-
-.employee-info p {
-    margin: 0;
-    color: #555;
-}
-/* Eliminar cualquier borde en el menú desplegable */
-.dropdown-content {
-    border: none; /* Asegúrate de que no haya bordes */
-    padding: 0;
-    background-color: transparent; /* Fondo transparente si es necesario */
-}
-
-/* Ajuste del espaciado en los botones del submenú */
-.dropdown-btn{
-    text-decoration: none; /* Quitar subrayado en los enlaces */
-}
-
-/* Ajustar los íconos */
-.dropdown-content a i {
-    font-size: 16px;
-    margin-right: 10px;
-}
-
-/* Ajuste del último ítem para no tener espacio extra */
-.dropdown-content a:last-child {
-    margin-bottom: 0;
-}
-
-/* Estilos del formulario */
-.form-section {
     margin-top: 20px;
 }
 
 .form-group {
-    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 .form-group label {
-    display: block;
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 8px;
 }
 
 .form-group input[type="text"],
-.form-group input[type="file"] {
+.form-group input[type="password"],
+.form-group select {
     width: 100%;
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    box-sizing: border-box;
 }
 
 .form-group input[type="text"]:focus,
-.form-group input[type="file"]:focus {
+.form-group input[type="password"]:focus {
     border-color: #888;
+}
+
+/* Contenedor de imagen */
+.image-and-fields {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.image-preview {
+    position: relative;
+    margin-right: 20px;
+    width: 150px;
+    height: 150px;
+    border: 2px solid #575757;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.change-photo-text {
+    position: absolute;
+    color: white;
+    background-color: #575757;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    border-radius: 50%;
+}
+
+.form-fields {
+    display: flex;
+    flex-direction: column;
 }
 
 .form-buttons {
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
+    grid-column: 1 / -1;
 }
 
 .btn-submit {
@@ -304,7 +252,6 @@ body, html {
 }
 
 .btn-cancel {
-    display: inline-block;
     background-color: #dc3545;
     color: white;
     padding: 10px 20px;
@@ -319,55 +266,25 @@ body, html {
     background-color: #c82333;
 }
 
-/* Contenedor de contraseña con el icono de ojo */
 .password-container {
     position: relative;
-    width: 100%;
 }
 
 .password-container input {
     width: 100%;
-    padding: 10px;
+    padding: 10px 40px 10px 15px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    box-sizing: border-box;
 }
 
-
-.password-container .toggle-password {
+.eye-icon {
     position: absolute;
-    right: 10px;
+    right: 15px;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
     color: #888;
-}
-
-.password-container .fa-eye-slash {
-    color: #000;
-}
-
-/* Estilos para el mensaje de error */
-.error-message {
-    color: red;
-    font-size: 14px;
-    margin-top: 5px;
-}
-
-/* Estilos para la vista previa de la imagen */
-.image-preview {
-    margin-top: 10px;
-    width: 150px;
-    height: 150px;
-    border: 1px solid #ccc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-}
-
-.image-preview img {
-    max-width: 100%;
-    max-height: 100%;
-    display: none;
+    font-size: 18px;
 }

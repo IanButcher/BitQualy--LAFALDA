@@ -9,38 +9,7 @@
 </head>
 
 <body>
-    <div class="container">
-        <!-- Panel lateral izquierdo -->
-        <aside class="sidebar">
-            <div class="logo">
-                <img src="/img/Logo BitQualy Blanco.png" alt="BitQualy Logo">
-            </div>
-            <nav>
-                <div class="menu-item">
-                    <a href="empleados"><i class="fas fa-users"></i> Empleados</a>
-                </div>
-                <div class="menu-item">
-                    <a href="#"><i class="fas fa-user-tie"></i> Evaluadores</a>
-                </div>
-                <div class="menu-item">
-                    <a href="#"><i class="fas fa-clipboard-check"></i> Reguladores</a>
-                </div>
-                <div class="gestion-section">
-                    <a href="#" class="dropdown-btn"><i class="fas fa-tasks"></i> GESTIÓN EVALUACIONES <i class="fas fa-chevron-down"></i></a>
-                    <div class="dropdown-container">
-                        <br>
-                        <div class="menu-item">
-                            <br>
-                            <a href="#" class="line"><i class="fas fa-file-alt"></i> <span class="dot"></span> Evaluaciones </a>
-                        </div>
-                        <br>
-                        <div class="menu-item">
-                            <a href="/formularios" class="line"><i class="fas fa-list-alt"></i> <span class="dot"></span> Formularios </a>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </aside>
+    <nav> <%- include('../partials/navbar') %> </nav>
 
         <!-- Panel principal -->
         <main class="main-content">
@@ -51,6 +20,8 @@
                     <p>Rol: Recursos Humanos</p>
                 </div>
             </header>
+
+            
             
             <!-- Sección de búsqueda -->
             <div class="search-section">
@@ -58,22 +29,18 @@
                 <i class="fas fa-search search-icon"></i>
             </div>
 
-            <!-- Botón Crear -->
-            <div class="create-section">
-                <a href="/newEvalrs" class="btn-create">
-                    <i class="fas fa-plus"></i> Crear Evaluador
-                </a>
-            </div>
-
             <section class="employee-list">
                 <% for (empleado of arrayEvaluadores) { %>
+                    
                     <div class="employee">
-                        <img src="empleado1.jpg" alt="Empleado">
-                        <div class="employee-info">
-                            <h3><%= empleado.nombre %> <%= empleado.apellido %></h3>
-                            <p>Rol: <%= empleado.rol %></p>
-                            <p>Legajo: <%= empleado.legajo %></p>
-                        </div>
+                        <a href="/evaluador/<%= empleado.id %>">
+                            <img src="empleado1.jpg" alt="Empleado">
+                            <div class="employee-info">
+                                <h3><%= empleado.nombre %> <%= empleado.apellido %></h3>
+                                <p>Rol: <%= empleado.rol %></p>
+                                <p>Legajo: <%= empleado.legajo %></p>
+                            </div>
+                        </a>  
                     </div>
                 <% } %>               
             </section>

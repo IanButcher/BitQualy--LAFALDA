@@ -9,43 +9,12 @@
 </head>
 
 <body>
-    <div class="container">
-        <!-- Panel lateral izquierdo -->
-        <aside class="sidebar">
-            <div class="logo">
-                <img src="/img/Logo BitQualy Blanco.png" alt="BitQualy Logo">
-            </div>
-            <nav>
-                <div class="menu-item">
-                    <a href="empleados"><i class="fas fa-users"></i> Empleados</a>
-                </div>
-                <div class="menu-item">
-                    <a href="#"><i class="fas fa-user-tie"></i> Evaluadores</a>
-                </div>
-                <div class="menu-item">
-                    <a href="#"><i class="fas fa-clipboard-check"></i> Reguladores</a>
-                </div>
-                <div class="gestion-section">
-                    <a href="#" class="dropdown-btn"><i class="fas fa-tasks"></i> GESTIÓN EVALUACIONES <i class="fas fa-chevron-down"></i></a>
-                    <div class="dropdown-container">
-                        <br>
-                        <div class="menu-item">
-                            <br>
-                            <a href="#" class="line"><i class="fas fa-file-alt"></i> <span class="dot"></span> Evaluaciones </a>
-                        </div>
-                        <br>
-                        <div class="menu-item">
-                            <a href="/formularios" class="line"><i class="fas fa-list-alt"></i> <span class="dot"></span> Formularios </a>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </aside>
+    <nav> <%- include('../partials/navbar') %> </nav>
 
         <!-- Panel principal -->
         <main class="main-content">
             <header class="header">
-                <h1>Crear Evaluador</h1>
+                <h1>Crear Empleado</h1>
                 <div class="user-info">
                     <h2>Carina Campo</h2>
                     <p>Rol: Recursos Humanos</p>
@@ -53,67 +22,71 @@
             </header>
 
             <!-- Formulario de Creación de Evaluador -->
-            <section class="form-section">
-                <form id="crear-evaluador-form">
+            <div class="image-and-fields">
+                <!-- Vista previa de la imagen -->
+                <div class="image-preview" onclick="document.getElementById('foto').click();">
+                    <img id="image-preview-img" alt="Vista previa de la foto" style="display: none;" />
+                    <span class="change-photo-text">Haz clic aquí para cambiar la foto</span> <!-- Mensaje indicativo -->
+                </div>
+                <input type="file" id="foto" name="foto" accept="image/*" onchange="previewImage(event);" style="display: none;"> <!-- Asegúrate de que este input esté presente -->
+
+                <!-- Campos de Nombre y Apellido -->
+                <div class="form-fields">
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
-                        <input type="text" id="nombre" name="nombre" placeholder="Ingresa el nombre" required>
+                        <input type="text" id="nombre" name="nombre" placeholder="Ingresa el nombre" required minlength="4" maxlength="16" size="16">
                     </div>
-                    
                     <div class="form-group">
                         <label for="apellido">Apellido</label>
-                        <input type="text" id="apellido" name="apellido" placeholder="Ingresa el apellido" required>
+                        <input type="text" id="apellido" name="apellido" placeholder="Ingresa el apellido" required minlength="4" maxlength="16" size="16">
                     </div>
+                </div>
+            </div>
 
-                    <div class="form-group">
-                        <label for="rol">Rol</label>
-                        <input type="text" id="rol" name="rol" placeholder="Ingresa el rol" required>
-                    </div>
+            <!-- Resto del formulario -->
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="legajo">Legajo</label>
+                    <input type="text" id="legajo" name="legajo" placeholder="Ingresa el legajo" required minlength="4" maxlength="16" size="25">
+                </div>
+                <div class="form-group">
+                    <label for="rol">Rol</label>
+                    <select id="rol" name="rol" required>
+                        <option value="" disabled selected>Selecciona un rol</option>
+                        <option value="regulador">Regulador</option>
+                        <option value="empleado">Empleado</option>
+                        <option value="evaluador">Evaluador</option>
+                    </select>
+                </div>
 
-                    <div class="form-group">
-                        <label for="legajo">Legajo</label>
-                        <input type="text" id="legajo" name="legajo" placeholder="Ingresa el legajo" required>
+                <!-- Campo de Contraseña -->
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="password-container">
+                        <input type="password" id="password" name="password" placeholder="Ingresa la contraseña" required minlength="6" maxlength="8">
+                        <i class="fas fa-eye toggle-password eye-icon"></i>
                     </div>
+                </div>
 
-                    <!-- Campo de Contraseña -->
-                    <div class="form-group">
-                        <label for="password">Contraseña</label>
-                        <div class="password-container">
-                            <input type="password" id="password" name="password" placeholder="Ingresa la contraseña" required minlength="6" maxlength="8">
-                            <i class="fas fa-eye toggle-password"></i>
-                        </div>
+                <!-- Campo para Confirmar Contraseña -->
+                <div class="form-group">
+                    <label for="confirm-password">Confirmar Contraseña</label>
+                    <div class="password-container">
+                        <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirma la contraseña" required minlength="6" maxlength="8">
+                        <i class="fas fa-eye toggle-password eye-icon"></i>
                     </div>
+                    <p id="error-message" class="error-message"></p>
+                </div>
 
-                    <!-- Campo para Confirmar Contraseña -->
-                    <div class="form-group">
-                        <label for="confirm-password">Confirmar Contraseña</label>
-                        <div class="password-container">
-                            <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirma la contraseña" required minlength="6" maxlength="8">
-                            <i class="fas fa-eye toggle-password"></i>
-                        </div>
-                        <p id="error-message" class="error-message"></p>
-                    </div>
-
-                    <!-- Vista previa de la imagen -->
-                    <div class="form-group">
-                        <label for="foto">Foto</label>
-                        <input type="file" id="foto" name="foto" accept="image/*" onchange="previewImage(event)">
-                        <div class="image-preview" id="image-preview">
-                            <img id="image-preview-img" alt="Vista previa de la foto" />
-                        </div>
-                    </div>
-
-                    <div class="form-buttons">
-                        <button type="submit" class="btn-submit">Crear Evaluador</button>
-                        <a href="/evaluadores" class="btn-cancel">Cancelar</a>
-                    </div>
-                </form>
-            </section>
+                <div class="form-buttons">
+                    <button type="submit" class="btn-submit">Crear Evaluador</button>
+                    <a href="/evaluadores" class="btn-cancel">Cancelar</a>
+                </div>
+            </div>
         </main>
     </div>
 
     <script>
-        // JavaScript para mostrar/ocultar el submenú
         const dropdownBtn = document.querySelector('.dropdown-btn');
         const dropdownContainer = document.querySelector('.dropdown-container');
 
@@ -122,7 +95,6 @@
             dropdownContainer.classList.toggle('active');
         });
 
-        // Mostrar/Ocultar Contraseña
         const togglePassword = document.querySelectorAll('.toggle-password');
         togglePassword.forEach(toggle => {
             toggle.addEventListener('click', function() {
@@ -134,7 +106,6 @@
             });
         });
 
-        // Validar que las contraseñas sean iguales
         const form = document.getElementById('crear-evaluador-form');
         const passwordInput = document.getElementById('password');
         const confirmPasswordInput = document.getElementById('confirm-password');
@@ -149,7 +120,6 @@
             }
         });
 
-        // Vista previa de la imagen
         function previewImage(event) {
             const reader = new FileReader();
             reader.onload = function() {

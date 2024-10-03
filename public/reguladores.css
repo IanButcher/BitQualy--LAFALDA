@@ -10,6 +10,124 @@ body, html {
     background-color: #f4f4f4;
 }
 
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    transition: width 0.3s ease;
+}
+
+.sidebar .logo {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.sidebar .logo img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.sidebar nav .menu-item {
+    margin-bottom: 20px;
+}
+
+.sidebar nav .menu-item a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.sidebar nav .menu-item a i {
+    margin-right: 10px;
+}
+
+.sidebar nav .menu-item a:hover {
+    background-color: #575757;
+    transform: scale(1.05);
+}
+
+/* Dropdown section */
+.sidebar .gestion-section .dropdown-btn {
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    cursor: pointer;
+    color: white;
+    background-color: transparent;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.sidebar .gestion-section .dropdown-btn:hover {
+    background-color: #575757;
+    transform: scale(1.05);
+}
+
+.sidebar .gestion-section .dropdown-btn i:last-child {
+    margin-left: 10px;
+}
+
+/* Dropdown items */
+.sidebar .gestion-section .dropdown-container {
+    display: none;
+    padding-left: 20px;
+}
+
+.sidebar .gestion-section .dropdown-container.active {
+    display: block;
+}
+
+.sidebar .gestion-section .dropdown-container .menu-item {
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    position: relative;
+}
+
+.sidebar .gestion-section .dropdown-container .menu-item a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.sidebar .gestion-section .dropdown-container .menu-item a i {
+    margin-right: 10px;
+}
+
+.sidebar .gestion-section .dropdown-container .menu-item a:hover {
+    background-color: #575757;
+    transform: scale(1.05);
+}
+
+/* Vertical line */
+.sidebar .gestion-section .dropdown-container .menu-item .line {
+    position: absolute;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background-color: white;
+}
+
+/* Remove dots */
+.sidebar .gestion-section .dropdown-container .menu-item .dot {
+    display: none;
+}
+
 /* Help section */
 .help-section {
     margin-top: auto;
@@ -40,11 +158,11 @@ body, html {
     display: flex;
     align-items: center;
     background-color: #fff;
-    border: 2px solid #000000;  /* Borde */
+    border: 2px solid #d80000;  /* Borde */
     border-radius: 25px;  /* Bordes redondeados */
     padding: 5px 10px;  /* Espaciado interno */
     transition: border-color 0.3s ease;  /* Transición suave */
-    width: 300px;  /* Ancho fijo más grande */
+    width: 350px;  /* Ancho fijo más grande */
 }
 
 input[type="search"] {
@@ -57,7 +175,7 @@ input[type="search"] {
 
 .search-icon {
     font-size: 18px;  /* Tamaño del ícono */
-    color: #000000;  /* Color del ícono */
+    color: #ff0000;  /* Color del ícono */
     cursor: pointer;
     padding: 0;  /* Sin espaciado adicional */
     margin-left: 10px; /* Espaciado a la izquierda del ícono */
@@ -92,6 +210,10 @@ input[type="search"] {
 }
 
 /* Employee list */
+/* Contenedor de la lista de empleados */
+/* Contenedor de la lista de empleados */
+/* Contenedor de la lista de empleados */
+/* Contenedor de la lista de empleados */
 .employee-list {
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* Dos columnas */
@@ -162,6 +284,36 @@ input[type="search"] {
     align-items: center;
     width: 100%;
 }
+
+/* Media Query para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .employee-list {
+        grid-template-columns: 1fr;  /* Una columna en pantallas pequeñas */
+    }
+
+    .employee {
+        max-width: 100%;  /* Ajusta el ancho para pantallas más pequeñas */
+    }
+}
+
+/* Media Query para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .employee-list {
+        grid-template-columns: 1fr;  /* Una columna en pantallas pequeñas */
+    }
+
+    .employee {
+        max-width: 100%;  /* Ajusta el ancho para pantallas más pequeñas */
+    }
+}
+
+/* Media Query para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .employee-list {
+        grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+    }
+}
+
 /* Dropdown content adjustments */
 .dropdown-content {
     border: none;
@@ -205,11 +357,6 @@ input[type="search"] {
     .employee-info h3 {
         font-size: 16px;
     }
-    .employee-info p{
-      margin-bottom: 5px;
-
-    }  
-    
 }
 
 @media (max-width: 480px) {
@@ -289,3 +436,36 @@ input[type="search"] {
         grid-template-columns: 1fr;
     }
 } */
+
+.combobox-container {
+    margin-left: 50px; /* Ajusta este valor para moverlo más a la izquierda o derecha */
+    margin-right: 50px; /* Mantenerlo cerca del centro sin ir completamente a la derecha */
+    margin-top: 50px; /* Ajusta este valor para moverlo más abajo */
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espacio entre el label y el select */
+}
+
+
+.combobox-container label {
+    font-size: 14px;
+    color: #555;
+}
+
+#employee-options {
+    padding: 8px 16px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 25px; /* Bordes redondeados para look moderno */
+    background-color: #fff;
+    color: #333;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: all 0.3s ease; /* Transición para hover */
+}
+
+/* Efecto hover para el select */
+#employee-options:hover {
+    border-color: #aaa;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Mayor sombra en hover */
+}

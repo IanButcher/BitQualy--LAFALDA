@@ -87,5 +87,5 @@ const Nereo = {
     rol: "Diseño",
     legajo: 27
 }
-const empleadosArray = [Julia,franco, taylor, kendrick, messi, dilan,Luis,Juan,Leonardo,Nacho,Sofi,Nereo]
-module.exports = empleadosArray
+const reguladoresArray = [Julia,franco, taylor, kendrick, messi, dilan,Luis,Juan,Leonardo,Nacho,Sofi,Nereo]
+module.exports = reguladoresArray
