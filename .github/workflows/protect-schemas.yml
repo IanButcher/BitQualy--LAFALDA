@@ -1,0 +1,29 @@
+name: Protect JavaScript Files in Schemas
+
+on:
+  pull_request:
+    branches:
+      - main  
+    paths:
+      - 'Schemas/**/*.js'  
+
+jobs:
+  protect_schemas:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check for deleted JavaScript files
+        run: |
+          # List deleted JavaScript files in the Schemas folder
+          deleted_files=$(git diff --name-status HEAD^ HEAD | grep "^D" | grep "Schemas/.*\.js")
+
+          if [ -n "$deleted_files" ]; then
+            echo "Error: The following JavaScript files have been deleted from /Schemas:"
+            echo "$deleted_files"
+            exit 1
+          else
+            echo "No JavaScript files were deleted in /Schemas."
+          fi

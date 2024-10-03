@@ -1,0 +1,26 @@
+name: Prevent PRs with node index.js errors
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run_node_script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' 
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run node index.js
+        run: |
+          node index.js
