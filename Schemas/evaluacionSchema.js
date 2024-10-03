@@ -1,7 +1,8 @@
-// evaluationSchema.js
+// modulos
 const mongoose = require('mongoose')
 const Formulario = require('./formularioSchema')
 
+//esquema para los comentarios
 const comentarioSchema = new mongoose.Schema({
     intermediario: {
         type: Object,
@@ -15,7 +16,7 @@ const comentarioSchema = new mongoose.Schema({
 
 const Comentario = mongoose.model('Comentario', comentarioSchema)
 
-
+//esquema base para las evaluaciones
 const evaluacionSchema = new mongoose.Schema({
     formulario: {
         type: mongoose.Schema.Types.ObjectId,
