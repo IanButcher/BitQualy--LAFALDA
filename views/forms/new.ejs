@@ -169,6 +169,7 @@
 
         // Sumar todos los valores de porcentaje
         percentageInputs.forEach(input => {
+            const value = parseFloat(input.value)
             if (!isNaN(value)) {
                 total += value;
             }
