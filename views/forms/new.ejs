@@ -215,11 +215,13 @@
         if (!isNaN(value)) {
             if (value > 100) {
                 alert("El porcentaje no puede ser mayor a 100%.");
-                percentageInput.value = 0;  
+                percentageInput.value = 0;
+
             }
             else {
                 if (TotalMaxPorcentaje() === false)
-                percentageInput.value = 0;  
+                percentageInput.value = 0;
+
             }
         } else {
             
@@ -231,18 +233,18 @@
             const percentageInput = document.getElementById(`percentage${questionNumber}`)
             const value = percentageInput.value
 
-            if (value < 10) {
-                percentageInput.style.backgroundColor = "#f8d7da"; // Red
-            } else if (value <= 20) {
-                percentageInput.style.backgroundColor = "#f5c6cb"; // Light Red
-            } else if (value <= 30) {
-                percentageInput.style.backgroundColor = "#ffeeba"; // Yellow
+            if (value < 20) {
+                percentageInput.style.backgroundColor = "#f5c6cb"; // Red
             } else if (value <= 40) {
+                percentageInput.style.backgroundColor = "#f8d7da"; // Light Red
+            } else if (value <= 60) {
+                percentageInput.style.backgroundColor = "#ffeeba"; // Yellow
+            } else if (value <= 80) {
                 percentageInput.style.backgroundColor = "#fff3cd"; // Light Yellow
-            } else if (value <= 50) {
+            } else if (value <= 100) {
                 percentageInput.style.backgroundColor = "#d4edda"; // Green
             } else {
-                percentageInput.style.backgroundColor = "#c3e6cb"; // Dark Green
+                percentageInput.style.backgroundColor = "#f5c6cb"; // red
             }
         }
 
