@@ -97,7 +97,7 @@
 
                     <!-- Porcentaje -->
                     <label for="percentage${questionNumber}">Porcentaje:</label>
-                    <input type="number" class="percentage-input" id="percentage${questionNumber}" name="percentage${questionNumber}" min="0" max="100" required oninput="updateColor(${questionNumber})">
+                    <input type="number" class="percentage-input" id="percentage${questionNumber}" name="percentage${questionNumber}" min="0" max="100" required oninput="updateColor(${questionNumber}), maxPorcentage(${questionNumber}) ">
 
                     <!-- Tipo de pregunta -->
                     <label for="type${questionNumber}">Tipo de Pregunta:</label>
@@ -163,23 +163,59 @@
             }
         }
 
+        function TotalMaxPorcentaje() {
+        const percentageInputs = document.querySelectorAll('.percentage-input');
+        let total = 0;
+
+        // Sumar todos los valores de porcentaje
+        percentageInputs.forEach(input => {
+            if (!isNaN(value)) {
+                total += value;
+            }
+        });
+        if (total > 100) {
+            alert("La suma total de los porcentajes no puede exceder el 100%.");
+            return false;  
+        }
+        return true;  
+    }
+        // que el porcentage de cada pregunta no supere a 100 o este por debajo de 0
+        function maxPorcentage(questionNumber) {
+        const percentageInput = document.getElementById(`percentage${questionNumber}`);
+        const value = parseFloat(percentageInput.value);
+        if (!isNaN(value)) {
+            if (value > 100) {
+                alert("El porcentaje no puede ser mayor a 100%.");
+                percentageInput.value = 0;
+
+            }
+            else {
+                if (TotalMaxPorcentaje() === false)
+                percentageInput.value = 0;
+
+            }
+        } else {
+            
+        }
+    }
+        
         // Actualizar el color del porcentaje
         function updateColor(questionNumber) {
-            const percentageInput = document.getElementById(`percentage${questionNumber}`);
-            const value = percentageInput.value;
+            const percentageInput = document.getElementById(`percentage${questionNumber}`)
+            const value = percentageInput.value
 
-            if (value < 10) {
-                percentageInput.style.backgroundColor = "#f8d7da"; // Red
-            } else if (value <= 20) {
-                percentageInput.style.backgroundColor = "#f5c6cb"; // Light Red
-            } else if (value <= 30) {
-                percentageInput.style.backgroundColor = "#ffeeba"; // Yellow
+            if (value < 20) {
+                percentageInput.style.backgroundColor = "#f5c6cb"; // Red
             } else if (value <= 40) {
+                percentageInput.style.backgroundColor = "#f8d7da"; // Light Red
+            } else if (value <= 60) {
+                percentageInput.style.backgroundColor = "#ffeeba"; // Yellow
+            } else if (value <= 80) {
                 percentageInput.style.backgroundColor = "#fff3cd"; // Light Yellow
-            } else if (value <= 50) {
+            } else if (value <= 100) {
                 percentageInput.style.backgroundColor = "#d4edda"; // Green
             } else {
-                percentageInput.style.backgroundColor = "#c3e6cb"; // Dark Green
+                percentageInput.style.backgroundColor = "#f5c6cb"; // red
             }
         }
 

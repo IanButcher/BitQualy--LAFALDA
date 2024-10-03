@@ -11,86 +11,38 @@
 <body>
     <nav> <%- include('../partials/navbar') %> </nav>
 
-        <!-- Panel principal -->
-        <div class="main-content">
-            <div class="header">
-                <div class="user-info">
-                    <img src="/img/user-image.png" alt="User Image">
-                    <span>Carina Campo | Rol: Recursos Humanos</span>
-                </div>
-            </div>
+        <!-- Select para seleccionar el formulario -->
+        <label for="formularioSelect">Seleccionar Formulario:</label>
+        <select id="formularioSelect" name="formulario" required>
+            <option value="">--Seleccionar Formulario--</option>
+            <% formularios.forEach(formulario => { %>
+                <option value="<%= formulario._id %>"><%= formulario.titulo %></option>
+            <% }) %>
+        </select>
 
-            <div class="form-editor">
-                <h2>Crear Nueva Evaluación</h2>
+        <!-- Select para seleccionar empleado -->
+        <label for="empleadoSelect">Seleccionar Empleado:</label>
+        <select id="empleadoSelect" name="empleado" required>
+            <option value="">--Seleccionar Empleado--</option>
+            <!-- Placeholder: Add logic to dynamically populate empleados -->
+            <option value="Juan">Juan</option>
+            <option value="Maria">Maria</option>
+        </select>
 
-                <!-- Combobox para seleccionar el formulario -->
-                <label for="formulario">Seleccionar Formulario:</label>
-                <select id="formularioSelect" name="formulario" onchange="mostrarPreguntas()">
-                    <option value="">--Seleccionar Formulario--</option>
-                    <% formularios.forEach(formulario => { %>
-                        <option value="<%= formulario._id %>"><%= formulario.titulo %></option>
-                    <% }) %>
-                </select>
-
-                <!-- Formulario para responder preguntas -->
-                <form id="evaluacionForm" method="POST" action="/evaluaciones/save-evaluacion">
-                    <div id="preguntasContainer">
-                        <!-- Aquí se cargarán las preguntas dinámicamente -->
-                    </div>
-
-                    <!-- Campo para el nombre del empleado -->
-                    <label for="empleado">Seleccionar Empleado:</label>
-                    <select id="empleadoSelect" name="empleado">
-                        <option value="">--Seleccionar Empleado--</option>
-                        <!-- Aquí deberías agregar los empleados dinámicamente -->
-                    </select>
-
-                    <!-- Botón para guardar la evaluación -->
-                    <button type="submit" class="btn-save">Guardar Evaluación</button>
-                </form>
-            </div>
-        </div>
+        <!-- Botón para aceptar y mostrar las preguntas -->
+        <button type="button" onclick="submitForm()">Aceptar</button>
     </div>
 
     <script>
-        // Cargar preguntas al seleccionar formulario
-        function mostrarPreguntas() {
+        // Function to submit the form and redirect to the questions page
+        function submitForm() {
             const formularioId = document.getElementById('formularioSelect').value;
-            if (formularioId) {
-                fetch(`/formularios/preguntas/${formularioId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        const preguntasContainer = document.getElementById('preguntasContainer');
-                        preguntasContainer.innerHTML = ''; // Limpiar preguntas previas
+            const empleado = document.getElementById('empleadoSelect').value;
 
-                        data.questions.forEach((pregunta, index) => {
-                            let preguntaHTML = `<div>
-                                <h3>${pregunta.titulo}</h3>
-                                <p>${pregunta.descripcion}</p>`;
-
-                            // Si es texto
-                            if (pregunta.tipo === 'texto') {
-                                preguntaHTML += `<input type="text" name="respuestas[${index}][respuesta]" required>`;
-                            }
-                            // Si es multiple choice
-                            else if (pregunta.tipo === 'multiple') {
-                                pregunta.options.forEach((option) => {
-                                    preguntaHTML += `<label><input type="radio" name="respuestas[${index}][respuesta]" value="${option}"> ${option}</label>`;
-                                });
-                            }
-                            // Si es checkbox
-                            else if (pregunta.tipo === 'checkbox') {
-                                pregunta.options.forEach((option) => {
-                                    preguntaHTML += `<label><input type="checkbox" name="respuestas[${index}][respuesta][]" value="${option}"> ${option}</label>`;
-                                });
-                            }
-
-                            preguntaHTML += `<input type="hidden" name="respuestas[${index}][pregunta]" value="${pregunta.titulo}"></div>`;
-                            preguntasContainer.innerHTML += preguntaHTML;
-                        });
-                    });
+            if (formularioId && empleado) {
+                window.location.href = `/evaluaciones/answer/${formularioId}?empleado=${empleado}`;
             } else {
-                document.getElementById('preguntasContainer').innerHTML = '';
+                alert("Por favor selecciona un formulario y un empleado.");
             }
         }
 
