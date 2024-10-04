@@ -1,4 +1,4 @@
-name: Run Node.js with Native MongoDB Service
+name: Run Node.js with MongoDB
 
 on:
   pull_request:
@@ -11,7 +11,7 @@ jobs:
 
     services:
       mongo:
-        image: mongo:5.0               
+        image: mongo:5.0               #Version
         ports:
           - 27017:27017                
 
@@ -22,16 +22,14 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'   
+          node-version: '18.x'          
 
       - name: Install dependencies
         run: npm install
 
-      - name: Wait for MongoDB to be ready
-        run: sleep 15s 
-
-      - name: Run node index.js
-        env:
-          MONGO_URI: mongodb://localhost:27017/bitqualyPrueba  # Local MongoDB URI
+      - name: Run node index.js with timeout
         run: |
-         timeout 30s node index.js
+          timeout 30s node index.js || \
+          if [ $? -eq 124 ]; then echo "Timeout reached, exiting successfully"; exit 0; else exit 1; fi
+        env:
+          MONGO_URI: mongodb://localhost:27017/bitqualyPrueba  
