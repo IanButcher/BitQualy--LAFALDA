@@ -54,9 +54,6 @@ app.get('/evaluadores', (req, res) => {
 
 })
 
-app.get('/evaluacion', (req, res) => {
-    res.render('evals/evaluacion')
-})
 
 
 app.get('/newEvalrs', (req, res) => {

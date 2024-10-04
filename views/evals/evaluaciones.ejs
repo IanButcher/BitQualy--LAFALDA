@@ -44,7 +44,7 @@
                                 <p class="eval-status"><%= evaluacion.formulario.titulo %></p>
                             </div>
                             <div class="eval-summary">
-                                <a href="/evaluaciones/<%= evaluacion._id %>" class="btn">Ver Evaluación</a>
+                                <a href="/evaluaciones/preview/<%= evaluacion._id %>" class="btn">Ver Evaluación</a>
                             </div>
                         </div>
                     <% }) %>
@@ -82,7 +82,7 @@
 
             <section class="evaluation-finished">
                 <h2>Evaluaciones Finalizadas</h2>
-
+            
                 <!-- Aquí continúa el ciclo de evaluaciones -->
                 <% evaluaciones.forEach(evaluacion => { %>
                     <div class="evaluation-card">
@@ -100,15 +100,17 @@
                                 <i class="fas fa-filter filter-icon"></i>
                             </div>
                         </div>
-                        <a href="/evaluaciones/preview/<%= evaluacion._id %>">ver</a>
+                        <!-- Corrected link to show "Ver Evaluación" and point to the preview path -->
+                        <a href="/evaluaciones/preview/<%= evaluacion._id %>" class="btn">Ver Evaluaciones</a>
                     </div>
                 <% }) %>
-
+            
             </section>
+            
 
             <!-- Botón para crear una nueva evaluación -->
             <div class="evaluation-actions">
-                <a href="/evaluaciones/new"> Nueva Evaluacion</a>
+                <a href="/evaluaciones/new" id="nuevaEvaluacionBtn">Nueva Evaluacion</a>
             </div>
 
         </main>
