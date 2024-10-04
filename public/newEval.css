@@ -16,42 +16,6 @@ body, html {
     height: 100vh; /* Ocupa toda la altura de la ventana */
 }
 
-/* Estilos del Sidebar */
-.sidebar {
-    width: 250px;
-    background-color: #343a40;
-    color: white;
-    padding: 15px;
-}
-
-.logo img {
-    width: 100%;
-    height: auto;
-}
-
-.menu-item {
-    margin: 15px 0;
-}
-
-.menu-item a {
-    color: white;
-    text-decoration: none;
-}
-
-.dropdown-btn {
-    cursor: pointer;
-    padding: 10px 0;
-    color: #ffffff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.dropdown-container {
-    display: none;
-    padding-left: 15px;
-}
-
 /* Estilos del contenido principal */
 .main-content {
     flex: 1;

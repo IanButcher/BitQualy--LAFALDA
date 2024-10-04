@@ -12,62 +12,6 @@ body, html {
     display: flex;
 }
 
-/* Contenedor principal */
-.container {
-    display: flex;
-    width: 100%;
-}
-
-/* Estilos del Sidebar */
-.sidebar {
-    width: 250px;
-    background-color: #343a40;
-    color: white;
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.logo img {
-    width: 100%;
-    height: auto;
-}
-
-.menu-item {
-    margin: 15px 0;
-}
-
-.menu-item a {
-    color: white;
-    text-decoration: none;
-    display: block;
-    padding: 10px;
-    border-radius: 5px;
-}
-
-.menu-item a:hover {
-    background-color: #495057;
-}
-
-.dropdown-btn {
-    cursor: pointer;
-    padding: 10px;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 5px;
-}
-
-.dropdown-container {
-    display: none;
-    padding-left: 15px;
-}
-
-.dropdown-container .menu-item a {
-    padding-left: 25px;
-}
 
 /* Estilos del contenido principal */
 .main-content {
