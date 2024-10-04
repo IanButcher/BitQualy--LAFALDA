@@ -41,7 +41,7 @@ const messi = {
 const dilan = {
     nombre: "Dillan",
     apellido: "Perez Diaz",
-    rol: "Limpieza y Mantenimiento",
+    rol: "Violinista",
     legajo: 622,
     id: 5
 }
@@ -49,7 +49,7 @@ const Luis = {
     id: 6,
     nombre: "Luis",
     apellido: "Siccardi",
-    rol: "chef",
+    rol: "Chef",
     legajo: 1112
 }
 const Juan = {
@@ -69,8 +69,8 @@ const Leonardo = {
 const Nacho = {
     id: 9,
     nombre: "Profe ",
-    apellido: "nacho",
-    rol: "tester",
+    apellido: "Nacho",
+    rol: "Tester",
     legajo: 777
 }
 const Sofi = {
