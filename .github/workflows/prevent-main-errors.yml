@@ -1,0 +1,37 @@
+name: Run Node.js with MongoDB
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run_with_mongo:
+    runs-on: ubuntu-latest
+
+    services:
+      mongo:
+        image: mongo:5.0               # MongoDB version
+        ports:
+          - 27017:27017                # Expose MongoDB port
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'          # Node.js version
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run node index.js with timeout
+        run: |
+          timeout 30s node index.js || \
+          EXIT_CODE=$? && if [ $EXIT_CODE -eq 124 ]; then \
+          echo "Timeout reached, exiting successfully"; exit 0; \
+          else exit $EXIT_CODE; fi
+        env:
+          MONGO_URI: mongodb://localhost:27017/bitqualyPrueba

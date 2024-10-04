@@ -24,8 +24,9 @@ app.set('views', path.join(__dirname, 'views'))
 app.use(express.static('public'))
 
 // Mongoose conection
+const uri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/bitqualyPrueba'
 async function main() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/bitqualyPrueba')
+    await mongoose.connect(uri)
     //const mongoURI = process.env.MONGODB_URI || "mongodb://mongodb:27017/mydatabase";  
     //await mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
     console.log('Conection to mongodb Succsesful')
