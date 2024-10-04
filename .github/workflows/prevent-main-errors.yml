@@ -11,9 +11,9 @@ jobs:
 
     services:
       mongo:
-        image: mongo:5.0               #Version
+        image: mongo:5.0               # MongoDB version
         ports:
-          - 27017:27017                
+          - 27017:27017                # Expose MongoDB port
 
     steps:
       - name: Checkout repository
@@ -22,7 +22,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'          
+          node-version: '18.x'          # Node.js version
 
       - name: Install dependencies
         run: npm install
@@ -30,6 +30,8 @@ jobs:
       - name: Run node index.js with timeout
         run: |
           timeout 30s node index.js || \
-          if [ $? -eq 124 ]; then echo "Timeout reached, exiting successfully"; exit 0; else exit 1; fi
+          EXIT_CODE=$? && if [ $EXIT_CODE -eq 124 ]; then \
+          echo "Timeout reached, exiting successfully"; exit 0; \
+          else exit $EXIT_CODE; fi
         env:
-          MONGO_URI: mongodb://localhost:27017/bitqualyPrueba  
+          MONGO_URI: mongodb://localhost:27017/bitqualyPrueba
