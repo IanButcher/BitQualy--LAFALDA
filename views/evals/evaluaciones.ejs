@@ -100,7 +100,7 @@
                                 <i class="fas fa-filter filter-icon"></i>
                             </div>
                         </div>
-                        <a href="/evaluaciones/preview/<%= evaluacion._id %>" class="btn">Ver Evaluación</a>
+                        <a href="/evaluaciones/preview/<%= evaluacion._id %>">ver</a>
                     </div>
                 <% }) %>
 
@@ -108,7 +108,7 @@
 
             <!-- Botón para crear una nueva evaluación -->
             <div class="evaluation-actions">
-                <button id="nuevaEvaluacionBtn">Crear Nueva Evaluación</button>
+                <a href="/evaluaciones/new"> Nueva Evaluacion</a>
             </div>
 
         </main>
@@ -124,9 +124,9 @@
         });
 
         // Botón para crear nueva evaluación
-        document.getElementById('nuevaEvaluacionBtn').addEventListener('click', function() {
-            window.location.href = '/evaluaciones/new';
-        });
+        //document.getElementById('nuevaEvaluacionBtn').addEventListener('click', function() {
+          //  window.location.href = '/evaluaciones/new';
+        //});
     </script>
 </body>
 

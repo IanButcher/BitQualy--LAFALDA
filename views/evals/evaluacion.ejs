@@ -31,7 +31,13 @@
                     <% evaluacion.respuestas.forEach((respuesta, index) => { %>
                         <div class="respuesta-item">
                             <h3><%= respuesta.pregunta %></h3>
-                            <p><%= respuesta.respuesta.join(', ') %></p>
+                            <p>
+                                <% if (Array.isArray(respuesta.respuesta)) { %>
+                                    <%= respuesta.respuesta.join(', ') %>
+                                <% } else { %>
+                                    <%= respuesta.respuesta %>
+                                <% } %>
+                              </p>                              
                         </div>
                     <% }) %>
                 </div>
