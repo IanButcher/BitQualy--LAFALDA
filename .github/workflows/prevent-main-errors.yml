@@ -32,6 +32,6 @@ jobs:
 
       - name: Run node index.js
         env:
-          MONGO_URI: mongodb://localhost:27017/test  # Local MongoDB URI
+          MONGO_URI: mongodb://localhost:27017/bitqualyPrueba  # Local MongoDB URI
         run: |
-          node index.js
+         timeout 30s node index.js
