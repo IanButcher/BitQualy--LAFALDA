@@ -1,0 +1,229 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    font-family: Arial, sans-serif;
+    height: 100%;  
+    background-color: #f4f4f4;
+}
+h2{
+    margin-bottom: 20px;
+    
+}
+.container {
+    display: flex;
+    min-height: 100vh; /* Se asegura que ocupe al menos el 100% del viewport */
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    background-color: #333333;
+    color: white;
+    padding: 15px;
+    min-height: 100vh; /* Asegura que el sidebar se extienda hasta el fondo */
+}
+
+.logo img {
+    width: 100%;
+    height: auto;
+}
+
+.menu-item {
+    margin: 15px 0;
+}
+
+.menu-item a {
+    color: white;
+    text-decoration: none;
+}
+
+.dropdown-btn {
+    cursor: pointer;
+    padding: 10px 0;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dropdown-container {
+    display: none;
+    padding-left: 15px;
+}
+
+/* Dropdown Styles */
+.sidebar nav .menu-item a:hover {
+    background-color: #575757;
+    transform: scale(1.05);
+}
+
+.sidebar .gestion-section .dropdown-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    color: white;
+    background-color: transparent;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.sidebar .gestion-section .dropdown-btn:hover {
+    transform: scale(1.05);
+}
+
+.sidebar .gestion-section .dropdown-container {
+    display: none;
+    padding-left: 20px;
+}
+
+.sidebar .gestion-section .dropdown-container.active {
+    display: block;
+}
+
+.sidebar .gestion-section .dropdown-container .menu-item {
+    padding-left: 10px;
+}
+
+.sidebar .gestion-section .dropdown-container .menu-item a:hover {
+    background-color: #575757;
+    transform: scale(1.05);
+}
+/* Main Content Styles */
+.main-content {
+    flex: 1;
+    padding: 20px;
+    background-color: white;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+/* Form Editor Styles */
+.form-editor {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+/*botones*/
+.btn-add {
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-add:hover {
+    background-color: #0056b3;
+}
+
+.btn-save, .btn-cancel {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+}
+
+.btn-save {
+    background-color: #28a745;
+    color: white;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.btn-cancel {
+    
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-delete {
+    margin-top: 10px;
+    background-color: #dc3545;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+}
+
+.btn-delete:hover {
+    background-color: #c82333;
+}
+
+.preview-section {
+    margin-top: 20px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom Styles for Gestion Evaluaciones */
+.gestion-section {
+    margin: 15px 0;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.gestion-section:hover {
+    background-color: #495057;
+}
+
+.gestion-section .dropdown-btn {
+    background-color: #343a40;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.gestion-section .dropdown-btn:hover {
+    background-color: #495057;
+}
+
+.gestion-section .dropdown-container {
+    margin-top: 10px;
+}
+
+@media (min-width: 488px){
+   
+} 
