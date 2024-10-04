@@ -1,4 +1,4 @@
-name: Run Node.js with MongoDB
+name: Run Node.js with Native MongoDB Service
 
 on:
   pull_request:
@@ -11,14 +11,9 @@ jobs:
 
     services:
       mongo:
-        image: mongo:5.0               # Specify the MongoDB version you want to use
+        image: mongo:5.0               
         ports:
-          - 27017:27017                # Expose MongoDB port
-        options: >                     # MongoDB options
-          --health-cmd "mongosh --eval 'db.runCommand(\"ping\").ok'"    # Ensure MongoDB is ready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+          - 27017:27017                
 
     steps:
       - name: Checkout repository
@@ -27,16 +22,16 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-            node-version: 18.x            
+          node-version: '18.x'   
 
       - name: Install dependencies
         run: npm install
 
       - name: Wait for MongoDB to be ready
-        run: sleep 15s                  # Wait for MongoDB to initialize (can adjust based on needs)
+        run: sleep 15s 
 
       - name: Run node index.js
         env:
-          MONGO_URI: mongodb://127.0.0.1:27017/bitqualyPrueba  # Connection URI for MongoDB
+          MONGO_URI: mongodb://localhost:27017/test  # Local MongoDB URI
         run: |
           node index.js
