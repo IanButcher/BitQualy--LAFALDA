@@ -17,20 +17,27 @@ h2 {
     color: #333;
 }
 
-/* Contenedor del formulario */
+
+/* Main Content */
 .container {
+    margin-left: 220px; /* Debe coincidir con el ancho del sidebar */
+    padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+   
 }
 
+/* Formulario */
 .form-container {
     background-color: white;
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    width: 400px;
+    max-width: 600px; /* Aumentamos el ancho máximo para reducir espacio en blanco */
+    width: 100%;
 }
 
 /* Estilo de los campos del formulario */
@@ -79,6 +86,10 @@ h2 {
 
 /* Media Queries para pantallas pequeñas */
 @media (max-width: 768px) {
+    .container {
+        margin-left: 0;
+    }
+
     .form-container {
         width: 90%;
     }
