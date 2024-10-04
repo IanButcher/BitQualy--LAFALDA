@@ -1,0 +1,42 @@
+name: Run Node.js with MongoDB
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run_with_mongo:
+    runs-on: ubuntu-latest
+
+    services:
+      mongo:
+        image: mongo:5.0               # Specify the MongoDB version you want to use
+        ports:
+          - 27017:27017                # Expose MongoDB port
+        options: >                     # MongoDB options
+          --health-cmd "mongosh --eval 'db.runCommand(\"ping\").ok'"    # Ensure MongoDB is ready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+            node-version: 18.x            
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Wait for MongoDB to be ready
+        run: sleep 15s                  # Wait for MongoDB to initialize (can adjust based on needs)
+
+      - name: Run node index.js
+        env:
+          MONGO_URI: mongodb://127.0.0.1:27017/bitqualyPrueba  # Connection URI for MongoDB
+        run: |
+          node index.js
