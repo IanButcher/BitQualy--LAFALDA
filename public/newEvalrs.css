@@ -140,17 +140,6 @@ body, html {
     overflow-y: auto;
 }
 
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.header .user-info {
-    text-align: right;
-}
-
 .form-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
