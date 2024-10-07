@@ -3,7 +3,10 @@ const express = require('express')
 const router = express.Router()
 const Empleado = require('../Schemas/empleadoSchema')
 const Evaluador = require('../Schemas/evaluadorSchema')
-const Regulador = require('../Schemas/reguladorSchema')
+const Regulador = require('../Schemas/intermediarioSchema')
+const baseUserSchema = require('../Schemas/baseUserSchema')
+//const { initializePassportSession } = require('./middleware/passportConfig')
+const { roleAuthorization } = require('../middleware/roleAuth')
 
 // GET route --> Log In Page
 router.get('/', (req, res) => {
@@ -38,7 +41,8 @@ router.post('/save-new-user', async (req, res) => {
 
         // Save the user to the database
         await newUser.save()
-        res.status(201).json({ message: 'User created successfully', user: newUser })
+        console.log(newUser)
+        res.redirect('/home')
 
     } catch (error) {
         console.error(error)

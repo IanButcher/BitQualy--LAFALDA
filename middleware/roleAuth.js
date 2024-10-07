@@ -19,7 +19,5 @@ function roleAuthorization(roles) {
     }
 }
   
-module.exports = {
-    roleAuthorization
-}
+module.exports = roleAuthorization
   

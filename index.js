@@ -10,7 +10,7 @@ const session = require('express-session')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const { initializePassportSession } = require('./middleware/passportConfig')
-const { auth } = require('./middleware/roleAuth')
+const { roleAuthorization } = require('./middleware/roleAuth')
 
 // Server config
 const app = express()
@@ -45,7 +45,7 @@ initializePassportSession(app)
 // Import Routes
 const formularioRoutes = require('./routes/formularioRoutes')
 const evaluacionRoutes = require('./routes/evaluacionRoutes')
-
+const loginRoutes = require('./routes/login')
 
 app.post('/login', passport.authenticate('local', {
     successRedirect: '/home',
@@ -53,7 +53,7 @@ app.post('/login', passport.authenticate('local', {
     failureFlash: true
 }))
 
-app.get('/home', roleAuthorization(['Empleado', 'Evaluador', 'Intermediario', 'Administrador']), (req, res) => {
+app.get('/home', (req, res) => {
     res.render('home')
 })
 
@@ -83,11 +83,11 @@ app.get('/reguladores/:id', (req, res)=>{
     const regulador = arrayReguladores[id]
     res.render('regs/ReguladoresEsp', {regulador})
 })
-app.get('/evaluador', (req, res)=>{
+app.get('/evaluadores', (req, res)=>{
     res.render('evalrs/evaluador', {arrayEvaluadores})
 })
 
-app.get('/evaluador/:id', (req,res)=>{
+app.get('/evaluadores/:id', (req,res)=>{
     const id = req.params.id
     const empleado = arrayEvaluador[id]
     res.render('evalrs/evaluador', {evaluador})
@@ -100,14 +100,9 @@ app.get('/home', (req, res) => {
 // Rutas Formulario
 app.use('/', formularioRoutes)
 app.use('/', evaluacionRoutes)
-
+app.use('/', loginRoutes)
 
 // Start the server
-
-app.get('/evaluaciones1', (req, res)=>{
-    res.render('evaluaciones/evaluaciones')
-})
-
 app.listen(puerto, () => {
     console.log('Servidor abierto')
     console.log(puerto)
