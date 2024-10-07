@@ -199,30 +199,6 @@ h2{
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Custom Styles for Gestion Evaluaciones */
-.gestion-section {
-    margin: 15px 0;
-    padding: 10px;
-    border-radius: 4px;
-}
-
-.gestion-section:hover {
-    background-color: #495057;
-}
-
-.gestion-section .dropdown-btn {
-    background-color: #343a40;
-    padding: 10px;
-    border-radius: 4px;
-}
-
-.gestion-section .dropdown-btn:hover {
-    background-color: #495057;
-}
-
-.gestion-section .dropdown-container {
-    margin-top: 10px;
-}
 
 @media (min-width: 488px){
    
