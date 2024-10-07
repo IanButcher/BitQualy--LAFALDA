@@ -10,7 +10,7 @@ const session = require('express-session')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const { initializePassportSession } = require('./middleware/passportConfig')
-const { roleAuthorization } = require('./middleware/roleAuth')
+//const { roleAuthorization } = require('./middleware/roleAuth')
 
 // Server config
 const app = express()
@@ -46,6 +46,9 @@ initializePassportSession(app)
 const formularioRoutes = require('./routes/formularioRoutes')
 const evaluacionRoutes = require('./routes/evaluacionRoutes')
 const loginRoutes = require('./routes/login')
+const empleadoRoutes = require('./routes/empleadoRoutes')
+const evaluadorRoutes = require('./routes/evaluadorRoutes')
+const intermediarioRoutes = require('./routes/intermediarioRoutes')
 
 app.post('/login', passport.authenticate('local', {
     successRedirect: '/home',
@@ -53,54 +56,17 @@ app.post('/login', passport.authenticate('local', {
     failureFlash: true
 }))
 
+// Routes
 app.get('/home', (req, res) => {
     res.render('home')
 })
 
-app.get('/evaluadores', (req, res) => {
-    res.render('evalrs/evaluadores', {arrayEvaluadores})
-
-})
-
-
-
-app.get('/empleados', (req, res)=>{
-    res.render('empls/empleados', {arrayEmpleados})
-})
-
-app.get('/empleados/:id', (req,res)=>{
-    const id = req.params.id
-    const empleado = arrayEmpleados[id]
-    res.render('empls/empleado', {empleado})
-
-})
-app.get('/reguladores', (req, res)=>{
-    res.render('regs/reguladores', {arrayReguladores})
-})
-
-app.get('/reguladores/:id', (req, res)=>{
-    const id = req.params.id
-    const regulador = arrayReguladores[id]
-    res.render('regs/ReguladoresEsp', {regulador})
-})
-app.get('/evaluadores', (req, res)=>{
-    res.render('evalrs/evaluador', {arrayEvaluadores})
-})
-
-app.get('/evaluadores/:id', (req,res)=>{
-    const id = req.params.id
-    const empleado = arrayEvaluador[id]
-    res.render('evalrs/evaluador', {evaluador})
-})
-
-app.get('/home', (req, res) => {
-    res.render('home')
-})
-
-// Rutas Formulario
 app.use('/', formularioRoutes)
 app.use('/', evaluacionRoutes)
 app.use('/', loginRoutes)
+app.use('/', empleadoRoutes)
+app.use('/', evaluadorRoutes)
+app.use('/', intermediarioRoutes)
 
 // Start the server
 app.listen(puerto, () => {
