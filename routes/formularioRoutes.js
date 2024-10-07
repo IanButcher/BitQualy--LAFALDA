@@ -7,7 +7,7 @@ const mongoose = require('mongoose')
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 //const { initializePassportSession } = require('./middleware/passportConfig')
-const { roleAuthorization } = require('../middleware/roleAuth')
+//const  roleAuthorization = require('../middleware/roleAuth')
 
 // GET route --> Display Formularios
 router.get('/formularios', async (req, res) => {

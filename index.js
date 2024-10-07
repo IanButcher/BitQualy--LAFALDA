@@ -10,12 +10,13 @@ const session = require('express-session')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const { initializePassportSession } = require('./middleware/passportConfig')
-//const { roleAuthorization } = require('./middleware/roleAuth')
+//const  roleAuthorization  = require('./middleware/roleAuth')
 
 // Server config
 const app = express()
 const puerto = 3000
 app.set('view engine', 'ejs')
+
 
 // Method Over-ride (put & delete methods)
 const methodOverride = require('method-override')
@@ -41,6 +42,7 @@ app.use(express.json())
 
 // Middlewares
 initializePassportSession(app)
+//app.use(roleAuthorization(['Administrador']))
 
 // Import Routes
 const formularioRoutes = require('./routes/formularioRoutes')
