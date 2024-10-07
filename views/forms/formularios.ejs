@@ -10,34 +10,7 @@
 <body>
     <div class="container">
         <!-- Panel lateral izquierdo -->
-        <aside class="sidebar">
-            <div class="logo">
-                <img src="img/Logo BitQualy Blanco.png" alt="Logo BitQualy">
-            </div>
-            <nav>
-                <div class="menu-item">
-                    <a href="/empleados"><i class="fas fa-users"></i> Empleados</a>
-                </div>
-                <div class="menu-item">
-                    <a href="/evaluadores"><i class="fas fa-user-tie"></i> Evaluadores</a>
-                </div>
-                <div class="menu-item">
-                    <a href="/reguladores"><i class="fas fa-clipboard-check"></i> Reguladores</a>
-                </div>
-                <div class="gestion-section">
-                    <a href="#" class="dropdown-btn"><i class="fas fa-tasks"></i> GESTIÓN EVALUACIONES <i class="fas fa-chevron-down"></i></a>
-                    <div class="dropdown-container">
-                        <div class="menu-item">
-                            <a href="/evaluaciones"><i class="fas fa-file-alt"></i> Evaluaciones</a>
-                        </div>
-                        <div class="menu-item">
-                            <a href="/formularios"><i class="fas fa-list-alt"></i> Formularios</a>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </aside>
-
+        <nav><%- include('../partials/navbar') %> </nav>
         <!-- Panel principal -->
         <div class="main-content">
             <div class="header">
@@ -127,14 +100,6 @@
             }
         }
     
-        // JavaScript para mostrar/ocultar el submenú
-        const dropdownBtn = document.querySelector('.dropdown-btn');
-        const dropdownContainer = document.querySelector('.dropdown-container');
-    
-        dropdownBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            dropdownContainer.classList.toggle('active');
-        });
     </script>
     
 </body>
