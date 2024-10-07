@@ -47,11 +47,6 @@ const formularioRoutes = require('./routes/formularioRoutes')
 const evaluacionRoutes = require('./routes/evaluacionRoutes')
 
 
-// Rutas
-app.get('/', (req, res) => {
-    res.render('index')
-})
-
 app.post('/login', passport.authenticate('local', {
     successRedirect: '/home',
     failureRedirect: '/',
@@ -67,9 +62,7 @@ app.get('/evaluadores', (req, res) => {
 
 })
 
-app.get('/newEvalrs', (req, res) => {
-    res.render('evalrs/newEvalrs')
-})
+
 
 app.get('/empleados', (req, res)=>{
     res.render('empls/empleados', {arrayEmpleados})

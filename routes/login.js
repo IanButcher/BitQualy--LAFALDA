@@ -1,0 +1,51 @@
+// Modulos
+const express = require('express')
+const router = express.Router()
+const Empleado = require('../Schemas/empleadoSchema')
+const Evaluador = require('../Schemas/evaluadorSchema')
+const Regulador = require('../Schemas/reguladorSchema')
+
+// GET route --> Log In Page
+router.get('/', (req, res) => {
+    res.render('index')
+})
+
+// GET route --> User Creator
+router.get('/user-creator', (req, res) => {
+    res.render('newUsers')
+})
+
+// POST route --> Create User
+router.post('/save-new-user', async (req, res) => {
+    const { nombre, apellido, legajo, rol, password } = req.body;
+
+    try {
+        // Based on the role selected, create the appropriate user
+        let newUser;
+        switch (rol) {
+            case 'empleado':
+                newUser = new Empleado({ nombre, apellido, legajo, password })
+                break;
+            case 'evaluador':
+                newUser = new Evaluador({ nombre, apellido, legajo, password })
+                break;
+            case 'regulador':
+                newUser = new Regulador({ nombre, apellido, legajo, password })
+                break;
+            default:
+                return res.status(400).json({ message: 'Invalid role selected' })
+        }
+
+        // Save the user to the database
+        await newUser.save()
+        res.status(201).json({ message: 'User created successfully', user: newUser })
+
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ message: 'Error creating user' })
+    }
+});
+
+module.exports = router;
+
+
