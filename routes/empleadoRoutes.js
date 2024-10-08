@@ -1,5 +1,6 @@
 // Modulos
 const express = require('express')
+const app = express()
 const router = express.Router()
 const Empleado = require('../Schemas/empleadoSchema')
 const Evaluador = require('../Schemas/evaluadorSchema')
@@ -19,3 +20,5 @@ router.get('/empleados/:id', async (req,res)=>{
     const empleado = baseUserSchema.findById(id)
     res.render('empls/empleado', { empleado })
 })
+
+module.exports = router
