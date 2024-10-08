@@ -5,41 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Preview Evaluación</title>
     <link rel="stylesheet" href="/evaluacion.css">
+    <link rel="stylesheet" href="/navbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" type="image/png" href="https://ugc.production.linktr.ee/mj5IciCyRk2puUukygYa_kmwAn8AE84X4N3S5?io=true&size=avatar-v3_0">
+    
 </head>
 <body>
     <nav> <%- include('../partials/navbar') %> </nav>
 
-        <!-- Panel principal -->
-        <div class="main-content">
-            <header>
-                <%- include('../partials/headerU') %>
-            </header>  
+    <!-- Panel principal -->
+    <div class="main-content">
+        <header> <%- include('../partials/headerU') %> </header>
     
-
-            <!-- Contenido principal de la evaluación -->
-            <div class="evaluation-content">
-                <h2>Evaluación: <%= evaluacion.formulario.titulo %></h2>
-                <p><strong>Empleado:</strong> <%= evaluacion.empleado %></p>
-
-                <!-- Mostrar preguntas y respuestas -->
-                <div class="respuestas-container">
-                    <% evaluacion.respuestas.forEach((respuesta, index) => { %>
-                        <div class="respuesta-item">
-                            <h3><%= respuesta.pregunta %></h3>
-                            <p>
-                                <% if (Array.isArray(respuesta.respuesta)) { %>
-                                    <%= respuesta.respuesta.join(', ') %>
-                                <% } else { %>
-                                    <%= respuesta.respuesta %>
-                                <% } %>
-                              </p>                              
-                        </div>
-                    <% }) %>
-                </div>
-            </div>
-        </div>
 
         <!-- Contenido principal de la evaluación -->
         <div class="evaluation-content">
