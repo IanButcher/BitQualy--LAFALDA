@@ -11,25 +11,24 @@ const baseUserSchema = require('../Schemas/baseUserSchema')
 
 
 //GET route --> All evaluadores
-router.get('/reguladores', async (req, res) => {
-    const intermediarios = await Intermediario.find({ estaActivo: true })
-    res.render('regs/reguladores', { intermediarios })
+router.get('/evaluadores', async (req, res) => {
+    const evaluadores = await Evaluador.find({ estaActivo: true })
+    res.render('evalrs/evaluadores', { evaluadores })
 })
 
 // GET route --> Evaluador Especifico
-router.get('/reguladores/:id', async (req, res) => {
+router.get('/evaluadores/:id', async (req, res) => {
     try {
         const id = req.params.id
-        const intermediario = await Intermediario.findById(id)
-        if (!intermediario) {
-            return res.status(404).send('Intermediario no encontrado')
+        const evaluador = await Evaluador.findById(id)
+        if (!evaluador) {
+            return res.status(404).send('Evaluador no encontrado')
         }
-        res.render('regs/regulador', { intermediario })
+        res.render('evalrs/evaluador', { evaluador })
     } catch (error) {
         console.error(error)
         res.status(500).send('Error del servidor')
     }
 })
-
 
 module.exports = router

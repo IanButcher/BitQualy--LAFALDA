@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Evaluaciones</title>
-    <link rel="stylesheet" href="/evaluador.css">
+    <link rel="stylesheet" href="/empleado.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" type="image/png" href="https://ugc.production.linktr.ee/mj5IciCyRk2puUukygYa_kmwAn8AE84X4N3S5?io=true&size=avatar-v3_0">
 
@@ -20,11 +20,12 @@
                 <div class="user-section">
                     <img src="/img/user.png" alt="Empleado" class="user-img">
                     <div class="user-info">
-                        <h2>Pepito</h2>
-                        <p>Rol: Evaluador</p>
-                        <p>Número de legajo: xxxx | DNI: XXXX</p>
+                        <h2><%= evaluador.nombre %>  <%= evaluador.apellido %></h2>
+                        <p>Evaluador</p>
+                        <p>Número de legajo: <%= evaluador.legajo %> | DNI: XXXX</p>
                     </div>
                 </div>
+
                 <div class="combobox-container">
                     <label for="employee-options">Designar como:</label>
                     <select id="employee-options">
@@ -33,38 +34,34 @@
                         <option value="option3">Intermediario</option>
                     </select>
                 </div>
+                
+                <div class="header-options">
+                    <i class="fas fa-bell"></i>
+                    <i class="fas fa-cog"></i>
+                    <img src="/img/profile.png" alt="Carina Campo" class="profile-img">
+                </div>
 
                     <%- include('../partials/headerU') %>
             </header>
 
             <div class="filter-panel-container">
                 <section class="evaluation-section">
-                    <h2>Evaluaciones Enviadas</h2>
+                    <h2>Evaluaciones por revisar</h2>
                     <div class="evaluation-card">
                         <img src="empleado1.jpg" alt="Franco Siccardi" class="eval-img">
                         <div class="eval-info">
-                            <p><strong>Franco Siccardi</strong></p>
+                            <p><strong><%= evaluador.nombre %>  <%= evaluador.apellido %></strong></p>
                             <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
                             <p class="eval-status">Autoevaluación</p>
                         </div>
                     </div>
 
                     <div class="evaluation-card">
-                        <img src="empleado1.jpg" alt="Dillan Perez Diaz" class="eval-img">
+                        <img src="empleado1.jpg" alt="Franco Siccardi" class="eval-img">
                         <div class="eval-info">
-                            <p><strong>Dillan Perez Diaz</strong></p>
+                            <p><strong><%= evaluador.nombre %>  <%= evaluador.apellido %></strong></p>
                             <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
                             <p class="eval-status">Evaluación de Análisis</p>
-                        </div>
-                    </div>
-
-                    <h2>Evaluaciones Asignadas</h2>
-                    <div class="evaluation-card">
-                        <img src="empleado1.jpg" alt="Franco Siccardi" class="eval-img">
-                        <div class="eval-info">
-                            <p><strong>Nombre Evaluador</strong></p>
-                            <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
-                            <p class="eval-status">Autoevaluación</p>
                         </div>
                     </div>
                 </section>
@@ -100,7 +97,7 @@
                 <div class="evaluation-card">
                     <img src="empleado1.jpg" alt="Franco Siccardi" class="eval-img">
                     <div class="eval-info">
-                        <p><strong>Franco Siccardi</strong></p>
+                        <p><strong><%= evaluador.nombre %>  <%= evaluador.apellido %></strong></p>
                         <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
                         <p>Autoevaluación</p>
                         <div class="progress-bar">
@@ -124,3 +121,4 @@
 </body>
 
 </html>
+

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Evaluador</title>
+    <link rel="stylesheet" href="/newEvalrs.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" type="image/png" href="https://ugc.production.linktr.ee/mj5IciCyRk2puUukygYa_kmwAn8AE84X4N3S5?io=true&size=avatar-v3_0">
+
+</head>
+
+<body>
+    <nav> <%- include('./partials/navbar') %> </nav>
+
+        <!-- Panel principal -->
+        <main class="main-content">
+            <header class="header">
+                <h1>Crear Empleado</h1>
+                <div class="user-info">
+                    <h2>Carina Campo</h2>
+                    <p>Rol: Recursos Humanos</p>
+                </div>
+            </header>
+
+            <form method="POST" action="/save-new-user">
+                <!-- Formulario de Creación de Evaluador -->
+                <div class="image-and-fields">
+                    <!-- Vista previa de la imagen -->
+                    <div class="image-preview" onclick="document.getElementById('foto').click();">
+                        <img id="image-preview-img" alt="Vista previa de la foto" style="display: none;" />
+                        <span class="change-photo-text">Haz clic aquí para cambiar la foto</span> <!-- Mensaje indicativo -->
+                    </div>
+                    <!--<input type="file" id="foto" name="foto" accept="image/*" onchange="previewImage(event);" style="display: none;"> <!-- Asegúrate de que este input esté presente -->
+
+                    
+                    <!-- Campos de Nombre y Apellido -->
+                    <div class="form-fields">
+                        <div class="form-group">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" id="nombre" name="nombre" placeholder="Ingresa el nombre" required minlength="4" maxlength="16" size="16">
+                        </div>
+                        <div class="form-group">
+                            <label for="apellido">Apellido</label>
+                            <input type="text" id="apellido" name="apellido" placeholder="Ingresa el apellido" required minlength="4" maxlength="16" size="16">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Resto del formulario -->
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="legajo">Legajo</label>
+                        <input type="text" id="legajo" name="legajo" placeholder="Ingresa el legajo" required minlength="4" maxlength="16" size="25">
+                    </div>
+                    <div class="form-group">
+                        <label for="rol">Rol</label>
+                        <select id="rol" name="rol" required>
+                            <option value="" disabled selected>Selecciona un rol</option>
+                            <option value="regulador">Regulador</option>
+                            <option value="empleado">Empleado</option>
+                            <option value="evaluador">Evaluador</option>
+                        </select>
+                    </div>
+
+                    <!-- Campo de Contraseña -->
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <div class="password-container">
+                            <input type="password" id="password" name="password" placeholder="Ingresa la contraseña" required minlength="6" maxlength="8">
+                            <i class="fas fa-eye toggle-password eye-icon"></i>
+                        </div>
+                    </div>
+
+                    <!-- Campo para Confirmar Contraseña -->
+                    <div class="form-group">
+                        <label for="confirm-password">Confirmar Contraseña</label>
+                        <div class="password-container">
+                            <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirma la contraseña" required minlength="6" maxlength="8">
+                            <i class="fas fa-eye toggle-password eye-icon"></i>
+                        </div>
+                        <p id="error-message" class="error-message"></p>
+                    </div>
+
+                    <div class="form-buttons">
+                        <button type="submit" class="btn-submit">Crear Usuario</button>
+                        <a href="/home" class="btn-cancel">Cancelar</a>
+                    </div>
+                </div>
+            </form>
+            
+        </main>
+    </div>
+
+    <script>
+        const dropdownBtn = document.querySelector('.dropdown-btn');
+        const dropdownContainer = document.querySelector('.dropdown-container');
+
+        dropdownBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            dropdownContainer.classList.toggle('active');
+        });
+
+        const togglePassword = document.querySelectorAll('.toggle-password');
+        togglePassword.forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const passwordInput = this.previousElementSibling;
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
+            });
+        });
+
+        const form = document.getElementById('crear-evaluador-form');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirm-password');
+        const errorMessage = document.getElementById('error-message');
+
+        form.addEventListener('submit', function(event) {
+            if (passwordInput.value !== confirmPasswordInput.value) {
+                event.preventDefault();
+                errorMessage.textContent = 'Las contraseñas no coinciden.';
+            } else {
+                errorMessage.textContent = '';
+            }
+        });
+
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const output = document.getElementById('image-preview-img');
+                output.src = reader.result;
+                output.style.display = 'block';
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+</body>
+</html>
