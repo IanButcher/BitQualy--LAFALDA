@@ -89,8 +89,20 @@ app.get('/evaluador/:id', (req,res)=>{
     res.render('evalrs/evaluador', {evaluador})
 })
 
-app.get('/home', (req, res) => {
-    res.render('home')
+app.get('/home-admin', (req, res) => {
+    res.render('home/homeAdmin')
+})
+
+app.get('/home-inter', (req, res) => {
+    res.render('home/homeInter')
+})
+
+app.get('/home-user', (req, res) => {
+    res.render('home/homeUser')
+})
+
+app.get('/home-eval', (req, res) => {
+    res.render('home/homeEval')
 })
 
 // Rutas Formulario

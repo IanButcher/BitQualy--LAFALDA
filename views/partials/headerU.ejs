@@ -11,8 +11,49 @@
     <header class="header">
         <div class="header-options">
             <i class="fas fa-bell"></i>
-            <img src="/img/profile.png" alt="Carina Campo" class="profile-img">
+            <img src="https://infonegocios.info/content/cards/82843_Carina%20Campo%20-%20Bitsion.png" alt="Carina Campo" class="profile-img">
         </div>
+        <div class="notification-popup" id="notificationPopup">
+            <div class="popup-header">
+                <h3>Notificaciones</h3>
+                <i class="fas fa-times close-popup"></i>
+            </div>
+                <!-- <div class="popup-body">
+                    <% // if (notificaciones.length != 0) { %>
+                    <% // for (notificacion of notificaciones) {%>
+                        <p>No tienes nuevas notificaciones</p>
+                        <p>Endererrrpell</p>
+                    <% // } %>
+                <% // } %> 
+            </div> -->
+        </div> 
     </header>
+
+    <script>
+        // JavaScript para el popup de notificaciones
+        document.addEventListener("DOMContentLoaded", function() {
+                // Seleccionamos los elementos necesarios
+                const bellIcon = document.querySelector('.fa-bell');
+                const notificationPopup = document.getElementById('notificationPopup');
+                const closePopupIcon = document.querySelector('.close-popup');
+
+                // Mostrar el popup al hacer clic en el icono de la campana
+                bellIcon.addEventListener('click', function() {
+                    notificationPopup.style.display = 'block';
+                });
+
+                // Cerrar el popup al hacer clic en el icono de cerrar
+                closePopupIcon.addEventListener('click', function() {
+                    notificationPopup.style.display = 'none';
+                });
+
+                // Cerrar el popup si se hace clic fuera de él
+                window.addEventListener('click', function(e) {
+                    if (e.target !== notificationPopup && e.target !== bellIcon) {
+                        notificationPopup.style.display = 'none';
+                    }
+                });
+            });
+    </script>
 </body>
 </html>
