@@ -4,7 +4,7 @@ const app = express()
 const router = express.Router()
 const Empleado = require('../Schemas/empleadoSchema')
 const Evaluador = require('../Schemas/evaluadorSchema')
-const Regulador = require('../Schemas/intermediarioSchema')
+const Intermediario = require('../Schemas/intermediarioSchema')
 const baseUserSchema = require('../Schemas/baseUserSchema')
 
 
@@ -15,10 +15,18 @@ router.get('/empleados', async (req, res) => {
 })
 
 // GET route --> Evaluador Especifico
-router.get('/empleados/:id', async (req,res)=>{
-    const id = req.params.id
-    const empleado = baseUserSchema.findById(id)
-    res.render('empls/empleado', { empleado })
+router.get('/empleados/:id', async (req, res) => {
+    try {
+        const id = req.params.id
+        const empleado = await Empleado.findById(id)
+        if (!evaluador) {
+            return res.status(404).send('Evaluador no encontrado')
+        }
+        res.render('empls/empleado', { empleado })
+    } catch (error) {
+        console.error(error)
+        res.status(500).send('Error del servidor')
+    }
 })
 
 module.exports = router
