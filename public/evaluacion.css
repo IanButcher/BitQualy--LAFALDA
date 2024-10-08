@@ -12,23 +12,15 @@ body {
     box-sizing: border-box;
 }
 
-body, html {
-    font-family: Arial, sans-serif;
-    height: 100%;
-    background-color: #f0f0f0;
-    display: flex;
-}
-
-
-/* Estilos del contenido principal */
+/* Panel principal */
 .main-content {
     background-color: #fff;
-    border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     padding: 20px;
     width: 90%; /* Ancho adaptable */
     max-width: 800px; /* Máximo ancho */
     margin: 20px 0; /* Espaciado superior e inferior */
+    
 }
 
 /* Estilo de los encabezados */
@@ -134,3 +126,4 @@ a:hover {
         font-size: 1.2em;
     }
 }
+
