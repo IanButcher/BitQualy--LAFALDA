@@ -109,13 +109,13 @@ router.post('/evaluaciones/save-evaluacion', async (req, res) => {
 router.get('/evaluaciones/preview/:id', async (req, res) => {
     try {
         const { id } = req.params;  // Evaluation ID
-        
+
         // Find the evaluation by ID and populate the associated form and questions
         const evaluacion = await Evaluacion.findById(id).populate({
             path: 'formulario',
             populate: { path: 'questions' }  // Populate questions within the form
         });
-        
+
         if (!evaluacion) {
             return res.status(404).send('Evaluación no encontrada');
         }

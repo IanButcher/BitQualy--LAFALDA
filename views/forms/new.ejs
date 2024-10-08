@@ -22,7 +22,35 @@
     </style>
 </head>
 <body>
-    <nav> <%- include('../partials/navbar') %> </nav>
+    <div class="container">
+        <!-- Panel lateral izquierdo -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="/img/Logo BitQualy Blanco.png" alt="Logo BitQualy">
+            </div>
+            <nav>
+                <div class="menu-item">
+                    <a href="/empleados"><i class="fas fa-users"></i> Empleados</a>
+                </div>
+                <div class="menu-item">
+                    <a href="/evaluadores"><i class="fas fa-user-tie"></i> Evaluadores</a>
+                </div>
+                <div class="menu-item">
+                    <a href="/reguladores"><i class="fas fa-clipboard-check"></i> Reguladores</a>
+                </div>
+                <div class="gestion-section">
+                    <a href="#" class="dropdown-btn" id="dropdown-toggle"><i class="fas fa-tasks"></i> GESTIÓN <br> EVALUACIONES <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-container" id="dropdown-content" style="display: none;">
+                        <div class="menu-item">
+                            <a href="/evaluaciones"><i class="fas fa-file-alt"></i> Evaluaciones</a>
+                        </div>
+                        <div class="menu-item">
+                            <a href="/formularios"><i class="fas fa-list-alt"></i> Formularios</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
 
         <!-- Panel principal -->
         <div class="main-content">
@@ -51,8 +79,9 @@
                         <div id="additional-questions"></div>
 
                         <!-- Botón para agregar nuevas preguntas -->
+                        <button type="button" class="btn-add" id="add-question-btn">Añadir Pregunta</button>
+
                         <div class="modify-buttons">
-                            <button type="button" class="btn-add" id="add-question-btn">Añadir Pregunta</button>                        
                             <button type="submit" class="btn-save" id="save-form-btn">Guardar Cambios</button> <!-- Submit button -->
                             <button type="button" class="btn-download" id="download-pdf-btn">Descargar PDF</button> <!-- PDF download button -->
                             <a href="/formularios" class="btn-cancel">Cancelar</a>
@@ -189,13 +218,11 @@
         if (!isNaN(value)) {
             if (value > 100) {
                 alert("El porcentaje no puede ser mayor a 100%.");
-                percentageInput.value = 0;
-
+                percentageInput.value = 0;  
             }
             else {
                 if (TotalMaxPorcentaje() === false)
-                percentageInput.value = 0;
-
+                percentageInput.value = 0;  
             }
         } else {
             
@@ -207,18 +234,18 @@
             const percentageInput = document.getElementById(`percentage${questionNumber}`)
             const value = percentageInput.value
 
-            if (value < 20) {
-                percentageInput.style.backgroundColor = "#f5c6cb"; // Red
-            } else if (value <= 40) {
-                percentageInput.style.backgroundColor = "#f8d7da"; // Light Red
-            } else if (value <= 60) {
+            if (value < 10) {
+                percentageInput.style.backgroundColor = "#f8d7da"; // Red
+            } else if (value <= 20) {
+                percentageInput.style.backgroundColor = "#f5c6cb"; // Light Red
+            } else if (value <= 30) {
                 percentageInput.style.backgroundColor = "#ffeeba"; // Yellow
-            } else if (value <= 80) {
+            } else if (value <= 40) {
                 percentageInput.style.backgroundColor = "#fff3cd"; // Light Yellow
-            } else if (value <= 100) {
+            } else if (value <= 50) {
                 percentageInput.style.backgroundColor = "#d4edda"; // Green
             } else {
-                percentageInput.style.backgroundColor = "#f5c6cb"; // red
+                percentageInput.style.backgroundColor = "#c3e6cb"; // Dark Green
             }
         }
 

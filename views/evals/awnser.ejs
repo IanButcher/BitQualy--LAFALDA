@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Responder Evaluación</title>
-    <link rel="stylesheet" href="/formularios.css">
+    <link rel="stylesheet" href="/awnser.css">
 </head>
 <body>
+    <nav> <%- include('../partials/navbar') %> </nav>
     <div class="container">
-        <h2>Formulario: <%= formulario.titulo %></h2>
+        <h2 class="pepe">Formulario: <%= formulario.titulo %></h2>
 
         <!-- Formulario para responder preguntas -->
         <form method="POST" action="/evaluaciones/save-evaluacion">
@@ -17,9 +18,13 @@
         
             <!-- Questions and responses -->
             <div id="preguntasContainer">
+                <br>
                 <% formulario.questions.forEach((pregunta, index) => { %>
                     <div>
+                        <br>
                         <h3><%= pregunta.titulo %></h3>
+                        
+
                         <p><%= pregunta.descripcion %></p>
         
                         <% if (pregunta.tipo === 'texto') { %>

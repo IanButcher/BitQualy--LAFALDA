@@ -6,12 +6,11 @@
     <title>Gestión de Evaluaciones</title>
     <link rel="stylesheet" href="formularios.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="icon" type="image/png" href="https://ugc.production.linktr.ee/mj5IciCyRk2puUukygYa_kmwAn8AE84X4N3S5?io=true&size=avatar-v3_0">
-
 </head>
 <body>
-    <nav> <%- include('../partials/navbar') %> </nav>
-
+    <div class="container">
+        <!-- Panel lateral izquierdo -->
+        <nav><%- include('../partials/navbar') %> </nav>
         <!-- Panel principal -->
         <div class="main-content">
             <div class="header">
@@ -101,14 +100,6 @@
             }
         }
     
-        // JavaScript para mostrar/ocultar el submenú
-        const dropdownBtn = document.querySelector('.dropdown-btn');
-        const dropdownContainer = document.querySelector('.dropdown-container');
-    
-        dropdownBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            dropdownContainer.classList.toggle('active');
-        });
     </script>
     
 </body>
