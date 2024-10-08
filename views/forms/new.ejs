@@ -22,10 +22,11 @@
     </style>
 </head>
 <body>
+     
+
     <div class="container">
         <!-- Panel lateral izquierdo -->
         <nav> <%- include('../partials/navbar') %> </nav>
-
         <!-- Panel principal -->
         <div class="main-content">
 
@@ -72,14 +73,6 @@
 
     <script>
         
-    document.getElementById('dropdown-toggle').addEventListener('click', function () {
-        const dropdownContent = document.getElementById('dropdown-content');
-        if (dropdownContent.style.display === 'block') {
-            dropdownContent.style.display = 'none';
-        } else {
-            dropdownContent.style.display = 'block';
-        }
-    });
 
         let questionCount = 1;
 
