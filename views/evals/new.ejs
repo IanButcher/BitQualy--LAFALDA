@@ -4,39 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nueva Evaluación</title>
-    <link rel="stylesheet" href="/formularios.css">
     <link rel="stylesheet" href="/new.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" type="image/png" href="https://ugc.production.linktr.ee/mj5IciCyRk2puUukygYa_kmwAn8AE84X4N3S5?io=true&size=avatar-v3_0">
-
 </head>
 <body>
     <nav> <%- include('../partials/navbar') %> </nav>
 
-        <!-- Select para seleccionar el formulario -->
-        <label for="formularioSelect">Seleccionar Formulario:</label>
-        <select id="formularioSelect" name="formulario" required>
-            <option value="">--Seleccionar Formulario--</option>
-            <% formularios.forEach(formulario => { %>
-                <option value="<%= formulario._id %>"><%= formulario.titulo %></option>
-            <% }) %>
-        </select>
+    <div class="container">
+        <div class="form-container">
+            <h2>Nueva Evaluación</h2>
 
-        <!-- Select para seleccionar empleado -->
-        <label for="empleadoSelect">Seleccionar Empleado:</label>
-        <select id="empleadoSelect" name="empleado" required>
-            <option value="">--Seleccionar Empleado--</option>
-            <!-- Placeholder: Add logic to dynamically populate empleados -->
-            <option value="Juan">Juan</option>
-            <option value="Maria">Maria</option>
-        </select>
+            <!-- Select para seleccionar el formulario -->
+            <div class="form-group">
+                <label for="formularioSelect">Seleccionar Formulario:</label>
+                <select id="formularioSelect" name="formulario" required>
+                    <option value="">--Seleccionar Formulario--</option>
+                    <% formularios.forEach(formulario => { %>
+                        <option value="<%= formulario._id %>"><%= formulario.titulo %></option>
+                    <% }) %>
+                </select>
+            </div>
 
-        <!-- Botón para aceptar y mostrar las preguntas -->
-        <button type="button" onclick="submitForm()">Aceptar</button>
+            <!-- Select para seleccionar empleado -->
+            <div class="form-group">
+                <label for="empleadoSelect">Seleccionar Empleado:</label>
+                <select id="empleadoSelect" name="empleado" required>
+                    <option value="">--Seleccionar Empleado--</option>
+                    <!-- Placeholder: Add logic to dynamically populate empleados -->
+                    <option value="Juan">Juan</option>
+                    <option value="Maria">Maria</option>
+                </select>
+            </div>
+
+            <!-- Botón para aceptar y mostrar las preguntas -->
+            <button class="btn-aceptar" type="button" onclick="submitForm()">Aceptar</button>
+        </div>
     </div>
 
     <script>
-        // Function to submit the form and redirect to the questions page
         function submitForm() {
             const formularioId = document.getElementById('formularioSelect').value;
             const empleado = document.getElementById('empleadoSelect').value;

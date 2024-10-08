@@ -19,12 +19,6 @@ body, html {
     display: flex;
 }
 
-/* Contenedor principal */
-.container {
-    display: flex;
-    width: 100%;
-}
-
 
 /* Estilos del contenido principal */
 .main-content {
