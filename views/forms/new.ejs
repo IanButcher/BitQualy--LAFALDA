@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+    <link rel="icon" type="image/png" href="https://ugc.production.linktr.ee/mj5IciCyRk2puUukygYa_kmwAn8AE84X4N3S5?io=true&size=avatar-v3_0">
+
     <style>
         /* Estilos adicionales para el Numeric Up Down */
         .percentage-input {
@@ -35,10 +37,6 @@
                 </div>
                 <div class="menu-item">
                     <a href="/reguladores"><i class="fas fa-clipboard-check"></i> Reguladores</a>
-                
-                </div>
-                <div class="menu-item"></div>
-                    <a href="/newEvalrs"><i class="fas fa-user-plus"></i> Crear Empleado</a>
                 </div>
                 <div class="gestion-section">
                     <a href="#" class="dropdown-btn" id="dropdown-toggle"><i class="fas fa-tasks"></i> GESTIÓN <br> EVALUACIONES <i class="fas fa-chevron-down"></i></a>
@@ -130,7 +128,7 @@
 
                     <!-- Porcentaje -->
                     <label for="percentage${questionNumber}">Porcentaje:</label>
-                    <input type="number" class="percentage-input" id="percentage${questionNumber}" name="percentage${questionNumber}" min="0" max="100" required oninput="updateColor(${questionNumber})">
+                    <input type="number" class="percentage-input" id="percentage${questionNumber}" name="percentage${questionNumber}" min="0" max="100" required oninput="updateColor(${questionNumber}), maxPorcentage(${questionNumber}) ">
 
                     <!-- Tipo de pregunta -->
                     <label for="type${questionNumber}">Tipo de Pregunta:</label>
@@ -196,10 +194,45 @@
             }
         }
 
+        function TotalMaxPorcentaje() {
+        const percentageInputs = document.querySelectorAll('.percentage-input');
+        let total = 0;
+
+        // Sumar todos los valores de porcentaje
+        percentageInputs.forEach(input => {
+            const value = parseFloat(input.value)
+            if (!isNaN(value)) {
+                total += value;
+            }
+        });
+        if (total > 100) {
+            alert("La suma total de los porcentajes no puede exceder el 100%.");
+            return false;  
+        }
+        return true;  
+    }
+        // que el porcentage de cada pregunta no supere a 100 o este por debajo de 0
+        function maxPorcentage(questionNumber) {
+        const percentageInput = document.getElementById(`percentage${questionNumber}`);
+        const value = parseFloat(percentageInput.value);
+        if (!isNaN(value)) {
+            if (value > 100) {
+                alert("El porcentaje no puede ser mayor a 100%.");
+                percentageInput.value = 0;  
+            }
+            else {
+                if (TotalMaxPorcentaje() === false)
+                percentageInput.value = 0;  
+            }
+        } else {
+            
+        }
+    }
+        
         // Actualizar el color del porcentaje
         function updateColor(questionNumber) {
-            const percentageInput = document.getElementById(`percentage${questionNumber}`);
-            const value = percentageInput.value;
+            const percentageInput = document.getElementById(`percentage${questionNumber}`)
+            const value = percentageInput.value
 
             if (value < 10) {
                 percentageInput.style.backgroundColor = "#f8d7da"; // Red

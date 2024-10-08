@@ -658,3 +658,25 @@ body, html {
     pointer-events: none;
 }
  
+#nuevaEvaluacionBtn {
+    background-color: #28a745; /* Green background */
+    color: white; /* White text */
+    padding: 10px 20px; /* Padding for size */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px; /* Text size */
+    font-weight: bold; /* Bold text */
+    cursor: pointer; /* Pointer on hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+}
+
+#nuevaEvaluacionBtn:hover {
+    background-color: #218838; /* Darker green on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+#nuevaEvaluacionBtn:active {
+    background-color: #1e7e34; /* Even darker when pressed */
+    transform: scale(1); /* Reset scale on click */
+}

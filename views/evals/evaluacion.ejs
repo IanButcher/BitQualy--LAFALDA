@@ -1,25 +1,91 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ver Evaluación</title>
-    <link rel="stylesheet" href="/formularios.css">
+    <title>Preview Evaluación</title>
+    <link rel="stylesheet" href="/evaluacion.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" type="image/png" href="https://ugc.production.linktr.ee/mj5IciCyRk2puUukygYa_kmwAn8AE84X4N3S5?io=true&size=avatar-v3_0">
+
 </head>
 <body>
-    <div class="container">
-        <h2>Evaluación: <%= evaluacion.formulario.titulo %></h2>
-        <p>Empleado: <%= evaluacion.empleado %></p>
+    <nav> <%- include('../partials/navbar') %> </nav>
 
-        <!-- Mostrar preguntas y respuestas -->
-        <div>
-            <% evaluacion.respuestas.forEach((respuesta, index) => { %>
-                <div>
-                    <h3><%= respuesta.pregunta %></h3>
-                    <p><%= respuesta.respuesta.join(', ') %></p>
+        <!-- Panel principal -->
+        <div class="main-content">
+            <div class="header">
+                <div class="user-info">
+                    <img src="/img/user-image.png" alt="User Image">
+                    <span>Carina Campo | Rol: Recursos Humanos</span>
                 </div>
-            <% }) %>
+            </div>
+
+            <!-- Contenido principal de la evaluación -->
+            <div class="evaluation-content">
+                <h2>Evaluación: <%= evaluacion.formulario.titulo %></h2>
+                <p><strong>Empleado:</strong> <%= evaluacion.empleado %></p>
+
+                <!-- Mostrar preguntas y respuestas -->
+                <div class="respuestas-container">
+                    <% evaluacion.respuestas.forEach((respuesta, index) => { %>
+                        <div class="respuesta-item">
+                            <h3><%= respuesta.pregunta %></h3>
+                            <p>
+                                <% if (Array.isArray(respuesta.respuesta)) { %>
+                                    <%= respuesta.respuesta.join(', ') %>
+                                <% } else { %>
+                                    <%= respuesta.respuesta %>
+                                <% } %>
+                              </p>                              
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
         </div>
     </div>
+    <h1>Preview de la Evaluación</h1>
+
+    <h2>Formulario: <%= evaluacion.formulario.name %></h2>
+    <h3>Empleado: <%= evaluacion.empleado %></h3>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Pregunta</th>
+                <th>Respuesta</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% evaluacion.formulario.questions.forEach((question, index) => { %>
+                <tr>
+                    <td><%= question.text %></td>
+                    <td>
+                        
+                        <% if (typeof evaluacion.respuestas[index] === 'string') { %>
+                            <%= evaluacion.respuestas[index] %>  
+                        <% } else if (Array.isArray(evaluacion.respuestas[index])) { %>
+                            Seleccionado(s): <%= evaluacion.respuestas[index].join(', ') %>  
+                        <% } else { %>
+                            <%= JSON.stringify(evaluacion.respuestas[index]) %> 
+                        <% } %>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+
+    <a href="/evaluaciones">Volver a las evaluaciones</a>
+    <title>Ver Evaluación</title>
+    <script>
+        document.getElementById('dropdown-toggle').addEventListener('click', function () {
+            const dropdownContent = document.getElementById('dropdown-content');
+            if (dropdownContent.style.display === 'block') {
+                dropdownContent.style.display = 'none';
+            } else {
+                dropdownContent.style.display = 'block';
+            }
+        });
+    </script>
 </body>
 </html>

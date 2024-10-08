@@ -1,4 +1,5 @@
 const leo = {
+    id:0,
     nombre: "Leo",
     apellido: "Noase",
     rol: "Evaluadores",
@@ -6,6 +7,7 @@ const leo = {
 }
 
 const savage = {
+    id:01,
     nombre: "Salvaje",
     apellido: "Veintiuno",
     rol: "Evaluador Piolin",
@@ -13,6 +15,7 @@ const savage = {
 }
 
 const fran = {
+    id:02,
     nombre: "Franklin",
     apellido: "Jijo",
     rol: "Nigga",
@@ -20,6 +23,7 @@ const fran = {
 }
 
 const bicho = {
+    id:03,
     nombre: "Cris",
     apellido: "Ronaldo",
     rol: "El Goat",
