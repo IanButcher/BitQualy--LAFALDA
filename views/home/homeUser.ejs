@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BitQualy Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="home.css">
+    <link rel="icon" type="image/png" href="https://ugc.production.linktr.ee/mj5IciCyRk2puUukygYa_kmwAn8AE84X4N3S5?io=true&size=avatar-v3_0">
+    
+</head>
+<body>
+    <div class="home-container">
+        <!-- Logo -->
+        <div class="logo">
+            <img src="img/Logo BitQualy Blanco.png" alt="Logo BitQualy">
+        </div>
+
+        <!-- Botones de navegación principales -->
+        <nav class="main-nav">
+            <a class="nav-item"></a>
+                <i class=""></i> <!-- Icono de evaluaciones -->
+
+            </a>
+             <!-- Evaluaciones -->
+            <a href="/evaluaciones" class="nav-item">
+                <i class="fas fa-clipboard-list"></i> <!-- Icono de evaluaciones -->
+                <span>Evaluaciones</span>
+            </a>
+            <a  class="nav-item"></a>
+                <i class=""></i> <!-- Icono de evaluaciones -->
+
+            </a>
+
+            
+
+        </nav>
+
+        <!-- Icono de notificaciones en la esquina superior derecha -->
+        <div class="header-icons">
+            <i class="fas fa-bell icon"></i> <!-- Icono de notificaciones -->
+        </div>
+
+        <!-- Popup de notificaciones -->  
+        <div class="notification-popup" id="notificationPopup">
+            <div class="popup-header">
+                <h3>Notificaciones</h3>
+                <i class="fas fa-times close-popup"></i>
+            </div> 
+
+            <!-- <div class="popup-body">
+                <% // if (notificaciones.length != 0) { %>
+                    <% // for (notificacion of notificaciones) {%>
+                        <p>No tienes nuevas notificaciones</p>
+                        <p>Endererrrpell</p>
+                    <% // } %>
+                <% // } %> 
+            </div> -->
+        </div>
+    </div>
+
+    <script>
+        // JavaScript para el menú desplegable
+        document.addEventListener("DOMContentLoaded", function() {
+            // Selecciona el botón que despliega el menú
+            const gestionToggle = document.querySelector('.dropdown-toggle');
+            const gestionSection = document.querySelector('.gestion-section');
+
+            gestionToggle.addEventListener('click', function() {
+                gestionSection.classList.toggle('active');
+            });
+        });
+
+        // JavaScript para el popup de notificaciones
+        document.addEventListener("DOMContentLoaded", function() {
+            // Seleccionamos los elementos necesarios
+            const bellIcon = document.querySelector('.fa-bell');
+            const notificationPopup = document.getElementById('notificationPopup');
+            const closePopupIcon = document.querySelector('.close-popup');
+
+            // Mostrar el popup al hacer clic en el icono de la campana
+            bellIcon.addEventListener('click', function() {
+                notificationPopup.style.display = 'block';
+            });
+
+            // Cerrar el popup al hacer clic en el icono de cerrar
+            closePopupIcon.addEventListener('click', function() {
+                notificationPopup.style.display = 'none';
+            });
+
+            // Cerrar el popup si se hace clic fuera de él
+            window.addEventListener('click', function(e) {
+                if (e.target !== notificationPopup && e.target !== bellIcon) {
+                    notificationPopup.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

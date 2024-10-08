@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,19 +7,16 @@
     <link rel="stylesheet" href="/evaluacion.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" type="image/png" href="https://ugc.production.linktr.ee/mj5IciCyRk2puUukygYa_kmwAn8AE84X4N3S5?io=true&size=avatar-v3_0">
-
 </head>
 <body>
     <nav> <%- include('../partials/navbar') %> </nav>
 
         <!-- Panel principal -->
         <div class="main-content">
-            <div class="header">
-                <div class="user-info">
-                    <img src="/img/user-image.png" alt="User Image">
-                    <span>Carina Campo | Rol: Recursos Humanos</span>
-                </div>
-            </div>
+            <header>
+                <%- include('../partials/headerU') %>
+            </header>  
+    
 
             <!-- Contenido principal de la evaluación -->
             <div class="evaluation-content">
@@ -43,40 +40,61 @@
                 </div>
             </div>
         </div>
-    </div>
-    <h1>Preview de la Evaluación</h1>
 
-    <h2>Formulario: <%= evaluacion.formulario.name %></h2>
-    <h3>Empleado: <%= evaluacion.empleado %></h3>
+        <!-- Contenido principal de la evaluación -->
+        <div class="evaluation-content">
+            <h2>Evaluación: <%= evaluacion.formulario.titulo %></h2>
+            <p><strong>Empleado:</strong> <%= evaluacion.empleado %></p>
 
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Pregunta</th>
-                <th>Respuesta</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% evaluacion.formulario.questions.forEach((question, index) => { %>
+            <!-- Mostrar preguntas y respuestas -->
+            <div class="respuestas-container">
+                <% evaluacion.formulario.questions.forEach((pregunta, index) => { %>
+                    <div class="respuesta-item">
+                        <h3><%= pregunta.titulo %></h3>
+                        <p><%= pregunta.descripcion %></p>
+                        <p>
+                            <% if (Array.isArray(evaluacion.respuestas[index])) { %>
+                                <%= evaluacion.respuestas[index].join(', ') %>
+                            <% } else { %>
+                                <%= evaluacion.respuestas[index] %>
+                            <% } %>
+                        </p>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+        <h1>Preview de la Evaluación</h1>
+        <h2>Formulario: <%= evaluacion.formulario.name %></h2>
+        <h3>Empleado: <%= evaluacion.empleado %></h3>
+
+        <table border="1">
+            <thead>
                 <tr>
-                    <td><%= question.text %></td>
-                    <td>
-                        
-                        <% if (typeof evaluacion.respuestas[index] === 'string') { %>
-                            <%= evaluacion.respuestas[index] %>  
-                        <% } else if (Array.isArray(evaluacion.respuestas[index])) { %>
-                            Seleccionado(s): <%= evaluacion.respuestas[index].join(', ') %>  
-                        <% } else { %>
-                            <%= JSON.stringify(evaluacion.respuestas[index]) %> 
-                        <% } %>
-                    </td>
+                    <th>Pregunta</th>
+                    <th>Respuesta</th>
                 </tr>
-            <% }) %>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <% evaluacion.formulario.questions.forEach((question, index) => { %>
+                    <tr>
+                        <td><%= question.text %></td>
+                        <td>
+                            <% if (typeof evaluacion.respuestas[index] === 'string') { %>
+                                <%= evaluacion.respuestas[index] %>  
+                            <% } else if (Array.isArray(evaluacion.respuestas[index])) { %>
+                                Seleccionado(s): <%= evaluacion.respuestas[index].join(', ') %>  
+                            <% } else { %>
+                                <%= JSON.stringify(evaluacion.respuestas[index]) %> 
+                            <% } %>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
 
-    <a href="/evaluaciones">Volver a las evaluaciones</a>
-    <title>Ver Evaluación</title>
+        <a class="button" href="/evaluaciones">Volver a las evaluaciones</a>
+
+
     <script>
         document.getElementById('dropdown-toggle').addEventListener('click', function () {
             const dropdownContent = document.getElementById('dropdown-content');
