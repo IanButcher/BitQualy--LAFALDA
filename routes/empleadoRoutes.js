@@ -1,6 +1,6 @@
 // Modulos
 const express = require('express')
-
+const mongoose = require('mongoose')
 const router = express.Router()
 const Empleado = require('../Schemas/empleadoSchema')
 const Evaluador = require('../Schemas/evaluadorSchema')

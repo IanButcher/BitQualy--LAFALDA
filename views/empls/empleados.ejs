@@ -34,18 +34,23 @@
             
             
             <section class="employee-list">
-            <% for (empleado of empleados) { %>
-                <div class="employee">
-                    <a href="/empleados/<%= empleado._id %>">
-                        <img src="empleado1.jpg" alt="Empleado">
-                    <div class="employee-info">
-                        <h3><%= empleado.nombre %> <%= empleado.apellido %></h3>
-                        <p>Rol: <%= empleado.rol %></p>
-                        <p>Legajo: <%= empleado.legajo %></p>
+                <% for (let empleado of empleados) { %>
+                    <div class="employee">
+                        <a href="/empleados/<%= empleado._id %>">
+                            <img src="empleado1.jpg" alt="Empleado">
+                        </a>
+                        <div class="employee-info">
+                            <h3><%= empleado.nombre %> <%= empleado.apellido %></h3>
+                            <p>Rol: <%= empleado.rol %></p>
+                            <p>Legajo: <%= empleado.legajo %></p>
+                        </div>
+                        <!-- Add a form for deletion -->
+                        <form action="/empleados/eliminar/<%= empleado._id %>" method="POST">
+                            <button type="submit">Eliminar</button>
+                        </form>
                     </div>
-                    <button>eliminar</button>
                 <% } %>               
-            </section>
+            </section>            
         </main>
     </div>
 
