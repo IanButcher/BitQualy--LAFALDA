@@ -22,7 +22,6 @@ const baseUserSchema = new mongoose.Schema({
     required: true,
     trim: true,
     min: 3,
-    max:8
 },
   password: { 
     type: String, 

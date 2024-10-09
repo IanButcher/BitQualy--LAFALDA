@@ -21,21 +21,30 @@
         </div>
         <!-- Panel derecho para el formulario de login -->
         <div class="right-panel">
-            <form class="login-form">
+            <% if (error_msg) { %>
+                <div class="alert alert-danger">
+                    <%= error_msg %>
+                </div>
+            <% } %>
+            
+            <form class="login-form" method="POST" action="/login">
                 <img class="login-titulo" src="/img/Login Letra.png" alt="" >
                 <div class="input-group">
-                    <label for="legajo">Nº Legajo</label>
-                    <input type="text" id="legajo" placeholder="Nº Legajo"maxlength="15">
+                    <label for="legajo">Legajo</label>
+                    <input type="text" id="legajo" name="legajo" placeholder="Ingresa tu legajo" required>
                 </div>
+            
                 <div class="input-group">
                     <label for="password">Contraseña</label>
-                    <input type="password" id="password" placeholder="Contraseña"minlength="6"maxlength="16">
+                    <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required>
                     <span class="toggle-password-eye" onclick="togglePassword()">
                         <i class="fas fa-eye"></i>
                     </span>
                 </div>
+            
                 <button type="submit" class="login-button">Iniciar Sesión</button>
             </form>
+            
         </div>
     </div>
 
