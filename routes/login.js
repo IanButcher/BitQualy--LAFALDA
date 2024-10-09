@@ -55,7 +55,7 @@ router.post('/save-new-user', async (req, res) => {
         console.error(error)
         res.status(500).json({ message: 'Error creating user' })
     }
-});
+})
 
 module.exports = router;
 
