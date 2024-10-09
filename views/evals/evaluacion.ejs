@@ -22,53 +22,48 @@
         <div class="evaluation-content">
             <h2>Evaluación: <%= evaluacion.formulario.titulo %></h2>
             <p><strong>Empleado:</strong> <%= evaluacion.empleado %></p>
-
+        
             <!-- Mostrar preguntas y respuestas -->
             <div class="respuestas-container">
                 <% evaluacion.formulario.questions.forEach((pregunta, index) => { %>
                     <div class="respuesta-item">
                         <h3><%= pregunta.titulo %></h3>
                         <p><%= pregunta.descripcion %></p>
-                        <p>
-                            <% if (Array.isArray(evaluacion.respuestas[index])) { %>
-                                <%= evaluacion.respuestas[index].join(', ') %>
-                            <% } else { %>
-                                <%= evaluacion.respuestas[index] %>
+        
+                        <div>
+                            <% 
+                            // Try splitting the answer string based on "Respuesta: " or "Seleccionado(s): "
+                            const rawRespuesta = evaluacion.respuestas[index];
+                            
+                            // Split based on "Respuesta: " and "Seleccionado(s): " and get the last part
+                            const respuesta = rawRespuesta.split(/Respuesta: |Seleccionado\(s\): /).pop().trim();
+                            %>
+    
+        
+                            <% if (pregunta.tipo === 'texto') { %>
+                                <!-- Text question -->
+                                <input class="inputs-texto" type="text" value="<%= respuesta %>" disabled>
+                            <% } else if (pregunta.tipo === 'multiple') { %>
+                                <!-- Multiple choice (radio button) question -->
+                                <% pregunta.options.forEach(option => { %>
+                                    <label>
+                                        <input type="radio" disabled <%= respuesta.includes(option) ? 'checked' : '' %>> <%= option %>
+                                    </label><br>
+                                <% }) %>
+                            <% } else if (pregunta.tipo === 'checkbox') { %>
+                                <!-- Checkbox question -->
+                                <% pregunta.options.forEach(option => { %>
+                                    <label>
+                                        <input type="checkbox" disabled <%= respuesta.includes(option) ? 'checked' : '' %>> <%= option %>
+                                    </label><br>
+                                <% }) %>
                             <% } %>
-                        </p>
+                        </div>
                     </div>
                 <% }) %>
             </div>
         </div>
-        <h1>Preview de la Evaluación</h1>
-        <h2>Formulario: <%= evaluacion.formulario.name %></h2>
-        <h3>Empleado: <%= evaluacion.empleado %></h3>
-
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Pregunta</th>
-                    <th>Respuesta</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% evaluacion.formulario.questions.forEach((question, index) => { %>
-                    <tr>
-                        <td><%= question.text %></td>
-                        <td>
-                            <% if (typeof evaluacion.respuestas[index] === 'string') { %>
-                                <%= evaluacion.respuestas[index] %>  
-                            <% } else if (Array.isArray(evaluacion.respuestas[index])) { %>
-                                Seleccionado(s): <%= evaluacion.respuestas[index].join(', ') %>  
-                            <% } else { %>
-                                <%= JSON.stringify(evaluacion.respuestas[index]) %> 
-                            <% } %>
-                        </td>
-                    </tr>
-                <% }) %>
-            </tbody>
-        </table>
-
+                
         <a class="button" href="/evaluaciones">Volver a las evaluaciones</a>
 
 

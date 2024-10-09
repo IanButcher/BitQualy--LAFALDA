@@ -24,16 +24,16 @@
                         <option value="<%= formulario._id %>"><%= formulario.titulo %></option>
                     <% }) %>
                 </select>
-            </div>
+            </div> 
 
             <!-- Select para seleccionar empleado -->
             <div class="form-group">
                 <label for="empleadoSelect">Seleccionar Empleado:</label>
                 <select id="empleadoSelect" name="empleado" required>
                     <option value="">--Seleccionar Empleado--</option>
-                    <!-- Placeholder: Add logic to dynamically populate empleados -->
-                    <option value="Juan">Juan</option>
-                    <option value="Maria">Maria</option>
+                    <% usuarios.forEach(usuario => { %>
+                        <option value="<%= usuario.nombre %>+<%= usuario.apellido %>"><%= usuario.nombre %></option>
+                    <% }) %>
                 </select>
             </div>
 

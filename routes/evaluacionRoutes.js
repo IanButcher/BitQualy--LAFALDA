@@ -4,6 +4,7 @@ const app = express()
 const router = express.Router()
 const Formulario = require('../Schemas/formularioSchema')
 const Evaluacion = require('../Schemas/evaluacionSchema')
+const baseUserSchema = require('../Schemas/baseUserSchema')
 const mongoose = require('mongoose')
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
@@ -23,7 +24,8 @@ router.get('/evaluaciones', async (req, res) => {
 router.get('/evaluaciones/new', async (req, res) => {
     try {
         const formularios = await Formulario.find({ isActive: true }).populate('questions')
-        res.render('evals/new', { formularios })
+        const usuarios = await baseUserSchema.find({ estaActivo: true })
+        res.render('evals/new', { formularios, usuarios })
     } catch (error) {
         console.error('Error fetching forms:', error)
         res.status(500).send('Error interno del servidor')
@@ -44,8 +46,8 @@ router.get('/evaluaciones/new', async (req, res) => {
 router.get('/evaluaciones/answer/:id', async (req, res) => {
     console.log('GET /evaluaciones/answer/:id reached')
     try {
-        const { id } = req.params;  // formulario ID
-        const { empleado } = req.query;  // empleado from the query params
+        const { id } = req.params  // formulario ID
+        const { empleado } = req.query
         console.log(`Formulario ID: ${id}, Empleado: ${empleado}`)
         const formulario = await Formulario.findById(id).populate('questions')
         if (!formulario || formulario.isActive != true) {
@@ -74,18 +76,20 @@ router.post('/evaluaciones/save-evaluacion', async (req, res) => {
         // Format the answers to ensure they are strings
         const respuestasFormateadas = formulario.questions.map((question, index) => {
             const respuesta = respuestas[index];
-
+        
             if (Array.isArray(respuesta)) {
-                // If the respuesta is an array (for checkboxes), format them as a list of values
-                return `Seleccionado(s): ${respuesta.join(', ')}`;
+                // Format array responses (e.g., for checkboxes)
+                return respuesta.join(', ');
             } else if (typeof respuesta === 'object' && respuesta !== null) {
-                // If respuesta is an object (e.g., multiple-choice), format the object's values
-                return `Seleccionado(s): ${Object.values(respuesta).join(', ')}`;
+                // For object responses (e.g., multiple-choice or similar)
+                return Object.values(respuesta).join(', ');
             } else {
-                // Ensure single responses are returned as strings
-                return `Respuesta: ${respuesta.toString()}`;
+                // Return plain response without any prefix
+                return respuesta.toString();  // Only save the clean answer
             }
         });
+        
+        
 
         // Create a new Evaluacion instance
         const nuevaEvaluacion = new Evaluacion({

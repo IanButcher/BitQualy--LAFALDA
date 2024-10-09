@@ -43,6 +43,13 @@ h1, h2, h3 {
     background-color: #fafafa; /* Fondo claro */
 }
 
+.inputs-texto {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
 /* Estilo de la tabla */
 table {
     width: 100%; /* Ancho completo */

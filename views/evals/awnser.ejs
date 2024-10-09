@@ -21,27 +21,29 @@
                 <br>
                 <% formulario.questions.forEach((pregunta, index) => { %>
                     <div>
-                        <br>
-                        <h3><%= pregunta.titulo %></h3>
-                        
-
-                        <p><%= pregunta.descripcion %></p>
-        
-                        <% if (pregunta.tipo === 'texto') { %>
-                            <input type="text" name="respuestas[]" required>
-                        <% } else if (pregunta.tipo === 'multiple') { %>
-                            <% pregunta.options.forEach(option => { %>
-                                <label><input type="radio" name="respuestas[<%= index %>]" value="<%= option %>"> <%= option %></label>
-                            <% }) %>
-                        <% } else if (pregunta.tipo === 'checkbox') { %>
-                            <% pregunta.options.forEach(option => { %>
-                                <label><input type="checkbox" name="respuestas[<%= index %>][]" value="<%= option %>"> <%= option %></label>
-                            <% }) %>
-                        <% } %>
-        
-                        <input type="hidden" name="respuestas[<%= index %>][pregunta]" value="<%= pregunta.titulo %>">
+                      <h3><%= pregunta.titulo %></h3>
+                      <p><%= pregunta.descripcion %></p>
+                  
+                      <% if (pregunta.tipo === 'texto') { %>
+                        <input type="text" name="respuestas[<%= index %>]" required>
+                      <% } else if (pregunta.tipo === 'multiple') { %>
+                        <% pregunta.options.forEach(option => { %>
+                          <label>
+                            <input type="radio" name="respuestas[<%= index %>]" value="<%= option %>"> <%= option %>
+                          </label>
+                        <% }) %>
+                      <% } else if (pregunta.tipo === 'checkbox') { %>
+                        <% pregunta.options.forEach(option => { %>
+                          <label>
+                            <input type="checkbox" name="respuestas[<%= index %>][]" value="<%= option %>"> <%= option %>
+                          </label>
+                        <% }) %>
+                      <% } %>
+                  
+                      <!-- Hidden input to track question titles separately -->
+                      <input type="hidden" name="preguntas[<%= index %>]" value="<%= pregunta.titulo %>">
                     </div>
-                <% }) %>
+                  <% }) %>                  
             </div>
         
             <!-- Show the selected employee -->
