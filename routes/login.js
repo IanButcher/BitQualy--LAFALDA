@@ -57,6 +57,4 @@ router.post('/save-new-user', async (req, res) => {
     }
 })
 
-module.exports = router;
-
-
+module.exports = router
