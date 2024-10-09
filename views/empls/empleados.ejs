@@ -43,6 +43,7 @@
                         <p>Rol: <%= empleado.rol %></p>
                         <p>Legajo: <%= empleado.legajo %></p>
                     </div>
+                    <button>eliminar</button>
                 <% } %>               
             </section>
         </main>
@@ -70,8 +71,10 @@
                 } else {
                     employee.style.opacity = 1;  // Totalmente visible
                 }
-            });
-        });
+            })
+        })
+
+        
     </script>
     
 </body>

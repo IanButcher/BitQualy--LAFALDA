@@ -27,6 +27,13 @@
                 </div>
 
                 <div class="combobox-container">
+                    <form id="deleteEmpls" method="POST" style="display:none;">
+                        <input type="hidden" name="_method" value="PUT">  <!-- Si usas PUT en lugar de POST -->
+                    </form>
+                    
+                    <!-- Botón para desactivar al empleado -->
+                    <button onclick="popupEliminar('<%= empleado._id %>')">Desactivar</button>
+
                     <label for="employee-options">Designar como:</label>
                     <select id="employee-options">
                         <option value="option1">Empleado regular</option>
@@ -46,7 +53,7 @@
                 <section class="evaluation-section">
                     <h2>Evaluaciones Asignadas</h2>
                     <div class="evaluation-card">
-                        <img src="empleado1.jpg" alt="Franco Siccardi" class="eval-img">
+                        <!-- <img src="empleado1.jpg" alt="Franco Siccardi" class="eval-img"> -->
                         <div class="eval-info">
                             <p><strong><%= empleado.nombre %></strong></p>
                             <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
@@ -55,7 +62,7 @@
                     </div>
 
                     <div class="evaluation-card">
-                        <img src="empleado1.jpg" alt="Franco Siccardi" class="eval-img">
+                        <!--<img src="empleado1.jpg" alt="Franco Siccardi" class="eval-img">-->
                         <div class="eval-info">
                             <p><strong><%= empleado.nombre %></strong></p>
                             <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
@@ -93,7 +100,7 @@
             <section class="evaluation-finished">
                 <h2>Evaluaciones Finalizadas</h2>
                 <div class="evaluation-card">
-                    <img src="empleado1.jpg" alt="Franco Siccardi" class="eval-img">
+                    <!--<img src="empleado1.jpg" alt="Franco Siccardi" class="eval-img">-->
                     <div class="eval-info">
                         <p><strong><%= empleado.nombre %></strong></p>
                         <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
@@ -114,7 +121,19 @@
         dropdownBtn.addEventListener('click', function (e) {
             e.preventDefault();
             dropdownContainer.classList.toggle('active');
-        });
+        })
+        function popupEliminar(id_Empleado) {
+            console.log(id_Empleado);  // Verifica que se imprime un ObjectId válido
+            const deleteEmpls = document.getElementById('deleteEmpls');
+
+            if (deleteEmpls && confirm('¿Estás seguro de que deseas desactivar este empleado?')) {
+                // Configura la acción con el ID del empleado
+                deleteEmpls.action = `/empleados/eliminar/${id_Empleado}`;
+                deleteEmpls.submit();  // Envía el formulario
+            } else {
+                console.error('Formulario de eliminación no encontrado!');
+            }
+}
     </script>
 </body>
 
