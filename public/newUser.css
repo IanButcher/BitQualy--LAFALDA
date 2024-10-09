@@ -163,3 +163,17 @@ body, html {
     color: #888;
     font-size: 18px;
 }
+
+a {
+    text-decoration: none;
+}
+
+.navbar-item a {
+    text-decoration: none !important;
+    color: white;
+}
+
+.contenedor-evaluaciones a {
+    text-decoration: underline;
+}
+

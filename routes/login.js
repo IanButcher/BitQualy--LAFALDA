@@ -48,7 +48,7 @@ router.post('/save-new-user', async (req, res) => {
             // Save usuario
             await newUser.save()
             console.log(newUser)
-            res.redirect('/home')
+            res.redirect('/home-admin')
         }
 
     } catch (error) {
