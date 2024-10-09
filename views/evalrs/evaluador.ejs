@@ -27,6 +27,12 @@
                 </div>
 
                 <div class="combobox-container">
+                    <form id="deleteEvalrs" method="POST" action="/evaluadores/eliminar/<%= evaluador._id %>" style="display:none;">
+                    </form>
+                    
+                    <!-- Button to trigger the form submission -->
+                    <button onclick="popupEliminar('<%= evaluador._id %>')">Desactivar</button>
+
                     <label for="employee-options">Designar como:</label>
                     <select id="employee-options">
                         <option value="option1">Empleado regular</option>
@@ -35,11 +41,11 @@
                     </select>
                 </div>
                 
-                <div class="header-options">
+                <!--<div class="header-options">
                     <i class="fas fa-bell"></i>
                     <i class="fas fa-cog"></i>
                     <img src="/img/profile.png" alt="Carina Campo" class="profile-img">
-                </div>
+                </div>-->
 
                     <%- include('../partials/headerU') %>
             </header>
@@ -110,13 +116,15 @@
     </div>
 
     <script>
-        const dropdownBtn = document.querySelector('.dropdown-btn');
-        const dropdownContainer = document.querySelector('.dropdown-container');
+        function popupEliminar(empleadoId) {
 
-        dropdownBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            dropdownContainer.classList.toggle('active');
-        });
+            const form = document.getElementById('deleteEvalrs')
+
+            if (form && confirm('estas seguro')){
+                form.action = '/evaluadores/eliminar/' + empleadoId
+                form.submit()
+            }else{}
+        }
     </script>
 </body>
 

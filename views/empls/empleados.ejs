@@ -16,9 +16,22 @@
 
         <!-- Panel principal -->
         <main class="main-content">
-            <header>
-                <%- include('../partials/header') %>
-            </header>            
+            <header class="header">
+                <h1>Empleados</h1>
+                <div class="user-info">
+                    <h2>Carina Campo</h2>
+                    <p>Rol: Recursos Humanos</p>
+                </div>
+                
+            </header>
+            <div class="search-container">
+                <div class="search-wrapper">
+                    <input class="busqueda" type="search" placeholder="Buscar empleados...">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+            </div>
+            
+            
             
             <section class="employee-list">
             <% for (empleado of empleados) { %>
@@ -57,8 +70,10 @@
                 } else {
                     employee.style.opacity = 1;  // Totalmente visible
                 }
-            });
-        });
+            })
+        })
+
+        
     </script>
     
 </body>
