@@ -27,8 +27,11 @@
                             <option class="getOptionsForScript" value="<% formulario.id %>"><%= formulario.titulo %></option>
                         <% } %>
                     </select>
+                    <a href="/formularios/new" class="btn-modify">New</a>
                     <button class="btn-filter">Filtrar</button>
+                    
                 </div>
+            
 
                 <div class="eliminar">
                     <% for (formulario of formularios) { %>
@@ -47,9 +50,7 @@
                     <iframe src="https://cedec.intef.es/wp-content/uploads/2019/09/cedec-Plantilla-autoevaluacion-docente-ABP.pdf" tabindex="0" data-auto-height="true" data-aspect-ratio="0.7729220222793488" scrolling="no" width="100%" height="600" frameborder="0" class="preview-frame"></iframe>
                 </div>
     
-                <div class="modify-section">
-                    <a href="/formularios/new" class="btn-modify">New</a>
-                </div>
+                
             </div>
         </div>
     </div>
