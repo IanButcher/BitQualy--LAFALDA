@@ -112,9 +112,13 @@
 
     <script>
         function popupEliminar(empleadoId) {
+
         const form = document.getElementById('deleteEmpls')
-        form.action = '/empleados/eliminar/' + empleadoId
-        form.submit()
+
+            if (form && confirm('estas seguro')){
+                form.action = '/empleados/eliminar/' + empleadoId
+                form.submit()
+            }else{}
     }
     </script>
 </body>
