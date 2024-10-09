@@ -20,7 +20,8 @@ const baseUserSchema = new mongoose.Schema({
   legajo: {
     type: Number,
     required: true,
-    trim: true
+    trim: true,
+    min: 3,
 },
   password: { 
     type: String, 

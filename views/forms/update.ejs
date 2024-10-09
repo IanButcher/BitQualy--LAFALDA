@@ -4,23 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modificar Formulario</title>
-    <link rel="stylesheet" href="/newForm.css">
+    <link rel="stylesheet" href="/update.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
     <link rel="icon" type="image/png" href="https://ugc.production.linktr.ee/mj5IciCyRk2puUukygYa_kmwAn8AE84X4N3S5?io=true&size=avatar-v3_0">
 
-    <style>
-        /* Estilos adicionales para el Numeric Up Down */
-        .percentage-input {
-            width: auto;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            text-align: center;
-        }
-    </style>
+    
 </head>
+<style>
+    .notification-icon,
+    .user-photo {
+        position: absolute;
+        right: 120px;
+        top: 100px;
+    }   
+</style>  
 <body>
     <nav> <%- include('../partials/navbar') %> </nav>>
         
@@ -28,10 +27,7 @@
         <!-- Panel principal -->
         <div class="main-content">
             <div class="header">
-                <div class="user-info">
-                    <img src="/img/user-image.png" alt="User Image">
-                    <span>Carina Campo | Rol: Recursos Humanos</span>
-                </div>
+                <header class="notificacion-icon user-photo"> <%- include('../partials/headerU') %> </header>
             </div>
 
             <div class="modify-form-section">
@@ -55,12 +51,17 @@
                             <% for (pregunta of formulario.questions) {%>
                                 <div class="form-group" id="question-group-<%= pregunta._id %>">
                                     <label for="question<%= pregunta._id %>">Pregunta <%= questionIndex %>:</label>
+                                    <br>
                                     <input type="text" id="question<%= pregunta._id %>" name="question<%= pregunta._id %>" value="<%= pregunta.titulo %>" required>
                                      <!-- Descripción de la pregunta -->
+                                     <br>
                                     <label for="description<%= pregunta._id %>">Descripción:</label>
+                                    <br>
                                     <textarea id="description<%= pregunta._id %>" name="description<%= pregunta._id %>"><%= pregunta.descripcion %></textarea>
                                     <!-- Porcentaje -->
+                                    <br>
                                     <label for="percentage<%= pregunta._id %>">Porcentaje:</label>
+                                    <br>
                                     <input type="number" class="percentage-input" id="percentage${questionNumber}" name="percentage<%= pregunta._id %>" min="0" max="100" required oninput="updateColor('<%= pregunta.porcentaje %>')" value="<%= pregunta.porcentaje %>">
                                     <!-- Tipo de pregunta -->
                                     <label for="type<%= pregunta._id %>">Tipo de Pregunta:</label>
@@ -83,6 +84,8 @@
                                         </div>
                                         <button type="button" class="btn-add-option" onclick="addOption('<%= pregunta._id %>')">Añadir Opción</button>
                                     </div>
+                                    <br>
+                                    <br>
                                     <!-- Botón para eliminar pregunta -->
                                     <button type="button" class="btn-delete" onclick="deleteQuestion('<%= pregunta._id %>')">Eliminar Pregunta</button>
                                 </div>
@@ -265,6 +268,29 @@
             // Guardar PDF
             doc.save(`${title}.pdf`);
         });
+
+                
+
+
+
+
+
+        function updateColor(id) {
+            const percentageInput = document.getElementById(`percentage${id}`);
+            const value = Number(percentageInput.value); // Asegúrate de que el valor sea un número
+
+            // Limpiar clases de color anteriores
+            percentageInput.classList.remove('red-border', 'blue-border', 'green-border');
+
+            // Aplicar la clase correspondiente
+            if (value < 20) {
+                percentageInput.classList.add('red-border');
+            } else if (value >= 20 && value < 70) {
+                percentageInput.classList.add('blue-border');
+            } else if (value >= 70) {
+                percentageInput.classList.add('green-border');
+            }
+        }
     </script>
 </body>
 </html>

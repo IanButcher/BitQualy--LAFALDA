@@ -27,6 +27,13 @@
                 </div>
 
                 <div class="combobox-container">
+
+                    <form id="deleteRegs" method="POST" action="/reguladores/eliminar/<%= intermediario._id %>" style="display:none;">
+                    </form>
+                    
+                    <!-- Button to trigger the form submission -->
+                    <button onclick="popupEliminar('<%= intermediario._id %>')">Desactivar</button>
+
                     <label for="employee-options">Designar como:</label>
                     <select id="employee-options">
                         <option value="option1">Empleado regular</option>
@@ -104,13 +111,16 @@
     </div>
 
     <script>
-        const dropdownBtn = document.querySelector('.dropdown-btn');
-        const dropdownContainer = document.querySelector('.dropdown-container');
 
-        dropdownBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            dropdownContainer.classList.toggle('active');
-        });
+        function popupEliminar(empleadoId) {
+
+        const form = document.getElementById('deleteRegs')
+
+        if (form && confirm('estas seguro')){
+            form.action = '/reguladores/eliminar/' + empleadoId
+            form.submit()
+        }else{}
+        }
     </script>
 </body>
 

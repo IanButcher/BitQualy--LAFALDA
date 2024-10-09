@@ -1,51 +1,34 @@
 // Modulos
 const express = require('express')
-const ejs = require('ejs')
-const arrayEmpleados = require('./seedEmpleados')
-const arrayEvaluadores = require('./seedEvaluadores')
 const path = require('path')
 const mongoose = require('mongoose')
-const arrayReguladores = require('./seedReguladores')
-const session = require('express-session')
-const passport = require('passport')
-const LocalStrategy = require('passport-local').Strategy
-const { initializePassportSession } = require('./middleware/passportConfig')
-//const  roleAuthorization  = require('./middleware/roleAuth')
+const { initializePassportSession, passport } = require('./middleware/passportConfig')
 
 // Server config
-const app = express()
-const puerto = 3000
+const app = express();
+const puerto = 3000;
 app.set('view engine', 'ejs')
 
-
-// Method Over-ride (put & delete methods)
+// Method Override (for PUT & DELETE methods)
 const methodOverride = require('method-override')
 app.use(methodOverride('_method'))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-
 // Path configs 
 app.set('views', path.join(__dirname, 'views'))
 app.use(express.static('public'))
 
-// Mongoose conection
+// Mongoose connection
 const uri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/bitqualyPrueba'
 async function main() {
     await mongoose.connect(uri)
-    //const mongoURI = process.env.MONGODB_URI || "mongodb://mongodb:27017/mydatabase";  
-    //await mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
-    console.log('Conection to mongodb Succsesful')
-    // use await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test'); if your database has auth enabled
+    console.log('Connection to MongoDB successful')
 }
-main().catch(err => console.log(err, 'ERROR on conction to mongodb'))
-// Body parser middleware
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
+main().catch(err => console.log('ERROR on connection to MongoDB:', err))
 
-// Middlewares
+// Initialize Passport & session (with flash)
 initializePassportSession(app)
-//app.use(roleAuthorization(['Administrador']))
 
 // Import Routes
 const formularioRoutes = require('./routes/formularioRoutes')
@@ -55,28 +38,53 @@ const empleadoRoutes = require('./routes/empleadoRoutes')
 const evaluadorRoutes = require('./routes/evaluadorRoutes')
 const intermediarioRoutes = require('./routes/intermediarioRoutes')
 
+// Login route using Passport
 app.post('/login', passport.authenticate('local', {
     successRedirect: '/home',
     failureRedirect: '/',
     failureFlash: true
-}))
+}));
 
-app.get('/home-admin', (req, res) => {
+// Routes for different roles
+app.get('/home', (req, res) => {
+    // Check user role and redirect accordingly
+    if (req.user) {
+        switch (req.user.rol) {
+            case 'Administrador':
+                return res.redirect('/home-admin')
+            case 'Intermediario':
+                return res.redirect('/home-inter')
+            case 'Empleado':
+                return res.redirect('/home-user')
+            case 'Evaluador':
+                return res.redirect('/home-eval')
+            default:
+                return res.status(403).send('Unauthorized role')
+        }
+    } else {
+        return res.redirect('/')
+    }
+})
+
+app.get('/home-admin', (req,res)=>{
     res.render('home/homeAdmin')
 })
 
-app.get('/home-inter', (req, res) => {
+app.get('/home-inter', (req,res)=>{
     res.render('home/homeInter')
 })
 
-app.get('/home-user', (req, res) => {
+app.get('/home-user', (req,res)=>{
     res.render('home/homeUser')
 })
 
-app.get('/home-eval', (req, res) => {
+app.get('/home-eval', (req,res)=>{
+    console.log('User:', req.user)
     res.render('home/homeEval')
 })
 
+
+// Use routes
 app.use('/', formularioRoutes)
 app.use('/', evaluacionRoutes)
 app.use('/', loginRoutes)
@@ -86,6 +94,6 @@ app.use('/', intermediarioRoutes)
 
 // Start the server
 app.listen(puerto, () => {
-    console.log('Servidor abierto')
+    console.log(`Servidor abierto en el puerto}`)
     console.log(puerto)
 })

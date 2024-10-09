@@ -55,7 +55,32 @@ router.post('/save-new-user', async (req, res) => {
         console.error(error)
         res.status(500).json({ message: 'Error creating user' })
     }
+})
+
+// POST route --> Log In
+app.post('/login', (req, res, next) => {
+    passport.authenticate('local', (err, user, info) => {
+        if (err) {
+            console.error('Authentication error:', err)
+            return next(err)
+        }
+        if (!user) {
+            console.log('Login failed. User not found or invalid credentials.')
+            req.flash('error_msg', 'Invalid legajo or password.')
+            return res.redirect('/')
+        }
+        req.logIn(user, (err) => {
+            if (err) {
+                console.error('Login error:', err)
+                return next(err)
+            }
+            console.log('Login successful:', user)
+            return res.redirect('/home')
+        })
+    })(req, res, next)
 });
+
+
 
 module.exports = router;
 

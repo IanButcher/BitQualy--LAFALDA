@@ -18,8 +18,10 @@
         <main class="main-content">
             <header>
                 <%- include('../partials/header') %>
-            </header>            
-            
+                </div>
+                
+            </header>
+                        
             <section class="employee-list">
             <% for (empleado of empleados) { %>
                 <div class="employee">
@@ -57,8 +59,10 @@
                 } else {
                     employee.style.opacity = 1;  // Totalmente visible
                 }
-            });
-        });
+            })
+        })
+
+        
     </script>
     
 </body>

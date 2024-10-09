@@ -312,18 +312,45 @@ body, html {
 
 /* Panel derecho (Right Panel) ajustado */
 .right-panel {
-    width: 100%;
-    max-width: 300px; /* Ajuste de ancho para hacerlo más compacto */
+    position: fixed; /* Fijo en la pantalla */
+    top: 246px; /* Ajusta la posición desde la parte superior */
+    right: 60px; /* Acerca el panel más al lado izquierdo */
+    width: 300px; /* Ancho del panel */
     background-color: #f7f9fc;
-    padding: 15px; /* Reducir el padding */
+    padding: 15px;
     border-radius: 10px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
     font-family: 'Arial', sans-serif;
     color: #333;
-    margin-left: 15px; /* Ajusta los márgenes */
-    margin-right: 20px; /* Ajusta los márgenes */
-    margin-top: 80px; /* Ajusta el margen superior */
+    z-index: 1000; /* Asegura que el panel esté por encima de otros elementos */
 }
+
+
+
+#nuevaEvaluacionBtn {
+    display: inline-block;
+    margin-top: 20px; /* Espacio superior para separación */
+    width: 100%; /* Botón de ancho completo */
+    text-align: center;
+    background-color: #28a745; /* Fondo verde */
+    color: white; /* Texto blanco */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-decoration: none; /* Eliminar subrayado */
+}
+
+#nuevaEvaluacionBtn:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+
 
 /* Título de la sección de filtro */
 .filter-section h3 {
@@ -502,22 +529,27 @@ body, html {
 }
  
 #nuevaEvaluacionBtn {
-    background-color: #28a745; /* Green background */
-    color: white; /* White text */
-    padding: 10px 20px; /* Padding for size */
-    border: none; /* No border */
-    border-radius: 5px; /* Rounded corners */
-    font-size: 16px; /* Text size */
-    font-weight: bold; /* Bold text */
-    cursor: pointer; /* Pointer on hover */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow */
-    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+    position: relative; /* Elimina position: absolute para que esté dentro del flujo del panel */
+    background-color: #28a745; /* Fondo verde */
+    color: white; /* Texto blanco */
+    padding: 12px 75px; /* Padding más pequeño para reducir el largo */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    font-size: 14px; /* Tamaño del texto */
+    font-weight: bold; /* Texto en negrita */
+    cursor: pointer; /* Aparece como un puntero */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transiciones suaves */
+    width: auto; /* Elimina el ancho completo */
+    white-space: nowrap; /* Evita que el texto se rompa en varias líneas */
+    margin-top: 25px; /* Espaciado superior */
+    margin-left: 0px;
 }
 
-#nuevaEvaluacionBtn:hover {
-    background-color: #218838; /* Darker green on hover */
-    transform: scale(1.05); /* Slightly enlarge on hover */
-}
+
+
+
+
 
 #nuevaEvaluacionBtn:active {
     background-color: #1e7e34; /* Even darker when pressed */

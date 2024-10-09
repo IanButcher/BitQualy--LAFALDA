@@ -97,45 +97,45 @@
     </div>
 
     <script>
-        const dropdownBtn = document.querySelector('.dropdown-btn');
-        const dropdownContainer = document.querySelector('.dropdown-container');
+        const dropdownBtn = document.querySelector('.dropdown-btn')
+        const dropdownContainer = document.querySelector('.dropdown-container')
 
         dropdownBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            dropdownContainer.classList.toggle('active');
+            dropdownContainer.classList.toggle('active')
         });
 
-        const togglePassword = document.querySelectorAll('.toggle-password');
+        const togglePassword = document.querySelectorAll('.toggle-password')
         togglePassword.forEach(toggle => {
             toggle.addEventListener('click', function() {
-                const passwordInput = this.previousElementSibling;
-                const type = passwordInput.getAttribute('password') === 'password' ? 'text' : 'password';
-                passwordInput.setAttribute('type', type);
-                this.classList.toggle('fa-eye');
-                this.classList.toggle('fa-eye-slash');
-            });
-        });
+                const passwordInput = this.previousElementSibling
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password'
+                passwordInput.setAttribute('type', type)
+                this.classList.toggle('fa-eye')
+                this.classList.toggle('fa-eye-slash')
+            })
+        })
 
-        const form = document.getElementById('crear-evaluador-form');
-        const passwordInput = document.getElementById('password');
-        const confirmPasswordInput = document.getElementById('confirm-password');
-        const errorMessage = document.getElementById('error-message');
+        const form = document.getElementById('crear-evaluador-form')
+        const passwordInput = document.getElementById('password')
+        const confirmPasswordInput = document.getElementById('confirm-password')
+        const errorMessage = document.getElementById('error-message')
 
         form.addEventListener('submit', function(event) {
             if (passwordInput.value !== confirmPasswordInput.value) {
                 event.preventDefault();
-                errorMessage.textContent = 'Las contraseñas no coinciden.';
+                errorMessage.textContent = 'Las contraseñas no coinciden.'
             } else {
-                errorMessage.textContent = '';
+                errorMessage.textContent = ''
             }
         });
 
         function previewImage(event) {
-            const reader = new FileReader();
+            const reader = new FileReader()
             reader.onload = function() {
-                const output = document.getElementById('image-preview-img');
+                const output = document.getElementById('image-preview-img')
                 output.src = reader.result;
-                output.style.display = 'block';
+                output.style.display = 'block'
             }
             reader.readAsDataURL(event.target.files[0]);
         }
