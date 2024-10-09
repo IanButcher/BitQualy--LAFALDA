@@ -1,0 +1,131 @@
+/* Estilos del Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: -28px; /* Mantiene el ajuste original */
+}
+
+.header-options {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.header-options i {
+    font-size: 1.5em;
+    color: #777;
+    cursor: pointer;
+}
+
+.profile-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+}
+
+/* Nueva Sección de Búsqueda */
+.search-section {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 30px;
+    margin-top: 50px;
+}
+
+.search-section input {
+    width: 400px; /* Ajuste de ancho inicial */
+    padding: 12px 45px 12px 15px;
+    font-size: 18px;
+    border: 1px solid #ccc; /* Ajuste del borde */
+    border-radius: 25px;
+    transition: width 0.3s ease;
+    height: 50px;
+}
+
+.search-section input:focus {
+    width: 450px;
+}
+
+.search-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888; /* Ajuste de color */
+    pointer-events: none;
+}
+
+/* Popup de notificaciones */
+.notification-popup {
+    display: none; /* Oculto inicialmente */
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    width: 300px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 20px;
+    color: #333;
+}
+
+/* Encabezado del popup */
+.popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.popup-header h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.close-popup {
+    cursor: pointer;
+    color: #333;
+}
+
+/* Cuerpo del popup */
+.popup-body {
+    max-height: 200px;
+    overflow-y: auto;
+    font-size: 14px;
+    color: #666;
+}
+
+.popup-body p {
+    margin: 0;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+/* Estilo para las notificaciones */
+.popup-body .notification {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    color: #333;
+}
+
+.popup-body .notification:hover {
+    background-color: #f5f5f5;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+    .search-section input {
+        width: 300px;
+    }
+
+    .search-section input:focus {
+        width: 350px;
+    }
+}

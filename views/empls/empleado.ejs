@@ -27,13 +27,13 @@
                 </div>
 
                 <div class="combobox-container">
-                    <form id="deleteEmpls" method="POST" style="display:none;">
-                        <input type="hidden" name="_method" value="PUT">  <!-- Si usas PUT en lugar de POST -->
+                    <!-- Hidden form to handle employee deactivation -->
+                    <form id="deleteEmpls" method="POST" action="/empleados/eliminar/<%= empleado._id %>" style="display:none;">
                     </form>
                     
-                    <!-- Botón para desactivar al empleado -->
+                    <!-- Button to trigger the form submission -->
                     <button onclick="popupEliminar('<%= empleado._id %>')">Desactivar</button>
-
+        
                     <label for="employee-options">Designar como:</label>
                     <select id="employee-options">
                         <option value="option1">Empleado regular</option>
@@ -42,11 +42,7 @@
                     </select>
                 </div>
 
-                <div class="header-options">
-                    <i class="fas fa-bell"></i>
-                    <i class="fas fa-cog"></i>
-                    <img src="/img/profile.png" alt="Carina Campo" class="profile-img">
-                </div>
+                    <%- include('../partials/headerU') %>
             </header>
 
             <div class="filter-panel-container">
@@ -115,25 +111,11 @@
     </div>
 
     <script>
-        const dropdownBtn = document.querySelector('.dropdown-btn');
-        const dropdownContainer = document.querySelector('.dropdown-container');
-
-        dropdownBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            dropdownContainer.classList.toggle('active');
-        })
-        function popupEliminar(id_Empleado) {
-            console.log(id_Empleado);  // Verifica que se imprime un ObjectId válido
-            const deleteEmpls = document.getElementById('deleteEmpls');
-
-            if (deleteEmpls && confirm('¿Estás seguro de que deseas desactivar este empleado?')) {
-                // Configura la acción con el ID del empleado
-                deleteEmpls.action = `/empleados/eliminar/${id_Empleado}`;
-                deleteEmpls.submit();  // Envía el formulario
-            } else {
-                console.error('Formulario de eliminación no encontrado!');
-            }
-}
+        function popupEliminar(empleadoId) {
+        const form = document.getElementById('deleteEmpls')
+        form.action = '/empleados/eliminar/' + empleadoId
+        form.submit()
+    }
     </script>
 </body>
 

@@ -112,19 +112,20 @@ router.put('/formularios/:id', async (req, res) => {
         const { id } = req.params;
         const { 'form-title': titulo, 'deleted-questions': deletedQuestionIds, ...formData } = req.body;
 
-        // Find el Formulario
+        // Find the Formulario
         const formulario = await Formulario.findById(id);
 
         if (!formulario) {
             return res.status(404).send('Formulario not found');
         }
 
-        // Procesar las preguntas
-        const updatedQuestions = [...formulario.questions];  // Empezar con las preguntas preexistentes
+        // Start with the existing questions
+        let updatedQuestions = [...formulario.questions];
 
+        // Process the questions from the form
         let questionIndex = 1;
         while (formData[`question${questionIndex}`]) {
-            const questionId = formData[`question${questionIndex}_id`]  // Get the _id if present
+            const questionId = formData[`question${questionIndex}_id`]; // Existing question ID (if any)
 
             const question = {
                 titulo: formData[`question${questionIndex}`],
@@ -134,7 +135,7 @@ router.put('/formularios/:id', async (req, res) => {
                 options: []
             };
 
-            // Multiple o Checkbox
+            // Handle multiple-choice or checkbox options
             if (question.tipo === 'multiple' || question.tipo === 'checkbox') {
                 let optionIndex = 1;
                 while (formData[`option${questionIndex}_${optionIndex}`]) {
@@ -143,37 +144,38 @@ router.put('/formularios/:id', async (req, res) => {
                 }
             }
 
-            // Si existe la pregunta, buscar y actualizar, si no, eliminar
+            // If the question has an ID, update the existing question
             if (questionId) {
-                const existingQuestionIndex = updatedQuestions.findIndex(q => q._id == questionId);
+                const existingQuestionIndex = updatedQuestions.findIndex(q => q._id.toString() === questionId);
                 if (existingQuestionIndex !== -1) {
-                    // Update pregunta
                     updatedQuestions[existingQuestionIndex] = { ...updatedQuestions[existingQuestionIndex], ...question };
                 }
             } else {
-                // Añadir preguntas
-                updatedQuestions.push(question)
+                // Otherwise, it's a new question
+                updatedQuestions.push(question);
             }
 
-            questionIndex++
+            questionIndex++;
         }
 
-        // Remove deleted preguntas
+        // Handle deletion of questions
         if (deletedQuestionIds) {
-            const idsToDelete = deletedQuestionIds.split(',');  // Convert string into array de IDs
-            updatedQuestions = updatedQuestions.filter(q => !idsToDelete.includes(q._id.toString()))
+            const idsToDelete = deletedQuestionIds.split(',');  // Convert string into array of IDs
+            updatedQuestions = updatedQuestions.filter(q => !idsToDelete.includes(q._id.toString()));
         }
 
-        // Update the Formulario
+        // Update the Formulario with the new title and questions
         formulario.titulo = titulo;
         formulario.questions = updatedQuestions;
 
-        await formulario.save();  // Save the updated Formulario
+        // Save the updated Formulario
+        await formulario.save();
 
-        res.redirect('/formularios')
+        // Redirect to the formularios list after updating
+        res.redirect('/formularios');
     } catch (error) {
-        console.error('Error updating formulario:', error)
-        res.status(500).send('Internal Server Error')
+        console.error('Error updating formulario:', error);
+        res.status(500).send('Internal Server Error');
     }
 })
 

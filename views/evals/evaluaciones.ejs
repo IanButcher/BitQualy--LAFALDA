@@ -16,17 +16,8 @@
 
         <!-- Panel principal -->
         <main class="main-content">
-            <header class="header">
-                <div class="search-section">
-                    <input class="busqueda" type="text" placeholder="Buscar ...">
-                    <i class="fas fa-search search-icon"></i>
-                </div>
-                
-                <div class="header-options">
-                    <i class="fas fa-bell"></i>
-                    <i class="fas fa-cog"></i>
-                    <img src="/img/profile.png" alt="Carina Campo" class="profile-img">
-                </div>
+            <header>
+                    <%- include('../partials/header') %>
             </header>
 
             <div class="filter-panel-container">
@@ -88,13 +79,13 @@
                     <div class="evaluation-card">
                         <img src="empleado1.jpg" class="eval-img">
                         <div class="eval-info">
-                            <p><strong><%= evaluacion.empleado %></strong></p>
+                            <p><strong><%= evaluacion.empleado.nombre %></strong></p>
                             <p>Fecha Inicio: xxxx | Fecha Fin: xxxx </p>
                             <br>
                             <p class="eval-status"><%= evaluacion.formulario.titulo %></p>
                         </div>
                         <div class="eval-summary">
-                            <p>Autoevaluación</p>
+                            <p><%= evaluacion.formulario.titulo %></p>
                             <div class="eval-icons">
                                 <i class="fas fa-download download-icon"></i>
                                 <i class="fas fa-filter filter-icon"></i>

@@ -1,82 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Preview Evaluación</title>
     <link rel="stylesheet" href="/evaluacion.css">
+    <link rel="stylesheet" href="/navbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" type="image/png" href="https://ugc.production.linktr.ee/mj5IciCyRk2puUukygYa_kmwAn8AE84X4N3S5?io=true&size=avatar-v3_0">
-
+    
 </head>
 <body>
     <nav> <%- include('../partials/navbar') %> </nav>
 
-        <!-- Panel principal -->
-        <div class="main-content">
-            <div class="header">
-                <div class="user-info">
-                    <img src="/img/user-image.png" alt="User Image">
-                    <span>Carina Campo | Rol: Recursos Humanos</span>
-                </div>
-            </div>
+    <!-- Panel principal -->
+    <div class="main-content">
+        <header> <%- include('../partials/headerU') %> </header>
+    
 
-            <!-- Contenido principal de la evaluación -->
-            <div class="evaluation-content">
-                <h2>Evaluación: <%= evaluacion.formulario.titulo %></h2>
-                <p><strong>Empleado:</strong> <%= evaluacion.empleado %></p>
+        <!-- Contenido principal de la evaluación -->
+        <div class="evaluation-content">
+            <h2>Evaluación: <%= evaluacion.formulario.titulo %></h2>
+            <p><strong>Empleado:</strong> <%= evaluacion.empleado %></p>
+        
+            <!-- Mostrar preguntas y respuestas -->
+            <div class="respuestas-container">
+                <% evaluacion.formulario.questions.forEach((pregunta, index) => { %>
+                    <div class="respuesta-item">
+                        <h3><%= pregunta.titulo %></h3>
+                        <p><%= pregunta.descripcion %></p>
+        
+                        <div>
+                            <%
+                            // Try splitting the answer string based on "Respuesta: " or "Seleccionado(s): "
+                            const rawRespuesta = evaluacion.respuestas[index]; 
+                            
+                            // Split based on "Respuesta: " and "Seleccionado(s): " and get the last part
+                            const respuesta = rawRespuesta.split(/Respuesta: |Seleccionado\(s\): /).pop().trim();
 
-                <!-- Mostrar preguntas y respuestas -->
-                <div class="respuestas-container">
-                    <% evaluacion.respuestas.forEach((respuesta, index) => { %>
-                        <div class="respuesta-item">
-                            <h3><%= respuesta.pregunta %></h3>
-                            <p>
-                                <% if (Array.isArray(respuesta.respuesta)) { %>
-                                    <%= respuesta.respuesta.join(', ') %>
-                                <% } else { %>
-                                    <%= respuesta.respuesta %>
-                                <% } %>
-                              </p>                              
+                            %>
+        
+                            <% if (pregunta.tipo === 'texto') { %>
+                                <!-- Text question -->
+                                <input class="inputs-texto" type="text" value="<%= respuesta %>" disabled>
+                            <% } else if (pregunta.tipo === 'multiple') { %>
+                                <!-- Multiple choice (radio button) question -->
+                                <% pregunta.options.forEach(option => { %>
+                                    <label>
+                                        <input type="radio" disabled <%= respuesta.includes(option) ? 'checked' : '' %>> <%= option %>
+                                    </label><br>
+                                <% }) %>
+                            <% } else if (pregunta.tipo === 'checkbox') { %>
+                                <!-- Checkbox question -->
+                                <% pregunta.options.forEach(option => { %>
+                                    <label>
+                                        <input type="checkbox" disabled <%= respuesta.includes(option) ? 'checked' : '' %>> <%= option %>
+                                    </label><br>
+                                <% }) %>
+                            <% } %>
                         </div>
-                    <% }) %>
-                </div>
+                    </div>
+                <% }) %>
             </div>
         </div>
-    </div>
-    <h1>Preview de la Evaluación</h1>
+                
+        <a class="button" href="/evaluaciones">Volver a las evaluaciones</a>
 
-    <h2>Formulario: <%= evaluacion.formulario.name %></h2>
-    <h3>Empleado: <%= evaluacion.empleado %></h3>
 
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Pregunta</th>
-                <th>Respuesta</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% evaluacion.formulario.questions.forEach((question, index) => { %>
-                <tr>
-                    <td><%= question.text %></td>
-                    <td>
-                        
-                        <% if (typeof evaluacion.respuestas[index] === 'string') { %>
-                            <%= evaluacion.respuestas[index] %>  
-                        <% } else if (Array.isArray(evaluacion.respuestas[index])) { %>
-                            Seleccionado(s): <%= evaluacion.respuestas[index].join(', ') %>  
-                        <% } else { %>
-                            <%= JSON.stringify(evaluacion.respuestas[index]) %> 
-                        <% } %>
-                    </td>
-                </tr>
-            <% }) %>
-        </tbody>
-    </table>
-
-    <a href="/evaluaciones">Volver a las evaluaciones</a>
-    <title>Ver Evaluación</title>
     <script>
         document.getElementById('dropdown-toggle').addEventListener('click', function () {
             const dropdownContent = document.getElementById('dropdown-content');

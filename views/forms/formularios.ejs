@@ -10,19 +10,14 @@
 <body>
     <div class="container">
         <!-- Panel lateral izquierdo -->
-        <nav><%- include('../partials/navbar') %> </nav>
+        <nav> <%- include('../partials/navbar') %> </nav>
+
+
         <!-- Panel principal -->
         <div class="main-content">
-            <div class="header">
-                <div class="search-section">
-                    <input type="text" placeholder="Encontrar Formularios..">
-                    <i class="fas fa-search search-icon"></i>
-                </div>
-                <div class="user-info">
-                    <img src="user-image.png" alt="User Image">
-                    <span>Carina Campo | Rol: Recursos Humanos</span>
-                </div>
-            </div>
+            <header>
+                <%- include('../partials/header') %>
+            </header>  
     
             <div class="form-section">
                 <h2>Plantillas Formularios</h2>
