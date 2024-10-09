@@ -1,130 +1,68 @@
-/* General Styles */
-* {
+/* Estilos generales */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7fa;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    color: #333;
+    display: flex; /* Habilita flexbox en el body */
+    flex-direction: column; /* Asegura que los hijos se apilen verticalmente */
+    align-items: center; /* Centra horizontalmente los hijos */
+    height: 100vh; /* Asegura que el body ocupe toda la altura de la ventana */
 }
 
-body, html {
-    font-family: Arial, sans-serif;
-    height: 100%;  
-    background-color: #f4f4f4;
-}
-h2{
-    margin-bottom: 20px;
-    
-}
+/* Contenedor principal */
 .container {
     display: flex;
-    min-height: 100vh; /* Se asegura que ocupe al menos el 100% del viewport */
+    flex-grow: 1; /* Permite que el contenedor principal ocupe el espacio disponible */
+    justify-content: space-between; /* Asegura que los paneles estén separados */
+    width: 100%; /* Asegura que el contenedor ocupe el 100% del ancho */
 }
 
-/* Sidebar Styles */
-.sidebar {
-    width: 250px;
-    background-color: #333333;
-    color: white;
-    padding: 15px;
-    min-height: 100vh; /* Asegura que el sidebar se extienda hasta el fondo */
-}
-
-.logo img {
-    width: 100%;
-    height: auto;
-}
-
-.menu-item {
-    margin: 15px 0;
-}
-
-.menu-item a {
-    color: white;
-    text-decoration: none;
-}
-
-.dropdown-btn {
-    cursor: pointer;
-    padding: 10px 0;
-    color: #ffffff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.dropdown-container {
-    display: none;
-    padding-left: 15px;
-}
-
-/* Dropdown Styles */
-.sidebar nav .menu-item a:hover {
-    background-color: #575757;
-    transform: scale(1.05);
-}
-
-.sidebar .gestion-section .dropdown-btn {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-    color: white;
-    background-color: transparent;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.sidebar .gestion-section .dropdown-btn:hover {
-    transform: scale(1.05);
-}
-
-.sidebar .gestion-section .dropdown-container {
-    display: none;
-    padding-left: 20px;
-}
-
-.sidebar .gestion-section .dropdown-container.active {
-    display: block;
-}
-
-.sidebar .gestion-section .dropdown-container .menu-item {
-    padding-left: 10px;
-}
-
-.sidebar .gestion-section .dropdown-container .menu-item a:hover {
-    background-color: #575757;
-    transform: scale(1.05);
-}
-/* Main Content Styles */
-.main-content {
-    flex: 1;
-    padding: 20px;
-    background-color: white;
-}
-
+/* Estilos del encabezado */
 .header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    justify-content: space-between;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 10px;
+    width: 100%; /* Asegura que el encabezado ocupe todo el ancho */
 }
 
+/* Contenido principal */
+.main-content {
+    flex-grow: 1;
+    padding: 50px;
+    background-color: #fff;
+    overflow-y: auto;
+    margin-right: 20px; /* Da espacio al panel derecho */
+}
+
+/* Estilos del usuario */
 .user-info {
     display: flex;
     align-items: center;
 }
 
 .user-info img {
+    border-radius: 50%;
     width: 40px;
     height: 40px;
-    border-radius: 50%;
     margin-right: 10px;
 }
 
-/* Form Editor Styles */
+/* Sección de formulario */
+.modify-form-section {
+    margin-top: 20px;
+}
+
+h2 {
+    color: #4a90e2;
+}
+
+/* Estilos del formulario */
 .form-editor {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
 }
 
 .form-group {
@@ -134,72 +72,135 @@ h2{
 .form-group label {
     display: block;
     margin-bottom: 5px;
+    font-weight: bold;
 }
 
-.form-group input,
-.form-group textarea,
-.form-group select {
-    width: 100%;
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+    width: 80%;
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 20px; /* Aumento del redondeado */
+    box-sizing: border-box;
+    transition: border-color 0.3s, background-color 0.3s;
 }
-/*botones*/
-.btn-add {
-    margin-top: 10px;
-    padding: 10px 15px;
-    background-color: #007bff;
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
+    border-color: #4a90e2;
+}
+
+/* Estilos de botones */
+.modify-buttons {
+    display: flex;
+    justify-content: space-between; /* Alinear botones */
+    margin-top: 40px; /* Aumenta este margen para más espacio entre inputs y botones */
+}
+
+.btn-download {
+    background-color: #2a36d4;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 20px; /* Aumento del redondeado */
+    padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
     cursor: pointer;
-}
-
-.btn-add:hover {
-    background-color: #0056b3;
-}
-
-.btn-save, .btn-cancel {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-}
-
-.btn-save {
-    background-color: #28a745;
-    color: white;
-    margin-right: 10px;
-    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .btn-cancel {
-    
-    background-color: #dc3545;
+    background-color: #d42a2a;
     color: white;
+    border: none;
+    border-radius: 20px; /* Aumento del redondeado */
+    padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.btn-delete {
-    margin-top: 10px;
-    background-color: #dc3545;
+.btn-add-option {
+    background-color: #38df40;
     color: white;
-    padding: 10px 15px;
+    border: none;
+    border-radius: 20px; /* Aumento del redondeado */
+    padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-delete,
+.btn-add,
+.btn-save,
+.btn-add:hover {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 20px; /* Aumento del redondeado */
+    padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-save:hover {
+    background-color: #4a90e2;
+}
+
+.btn-download:hover {
+    background-color: #4a90e2;
+}
+
+.btn-cancel:hover,
+.btn-delete:hover,
+.btn-add-option:hover {
+    background-color: #357ab8;
+}
+
+/* Estilos de las opciones */
+.options-group {
+    margin-top: 10px;
+    padding-left: 20px;
+    border-left: 2px solid #e0e0e0;
+}
+
+.option-item {
+    margin-bottom: 10px;
+}
+
+/* Vista previa del formulario */
+.preview-section {
+    margin-top: 20px;
+}
+
+iframe {
     border: none;
     border-radius: 5px;
 }
 
-.btn-delete:hover {
-    background-color: #c82333;
+/* Estilos para el input de porcentaje */
+.percentage-input {
+    width: 80%; /* Mantiene el input del porcentaje alineado con otros inputs */
+    padding: 10px;
+    border: 2px solid #4a90e2; /* Color de borde por defecto */
+    border-radius: 20px;
+    box-sizing: border-box;
+    background-color: #e7f4ff; /* Color de fondo */
+    transition: border-color 0.3s; /* Transición suave para el cambio de color */
 }
 
-.preview-section {
-    margin-top: 20px;
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+/* Borde rojo para porcentaje < 20 */
+.red-border {
+    border-color: #dc3545; /* Rojo */
 }
 
+/* Borde azul para 20 <= porcentaje < 70 */
+.blue-border {
+    border-color: #007bff; /* Azul */
+}
 
-@media (min-width: 488px){
-   
-} 
+/* Borde verde para porcentaje >= 70 */
+.green-border {
+    border-color: #28a745; /* Verde */
+}
