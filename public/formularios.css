@@ -82,10 +82,11 @@ body, html {
     background-color: green;
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 10px 40px;
     border-radius: 25px;
     transition: background-color 0.5s ease;
     cursor: pointer;
+    margin-left: 0px;
 }
 .btn-filter button:hover {
     background-color: hwb(113 11% 0%); 
@@ -110,9 +111,11 @@ body, html {
 .btn-modify {
     background-color: rgb(213, 138, 0);
     color: white;
-    padding: 10px 20px;
+    padding: 10px 40px;
     cursor: pointer;
     border-radius: 8px;
+    margin-left: 550px;
+    text-decoration: none;
 }
 
 /* Estilos para el contenedor eliminar */
