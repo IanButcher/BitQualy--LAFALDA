@@ -31,14 +31,14 @@
                         <p><%= pregunta.descripcion %></p>
         
                         <div>
-                            <% 
+                            <%
                             // Try splitting the answer string based on "Respuesta: " or "Seleccionado(s): "
-                            const rawRespuesta = evaluacion.respuestas[index];
+                            const rawRespuesta = evaluacion.respuestas[index]; 
                             
                             // Split based on "Respuesta: " and "Seleccionado(s): " and get the last part
                             const respuesta = rawRespuesta.split(/Respuesta: |Seleccionado\(s\): /).pop().trim();
+
                             %>
-    
         
                             <% if (pregunta.tipo === 'texto') { %>
                                 <!-- Text question -->
