@@ -23,53 +23,6 @@ body, html {
     overflow-y: auto;
 }
 
-/* Header */
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.header .user-info {
-    text-align: right;
-}
-
-/* Search section */
-.search-container {
-    display: flex;
-    align-items: center;
-    background-color: #fff;
-    border: 2px solid #000000;  /* Borde */
-    border-radius: 25px;  /* Bordes redondeados */
-    padding: 5px 10px;  /* Espaciado interno */
-    transition: border-color 0.3s ease;  /* Transición suave */
-    width: 300px;  /* Ancho fijo más grande */
-}
-
-input[type="search"] {
-    flex-grow: 1;  /* Ocupa todo el espacio disponible */
-    border: none;  /* Sin borde interno */
-    outline: none;  /* Sin contorno */
-    font-size: 16px;  /* Tamaño de la fuente */
-    padding-left: 10px; /* Para separar el texto del borde izquierdo */
-}
-
-.search-icon {
-    font-size: 18px;  /* Tamaño del ícono */
-    color: #000000;  /* Color del ícono */
-    cursor: pointer;
-    padding: 0;  /* Sin espaciado adicional */
-    margin-left: 10px; /* Espaciado a la izquierda del ícono */
-}
-
-.search-container:hover {
-    border-color: #000000;  /* Color del borde al pasar el mouse */
-}
-
-
-
-
 /* Filters */
 .filters {
     margin-top: 20px;

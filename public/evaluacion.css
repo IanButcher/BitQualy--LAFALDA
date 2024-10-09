@@ -1,162 +1,136 @@
-/* Estilos generales */
-* {
+/* Estilos globales */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
     box-sizing: border-box;
 }
 
-body, html {
-    font-family: Arial, sans-serif;
-    height: 100%;
-    background-color: #f0f0f0;
-    display: flex;
-}
-
-/* Contenedor principal */
-.container {
-    display: flex;
-    width: 100%;
-}
-
-/* Estilos del Sidebar */
-.sidebar {
-    width: 250px;
-    background-color: #343a40;
-    color: white;
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.logo img {
-    width: 100%;
-    height: auto;
-}
-
-.menu-item {
-    margin: 15px 0;
-}
-
-.menu-item a {
-    color: white;
-    text-decoration: none;
-    display: block;
-    padding: 10px;
-    border-radius: 5px;
-}
-
-.menu-item a:hover {
-    background-color: #495057;
-}
-
-.dropdown-btn {
-    cursor: pointer;
-    padding: 10px;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 5px;
-}
-
-.dropdown-container {
-    display: none;
-    padding-left: 15px;
-}
-
-.dropdown-container .menu-item a {
-    padding-left: 25px;
-}
-
-/* Estilos del contenido principal */
+/* Panel principal */
 .main-content {
-    flex: 1;
-    padding: 20px;
     background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    overflow-y: auto;
-}
-
-.header {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 20px;
-}
-
-.user-info {
-    display: flex;
-    align-items: center;
-}
-
-.user-info img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
-
-/* Contenido de la evaluación */
-.evaluation-content {
-    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 90%; /* Ancho adaptable */
+    max-width: 800px; /* Máximo ancho */
+    margin: 20px 0; /* Espaciado superior e inferior */
+    
 }
 
-.evaluation-content h2 {
-    font-size: 24px;
+/* Estilo de los encabezados */
+h1, h2, h3 {
     color: #333;
-    margin-bottom: 10px;
+    margin: 10px 0;
 }
 
-.evaluation-content p {
-    font-size: 18px;
-    color: #555;
-    margin-bottom: 20px;
-}
-
+/* Estilo del contenedor de respuestas */
 .respuestas-container {
     margin-top: 20px;
 }
 
+/* Estilo de cada respuesta */
 .respuesta-item {
-    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
     padding: 15px;
-    margin-bottom: 10px;
-    border-left: 4px solid #007bff;
-    border-radius: 5px;
+    margin-bottom: 15px;
+    background-color: #fafafa; /* Fondo claro */
 }
 
-.respuesta-item h3 {
-    font-size: 20px;
-    color: #333;
-    margin-bottom: 5px;
+.inputs-texto {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
-.respuesta-item p {
-    font-size: 16px;
-    color: #555;
+/* Estilo de la tabla */
+table {
+    width: 100%; /* Ancho completo */
+    border-collapse: collapse;
+    margin-top: 20px;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .container {
-        flex-direction: column;
-    }
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
 
-    .sidebar {
-        width: 100%;
-        flex-direction: row;
-        justify-content: space-between;
-        padding: 10px;
-    }
+th {
+    background-color: #f0f0f0; /* Color de fondo del encabezado */
+}
 
+td {
+    background-color: #ffffff; /* Color de fondo de las celdas */
+}
+
+/* Enlaces */
+a {
+    display: inline-block;
+    margin-top: 20px;
+    color: #2ecc71; /* Color verde */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline; /* Subrayar al pasar el ratón */
+}
+
+/* Estilo del usuario */
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.user-info img {
+    width: 50px; /* Tamaño de la imagen del usuario */
+    border-radius: 50%; /* Imagen redondeada */
+    margin-right: 10px;
+}
+
+/* Estilo del botón */
+.button {
+    display: inline-block; /* Muestra como un bloque en línea */
+    padding: 10px 20px; /* Espaciado interno */
+    background-color: #2ecc71; /* Color de fondo */
+    color: white; /* Color del texto */
+    text-decoration: none; /* Sin subrayado */
+    border-radius: 5px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño de fuente */
+    transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
+    margin-top: 20px; /* Espaciado superior */
+}
+
+.button:hover {
+    background-color: #27ae60; /* Color más oscuro al pasar el ratón */
+}
+
+
+/* Estilo responsive */
+@media (max-width: 600px) {
     .main-content {
         padding: 10px;
+        width: 95%; /* Aumentar el ancho en pantallas pequeñas */
+    }
+    
+    h1 {
+        font-size: 1.8em;
     }
 
-    .evaluation-content {
-        padding: 10px;
+    h2 {
+        font-size: 1.5em;
+    }
+
+    h3 {
+        font-size: 1.2em;
     }
 }
+
