@@ -48,15 +48,21 @@
             <div class="filter-panel-container">
                 <section class="evaluation-section">
                     <h2>Evaluaciones Asignadas</h2>
-                    <div class="evaluation-card">
-                        <!-- <img src="empleado1.jpg" alt="Franco Siccardi" class="eval-img"> -->
-                        <div class="eval-info">
-                            <p><strong><%= empleado.nombre %></strong></p>
-                            <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
-                            <p class="eval-status">Autoevaluación</p>
-                        </div>
-                    </div>
-
+                    <% if (typeof evaluaciones !== 'undefined' && evaluaciones.length > 0 ) { %>
+                        <% Evaluaciones.forEach(function(evaluacion) { %>
+                            <div class="evaluation-card">
+                                <img src="empleado1.jpg" alt='<%= baseUserSchema.nombre %>' class="eval-img">
+                                <div class="eval-info">
+                                    <p><strong>Formulario: <%= evaluacion.formulario.titulo %></strong></p>
+                                    <p>Fecha Inicio: <%= new Date(evaluacion.fechaInicio).toLocaleDateString() %></p>
+                                    <p>Fecha Fin: <%= new Date(evaluacion.fechaFin).toLocaleDateString() %></p>
+                                    <p class="eval-status">Estado: <%= evaluacion.estado %></p>
+                                </div>
+                            </div>
+                        <%})%>
+                    <% } else { %>
+                        <p>No hay evaluaciones asignadas para este empleado.</p>
+                    <% } %>
                     <div class="evaluation-card">
                         <!--<img src="empleado1.jpg" alt="Franco Siccardi" class="eval-img">-->
                         <div class="eval-info">
@@ -120,6 +126,22 @@
                 form.submit()
             }else{}
     }
+
+    function submitForm() {
+            const formularioId = document.getElementById('formularioSelect').value;
+            const empleado = document.getElementById('empleadoSelect').value;
+
+            if (formularioId && empleado) {
+                window.location.href = `/evaluaciones/answer/${formularioId}?empleado=${empleado}`;
+            } else {
+                alert("Por favor selecciona un formulario y un empleado.");
+            }
+        }
+
+        document.getElementById('dropdown-toggle').addEventListener('click', function () {
+            const dropdownContent = document.getElementById('dropdown-content');
+            dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+        })
     </script>
 </body>
 

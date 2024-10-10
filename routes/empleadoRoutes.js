@@ -2,6 +2,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const router = express.Router()
+const Evaluaciones = require('../Schemas/evaluacionSchema')
 const Empleado = require('../Schemas/empleadoSchema')
 const Evaluador = require('../Schemas/evaluadorSchema')
 const Intermediario = require('../Schemas/intermediarioSchema')
@@ -46,6 +47,30 @@ router.post('/empleados/eliminar/:id', async (req, res) => {
     } catch (error) {
         console.error('Error desactivando empleado:', error)
         res.status(500).send('Error en el servidor')
+    }
+})
+
+router.get('/empleados/evaluaciones/:id', async (req, res) =>{
+    const empleadoId = req.params.id //juan esta abrazando a un caiman
+                                             
+    try{
+        const empleado = await Empleado.findById(empleadoId)
+       
+        if (!empleado) {
+        return res.status(404).send("Empleado no encontrado")
+        
+        }   
+        const evaluaciones = await Evaluaciones.find({ empleado: empleadoId })
+                                               .populate('formulario')
+
+    res.render('empls/evaluaciones',{
+        empleado: empleado,
+        evaluaciones: evaluaciones
+    })
+    }
+    catch (err) {
+        console.error(err)
+        res.status(500).send("Error obteniendo las evaluaciones");
     }
 })
 

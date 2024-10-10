@@ -30,6 +30,19 @@ const evaluacionSchema = new mongoose.Schema({
         type: [String],
         required: true
     },
+    fechaInicio: {
+        type: Date,
+        required: true
+    },
+    fechaFin: {
+        type: Date,
+        required: true
+    },
+    estado: {
+        type: Boolean, // Puede ser 'pendiente', 'completado', etc.
+        required: true
+    },
+
     comentarios: [comentarioSchema]
 });
 
