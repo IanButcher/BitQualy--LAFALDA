@@ -6,31 +6,39 @@ const Formulario = require('../Schemas/formularioSchema')
 const Evaluacion = require('../Schemas/evaluacionSchema')
 const baseUserSchema = require('../Schemas/baseUserSchema')
 const mongoose = require('mongoose')
-const roleAuthorization = require('../middleware/roleAtuh')
+const  roleAuthorization = require('../middleware/roleAuth')
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 router.get('/evaluaciones', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async (req, res) => {
-    try {
-        const evaluaciones = await Evaluacion.find().populate('formulario')
-        res.render('evals/evaluaciones', { evaluaciones })
-    } catch (error) {
-        console.error('Error fetching evaluations:', error)
-        res.status(500).send('Error interno del servidor')
+    if (req.user) {
+        try {
+            const evaluaciones = await Evaluacion.find().populate('formulario')
+            res.render('evals/evaluaciones', { evaluaciones, user: req.user })
+        } catch (error) {
+            console.error('Error fetching evaluations:', error)
+            res.status(500).send('Error interno del servidor')
+        }
+    } else {
+        res.redirect('/');
     }
-});
+})
 
 
 // GET route --> Mostrar evaluacion especifica
 router.get('/evaluaciones/new', roleAuthorization(['Administrador', 'Evaluador']), async (req, res) => {
-    try {
-        const formularios = await Formulario.find({ isActive: true }).populate('questions')
-        const usuarios = await baseUserSchema.find({ estaActivo: true })
-        res.render('evals/new', { formularios, usuarios })
-    } catch (error) {
-        console.error('Error fetching forms:', error)
-        res.status(500).send('Error interno del servidor')
-    }
+    if (req.user) {
+        try {
+            const formularios = await Formulario.find({ isActive: true }).populate('questions')
+            const usuarios = await baseUserSchema.find({ estaActivo: true })
+            res.render('evals/new', { formularios, usuarios, user: req.user })
+        } catch (error) {
+            console.error('Error fetching forms:', error)
+            res.status(500).send('Error interno del servidor')
+        }
+    } else {
+        res.redirect('/');
+    } 
 })
 
 //app.get('/formularios/:id/preguntas', async (req, res) => {
@@ -46,22 +54,26 @@ router.get('/evaluaciones/new', roleAuthorization(['Administrador', 'Evaluador']
 // GET route --> Mostrar las preguntas para la evaluación
 router.get('/evaluaciones/answer/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async (req, res) => {
     console.log('GET /evaluaciones/answer/:id reached')
-    try {
-        const { id } = req.params  // formulario ID
-        const { empleado } = req.query
-        console.log(`Formulario ID: ${id}, Empleado: ${empleado}`)
-        const formulario = await Formulario.findById(id).populate('questions')
-        if (!formulario || formulario.isActive != true) {
-            return res.status(404).send('Formulario no encontrado')
+    if (req.user) {
+        try {
+            const { id } = req.params  // formulario ID
+            const { empleado } = req.query
+            console.log(`Formulario ID: ${id}, Empleado: ${empleado}`)
+            const formulario = await Formulario.findById(id).populate('questions')
+            if (!formulario || formulario.isActive != true) {
+                return res.status(404).send('Formulario no encontrado')
+            }
+    
+            // Render a new page with the preguntas and the selected empleado
+            res.render('evals/awnser', { formulario, empleado, user: req.user })
+        } catch (error) {
+            console.error('Error fetching formulario:', error)
+            res.status(500).send('Error interno del servidor')
         }
-
-        // Render a new page with the preguntas and the selected empleado
-        res.render('evals/awnser', { formulario, empleado })
-    } catch (error) {
-        console.error('Error fetching formulario:', error)
-        res.status(500).send('Error interno del servidor')
+    } else {
+        res.redirect('/');
     }
-});
+})
 
 
 // POST route --> Enviar nueva evaluación
@@ -88,7 +100,7 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
                 // Return plain response without any prefix
                 return respuesta.toString();  // Only save the clean answer
             }
-        });
+        })
         
         
 
@@ -112,26 +124,30 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
 
 // GET route --> Preview evaluacion
 router.get('/evaluaciones/preview/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async (req, res) => {
-    try {
-        const { id } = req.params;  // Evaluation ID
-
-        // Find the evaluation by ID and populate the associated form and questions
-        const evaluacion = await Evaluacion.findById(id).populate({
-            path: 'formulario',
-            populate: { path: 'questions' }  // Populate questions within the form
-        });
-
-        if (!evaluacion) {
-            return res.status(404).send('Evaluación no encontrada');
+    if (req.user) {
+        try {
+            const { id } = req.params;  // Evaluation ID
+    
+            // Find the evaluation by ID and populate the associated form and questions
+            const evaluacion = await Evaluacion.findById(id).populate({
+                path: 'formulario',
+                populate: { path: 'questions' }  // Populate questions within the form
+            });
+    
+            if (!evaluacion) {
+                return res.status(404).send('Evaluación no encontrada')
+            }
+    
+            // Render a view for displaying the evaluation (non-editable)
+            res.render('evals/evaluacion', { evaluacion, user: req.user })
+        } catch (error) {
+            console.error('Error fetching evaluation:', error)
+            res.status(500).send('Error interno del servidor')
         }
-
-        // Render a view for displaying the evaluation (non-editable)
-        res.render('evals/evaluacion', { evaluacion });
-    } catch (error) {
-        console.error('Error fetching evaluation:', error);
-        res.status(500).send('Error interno del servidor');
+    } else {
+        res.redirect('/')
     }
-});
+})
 
 
 module.exports = router

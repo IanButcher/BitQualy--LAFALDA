@@ -11,29 +11,37 @@ const roleAuthorization = require('../middleware/roleAuth')
 
 
 //GET route --> All evaluadores
-router.get('/reguladores', roleAuthorization(['Administrador', 'Intermediarios']), async (req, res) => {
-    const intermediarios = await Intermediario.find({ estaActivo: true })
-    res.render('regs/reguladores', { intermediarios })
+router.get('/reguladores', roleAuthorization(['Administrador', 'Intermediario']), async (req, res) => {
+    if (req.user) {
+        const intermediarios = await Intermediario.find({ estaActivo: true })
+        res.render('regs/reguladores', { intermediarios, user: req.user })
+    } else {
+        res.redirect('/');
+    }
 })
 
 // GET route --> Evaluador Especifico
-router.get('/reguladores/:id', roleAuthorization(['Administrador', 'Intermediarios']), async (req, res) => {
-    try {
-        const id = req.params.id
-        const intermediario = await Intermediario.findById(id)
-        if (!intermediario) {
-            return res.status(404).send('Intermediario no encontrado')
+router.get('/reguladores/:id', roleAuthorization(['Administrador', 'Intermediario']), async (req, res) => {
+    if (req.user) {
+        try {
+            const id = req.params.id
+            const intermediario = await Intermediario.findById(id)
+            if (!intermediario) {
+                return res.status(404).send('Intermediario no encontrado')
+            }
+            res.render('regs/regulador', { intermediario, user: req.user })
+        } catch (error) {
+            console.error(error)
+            res.status(500).send('Error del servidor')
         }
-        res.render('regs/regulador', { intermediario })
-    } catch (error) {
-        console.error(error)
-        res.status(500).send('Error del servidor')
+    } else {
+        res.redirect('/');
     }
+    
 })
 
 router.post('/reguladores/eliminar/:id', roleAuthorization(['Administrador']), async (req, res) => {
     const reguladoresId = req.params.id  // Use req.params to get the ID
-
     if (!mongoose.isValidObjectId(reguladoresId)) {
         return res.status(400).send('ID inválido')
     }

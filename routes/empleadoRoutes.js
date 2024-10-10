@@ -14,28 +14,35 @@ app.use(roleAuthorization)
 
 //GET route --> All evaluadores
 router.get('/empleados', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async (req, res) => {
-    const empleados = await Empleado.find({ estaActivo: true })
-    res.render('empls/empleados', { empleados })
+    if (req.user) {
+        const empleados = await Empleado.find({ estaActivo: true })
+        res.render('empls/empleados', { empleados, user: req.user })  
+    } else {
+        res.redirect('/');
+    }
 })
 
 // GET route --> Evaluador Especifico
 router.get('/empleados/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async (req, res) => {
-    try {
-        const id = req.params.id
-        const empleado = await Empleado.findById(id)
-        if (!empleado) {
-            return res.status(404).send('Evaluador no encontrado')
+    if (req.user) {
+        try {
+            const id = req.params.id
+            const empleado = await Empleado.findById(id)
+            if (!empleado) {
+                return res.status(404).send('Evaluador no encontrado')
+            }
+            res.render('empls/empleado', { empleado, user: req.user })
+        } catch (error) {
+            console.error(error)
+            res.status(500).send('Error del servidor')
         }
-        res.render('empls/empleado', { empleado })
-    } catch (error) {
-        console.error(error)
-        res.status(500).send('Error del servidor')
-    }
+    } else {
+        res.redirect('/');
+    } 
 })
 
 router.post('/empleados/eliminar/:id', roleAuthorization(['Administrador']), async (req, res) => {
     const empleadoId = req.params.id  
-
     if (!mongoose.isValidObjectId(empleadoId)) {
         return res.status(400).send('ID inválido')
     }

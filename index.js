@@ -71,7 +71,7 @@ app.get('/home-admin', roleAuthorization(['Administrador']), (req,res)=>{
     res.render('home/homeAdmin')
 })
 
-app.get('/home-inter', roleAuthorization(['Intermediarios']), (req,res)=>{
+app.get('/home-inter', roleAuthorization(['Intermediario']), (req,res)=>{
     res.render('home/homeInter')
 })
 

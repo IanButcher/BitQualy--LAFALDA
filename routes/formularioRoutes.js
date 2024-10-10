@@ -10,6 +10,7 @@ const  roleAuthorization = require('../middleware/roleAuth')
 
 // GET route --> Display Formularios
 router.get('/formularios', roleAuthorization(['Administrador']), async (req, res) => {
+
     try {
         const formularios = await Formulario.find({ isActive: true })
         res.render('forms/formularios', { formularios: formularios })
