@@ -9,7 +9,15 @@
     <link rel="icon" type="image/png" href="https://ugc.production.linktr.ee/mj5IciCyRk2puUukygYa_kmwAn8AE84X4N3S5?io=true&size=avatar-v3_0">
 </head>
 <body>
-    <nav> <%- include('../partials/navbar') %> </nav>
+    <% if (user && user.rol === 'Administrador') { %>
+        <nav><%- include('../partials/navbar') %> </nav>
+    <% } else if (user && user.rol === 'Evaluador') { %>
+        <nav><%- include('../partials/navbarEval') %> </nav>
+    <% } else if (user && user.rol === 'Intermediario') { %>
+        <nav><%- include('../partials/navbarInter') %> </nav>
+    <% } else { %>
+        <p>Navbar error</p>
+    <% } %> 
 
     <div class="container">
         <div class="form-container">

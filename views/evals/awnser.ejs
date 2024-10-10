@@ -7,7 +7,17 @@
     <link rel="stylesheet" href="/awnser.css">
 </head>
 <body>
-    <nav> <%- include('../partials/navbar') %> </nav>
+  <% if (user && user.rol === 'Administrador') { %>
+    <nav><%- include('../partials/navbar') %> </nav>
+  <% } else if (user && user.rol === 'Evaluador') { %>
+      <nav><%- include('../partials/navbarEval') %> </nav>
+  <% } else if (user && user.rol === 'Intermediario') { %>
+      <nav><%- include('../partials/navbarInter') %> </nav>
+  <% } else if (user && user.rol === 'Empleado') { %>
+    <nav><%- include('../partials/navbarUser') %> </nav>
+  <% } else { %>
+      <p>Navbar error</p>
+  <% } %> 
     <div class="container">
         <h2 class="pepe">Formulario: <%= formulario.titulo %></h2>
 

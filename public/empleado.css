@@ -372,4 +372,18 @@ body, html {
     border-color: #aaa;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Mayor sombra en hover */
 }
+.btn-disable {
+    background-color: #dc3545;   /* Rojo para indicar advertencia */
+    color: white;                /* Texto blanco */
+    padding: 6px 12px;           /* Tamaño pequeño pero cómodo */
+    font-size: 12px;             /* Tamaño de fuente pequeño */
+    border: none;                /* Sin borde */
+    border-radius: 20px;         /* Redondeado */
+    cursor: pointer;             /* Cambia el cursor a "pointer" para indicar clic */
+    transition: background-color 0.3s ease, transform 0.2s ease;  /* Efecto suave */
+}
 
+.btn-disable:hover {
+    background-color: #c82333;   /* Rojo más oscuro en hover */
+    transform: scale(1.05);      /* Leve aumento en el tamaño al pasar el cursor */
+}

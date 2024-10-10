@@ -6,11 +6,11 @@ const Formulario = require('../Schemas/formularioSchema')
 const mongoose = require('mongoose')
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-//const { initializePassportSession } = require('./middleware/passportConfig')
-//const  roleAuthorization = require('../middleware/roleAuth')
+const  roleAuthorization = require('../middleware/roleAuth')
 
 // GET route --> Display Formularios
-router.get('/formularios', async (req, res) => {
+router.get('/formularios', roleAuthorization(['Administrador']), async (req, res) => {
+
     try {
         const formularios = await Formulario.find({ isActive: true })
         res.render('forms/formularios', { formularios: formularios })
@@ -22,12 +22,12 @@ router.get('/formularios', async (req, res) => {
 })
 
 // GET route --> Mostrar creador de formularios
-router.get('/formularios/new', (req, res) => {
+router.get('/formularios/new', roleAuthorization(['Administrador']), (req, res) => {
     res.render('forms/new') 
 })
 
 // Get route --> Mostrar updater de formulario
-router.get('/formularios/preview/:id', async (req, res)=>{
+router.get('/formularios/preview/:id', roleAuthorization(['Administrador']), async (req, res)=>{
     const { id } = req.params
     const formulario = await Formulario.findById(id)
     if (formulario) {
@@ -38,7 +38,7 @@ router.get('/formularios/preview/:id', async (req, res)=>{
 })
 
 // POST route --> save/insert Formulario
-router.post('/formularios/save-form', async (req, res) => {
+router.post('/formularios/save-form', roleAuthorization(['Administrador']), async (req, res) => {
     try {
         // Extraer toda la informacion del ejs
         const { 'form-title': titulo, ...formData } = req.body
@@ -88,7 +88,7 @@ router.post('/formularios/save-form', async (req, res) => {
 })
 
 // PUT route --> Delete Form
-router.post('/formularios/eliminar/:id', async (req, res) => {
+router.post('/formularios/eliminar/:id', roleAuthorization(['Administrador']), async (req, res) => {
     try {
         const formularioId = req.params.id
         console.log('Formulario ID:', formularioId) 
@@ -107,7 +107,7 @@ router.post('/formularios/eliminar/:id', async (req, res) => {
 })
 
 // PUT route --> Update Formulario
-router.put('/formularios/:id', async (req, res) => {
+router.put('/formularios/:id', roleAuthorization(['Administrador']), async (req, res) => {
     try {
         const { id } = req.params;
         const { 'form-title': titulo, 'deleted-questions': deletedQuestionIds, ...formData } = req.body;
