@@ -117,6 +117,9 @@ body, html {
     margin-left: 550px;
     text-decoration: none;
 }
+.btn-modify :hover{
+    transform: translateY(-5px);  /* Efecto hover: eleva ligeramente la tarjeta */
+}
 
 /* Estilos para el contenedor eliminar */
 .eliminar {
