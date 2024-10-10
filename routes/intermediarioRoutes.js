@@ -7,18 +7,17 @@ const Empleado = require('../Schemas/empleadoSchema')
 const Evaluador = require('../Schemas/evaluadorSchema')
 const Intermediario = require('../Schemas/intermediarioSchema')
 const baseUserSchema = require('../Schemas/baseUserSchema')
-//const { initializePassportSession } = require('./middleware/passportConfig')
-//const { roleAuthorization } = require('../middleware/roleAuth')
+const roleAuthorization = require('../middleware/roleAuth')
 
 
 //GET route --> All evaluadores
-router.get('/reguladores', async (req, res) => {
+router.get('/reguladores', roleAuthorization(['Administrador', 'Intermediarios']), async (req, res) => {
     const intermediarios = await Intermediario.find({ estaActivo: true })
     res.render('regs/reguladores', { intermediarios })
 })
 
 // GET route --> Evaluador Especifico
-router.get('/reguladores/:id', async (req, res) => {
+router.get('/reguladores/:id', roleAuthorization(['Administrador', 'Intermediarios']), async (req, res) => {
     try {
         const id = req.params.id
         const intermediario = await Intermediario.findById(id)
@@ -32,7 +31,7 @@ router.get('/reguladores/:id', async (req, res) => {
     }
 })
 
-router.post('/reguladores/eliminar/:id', async (req, res) => {
+router.post('/reguladores/eliminar/:id', roleAuthorization(['Administrador']), async (req, res) => {
     const reguladoresId = req.params.id  // Use req.params to get the ID
 
     if (!mongoose.isValidObjectId(reguladoresId)) {

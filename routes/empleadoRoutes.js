@@ -19,7 +19,7 @@ router.get('/empleados', roleAuthorization(['Administrador', 'Evaluador', 'Inter
 })
 
 // GET route --> Evaluador Especifico
-router.get('/empleados/:id', async (req, res) => {
+router.get('/empleados/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async (req, res) => {
     try {
         const id = req.params.id
         const empleado = await Empleado.findById(id)
@@ -33,8 +33,8 @@ router.get('/empleados/:id', async (req, res) => {
     }
 })
 
-router.post('/empleados/eliminar/:id', async (req, res) => {
-    const empleadoId = req.params.id  // Use req.params to get the ID
+router.post('/empleados/eliminar/:id', roleAuthorization(['Administrador']), async (req, res) => {
+    const empleadoId = req.params.id  
 
     if (!mongoose.isValidObjectId(empleadoId)) {
         return res.status(400).send('ID inválido')

@@ -6,10 +6,11 @@ const Formulario = require('../Schemas/formularioSchema')
 const Evaluacion = require('../Schemas/evaluacionSchema')
 const baseUserSchema = require('../Schemas/baseUserSchema')
 const mongoose = require('mongoose')
+const roleAuthorization = require('../middleware/roleAtuh')
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-router.get('/evaluaciones', async (req, res) => {
+router.get('/evaluaciones', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async (req, res) => {
     try {
         const evaluaciones = await Evaluacion.find().populate('formulario')
         res.render('evals/evaluaciones', { evaluaciones })
@@ -21,7 +22,7 @@ router.get('/evaluaciones', async (req, res) => {
 
 
 // GET route --> Mostrar evaluacion especifica
-router.get('/evaluaciones/new', async (req, res) => {
+router.get('/evaluaciones/new', roleAuthorization(['Administrador', 'Evaluador']), async (req, res) => {
     try {
         const formularios = await Formulario.find({ isActive: true }).populate('questions')
         const usuarios = await baseUserSchema.find({ estaActivo: true })
@@ -43,7 +44,7 @@ router.get('/evaluaciones/new', async (req, res) => {
 //})
 
 // GET route --> Mostrar las preguntas para la evaluación
-router.get('/evaluaciones/answer/:id', async (req, res) => {
+router.get('/evaluaciones/answer/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async (req, res) => {
     console.log('GET /evaluaciones/answer/:id reached')
     try {
         const { id } = req.params  // formulario ID
@@ -64,7 +65,7 @@ router.get('/evaluaciones/answer/:id', async (req, res) => {
 
 
 // POST route --> Enviar nueva evaluación
-router.post('/evaluaciones/save-evaluacion', async (req, res) => {
+router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async (req, res) => {
     try {
         const { formulario: formularioId, empleado, respuestas } = req.body
 
@@ -110,7 +111,7 @@ router.post('/evaluaciones/save-evaluacion', async (req, res) => {
 })
 
 // GET route --> Preview evaluacion
-router.get('/evaluaciones/preview/:id', async (req, res) => {
+router.get('/evaluaciones/preview/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async (req, res) => {
     try {
         const { id } = req.params;  // Evaluation ID
 

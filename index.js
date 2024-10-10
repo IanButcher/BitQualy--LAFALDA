@@ -3,13 +3,14 @@ const express = require('express')
 const path = require('path')
 const mongoose = require('mongoose')
 const { initializePassportSession, passport } = require('./middleware/passportConfig')
+const roleAuthorization = require('./middleware/roleAuth')
 
 // Server config
 const app = express();
 const puerto = 3000;
 app.set('view engine', 'ejs')
 
-// Method Override (for PUT & DELETE methods)
+// Method Override (PUT & DELETE)
 const methodOverride = require('method-override')
 app.use(methodOverride('_method'))
 app.use(express.urlencoded({ extended: true }))
@@ -27,10 +28,10 @@ async function main() {
 }
 main().catch(err => console.log('ERROR on connection to MongoDB:', err))
 
-// Initialize Passport & session (with flash)
+// Inicializar Passport & session
 initializePassportSession(app)
 
-// Import Routes
+// Routes
 const formularioRoutes = require('./routes/formularioRoutes')
 const evaluacionRoutes = require('./routes/evaluacionRoutes')
 const loginRoutes = require('./routes/login')
@@ -38,14 +39,14 @@ const empleadoRoutes = require('./routes/empleadoRoutes')
 const evaluadorRoutes = require('./routes/evaluadorRoutes')
 const intermediarioRoutes = require('./routes/intermediarioRoutes')
 
-// Login route using Passport
+// Login route con passport
 app.post('/login', passport.authenticate('local', {
     successRedirect: '/home',
     failureRedirect: '/',
     failureFlash: true
 }))
 
-// Routes for different roles
+// Home por roles
 app.get('/home', (req, res) => {
     // Check user role and redirect accordingly
     if (req.user) {
@@ -66,20 +67,19 @@ app.get('/home', (req, res) => {
     }
 })
 
-app.get('/home-admin', (req,res)=>{
+app.get('/home-admin', roleAuthorization(['Administrador']), (req,res)=>{
     res.render('home/homeAdmin')
 })
 
-app.get('/home-inter', (req,res)=>{
+app.get('/home-inter', roleAuthorization(['Intermediarios']), (req,res)=>{
     res.render('home/homeInter')
 })
 
-app.get('/home-user', (req,res)=>{
+app.get('/home-user', roleAuthorization(['Empleado']), (req,res)=>{
     res.render('home/homeUser')
 })
 
-app.get('/home-eval', (req,res)=>{
-    console.log('User:', req.user)
+app.get('/home-eval', roleAuthorization(['Evaluador']), (req,res)=>{
     res.render('home/homeEval')
 })
 
