@@ -49,9 +49,9 @@
                 <section class="evaluation-section">
                     <h2>Evaluaciones Asignadas</h2>
                     <% if (typeof evaluaciones !== 'undefined' && evaluaciones.length > 0 ) { %>
-                        <% Evaluaciones.forEach(function(evaluacion) { %>
+                        <% evaluaciones.forEach(function(evaluacion) { %>
                             <div class="evaluation-card">
-                                <img src="empleado1.jpg" alt='<%= baseUserSchema.nombre %>' class="eval-img">
+                                <img src="empleado1.jpg" alt='<%= empleado.nombre %> <%= empleado.apellido %>' class="eval-img">
                                 <div class="eval-info">
                                     <p><strong>Formulario: <%= evaluacion.formulario.titulo %></strong></p>
                                     <p>Fecha Inicio: <%= new Date(evaluacion.fechaInicio).toLocaleDateString() %></p>

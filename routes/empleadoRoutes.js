@@ -63,10 +63,13 @@ router.get('/empleados/evaluaciones/:id', async (req, res) =>{
         const evaluaciones = await Evaluaciones.find({ empleado: empleadoId })
                                                .populate('formulario')
 
-    res.render('empls/evaluaciones',{
-        empleado: empleado,
-        evaluaciones: evaluaciones
-    })
+        console.log('Empleado:', empleado);
+        console.log('Evaluaciones:', evaluaciones);
+
+        res.render('empls/evaluaciones',{
+            empleado: empleado,
+            evaluaciones: evaluaciones
+        })
     }
     catch (err) {
         console.error(err)
