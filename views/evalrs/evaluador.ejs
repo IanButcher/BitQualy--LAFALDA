@@ -12,7 +12,15 @@
 </head>
 
 <body>
-    <nav> <%- include('../partials/navbar') %> </nav>
+    <% if (user && user.rol === 'Administrador') { %>
+        <nav><%- include('../partials/navbar') %> </nav>
+    <% } else if (user && user.rol === 'Evaluador') { %>
+        <nav><%- include('../partials/navbarEval') %> </nav>
+    <% } else if (user && user.rol === 'Intermediario') { %>
+        <nav><%- include('../partials/navbarInter') %> </nav>
+    <% } else { %>
+        <p>Navbar error</p>
+    <% } %> 
 
         <!-- Panel principal -->
         <main class="main-content">
@@ -30,12 +38,10 @@
                     <form id="deleteEvalrs" method="POST" action="/evaluadores/eliminar/<%= evaluador._id %>" style="display:none;">
                     </form>
                     
+                    <% if (user && user.rol === 'Administrador') { %>
+                        <button class="btn-disable" onclick="popupEliminar('<%= evaluador._id %>')">Desactivar</button>
+                    <% } %>
                     
-                    <button class="btn-disable" onclick="popupEliminar('<%= evaluador._id %>')">Desactivar</button>
-
-                    
-                    
-
                     <label for="employee-options">Designar como:</label>
                     <select id="employee-options">
                         <option value="option1">Empleado regular</option>

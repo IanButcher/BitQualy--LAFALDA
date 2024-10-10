@@ -12,7 +12,11 @@
 </head>
 
 <body>
-    <nav> <%- include('../partials/navbar') %> </nav>
+    <% if (user && user.rol === 'Administrador') { %>
+        <nav><%- include('../partials/navbar') %> </nav>
+    <% } else if (user && user.rol === 'Intermediario') { %>
+        <nav><%- include('../partials/navbarInter') %> </nav>
+    <% } %>
 
         <!-- Panel principal -->
         <main class="main-content">
@@ -32,8 +36,9 @@
                     </form>
                     
                     <!-- Button to trigger the form submission -->
-                    <button class="btn-disable" onclick="popupEliminar('<%= intermediario %>')">Desactivar</button>
-
+                    <% if (user && user.rol === 'Administrador') { %>
+                        <button class="btn-disable" onclick="popupEliminar('<%= intermediario %>')">Desactivar</button>
+                    <% } %>
                     <label for="employee-options">Designar como:</label>
                     <select id="employee-options">
                         <option value="option1">Empleado regular</option>

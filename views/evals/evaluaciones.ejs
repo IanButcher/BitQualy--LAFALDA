@@ -8,40 +8,51 @@
     <link rel="stylesheet" href="evaluaciones.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" type="image/png" href="https://ugc.production.linktr.ee/mj5IciCyRk2puUukygYa_kmwAn8AE84X4N3S5?io=true&size=avatar-v3_0">
-
 </head>
 
 <body>
-    <nav> <%- include('../partials/navbar') %> </nav>
+    <% if (user && user.rol === 'Administrador') { %>
+        <nav><%- include('../partials/navbar') %> </nav>
+    <% } else if (user && user.rol === 'Evaluador') { %>
+        <nav><%- include('../partials/navbarEval') %> </nav>
+    <% } else if (user && user.rol === 'Intermediario') { %>
+        <nav><%- include('../partials/navbarInter') %> </nav>
+    <% } else if (user && user.rol === 'Empleado') { %>
+        <nav><%- include('../partials/navbarUser') %> </nav>
+    <% } else { %>
+        <p>Navbar error</p>
+    <% } %>
 
-        <!-- Panel principal -->
-        <main class="main-content">
-            <header>
-                    <%- include('../partials/header') %>
-            </header>
+    <!-- Panel principal -->
+    <main class="main-content">
+        <header>
+            <%- include('../partials/header') %>
+        </header>
 
-            <div class="filter-panel-container">
-                <section class="evaluation-section">
-                    <h2>Evaluaciones Asignadas</h2>
+        <div class="filter-panel-container">
+            <section class="evaluation-section">
+                <h2>Evaluaciones Asignadas</h2>
 
-                    <!-- Aquí comienza el ciclo de evaluaciones en EJS -->
-                    <% evaluaciones.forEach(evaluacion => { %>
-                        <div class="evaluation-card">
-                            <img src="empleado1.jpg"" class="eval-img">
-                            <div class="eval-info">
-                                <p><strong><%= evaluacion.empleado %></strong></p>
-                                <p>Fecha Inicio: xxxx| Fecha Fin: xxxx</p>
-                                <br>
-                                <p class="eval-status"><%= evaluacion.formulario.titulo %></p>
-                            </div>
-                            <div class="eval-summary">
-                                <a href="/evaluaciones/preview/<%= evaluacion._id %>" class="btn">Ver Evaluación</a>
-                            </div>
+                <!-- Loop through evaluations -->
+                <% evaluaciones.forEach(evaluacion => { %>
+                    <div class="evaluation-card">
+                        <img src="empleado1.jpg" class="eval-img">
+                        <div class="eval-info">
+                            <p><strong><%= evaluacion.empleado %></strong></p>
+                            <p>Fecha Inicio: xxxx | Fecha Fin: xxxx</p>
+                            <br>
+                            <p class="eval-status"><%= evaluacion.formulario.titulo %></p>
                         </div>
-                    <% }) %>
+                        <div class="eval-summary">
+                            <a href="/evaluaciones/preview/<%= evaluacion._id %>" class="btn">Ver Evaluación</a>
+                        </div>
+                    </div>
+                <% }) %>
 
-                </section>
+            </section>
 
+            <!-- Only show the right panel if the user has the appropriate role -->
+            <% if (user && (user.rol === 'Administrador' || user.rol === 'Intermediario' || user.rol === 'Evaluador')) { %>    
                 <aside class="right-panel">
                     <div class="filter-section">
                         <h3>Filtrar por</h3>
@@ -68,46 +79,38 @@
                             </div>
                         </div>
                     </div>
-                   
                     <div class="evaluation-actions">
                         <a href="/evaluaciones/new" id="nuevaEvaluacionBtn">Nueva Evaluación</a>
                     </div>
-
                 </aside>
-                
-            </div>
+            <% } %>
+        </div>
 
-            <section class="evaluation-finished">
-                <h2>Evaluaciones Finalizadas</h2>
-            
-                <!-- Aquí continúa el ciclo de evaluaciones -->
-                <% evaluaciones.forEach(evaluacion => { %>
-                    <div class="evaluation-card">
-                        <img src="empleado1.jpg" class="eval-img">
-                        <div class="eval-info">
-                            <p><strong><%= evaluacion.empleado.nombre %></strong></p>
-                            <p>Fecha Inicio: xxxx | Fecha Fin: xxxx </p>
-                            <br>
-                            <p class="eval-status"><%= evaluacion.formulario.titulo %></p>
-                        </div>
-                        <div class="eval-summary">
-                            <p><%= evaluacion.formulario.titulo %></p>
-                            <div class="eval-icons">
-                                <i class="fas fa-download download-icon"></i>
-                                <i class="fas fa-filter filter-icon"></i>
-                            </div>
-                        </div>
-                        <!-- Corrected link to show "Ver Evaluación" and point to the preview path -->
-                        <a href="/evaluaciones/preview/<%= evaluacion._id %>" class="btn">Ver Evaluaciones</a>
+        <section class="evaluation-finished">
+            <h2>Evaluaciones Finalizadas</h2>
+
+            <!-- Loop through finished evaluations -->
+            <% evaluaciones.forEach(evaluacion => { %>
+                <div class="evaluation-card">
+                    <img src="empleado1.jpg" class="eval-img">
+                    <div class="eval-info">
+                        <p><strong><%= evaluacion.empleado.nombre %></strong></p>
+                        <p>Fecha Inicio: xxxx | Fecha Fin: xxxx </p>
+                        <br>
+                        <p class="eval-status"><%= evaluacion.formulario.titulo %></p>
                     </div>
-                <% }) %>
-            
-            </section>
-            <!-- Botón para crear una nueva evaluación -->
-            
-
-        </main>
-    </div>
+                    <div class="eval-summary">
+                        <p><%= evaluacion.formulario.titulo %></p>
+                        <div class="eval-icons">
+                            <i class="fas fa-download download-icon"></i>
+                            <i class="fas fa-filter filter-icon"></i>
+                        </div>
+                    </div>
+                    <a href="/evaluaciones/preview/<%= evaluacion._id %>" class="btn">Ver Evaluaciones</a>
+                </div>
+            <% }) %>
+        </section>
+    </main>
 
     <script>
         const dropdownBtn = document.querySelector('.dropdown-btn');
@@ -117,13 +120,7 @@
             e.preventDefault();
             dropdownContainer.classList.toggle('active');
         });
-
-        // Botón para crear nueva evaluación
-        //document.getElementById('nuevaEvaluacionBtn').addEventListener('click', function() {
-          //  window.location.href = '/evaluaciones/new';
-        //});
     </script>
 </body>
 
 </html>
-
