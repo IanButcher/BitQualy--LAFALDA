@@ -12,6 +12,14 @@
 
     
 </head>
+<style>
+    .notification-icon,
+    .user-photo {
+        position: absolute;
+        right: 120px;
+        top: 100px;
+    }   
+</style>  
 <body>
     <nav> <%- include('../partials/navbar') %> </nav>>
         
@@ -19,10 +27,7 @@
         <!-- Panel principal -->
         <div class="main-content">
             <div class="header">
-                <div class="user-info">
-                    <img src="/img/user-image.png" alt="User Image">
-                    <span>Carina Campo | Rol: Recursos Humanos</span>
-                </div>
+                <header class="notificacion-icon user-photo"> <%- include('../partials/headerU') %> </header>
             </div>
 
             <div class="modify-form-section">

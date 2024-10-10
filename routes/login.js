@@ -52,7 +52,7 @@ router.post('/save-new-user', roleAuthorization(['Administrador']), async (req, 
             // Save usuario
             await newUser.save()
             console.log(newUser)
-            res.redirect('/home')
+            res.redirect('/home-admin')
         }
 
     } catch (error) {

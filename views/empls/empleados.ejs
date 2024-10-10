@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="/navbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" type="image/png" href="https://ugc.production.linktr.ee/mj5IciCyRk2puUukygYa_kmwAn8AE84X4N3S5?io=true&size=avatar-v3_0">
-
 </head>
 
 <body>
@@ -22,44 +21,36 @@
         <p>Navbar error</p>
     <% } %> 
 
-        <!-- Panel principal -->
-        <main class="main-content">
-            <header class="header">
-                <h1>Empleados</h1>
-                <div class="user-info">
-                    <h2>Carina Campo</h2>
-                    <p>Rol: Recursos Humanos</p>
-                </div>
-                
-            </header>
-            <div class="search-container">
-                <div class="search-wrapper">
-                    <input class="busqueda" type="search" placeholder="Buscar empleados...">
-                    <i class="fas fa-search search-icon"></i>
-                </div>
-            </div>
-            
-            
-            
-            <section class="employee-list">
-            <% for (empleado of empleados) { %>
+    <!-- Panel principal -->
+    <main class="main-content">
+        <header>
+            <% if (user && user.rol === 'Administrador') { %>
+                <nav><%- include('../partials/navbar') %> </nav>
+            <% } else if (user && user.rol === 'Intermediario') { %>
+                <nav><%- include('../partials/navbarInter') %> </nav>
+            <% } %>
+        </header>
+        
+        <!-- Lista de empleados -->
+        <section class="employee-list">
+            <% for (let empleado of empleados) { %>
                 <div class="employee">
                     <a href="/empleados/<%= empleado._id %>">
                         <img src="empleado1.jpg" alt="Empleado">
-                    <div class="employee-info">
-                        <h3><%= empleado.nombre %> <%= empleado.apellido %></h3>
-                        <p>Rol: <%= empleado.rol %></p>
-                        <p>Legajo: <%= empleado.legajo %></p>
-                    </div>
-                <% } %>               
-            </section>
-        </main>
-    </div>
+                        <div class="employee-info">
+                            <h3><%= empleado.nombre %> <%= empleado.apellido %></h3>
+                            <p>Rol: <%= empleado.rol %></p>
+                            <p>Legajo: <%= empleado.legajo %></p>
+                        </div>
+                    </a>
+                </div>
+            <% } %>
+        </section>
+    </main>
 
     <script>
-    
         // JavaScript para desvanecer los empleados al hacer scroll
-        const employeeList = document.getElementById('employeeList');
+        const employeeList = document.querySelector('.employee-list');
         const employees = employeeList.querySelectorAll('.employee');
     
         employeeList.addEventListener('scroll', () => {
@@ -78,10 +69,8 @@
                 } else {
                     employee.style.opacity = 1;  // Totalmente visible
                 }
-            })
-        })
-
-        
+            });
+        });
     </script>
     
 </body>

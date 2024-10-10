@@ -32,8 +32,9 @@
                     </form>
                     
                     <!-- Button to trigger the form submission -->
-                    <button onclick="popupEliminar('<%= intermediario._id %>')">Desactivar</button>
-
+                    <% if (user && user.rol === 'Administrador') { %>
+                        <button class="btn-disable" onclick="popupEliminar('<%= intermediario %>')">Desactivar</button>
+                    <% } %>
                     <label for="employee-options">Designar como:</label>
                     <select id="employee-options">
                         <option value="option1">Empleado regular</option>

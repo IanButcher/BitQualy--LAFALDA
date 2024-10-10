@@ -38,9 +38,10 @@
                     <form id="deleteEvalrs" method="POST" action="/evaluadores/eliminar/<%= evaluador._id %>" style="display:none;">
                     </form>
                     
-                    <!-- Button to trigger the form submission -->
-                    <button onclick="popupEliminar('<%= evaluador._id %>')">Desactivar</button>
-
+                    <% if (user && user.rol === 'Administrador') { %>
+                        <button class="btn-disable" onclick="popupEliminar('<%= evaluador._id %>')">Desactivar</button>
+                    <% } %>
+                    
                     <label for="employee-options">Designar como:</label>
                     <select id="employee-options">
                         <option value="option1">Empleado regular</option>

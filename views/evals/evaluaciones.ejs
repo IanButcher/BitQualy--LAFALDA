@@ -51,40 +51,41 @@
                     <% }) %>
 
                 </section>
-
-                <aside class="right-panel">
-                    <div class="filter-section">
-                        <h3>Filtrar por</h3>
-                        <select class="filter-select">
-                            <option value="periodo">Periodo</option>
-                        </select>
-                        <div class="filter-order">
-                            <label><span class="blue-dot"></span> Más reciente</label>
-                            <label><span class="yellow-dot"></span> Más antigua</label>
-                        </div>
-                        <div class="status-buttons">
-                            <div class="status-button evaluate">
-                                <span class="green-dot"></span>
-                                <span>Completas</span>
-                                <span class="triangle"></span>
+                <% if user && (user.rol === 'Administrador' || user.rol === 'Intermediario' || user.rol === 'Evaluador') { %>    
+                    <aside class="right-panel">
+                        <div class="filter-section">
+                            <h3>Filtrar por</h3>
+                            <select class="filter-select">
+                                <option value="periodo">Periodo</option>
+                            </select>
+                            <div class="filter-order">
+                                <label><span class="blue-dot"></span> Más reciente</label>
+                                <label><span class="yellow-dot"></span> Más antigua</label>
+                            </div>
+                            <div class="status-buttons">
+                                <div class="status-button evaluate">
+                                    <span class="green-dot"></span>
+                                    <span>Completas</span>
+                                    <span class="triangle"></span>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="status-buttons">
+                                <div class="status-button evaluate">
+                                    <span class="red-dot"></span>
+                                    <span>Incompletas</span>
+                                    <span class="triangle"></span>
+                                </div>
                             </div>
                         </div>
-                        <br>
-                        <div class="status-buttons">
-                            <div class="status-button evaluate">
-                                <span class="red-dot"></span>
-                                <span>Incompletas</span>
-                                <span class="triangle"></span>
-                            </div>
+                    
+                        <div class="evaluation-actions">
+                            <a href="/evaluaciones/new" id="nuevaEvaluacionBtn">Nueva Evaluación</a>
                         </div>
-                    </div>
-                   
-                    <div class="evaluation-actions">
-                        <a href="/evaluaciones/new" id="nuevaEvaluacionBtn">Nueva Evaluación</a>
-                    </div>
 
-                </aside>
-                
+                    </aside>
+                <% } %>
+                 
             </div>
 
             <section class="evaluation-finished">
@@ -113,8 +114,6 @@
                 <% }) %>
             
             </section>
-            
-
             <!-- Botón para crear una nueva evaluación -->
             
 

@@ -19,25 +19,17 @@ body {
     width: 100%; /* Asegura que el contenedor ocupe el 100% del ancho */
 }
 
-/* Estilos del encabezado */
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 2px solid #e0e0e0;
-    padding-bottom: 10px;
-    width: 100%; /* Asegura que el encabezado ocupe todo el ancho */
-}
 
 /* Contenido principal */
-.main-content {
-    flex-grow: 1;
+.maincontent {
+    flex-grow: 1; /* Hace que el contenido principal ocupe todo el espacio restante */
     padding: 50px;
+    margin-left: 250px; /* Mueve el contenido principal a la derecha del sidebar */
     background-color: #fff;
     overflow-y: auto;
-    margin-right: 20px; /* Da espacio al panel derecho */
+    margin-right: 2px; /* Da espacio al panel derecho */
 }
-
+ 
 /* Estilos del usuario */
 .user-info {
     display: flex;
@@ -95,11 +87,21 @@ select:focus {
 }
 
 /* Estilos de botones */
+/* Estilos de botones */
 .modify-buttons {
     display: flex;
-    justify-content: space-between; /* Alinear botones */
-    margin-top: 40px; /* Aumenta este margen para más espacio entre inputs y botones */
+    justify-content: flex-start; /* Alinear los botones hacia la izquierda */
+    margin-top: 10px; /* Mantener el margen superior */
 }
+
+.modify-buttons button {
+    margin-right: 10px; /* Ajusta este valor para controlar el espacio entre los botones */
+}
+
+.modify-buttons button:last-child {
+    margin-right: 0; /* Elimina el margen del último botón */
+}
+
 
 .btn-download {
     background-color: #2a36d4;
@@ -109,6 +111,7 @@ select:focus {
     padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
     cursor: pointer;
     transition: background-color 0.3s;
+    font-size: 14px;
 }
 
 .btn-cancel {
@@ -118,6 +121,7 @@ select:focus {
     border-radius: 20px; /* Aumento del redondeado */
     padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
     cursor: pointer;
+    font-size: 14px;
     transition: background-color 0.3s;
 }
 
@@ -129,6 +133,7 @@ select:focus {
     padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
     cursor: pointer;
     transition: background-color 0.3s;
+    font-size: 14px;
 }
 
 .btn-delete,
