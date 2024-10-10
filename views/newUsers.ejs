@@ -4,23 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Evaluador</title>
-    <link rel="stylesheet" href="/newEvalrs.css">
+    <link rel="stylesheet" href="/newUser.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" type="image/png" href="https://ugc.production.linktr.ee/mj5IciCyRk2puUukygYa_kmwAn8AE84X4N3S5?io=true&size=avatar-v3_0">
 
 </head>
-
+<!-- Página de Evaluaciones -->
+<style>
+    .notification-icon,
+    .user-photo {
+        position: absolute;
+        right: 50px;
+        top: 100px;
+    }
+</style>
 <body>
     <nav> <%- include('./partials/navbar') %> </nav>
 
         <!-- Panel principal -->
         <main class="main-content">
-            <header class="header">
-                <h1>Crear Empleado</h1>
-                <div class="user-info">
-                    <h2>Carina Campo</h2>
-                    <p>Rol: Recursos Humanos</p>
-                </div>
+            <header class="header notificacion-icon user-photo">
+                <%- include('./partials/headerU') %> 
             </header>
 
             <form method="POST" action="/save-new-user">
@@ -84,7 +88,7 @@
 
                     <div class="form-buttons">
                         <button type="submit" class="btn-submit">Crear Usuario</button>
-                        <a href="/home" class="btn-cancel">Cancelar</a>
+                        <a href="/empleados" class="btn-cancel">Cancelar</a>
                     </div>
                 </div>
             </form>

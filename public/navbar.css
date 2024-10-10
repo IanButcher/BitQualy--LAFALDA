@@ -1,5 +1,6 @@
 /* Navbar Styles */
 /* Asegúrate de que el contenedor padre tenga un layout flexible */
+
 .container {
     display: flex;
     height: 100vh;
@@ -62,6 +63,19 @@
 }
 
 /* Dropdown section */
+a {
+    text-decoration: none;
+}
+
+.navbar-item a {
+    text-decoration: none !important;
+    color: white;
+}
+
+.contenedor-evaluaciones a {
+    text-decoration: underline;
+}
+
 .sidebar .gestion-section .dropdown-btn {
     font-weight: bold;
     display: flex;
@@ -107,6 +121,7 @@
     align-items: center;
     padding: 10px 0;
     transition: background-color 0.3s ease, transform 0.3s ease;
+    text-decoration: none;
 }
 
 .sidebar .gestion-section .dropdown-container .menu-item a i {
