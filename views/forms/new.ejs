@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modificar Formulario</title>
+    <link rel="stylesheet" href="/navbar.css">
     <link rel="stylesheet" href="/newForm.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -26,18 +27,32 @@
         position: absolute;
         right: 55px;
         top: 60px;
-        }   
+        }
+
+        #NavNF {
+            .sidebar {
+            width: 210px; /* Asegúrate de que tenga un ancho fijo */
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            position: fixed; /* Fija el sidebar a la izquierda */
+            top: 0;
+            left: 0;
+            height: 100%;
+}
+        }
+        
 </style>  
     </style>
 </head>
 <body>
-     
+    <!-- Panel lateral izquierdo -->
+    <nav id="NavNF"> <%- include('../partials/navbar') %> </nav>
 
     <div class="container">
-        <!-- Panel lateral izquierdo -->
-        <nav> <%- include('../partials/navbar') %> </nav>
+      
         <!-- Panel principal -->
-        <div class="main-content">
+        <div class="maincontent">
 
                 <header class="notification-icon user-photo">
                     <%- include('../partials/headerU') %>
