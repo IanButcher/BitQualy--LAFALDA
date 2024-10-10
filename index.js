@@ -43,7 +43,7 @@ app.post('/login', passport.authenticate('local', {
     successRedirect: '/home',
     failureRedirect: '/',
     failureFlash: true
-}));
+}))
 
 // Routes for different roles
 app.get('/home', (req, res) => {
@@ -59,7 +59,7 @@ app.get('/home', (req, res) => {
             case 'Evaluador':
                 return res.redirect('/home-eval')
             default:
-                return res.status(403).send('Unauthorized role')
+                return res.status(403).send('Rol no autorizado')
         }
     } else {
         return res.redirect('/')
@@ -94,6 +94,6 @@ app.use('/', intermediarioRoutes)
 
 // Start the server
 app.listen(puerto, () => {
-    console.log(`Servidor abierto en el puerto}`)
+    console.log(`Servidor abierto en el puerto`)
     console.log(puerto)
 })

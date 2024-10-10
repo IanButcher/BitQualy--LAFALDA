@@ -6,7 +6,8 @@ const Empleado = require('../Schemas/empleadoSchema')
 const Evaluador = require('../Schemas/evaluadorSchema')
 const Regulador = require('../Schemas/intermediarioSchema')
 const baseUserSchema = require('../Schemas/baseUserSchema')
-//const { initializePassportSession } = require('./middleware/passportConfig')
+const Administrador = require('../Schemas/adminSchema')
+const { initializePassportSession, passport } = require('../middleware/passportConfig')
 //const { roleAuthorization } = require('../middleware/roleAuth')
 
 // GET route --> Log In Page
@@ -40,6 +41,9 @@ router.post('/save-new-user', async (req, res) => {
                     break;
                 case 'regulador':
                     newUser = new Regulador({ nombre, apellido, legajo, password })
+                    break;
+                case 'administrador':
+                    newUser = new Administrador({ nombre, apellido, legajo, password })
                     break;
                 default:
                     return res.status(400).json({ message: 'Invalid role selected' })
@@ -78,7 +82,7 @@ app.post('/login', (req, res, next) => {
             return res.redirect('/home')
         })
     })(req, res, next)
-});
+})
 
 
 

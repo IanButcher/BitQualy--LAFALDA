@@ -1,15 +1,19 @@
 // Modulos
 const express = require('express')
+const app = express()
 const mongoose = require('mongoose')
 const router = express.Router()
 const Empleado = require('../Schemas/empleadoSchema')
 const Evaluador = require('../Schemas/evaluadorSchema')
 const Intermediario = require('../Schemas/intermediarioSchema')
 const baseUserSchema = require('../Schemas/baseUserSchema')
+const roleAuthorization = require('../middleware/roleAuth')
 
+
+app.use(roleAuthorization)
 
 //GET route --> All evaluadores
-router.get('/empleados', async (req, res) => {
+router.get('/empleados', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async (req, res) => {
     const empleados = await Empleado.find({ estaActivo: true })
     res.render('empls/empleados', { empleados })
 })
