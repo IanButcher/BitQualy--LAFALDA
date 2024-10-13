@@ -14,6 +14,7 @@
 <body>
     <nav> <%- include('../partials/navbar') %> </nav>
 
+<<<<<<< Updated upstream
         <!-- Panel principal -->
         <main class="main-content">
             <header>
@@ -24,6 +25,25 @@
                         
             <section class="employee-list">
             <% for (empleado of empleados) { %>
+=======
+    <!-- Panel principal -->
+    <main class="main-content">
+        <header>
+            <% if (user && user.rol === 'Administrador') { %>
+                <nav><%- include('../partials/navbar') %> </nav>
+            <% } else if (user && user.rol === 'Intermediario') { %>
+                <nav><%- include('../partials/navbarInter') %> </nav>
+            <% } %>
+        </header>
+        
+        <div class="search-section">
+            <input type="text" id="search-input" placeholder="Buscar evaluaciones por nombre...">
+            <i class="fas fa-search search-icon"></i>
+        </div>
+        <!-- Lista de empleados -->
+        <section class="employee-list">
+            <% for (let empleado of empleados) { %>
+>>>>>>> Stashed changes
                 <div class="employee">
                     <a href="/empleados/<%= empleado._id %>">
                         <img src="empleado1.jpg" alt="Empleado">
@@ -40,29 +60,83 @@
     <script>
     
         // JavaScript para desvanecer los empleados al hacer scroll
+<<<<<<< Updated upstream
         const employeeList = document.getElementById('employeeList');
         const employees = employeeList.querySelectorAll('.employee');
+=======
+        const employeeList = document.querySelector('.employee-list')
+        const employees = employeeList.querySelectorAll('.employee')
+>>>>>>> Stashed changes
     
         employeeList.addEventListener('scroll', () => {
             // Obtenemos el valor de desplazamiento vertical del contenedor
-            const scrollTop = employeeList.scrollTop;
+            const scrollTop = employeeList.scrollTop
             
             employees.forEach(employee => {
                 // Obtenemos la distancia del empleado con respecto al top de la lista
-                const employeeTop = employee.offsetTop - scrollTop;
+                const employeeTop = employee.offsetTop - scrollTop
                 
                 // Ajustamos la opacidad basado en la posición del empleado
                 if (employeeTop < 50) {
-                    employee.style.opacity = 0;  // Desaparece cuando sube por completo
+                    employee.style.opacity = 0  // Desaparece cuando sube por completo
                 } else if (employeeTop < 150) {
-                    employee.style.opacity = (employeeTop - 50) / 100;  // Se desvanece gradualmente
+                    employee.style.opacity = (employeeTop - 50) / 100  // Se desvanece gradualmente
                 } else {
-                    employee.style.opacity = 1;  // Totalmente visible
+                    employee.style.opacity = 1  // Totalmente visible
                 }
             })
         })
 
+<<<<<<< Updated upstream
         
+=======
+        searchInput.addEventListener('input', async function () {
+            const searchQuery = searchInput.value.trim();
+
+            if (!searchQuery) {
+                // Si no hay búsqueda, no hacemos la solicitud
+                return;
+            }
+
+            try {
+                // Hacer la solicitud AJAX al servidor
+                const response = await fetch(`/empleados/buscar?nombre=${encodeURIComponent(searchQuery)}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Error en la búsqueda')
+                }
+
+                const data = await response.json()
+
+                employeeList.innerHTML = ''
+
+                data.empleados.forEach(empleado => {
+                    const employeeHTML = `
+                        <div class="employee">
+                            <a href="/empleados/${empleado._id}">
+                                <img src="empleado1.jpg" alt="Empleado">
+                                <div class="employee-info">
+                                    <h3>${empleado.nombre} ${empleado.apellido}</h3>
+                                    <p>Rol: ${empleado.rol}</p>
+                                    <p>Legajo: ${empleado.legajo}</p>
+                                </div>
+                            </a>
+                        </div>
+                    `;
+                    employeeList.insertAdjacentHTML('beforeend', employeeHTML)
+                });
+
+            } catch (error) {
+                console.error('Error en la búsqueda:', error)
+
+            }
+        })
+>>>>>>> Stashed changes
     </script>
     
 </body>
