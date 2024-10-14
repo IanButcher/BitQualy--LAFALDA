@@ -24,11 +24,7 @@
     <!-- Panel principal -->
     <main class="main-content">
         <header>
-            <% if (user && user.rol === 'Administrador') { %>
-                <nav><%- include('../partials/navbar') %> </nav>
-            <% } else if (user && user.rol === 'Intermediario') { %>
-                <nav><%- include('../partials/navbarInter') %> </nav>
-            <% } %>
+            <%- include('../partials/header') %>
         </header>
         
         <!-- Lista de empleados -->
@@ -55,19 +51,19 @@
     
         employeeList.addEventListener('scroll', () => {
             // Obtenemos el valor de desplazamiento vertical del contenedor
-            const scrollTop = employeeList.scrollTop;
+            const scrollTop = employeeList.scrollTop
             
             employees.forEach(employee => {
                 // Obtenemos la distancia del empleado con respecto al top de la lista
-                const employeeTop = employee.offsetTop - scrollTop;
+                const employeeTop = employee.offsetTop - scrollTop
                 
                 // Ajustamos la opacidad basado en la posición del empleado
                 if (employeeTop < 50) {
-                    employee.style.opacity = 0;  // Desaparece cuando sube por completo
+                    employee.style.opacity = 0  // Desaparece cuando sube por completo
                 } else if (employeeTop < 150) {
-                    employee.style.opacity = (employeeTop - 50) / 100;  // Se desvanece gradualmente
+                    employee.style.opacity = (employeeTop - 50) / 100  // Se desvanece gradualmente
                 } else {
-                    employee.style.opacity = 1;  // Totalmente visible
+                    employee.style.opacity = 1  // Totalmente visible
                 }
             });
         });

@@ -40,7 +40,7 @@
                 <select id="empleadoSelect" name="empleado" required>
                     <option value="">--Seleccionar Empleado--</option>
                     <% usuarios.forEach(usuario => { %>
-                        <option value="<%= usuario.nombre %>+<%= usuario.apellido %>"><%= usuario.nombre %></option>
+                        <option value="<%= usuario._id %>"><%= usuario.nombre %></option>
                     <% }) %>
                 </select>
             </div>
