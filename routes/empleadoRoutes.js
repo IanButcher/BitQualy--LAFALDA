@@ -23,6 +23,24 @@ router.get('/empleados', roleAuthorization(['Administrador', 'Evaluador', 'Inter
     }
 })
 
+// GET route --> Buscar empleado
+router.get('/empleados/buscar', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async (req, res) => {
+    const { nombre } = req.query;
+
+    try {
+        const empleados = await Empleado.find({
+            nombre: { $regex: `^${nombre}`, $options: 'i' }, // Search for names that start with the input
+            estaActivo: true
+        });
+
+        // Render the search results in the 'empleados' view (assuming you use the same view)
+        res.render('empls/empleados', { empleados, user: req.user });
+    } catch (error) {
+        console.error('Error al buscar empleados:', error);
+        res.status(500).json({ error: 'Error en el servidor' });
+    }
+});
+
 // GET route --> Evaluador Especifico
 router.get('/empleados/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async (req, res) => {
     if (req.user) {
@@ -85,28 +103,6 @@ router.get('/empleados/evaluaciones/:id', async (req, res) =>{
     catch (err) {
         console.error(err)
         res.status(500).send("Error obteniendo las evaluaciones")
-    }
-})
-
-router.get('/empleados/buscar', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async (req, res) => {
-    const { nombre } = req.query; // Captura el parámetro de búsqueda del query
-
-    try {
-        // Buscar empleados cuyo nombre o apellido coincida con la búsqueda (usando regex)
-        const empleados = await Empleado.find({
-            $or: [
-                { nombre: { $regex: nombre, $options: 'i' } },
-                { apellido: { $regex: nombre, $options: 'i' } }
-            ],
-            estaActivo: true
-        });
-
-        // Devolver los empleados en formato JSON
-        res.json({ empleados })
-
-    } catch (error) {
-        console.error('Error al buscar empleados:', error)
-        res.status(500).json({ error: 'Error en el servidor' })
     }
 })
 

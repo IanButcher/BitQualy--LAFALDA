@@ -26,7 +26,12 @@
         <header>
             <%- include('../partials/header') %>
         </header>
-        
+
+        <form action="/empleados/buscar" method="GET">
+            <input type="text" id="searchEmpleado" name="nombre" placeholder="Buscar empleado por nombre"/>
+            <button type="submit">Buscar</button>
+        </form>
+
         <!-- Lista de empleados -->
         <section class="employee-list">
             <% for (let empleado of empleados) { %>
