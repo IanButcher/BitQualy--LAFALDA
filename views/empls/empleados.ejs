@@ -24,12 +24,9 @@
     <!-- Panel principal -->
     <main class="main-content">
         <header>
-            <% if (user && user.rol === 'Administrador') { %>
-                <nav><%- include('../partials/navbar') %> </nav>
-            <% } else if (user && user.rol === 'Intermediario') { %>
-                <nav><%- include('../partials/navbarInter') %> </nav>
-            <% } %>
+            <%- include('../partials/header') %>
         </header>
+        
         
         <!-- Lista de empleados -->
         <section class="employee-list">
