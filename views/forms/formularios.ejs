@@ -12,91 +12,61 @@
         <!-- Panel lateral izquierdo -->
         <nav> <%- include('../partials/navbar') %> </nav>
 
-
         <!-- Panel principal -->
         <div class="main-content">
             <header>
                 <%- include('../partials/header') %>
             </header>  
-    
+
+           
+
             <div class="form-section">
                 <h2>Plantillas Formularios</h2>
                 <div class="form-list">
-                    <select id="form-templates">
-                        <% for (formulario of formularios) { %>
-                            <option class="getOptionsForScript" value="<% formulario.id %>"><%= formulario.titulo %></option>
-                        <% } %>
-                    </select>
                     <a href="/formularios/new" class="btn-modify">New</a>
                     <button class="btn-filter">Filtrar</button>
-                    
                 </div>
-            
-
-                <div class="eliminar">
+                <!-- Cartas de formularios -->
+                <div class="form-cards">
                     <% for (formulario of formularios) { %>
+                    <div class="card">
                         <h3><%= formulario.titulo %></h3>
-                        <a href="/formularios/preview/<%= formulario._id %>" class="btn-preview">Vista Previa</a>
-                        <form id="deleteForm" method="POST" style="display:none;">
+                
+                        <!-- Botón de Vista Previa -->
+                        <a href="/formularios/preview/<%= formulario._id %>" class="btn-icon" title="Vista Previa">
+                            <i class="fas fa-eye"></i> Vista Previa
+                        </a>
+                
+                        <!-- Botones de Eliminar y Descargar alineados horizontalmente -->
+                        <form id="deleteForm" method="POST">
                             <input type="hidden" name="_method" value="PUT">
                         </form>
-                        <button onclick="popupEliminar('<%= formulario._id %>')">Eliminar</button>
-
+                        <div class="card-buttons">
+                            <button onclick="popupEliminar('<%= formulario._id %>')" class="btn-icon" title="Eliminar">
+                                <i class="fas fa-trash"></i> Eliminar
+                            </button>
+                            <a href="/formularios/descargar/<%= formulario._id %>" class="btn-icon" title="Descargar">
+                                <i class="fas fa-download"></i> Descargar
+                            </a>
+                        </div>
+                    </div>
                     <% } %>
-                </div>
-    
-                <div class="preview-section">
-                    <h3>Vista Previa</h3>
-                    <iframe src="https://cedec.intef.es/wp-content/uploads/2019/09/cedec-Plantilla-autoevaluacion-docente-ABP.pdf" tabindex="0" data-auto-height="true" data-aspect-ratio="0.7729220222793488" scrolling="no" width="100%" height="600" frameborder="0" class="preview-frame"></iframe>
-                </div>
-    
-                
+                </div>                
             </div>
         </div>
     </div>
 
     <script>
         function popupEliminar(idFormulario) {
-            // Ensure the form exists before trying to set the action
             const deleteForm = document.getElementById('deleteForm');
             
             if (deleteForm && confirm('¿Estás seguro de que deseas eliminar este formulario?')) {
-                // Set the action dynamically based on the id
                 deleteForm.action = `/formularios/eliminar/${idFormulario}`;
-                deleteForm.submit();  // Submit the form
+                deleteForm.submit();
             } else {
                 console.error('Delete form not found!');
             }
         }
-
-    
-        function popupEliminar1(idFormulario) {
-            // Crear un popup de confirmación
-            if (confirm('¿Estás seguro de que deseas eliminar este formulario?')) {
-                // Si se confirma, hacer una solicitud PUT a la ruta de eliminación
-                fetch(`/formularios/eliminar/${idFormulario}`, {
-                    method: 'PUT',  // Cambiar a PUT en lugar de POST
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({})
-                })
-                .then(response => {
-                    if (response.ok) {
-                        alert("Formulario desactivado");
-                        window.location.reload(); // Recargar la página después de la eliminación
-                    } else {
-                        alert("Error al desactivar el formulario");
-                    }
-                })
-                .catch(error => {
-                    alert("Ocurrió un error");
-                    console.error("Error:", error);
-                });
-            }
-        }
-    
     </script>
-    
 </body>
 </html>

@@ -24,6 +24,102 @@ body, html {
     overflow-y: auto;
 }
 
+/* Estilos de las cartas */
+.form-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Asegura que las tarjetas se distribuyan según el ancho disponible */
+    gap: 20px;
+}
+
+.card {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%; /* La tarjeta ocupará el ancho disponible */
+    word-wrap: break-word; /* Permite que el contenido del título haga salto de línea si es necesario */
+    box-sizing: border-box;
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Pequeño levantamiento al hacer hover */
+}
+
+.card h3 {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 15px;
+    white-space: normal; /* Permite el salto de línea */
+    word-wrap: break-word; /* Hace que el título largo salte de línea si es necesario */
+}
+
+.card-buttons {
+    display: flex;
+    justify-content: flex-start; /* Alinea los botones a la izquierda */
+    gap: 10px; /* Espacio entre los botones */
+    flex-wrap: wrap; /* Asegura que los botones bajen de línea si son muchos */
+    margin-top: 10px;
+}
+
+.card-footer {
+    margin-top: 20px;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Botones */
+.btn-icon {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.btn-icon i {
+    margin-right: 8px;
+}
+
+.btn-icon[title="Eliminar"] {
+    background-color: #dc3545;
+}
+
+.btn-icon[title="Eliminar"]:hover {
+    background-color: #b02a37;
+}
+
+.btn-icon[title="Descargar"] {
+    background-color: #28a745;
+}
+
+.btn-icon[title="Descargar"]:hover {
+    background-color: #218838;
+}
+
+.btn-icon[title="Vista Previa"] {
+    background-color: #007bff;
+    width: 100%;
+    text-align: center;
+}
+
+.btn-icon[title="Vista Previa"]:hover {
+    background-color: #0056b3;
+}
+
 /* Header */
 .header {
     display: flex;
@@ -59,18 +155,6 @@ body, html {
     margin-right: 10px;
 }
 
-/* Form Section */
-.form-section h2 {
-    margin-bottom: 20px;
-}
-
-.form-list {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
 .form-list select {
     padding: 10px;
     border: 1px solid #ccc;
@@ -79,7 +163,7 @@ body, html {
 }
 
 .btn-filter {
-    background-color: green;
+    background-color:  #e50c21e0;
     color: white;
     border: none;
     padding: 10px 40px;
@@ -87,9 +171,11 @@ body, html {
     transition: background-color 0.5s ease;
     cursor: pointer;
     margin-left: 0px;
+    font-size:  13px;
 }
 .btn-filter button:hover {
-    background-color: hwb(113 11% 0%); 
+    background-color:  #b30c00d0;
+
 }
 
 .preview-section {
@@ -109,13 +195,15 @@ body, html {
 }
 
 .btn-modify {
-    background-color: rgb(213, 138, 0);
+    background-color: #218838;;
     color: white;
     padding: 10px 40px;
     cursor: pointer;
-    border-radius: 8px;
-    margin-left: 550px;
+    border-radius: 25px;
+    margin-left: 748px;
     text-decoration: none;
+    font-size:  13px;
+
 }
 
 /* Estilos para el contenedor eliminar */
