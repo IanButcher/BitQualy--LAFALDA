@@ -23,10 +23,7 @@
 
         <!-- Formulario para responder preguntas -->
         <form method="POST" action="/evaluaciones/save-evaluacion">
-            <input type="hidden" name="formulario" value="<%= formulario._id %>">
-            <input type="hidden" name="empleado" value="<%= evaluacion.empleado._id %>">
-            <input type="hidden" name="tipo" value="<%= evaluacion.formulario.tipo %>">
-        
+            <input type="hidden" name="formulario" value="<%= formulario._id %>">        
             <!-- Questions and responses -->
             <div id="preguntasContainer">
                 <br>
