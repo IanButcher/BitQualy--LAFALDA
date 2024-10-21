@@ -6,11 +6,11 @@ const Formulario = require('../Schemas/formularioSchema')
 const Evaluacion = require('../Schemas/evaluacionSchema')
 const baseUserSchema = require('../Schemas/baseUserSchema')
 const mongoose = require('mongoose')
-const  roleAuthorization = require('../middleware/roleAuth')
+const roleAuthorization = require('../middleware/roleAuth')
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-router.get('/evaluaciones', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async (req, res) => {
+router.get('/evaluaciones', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async(req, res) => {
     if (req.user) {
         try {
             const evaluaciones = await Evaluacion.find().populate('formulario')
@@ -26,7 +26,7 @@ router.get('/evaluaciones', roleAuthorization(['Administrador', 'Evaluador', 'In
 
 
 // GET route --> Mostrar evaluacion especifica
-router.get('/evaluaciones/new', roleAuthorization(['Administrador', 'Evaluador']), async (req, res) => {
+router.get('/evaluaciones/new', roleAuthorization(['Administrador', 'Evaluador']), async(req, res) => {
     if (req.user) {
         try {
             const formularios = await Formulario.find({ isActive: true }).populate('questions')
@@ -38,20 +38,20 @@ router.get('/evaluaciones/new', roleAuthorization(['Administrador', 'Evaluador']
         }
     } else {
         res.redirect('/');
-    } 
+    }
 })
 
-router.get('/evaluaciones/buscar', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async (req, res) => {
+router.get('/evaluaciones/buscar', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async(req, res) => {
     const { nombre } = req.query;
 
     try {
-        const evaluaciones = await Empleado.find({
+        const evaluaciones = await Evaluacion.find({
             nombre: { $regex: `^${nombre}`, $options: 'i' }, // Search for names that start with the input
             estaActivo: true
         });
 
         // Render the search results in the 'empleados' view (assuming you use the same view)
-        res.render('empls/evaluaciones', { evaluaciones, user: req.user })
+        res.render('evals/evaluaciones', { evaluaciones, user: req.user })
     } catch (error) {
         console.error('Error al buscar empleados:', error)
         res.status(500).json({ error: 'Error en el servidor' })
@@ -59,28 +59,28 @@ router.get('/evaluaciones/buscar', roleAuthorization(['Administrador', 'Evaluado
 })
 
 //app.get('/formularios/:id/preguntas', async (req, res) => {
-    //try {
-      //  const formulario = await Formulario.findById(req.params.id).populate('preguntas');
-        //res.json({ preguntas: formulario.preguntas });
-    //} catch (error) {
-      //  console.error('Error fetching preguntas:', error);
-        //res.status(500).json({ error: 'Server Error' });
-    //}
+//try {
+//  const formulario = await Formulario.findById(req.params.id).populate('preguntas');
+//res.json({ preguntas: formulario.preguntas });
+//} catch (error) {
+//  console.error('Error fetching preguntas:', error);
+//res.status(500).json({ error: 'Server Error' });
+//}
 //})
 
 // GET route --> Mostrar las preguntas para la evaluación
-router.get('/evaluaciones/answer/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async (req, res) => {
+router.get('/evaluaciones/answer/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async(req, res) => {
     console.log('GET /evaluaciones/answer/:id reached')
     if (req.user) {
         try {
-            const { id } = req.params  // formulario ID
+            const { id } = req.params // formulario ID
             const { empleado } = req.query
             console.log(`Formulario ID: ${id}, Empleado: ${empleado}`)
             const formulario = await Formulario.findById(id).populate('questions')
             if (!formulario || formulario.isActive != true) {
                 return res.status(404).send('Formulario no encontrado')
             }
-    
+
             // Render a new page with the preguntas and the selected empleado
             res.render('evals/awnser', { formulario, empleado, user: req.user })
         } catch (error) {
@@ -94,7 +94,7 @@ router.get('/evaluaciones/answer/:id', roleAuthorization(['Administrador', 'Eval
 
 
 // POST route --> Enviar nueva evaluación
-router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async (req, res) => {
+router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async(req, res) => {
     try {
         const { formulario: formularioId, empleado, respuestas } = req.body
 
@@ -106,7 +106,7 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
         // Format the answers to ensure they are strings
         const respuestasFormateadas = formulario.questions.map((question, index) => {
             const respuesta = respuestas[index];
-        
+
             if (Array.isArray(respuesta)) {
                 // Format array responses (e.g., for checkboxes)
                 return respuesta.join(', ');
@@ -115,11 +115,11 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
                 return Object.values(respuesta).join(', ');
             } else {
                 // Return plain response without any prefix
-                return respuesta.toString();  // Only save the clean answer
+                return respuesta.toString(); // Only save the clean answer
             }
         })
-        
-        
+
+
 
         // Create a new Evaluacion instance
         const nuevaEvaluacion = new Evaluacion({
@@ -140,21 +140,21 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
 })
 
 // GET route --> Preview evaluacion
-router.get('/evaluaciones/preview/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async (req, res) => {
+router.get('/evaluaciones/preview/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async(req, res) => {
     if (req.user) {
         try {
-            const { id } = req.params;  // Evaluation ID
-    
+            const { id } = req.params; // Evaluation ID
+
             // Find the evaluation by ID and populate the associated form and questions
             const evaluacion = await Evaluacion.findById(id).populate({
                 path: 'formulario',
-                populate: { path: 'questions' }  // Populate questions within the form
+                populate: { path: 'questions' } // Populate questions within the form
             });
-    
+
             if (!evaluacion) {
                 return res.status(404).send('Evaluación no encontrada')
             }
-    
+
             // Render a view for displaying the evaluation (non-editable)
             res.render('evals/evaluacion', { evaluacion, user: req.user })
         } catch (error) {

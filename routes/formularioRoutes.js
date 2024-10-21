@@ -6,10 +6,10 @@ const Formulario = require('../Schemas/formularioSchema')
 const mongoose = require('mongoose')
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-const  roleAuthorization = require('../middleware/roleAuth')
+const roleAuthorization = require('../middleware/roleAuth')
 
 // GET route --> Display Formularios
-router.get('/formularios', roleAuthorization(['Administrador']), async (req, res) => {
+router.get('/formularios', roleAuthorization(['Administrador']), async(req, res) => {
 
     try {
         const formularios = await Formulario.find({ isActive: true })
@@ -23,11 +23,12 @@ router.get('/formularios', roleAuthorization(['Administrador']), async (req, res
 
 // GET route --> Mostrar creador de formularios
 router.get('/formularios/new', roleAuthorization(['Administrador']), (req, res) => {
-    res.render('forms/new') 
+    res.render('forms/new')
 })
 
+
 // Get route --> Mostrar updater de formulario
-router.get('/formularios/preview/:id', roleAuthorization(['Administrador']), async (req, res)=>{
+router.get('/formularios/preview/:id', roleAuthorization(['Administrador']), async(req, res) => {
     const { id } = req.params
     const formulario = await Formulario.findById(id)
     if (formulario) {
@@ -38,7 +39,7 @@ router.get('/formularios/preview/:id', roleAuthorization(['Administrador']), asy
 })
 
 // POST route --> save/insert Formulario
-router.post('/formularios/save-form', roleAuthorization(['Administrador']), async (req, res) => {
+router.post('/formularios/save-form', roleAuthorization(['Administrador']), async(req, res) => {
     try {
         // Extraer toda la informacion del ejs
         const { 'form-title': titulo, ...formData } = req.body
@@ -49,9 +50,9 @@ router.post('/formularios/save-form', roleAuthorization(['Administrador']), asyn
         let questionIndex = 1;
         while (formData[`question${questionIndex}`]) {
             const question = {
-                titulo: formData[`question${questionIndex}`],  // (preguntaSchema.titulo)
-                descripcion: formData[`description${questionIndex}`],  // (preguntaSchema.descripcion)
-                porcentaje: formData[`percentage${questionIndex}`],  //  (preguntaSchema.porcentaje)
+                titulo: formData[`question${questionIndex}`], // (preguntaSchema.titulo)
+                descripcion: formData[`description${questionIndex}`], // (preguntaSchema.descripcion)
+                porcentaje: formData[`percentage${questionIndex}`], //  (preguntaSchema.porcentaje)
                 tipo: formData[`type${questionIndex}`], // (preguntaSchema.tipo)
                 options: []
             };
@@ -72,8 +73,8 @@ router.post('/formularios/save-form', roleAuthorization(['Administrador']), asyn
 
         // Crear instancia Formulario 
         const newFormulario = new Formulario({
-            titulo,  
-            questions  
+            titulo,
+            questions
         });
 
         // Save the Formulario to the database
@@ -88,10 +89,10 @@ router.post('/formularios/save-form', roleAuthorization(['Administrador']), asyn
 })
 
 // PUT route --> Delete Form
-router.post('/formularios/eliminar/:id', roleAuthorization(['Administrador']), async (req, res) => {
+router.post('/formularios/eliminar/:id', roleAuthorization(['Administrador']), async(req, res) => {
     try {
         const formularioId = req.params.id
-        console.log('Formulario ID:', formularioId) 
+        console.log('Formulario ID:', formularioId)
         const result = await Formulario.findByIdAndUpdate(formularioId, { isActive: false })
         console.log('Update result:', result)
 
@@ -107,7 +108,7 @@ router.post('/formularios/eliminar/:id', roleAuthorization(['Administrador']), a
 })
 
 // PUT route --> Update Formulario
-router.put('/formularios/:id', roleAuthorization(['Administrador']), async (req, res) => {
+router.put('/formularios/:id', roleAuthorization(['Administrador']), async(req, res) => {
     try {
         const { id } = req.params;
         const { 'form-title': titulo, 'deleted-questions': deletedQuestionIds, ...formData } = req.body;
@@ -148,7 +149,7 @@ router.put('/formularios/:id', roleAuthorization(['Administrador']), async (req,
             if (questionId) {
                 const existingQuestionIndex = updatedQuestions.findIndex(q => q._id.toString() === questionId);
                 if (existingQuestionIndex !== -1) {
-                    updatedQuestions[existingQuestionIndex] = { ...updatedQuestions[existingQuestionIndex], ...question };
+                    updatedQuestions[existingQuestionIndex] = {...updatedQuestions[existingQuestionIndex], ...question };
                 }
             } else {
                 // Otherwise, it's a new question
@@ -160,7 +161,7 @@ router.put('/formularios/:id', roleAuthorization(['Administrador']), async (req,
 
         // Handle deletion of questions
         if (deletedQuestionIds) {
-            const idsToDelete = deletedQuestionIds.split(',');  // Convert string into array of IDs
+            const idsToDelete = deletedQuestionIds.split(','); // Convert string into array of IDs
             updatedQuestions = updatedQuestions.filter(q => !idsToDelete.includes(q._id.toString()));
         }
 
@@ -181,4 +182,3 @@ router.put('/formularios/:id', roleAuthorization(['Administrador']), async (req,
 
 
 module.exports = router
-

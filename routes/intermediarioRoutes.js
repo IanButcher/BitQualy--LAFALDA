@@ -11,7 +11,7 @@ const roleAuthorization = require('../middleware/roleAuth')
 
 
 //GET route --> All evaluadores
-router.get('/reguladores', roleAuthorization(['Administrador', 'Intermediario']), async (req, res) => {
+router.get('/reguladores', roleAuthorization(['Administrador', 'Intermediario']), async(req, res) => {
     if (req.user) {
         const intermediarios = await Intermediario.find({ estaActivo: true })
         res.render('regs/reguladores', { intermediarios, user: req.user })
@@ -20,8 +20,25 @@ router.get('/reguladores', roleAuthorization(['Administrador', 'Intermediario'])
     }
 })
 
+router.get('/reguladores/buscar', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async(req, res) => {
+    const { nombre } = req.query;
+
+    try {
+        const regulador = await Evaluacion.find({
+            nombre: { $regex: `^${nombre}`, $options: 'i' }, // Search for names that start with the input
+            estaActivo: true
+        });
+
+        // Render the search results in the 'empleados' view (assuming you use the same view)
+        res.render('regs/reguladores', { regulador, user: req.user })
+    } catch (error) {
+        console.error('Error al buscar regulador:', error)
+        res.status(500).json({ error: 'Error en el servidor' })
+    }
+})
+
 // GET route --> Evaluador Especifico
-router.get('/reguladores/:id', roleAuthorization(['Administrador', 'Intermediario']), async (req, res) => {
+router.get('/reguladores/:id', roleAuthorization(['Administrador', 'Intermediario']), async(req, res) => {
     if (req.user) {
         try {
             const id = req.params.id
@@ -37,11 +54,11 @@ router.get('/reguladores/:id', roleAuthorization(['Administrador', 'Intermediari
     } else {
         res.redirect('/');
     }
-    
+
 })
 
-router.post('/reguladores/eliminar/:id', roleAuthorization(['Administrador']), async (req, res) => {
-    const reguladoresId = req.params.id  // Use req.params to get the ID
+router.post('/reguladores/eliminar/:id', roleAuthorization(['Administrador']), async(req, res) => {
+    const reguladoresId = req.params.id // Use req.params to get the ID
     if (!mongoose.isValidObjectId(reguladoresId)) {
         return res.status(400).send('ID inválido')
     }
