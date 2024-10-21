@@ -23,9 +23,7 @@
 
         <!-- Formulario para responder preguntas -->
         <form method="POST" action="/evaluaciones/save-evaluacion">
-            <input type="hidden" name="formulario" value="<%= formulario._id %>">
-            <input type="hidden" name="empleado" value="<%= empleado %>">
-        
+            <input type="hidden" name="formulario" value="<%= formulario._id %>">        
             <!-- Questions and responses -->
             <div id="preguntasContainer">
                 <br>
@@ -57,7 +55,7 @@
             </div>
         
             <!-- Show the selected employee -->
-            <h4>Empleado: <%= empleado %></h4>
+            <h4>Empleado: <%= empleado.nombre %> <%= empleado.apellido %></h4>
         
             <!-- Submit the form -->
             <button type="submit">Guardar Evaluación</button>
