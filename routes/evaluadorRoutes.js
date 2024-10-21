@@ -28,7 +28,7 @@ router.get('/evaluadores/buscar', roleAuthorization(['Administrador', 'Intermedi
             });
 
             // Render the search results in the 'Evaluador ' view (assuming you use the same view)
-            res.render('evalrs/evaluador ', { evaluador, user: req.user })
+            res.render('evalrs/evaluadores', { evaluador, user: req.user })
         } catch (error) {
             console.error('Error al buscar evaluador :', error)
             res.status(500).json({ error: 'Error en el servidor' })

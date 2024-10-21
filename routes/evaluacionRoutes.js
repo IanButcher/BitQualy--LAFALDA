@@ -45,13 +45,13 @@ router.get('/evaluaciones/buscar', roleAuthorization(['Administrador', 'Evaluado
     const { nombre } = req.query;
 
     try {
-        const evaluaciones = await Evaluacion.find({
+        const evaluacion = await Evaluacion.find({
             nombre: { $regex: `^${nombre}`, $options: 'i' }, // Search for names that start with the input
             estaActivo: true
         });
 
         // Render the search results in the 'empleados' view (assuming you use the same view)
-        res.render('evals/evaluaciones', { evaluaciones, user: req.user })
+        res.render('evals/evaluaciones', { evaluacion, user: req.user })
     } catch (error) {
         console.error('Error al buscar empleados:', error)
         res.status(500).json({ error: 'Error en el servidor' })
