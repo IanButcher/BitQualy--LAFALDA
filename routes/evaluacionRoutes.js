@@ -41,6 +41,23 @@ router.get('/evaluaciones/new', roleAuthorization(['Administrador', 'Evaluador']
     } 
 })
 
+router.get('/evaluaciones/buscar', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async (req, res) => {
+    const { nombre } = req.query;
+
+    try {
+        const evaluaciones = await Empleado.find({
+            nombre: { $regex: `^${nombre}`, $options: 'i' }, // Search for names that start with the input
+            estaActivo: true
+        });
+
+        // Render the search results in the 'empleados' view (assuming you use the same view)
+        res.render('empls/evaluaciones', { evaluaciones, user: req.user })
+    } catch (error) {
+        console.error('Error al buscar empleados:', error)
+        res.status(500).json({ error: 'Error en el servidor' })
+    }
+})
+
 //app.get('/formularios/:id/preguntas', async (req, res) => {
     //try {
       //  const formulario = await Formulario.findById(req.params.id).populate('preguntas');

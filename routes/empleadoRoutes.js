@@ -34,12 +34,12 @@ router.get('/empleados/buscar', roleAuthorization(['Administrador', 'Evaluador',
         });
 
         // Render the search results in the 'empleados' view (assuming you use the same view)
-        res.render('empls/empleados', { empleados, user: req.user });
+        res.render('empls/empleados', { empleados, user: req.user })
     } catch (error) {
-        console.error('Error al buscar empleados:', error);
-        res.status(500).json({ error: 'Error en el servidor' });
+        console.error('Error al buscar empleados:', error)
+        res.status(500).json({ error: 'Error en el servidor' })
     }
-});
+})
 
 // GET route --> Evaluador Especifico
 router.get('/empleados/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async (req, res) => {

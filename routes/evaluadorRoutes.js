@@ -18,7 +18,22 @@ router.get('/evaluadores', roleAuthorization(['Administrador', 'Evaluador', 'Int
         res.redirect('/')
     }
 })
+router.get('/evaluadores/buscar', roleAuthorization(['Administrador', 'Intermediario']), async (req, res) => {
+    const { nombre } = req.query;
 
+    try {
+        const evaluador = await Evaluador .find({
+            nombre: { $regex: `^${nombre}`, $options: 'i' }, // Search for names that start with the input
+            estaActivo: true
+        });
+
+        // Render the search results in the 'Evaluador ' view (assuming you use the same view)
+        res.render('empls/evaluador ', { evaluador, user: req.user })
+    } catch (error) {
+        console.error('Error al buscar evaluador :', error)
+        res.status(500).json({ error: 'Error en el servidor' })
+    }
+})
 // GET route --> Evaluador Especifico
 router.get('/evaluadores/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async (req, res) => {
     if (req.user) {
@@ -55,5 +70,7 @@ router.post('/evaluadores/eliminar/:id', roleAuthorization(['Administrador']), a
         res.status(500).send('Error en el servidor')
     }
 })
+
+
 
 module.exports = router
