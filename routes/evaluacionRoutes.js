@@ -27,7 +27,7 @@ router.get('/evaluaciones', roleAuthorization(['Administrador', 'Evaluador', 'In
             res.status(500).send('Error interno del servidor')
         }
     } else {
-        res.redirect('/');
+        res.redirect('/')
     }
 })
 
@@ -125,7 +125,7 @@ router.get('/evaluaciones/answer/:id', roleAuthorization(['Administrador', 'Eval
             res.status(500).send('Error interno del servidor')
         }
     } else {
-        res.redirect('/');
+        res.redirect('/')
     }
 })
 
@@ -151,31 +151,29 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
             } else {
                 return respuesta.toString()
             }
-        })
+        });
 
-        // Find the existing evaluation based on the form and employee
-        const evaluacion = await Evaluacion.findOne({ formulario: formularioId, empleado: empleado })
-        if (!evaluacion) {
-            return res.status(404).send('Evaluación no encontrada')
-        }
-
-        // Logic for autoevaluaciones
+        // Logic for autoevaluaciones (update existing evaluation)
         if (tipo === 'autoevaluacion') {
+            const evaluacion = await Evaluacion.findOne({ formulario: formularioId, empleado: empleado })
+            if (!evaluacion) {
+                return res.status(404).send('Evaluación no encontrada')
+            }
             evaluacion.respuestas = respuestasFormateadas
             evaluacion.completed = true
+            await evaluacion.save()
         }
         
-        // Logic for normal evaluaciones
+        // Logic for normal evaluaciones (create a new evaluation)
         else if (tipo === 'evaluacion') {
             const nuevaEvaluacion = new Evaluacion({
-            formulario: formulario._id,
-            empleado: empleado,
-            respuestas: respuestasFormateadas
-        })
+                formulario: formulario._id,
+                empleado: empleado,
+                respuestas: respuestasFormateadas,
+                completed: true // Mark as completed immediately
+            });
+            await nuevaEvaluacion.save()
         }
-
-        // Save the updated evaluatio
-        await evaluacion.save();
 
         // Redirect after saving
         res.redirect('/evaluaciones')
@@ -184,6 +182,7 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
         res.status(500).send('Error interno del servidor')
     }
 })
+
 
 
 // GET route --> Preview evaluacion
