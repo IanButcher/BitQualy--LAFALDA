@@ -11,6 +11,7 @@ const { initializePassportSession, passport } = require('../middleware/passportC
 const roleAuthorization = require('../middleware/roleAuth')
 const crypto = require('crypto')
 const nodemailer = require('nodemailer')
+const upload = require('../middleware/multerConfig')
 
 // GET route --> Log In Page
 router.get('/', (req, res) => {
@@ -23,13 +24,14 @@ router.get('/user-creator', roleAuthorization(['Administrador']), (req, res) => 
 })
 
 // POST route --> Create User
-router.post('/save-new-user', roleAuthorization(['Administrador']), async (req, res) => {
-    const { nombre, apellido, legajo, rol, email } = req.body;
+router.post('/save-new-user', upload.single('image'), roleAuthorization(['Administrador']), async (req, res) => {
+    const { nombre, apellido, legajo, rol, email } = req.body
+    const imagePath = req.file ? req.file.path : null
     try {
         // Check legajo
         const legajoChecker = await baseUserSchema.findOne({ legajo })
         if (legajoChecker){
-            res.send('El legajo ya esta en uso, clickee en la flechita para volver atras y recuperar los datos ingresados')
+            res.send('El legajo ya esta en uso, clickee en la flechita para volver atras para recuperar los datos ingresados')
         }
         else {
             // Basado en el rol
@@ -37,19 +39,19 @@ router.post('/save-new-user', roleAuthorization(['Administrador']), async (req, 
             let newUser;
             switch (rol) {
                 case 'empleado':
-                    newUser = new Empleado({ nombre, apellido, legajo, password, email })
+                    newUser = new Empleado({ nombre, apellido, legajo, password, email, imagePath })
                     break;
                 case 'evaluador':
-                    newUser = new Evaluador({ nombre, apellido, legajo, password, email })
+                    newUser = new Evaluador({ nombre, apellido, legajo, password, email, imagePath })
                     break;
                 case 'regulador':
-                    newUser = new Regulador({ nombre, apellido, legajo, password, email })
+                    newUser = new Regulador({ nombre, apellido, legajo, password, email, imagePath })
                     break;
                 case 'administrador':
-                    newUser = new Administrador({ nombre, apellido, legajo, password, email })
+                    newUser = new Administrador({ nombre, apellido, legajo, password, email, imagePath })
                     break;
                 default:
-                    return res.status(400).json({ message: 'Invalid role selected' })
+                    return res.redirect('/user-creator')
             }
             
             // Save usuario
@@ -68,13 +70,13 @@ router.post('/save-new-user', roleAuthorization(['Administrador']), async (req, 
                 from: 'bitqualypassmanager@gmail.com',
                 to: email,
                 subject: 'Cuenta creada - Tu contraseña',
-                text: `Hola ${nombre},\n\nTu cuenta ha sido creada. Tu contraseña es: ${password}\nPor favor cámbiala después de iniciar sesión.`
+                text: `Hola ${nombre},\n\nTu cuenta de BitQualy ha sido creada. Tu contraseña es: ${password}\nPor favor cámbiala después de iniciar sesión.`
             }
     
             transporter.sendMail(mailOptions, (error, info) => {
                 if (error) {
                     console.log(error)
-                    return res.status(500).json({ message: 'Error al enviar el correo' })
+                    return res.redirect('/user-creator')
                     
                 }
                 console.log('Correo enviado: ' + info.response)
