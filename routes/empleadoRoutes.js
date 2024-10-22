@@ -31,7 +31,12 @@ router.get('/empleados/buscar', roleAuthorization(['Administrador', 'Evaluador',
         const empleados = await Empleado.find({
             nombre: { $regex: `^${nombre}`, $options: 'i' }, // Search for names that start with the input
             estaActivo: true
-        });
+        })
+
+        if (req.xhr || req.headers.accept.indexOf('json') > -1) {
+            // Si es una solicitud AJAX, responde con JSON
+            return res.json({ empleados })
+        }
 
         // Render the search results in the 'empleados' view (assuming you use the same view)
         res.render('empls/empleados', { empleados, user: req.user })

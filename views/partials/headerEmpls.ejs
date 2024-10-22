@@ -59,8 +59,39 @@
                     if (e.target !== notificationPopup && e.target !== bellIcon) {
                         notificationPopup.style.display = 'none';
                     }
-                });
-            });
+                })
+            })
+
+        document.getElementById('searchEmpleado').addEventListener('input', function () {
+            const searchValue = this.value
+
+            if (searchValue.length > 1) {
+            fetch(`/empleados/buscar?nombre=${encodeURIComponent(searchValue)}`)
+                .then(response => response.json())
+                .then(data => {
+                    const empleados = data.empleados
+                    const resultadosDiv = document.getElementById('empleadoResultados');
+                    resultadosDiv.innerHTML = ''
+
+                    if (empleados.length === 0) {
+                        resultadosDiv.innerHTML = '<p>No se encontraron empleados.</p>';
+                    } else {
+                        // Crea una lista de empleados encontrados
+                        empleados.forEach(empleado => {
+                            const empleadoItem = document.createElement('p')
+                            empleadoItem.textContent = empleado.nombre
+                            resultadosDiv.appendChild(empleadoItem)
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al realizar la búsqueda:', error)
+                })
+            } else {
+
+            document.getElementById('empleadoResultados').innerHTML = ''
+        }
+    })
     </script>
 
 </body>
