@@ -9,6 +9,8 @@ const baseUserSchema = require('../Schemas/baseUserSchema')
 const Administrador = require('../Schemas/adminSchema')
 const { initializePassportSession, passport } = require('../middleware/passportConfig')
 const roleAuthorization = require('../middleware/roleAuth')
+const crypto = require('crypto')
+const nodemailer = require('nodemailer')
 
 // GET route --> Log In Page
 router.get('/', (req, res) => {
@@ -22,7 +24,7 @@ router.get('/user-creator', roleAuthorization(['Administrador']), (req, res) => 
 
 // POST route --> Create User
 router.post('/save-new-user', roleAuthorization(['Administrador']), async (req, res) => {
-    const { nombre, apellido, legajo, rol, password } = req.body;
+    const { nombre, apellido, legajo, rol, email } = req.body;
     try {
         // Check legajo
         const legajoChecker = await baseUserSchema.findOne({ legajo })
@@ -31,19 +33,20 @@ router.post('/save-new-user', roleAuthorization(['Administrador']), async (req, 
         }
         else {
             // Basado en el rol
+            const password = crypto.randomBytes(8).toString('hex')
             let newUser;
             switch (rol) {
                 case 'empleado':
-                    newUser = new Empleado({ nombre, apellido, legajo, password })
+                    newUser = new Empleado({ nombre, apellido, legajo, password, email })
                     break;
                 case 'evaluador':
-                    newUser = new Evaluador({ nombre, apellido, legajo, password })
+                    newUser = new Evaluador({ nombre, apellido, legajo, password, email })
                     break;
                 case 'regulador':
-                    newUser = new Regulador({ nombre, apellido, legajo, password })
+                    newUser = new Regulador({ nombre, apellido, legajo, password, email })
                     break;
                 case 'administrador':
-                    newUser = new Administrador({ nombre, apellido, legajo, password })
+                    newUser = new Administrador({ nombre, apellido, legajo, password, email })
                     break;
                 default:
                     return res.status(400).json({ message: 'Invalid role selected' })
@@ -51,8 +54,36 @@ router.post('/save-new-user', roleAuthorization(['Administrador']), async (req, 
             
             // Save usuario
             await newUser.save()
+
+            // Enviar mail con contraseña
+            const transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: 'bitqualypassmanager@gmail.com',
+                    pass: 'yoif nkxt bqkl zsrf'
+                }
+            })
+
+            const mailOptions = {
+                from: 'bitqualypassmanager@gmail.com',
+                to: email,
+                subject: 'Cuenta creada - Tu contraseña',
+                text: `Hola ${nombre},\n\nTu cuenta ha sido creada. Tu contraseña es: ${password}\nPor favor cámbiala después de iniciar sesión.`
+            }
+    
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    console.log(error)
+                    return res.status(500).json({ message: 'Error al enviar el correo' })
+                    
+                }
+                console.log('Correo enviado: ' + info.response)
+                res.redirect('/home-admin')
+            })
+
+            // Redirect
             console.log(newUser)
-            res.redirect('/home-admin')
+            //res.redirect('/home-admin')
         }
 
     } catch (error) {
