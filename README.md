@@ -1,10 +1,7 @@
-#*BITQUALY*
-**Índice:** 
-
-[TOC]
+# *BITQUALY*
 
 ----------
-####Descripción
+#### Descripción
 Esta aplicación web es un sistema de evaluación del personal empresarial.
 Los componentes que usaremos para el desarrollo serán:
 - Lenguaje de programación: JavaScript
@@ -17,7 +14,7 @@ Los usuarios estarán definido por roles (administrador, evaluador, intermediari
 
 ------------
 
-####Requisitos
+#### Requisitos
 
 Para la ejecución del proyecto se necesitarán los siguientes software y herramientas:
 - Node js versión: v20.12.2 o superior.
@@ -29,8 +26,11 @@ Para la ejecución del proyecto se necesitarán los siguientes software y herram
 
 
 --------
-####Instalación
-Para poder acceder al desarrollo es necesario clonar el repositorio del proyecto que se encuentra en la plataforma de GITHUB.
+#### Instalación
+
+> [!NOTE]  
+> Para poder acceder al desarrollo es necesario clonar el repositorio del proyecto que se encuentra en la plataforma de GITHUB.
+
 
 1- Clonar el repositorio:
 
@@ -60,7 +60,7 @@ SESSION_SECRET=tuSecreto
 Para acceder a la aplicacion, entre a localhost:3000 en su buscador
 
 ------
-####Uso
+#### Uso
 Una vez instalada la aplicación, se inicia con un login de acceso que deriva en las diferentes rutas de los usuarios del sistema.
 Dentro de los usuarios se encuentran:
 1. Administrador: 
@@ -85,7 +85,7 @@ Dentro de los usuarios se encuentran:
 Cada rol tiene acceso limitado a determinadas funcionalidades según sus permisos.
 
 ----
-####Rutas
+#### Rutas
 1. Route - Login:
 - **GET /**: página de login (todos los usuarios).
 - **GET /user-creator**: nuevo usuario creado (solo administrador).
@@ -118,22 +118,24 @@ Cada rol tiene acceso limitado a determinadas funcionalidades según sus permiso
 - **PUT /formularios/:id**: Actualiza un formulario con sus correcciones.
 
 #### Endpoints
-> Importante:
-Al ser una base de datos local, todos los datos enviados y recibidos seran a su propia base de datos
+
+> [!IMPORTANT]  
+> Al ser una base de datos local, todos los datos enviados y recibidos seran a su propia base de datos
 
 ----
-####Estructura del proyecto
+#### Estructura del proyecto
+
    ```
-   ├── middleware  # Lógica de intercambio de información
-   ├── public           # Archivos estáticos (Imagenes, HTML, CSS, JS)
+   ├── middleware  # Lógica de intercambio de información y configuraciones
+   ├── public           # Archivos estáticos (Imagenes, CSS, JS)
    ├── routes           # Definición de rutas para la API
    ├── Schemas       # Definición de esquemas de la base de datos (MongoDB)
-   ├── views            # Plantillas HTML
+   ├── views            # Plantillas EJS
    index.js                 # Archivo principal (conexión al servidor, rutas, base de datos, middleware) 
    ```
 
-
-####Contribuir
+------
+#### Contribuir
 1. Haz un fork del repositorio.
 2. Crea una nueva rama (git checkout -b feature-branch).
 3. Realiza tus cambios.
@@ -141,7 +143,7 @@ Al ser una base de datos local, todos los datos enviados y recibidos seran a su 
 5. Empuja a la rama (git push origin feature-branch).
 6. Abre un Pull Request.
 
-####Enlaces a la documentacion
+#### Enlaces a la documentacion
 Trello / tareas:
 `https://trello.com/b/8FANcdZ7/tablero-bitqualy`
 

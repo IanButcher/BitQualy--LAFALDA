@@ -429,6 +429,9 @@ input[type="search"] {
 .status-button.evaluate {
     border-left: 5px solid #a72828; /* Mantengo este color ya que no está definido en las variables */
 }
+.status-button.evaluate2 {
+    border-left: 5px solid #28a745;
+}
 
 .status-button.evaluate .green-dot {
     background-color: var(--color-verde); /* Cambiado a variable */
@@ -500,10 +503,8 @@ input[type="search"] {
     height: 50px;
 }
 
-.search-section input:focus {
-    width: 450px;
-}
 
+<<<<<<< HEAD
 .search-icon {
     position: absolute;
     right: 15px;
@@ -513,6 +514,8 @@ input[type="search"] {
     pointer-events: none;
 }
  
+=======
+>>>>>>> 63c8bd70bf5c040343d6b3df39ac7f2aa274b9a1
 #nuevaEvaluacionBtn {
     position: relative; /* Elimina position: absolute para que esté dentro del flujo del panel */
     background-color: var(--color-verde); /* Cambiado a variable */
@@ -534,4 +537,16 @@ input[type="search"] {
 #nuevaEvaluacionBtn:active {
     background-color: var(--color-verde-oscuro); /* Cambiado a variable */
     transform: scale(1); /* Reset scale on click */
+<<<<<<< HEAD
 }
+=======
+}
+.status-button .count2 {
+    background-color: #1e7e34;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.85em;
+    font-weight: bold;
+}
+>>>>>>> 63c8bd70bf5c040343d6b3df39ac7f2aa274b9a1

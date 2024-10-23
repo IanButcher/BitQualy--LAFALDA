@@ -117,9 +117,26 @@ select:focus {
     transition: background-color 0.3s;
 }
 
+
+.btn-add{
+    background-color: #06335a;
+    color: white;
+    border: none;
+    border-radius: 20px; /* Aumento del redondeado */
+    padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.btn-save{
+    background-color: #063770;
+    color: white;
+    border: none;
+    border-radius: 20px; /* Aumento del redondeado */
+    padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 .btn-delete,
-.btn-add,
-.btn-save,
 .btn-add:hover {
     background-color: var(--color-azul); /* Cambiado a variable */
     color: var(--color-blanco); /* Cambiado a variable */
@@ -150,10 +167,15 @@ select:focus {
     transition: background-color 0.3s;
 }
 
-.btn-cancel:hover,
-.btn-delete:hover,
+.btn-cancel:hover{
+    background-color: #9b1616;
+}
+
+.btn-delete:hover{
+    background-color: #c01717;
+}
 .btn-add-option:hover {
-    background-color: #357ab8; /* Este color no se ha convertido a variable, puedes agregarlo si lo deseas */
+    background-color: #0c6e32;
 }
 
 /* Estilos de las opciones */

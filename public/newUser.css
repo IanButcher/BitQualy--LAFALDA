@@ -52,11 +52,12 @@ body, html {
 .form-group label {
     font-size: 16px;
     font-weight: bold;
-    margin-bottom: 8px;
+    margin-bottom: 2px;
 }
 
 .form-group input[type="text"],
 .form-group input[type="password"],
+.form-group input[type="email"],
 .form-group select {
     width: 100%;
     padding: 10px;
@@ -67,6 +68,7 @@ body, html {
 }
 
 .form-group input[type="text"]:focus,
+.form-group input[type="email"],
 .form-group input[type="password"]:focus {
     border-color: var(--color-gris-enfoque);
 }
@@ -115,7 +117,7 @@ body, html {
 }
 
 .form-buttons {
-    margin-top: 20px;
+    margin-top: 0px;
     display: flex;
     justify-content: space-between;
     grid-column: 1 / -1;
@@ -186,5 +188,30 @@ a {
 
 .contenedor-evaluaciones a {
     text-decoration: underline;
+}
+
+.error-msg {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 10px;
+    padding: 10px;
+    margin-right: 250px;
+    font-size: 14px;
+    margin-top: 0px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.error-msg i {
+    color: #f44336;
+    font-size: 16px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
