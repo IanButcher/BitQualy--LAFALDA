@@ -18,8 +18,9 @@
         <main class="main-content">
             <header class="header">
                 <div class="user-section">
-                    <img src="/img/user.png" alt="Empleado" class="user-img">
+                    <img  src="/img/user.png" alt="Empleado" class="user-img" width="50" height="50">
                     <div class="user-info">
+                        
                         <h2><%= empleado.nombre %> <%= empleado.apellido %></h2>
                         <p>Empleado</p>
                         <p>Número de legajo: <%= empleado.legajo %></p>
@@ -31,15 +32,6 @@
                     <form id="deleteEmpls" method="POST" action="/empleados/eliminar/<%= empleado._id %>" style="display:none;">
                     </form>
                     
-                    <!-- Button to trigger the form submission -->
-                    <button class="btn-disable" onclick="popupEliminar('<%= empleado._id %>')">Desactivar</button>
-        
-                    <label for="employee-options">Designar como:</label>
-                    <select id="employee-options">
-                        <option value="option1">Empleado regular</option>
-                        <option value="option2">Evaluador</option>
-                        <option value="option3">Intermediario</option>
-                    </select>
                 </div>
 
                     <%- include('../partials/headerU') %>
@@ -69,8 +61,23 @@
 
                 <aside class="right-panel">
                     <div class="filter-section">
-                        <h3>Filtrar por</h3>
+                        <h3>Estado de empleado</h3>
+                        <button class="btn-disable" onclick="popupEliminar('<%= empleado._id %>')">Desactivar</button>
+                        <br>
+                        <br>
+                        <select id="employee-options">
+                            <option value="" disabled selected>Designar como...</option>
+                            <option value="option1">Empleado regular</option>
+                            <option value="option2">Evaluador</option>
+                            <option value="option3">Intermediario</option>
+                            <br>
+                        </select>
+                        <button class="check-btn" title="Confirmar designación">
+                            &#10004;
+                        </button>
+                        <br>
                         <select class="filter-select">
+                            <option value="" disabled selected>Filtrar por...</option>
                             <option value="periodo">Periodo</option>
                             <option value="mastomenos">Legajo mayor a menor</option>
                             <option value="menostomas">Legajo menor a mayor</option>
@@ -83,10 +90,11 @@
                                 <span>Pendientes</span>
                                 <span class="count">0</span>
                             </div>
-                            <div class="status-button evaluate">
-                                <span class="green-dot"></span>
-                                <span>Evaluar</span>
+                            <br>
+                            <div class="evaluation-actions">
+                                <a href="/evaluaciones/new" id="nuevaEvaluacionBtn">Evaluar</a>
                             </div>
+                           
                         </div>
                     </div>
                 </aside>
