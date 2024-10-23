@@ -43,7 +43,17 @@
 </head>
 
 <body>
-    <nav> <%- include('../partials/navbar') %> </nav>
+    <% if (user && user.rol === 'Administrador') { %>
+        <nav><%- include('../partials/navbar') %> </nav>
+    <% } else if (user && user.rol === 'Evaluador') { %>
+        <nav><%- include('../partials/navbarEval') %> </nav>
+    <% } else if (user && user.rol === 'Intermediario') { %>
+        <nav><%- include('../partials/navbarInter') %> </nav>
+    <% } else if (user && user.rol === 'Empleado') { %>
+        <nav><%- include('../partials/navbarUser') %> </nav>
+    <% } else { %>
+        <p>Navbar error</p>
+    <% } %>
 
         <!-- Panel principal -->
         <main class="main-content">
@@ -51,28 +61,50 @@
                     <%- include('../partials/headerU') %>
             </header>
 
-            <div class="filter-panel-container">
-                <section class="evaluation-section">
-                    <h2>Evaluaciones Asignadas</h2>
+        <div class="filter-panel-container">
+            <section class="evaluation-section">
+                <h2>Evaluaciones Asignadas</h2>
 
-                    <!-- Aquí comienza el ciclo de evaluaciones en EJS -->
+                <% if (user && (user.rol === 'Administrador' || user.rol === 'Intermediario' || user.rol === 'Evaluador')) { %>
                     <% evaluaciones.forEach(evaluacion => { %>
-                        <div class="evaluation-card">
-                            <img src="empleado1.jpg"" class="eval-img">
-                            <div class="eval-info">
-                                <p><strong><%= evaluacion.empleado %></strong></p>
-                                <p>Fecha Inicio: xxxx| Fecha Fin: xxxx</p>
-                                <br>
-                                <p class="eval-status"><%= evaluacion.formulario.titulo %></p>
+                        <% if (evaluacion.formulario.tipo === 'autoevaluacion' || evaluacion.completed === false) { %>
+                            <div class="evaluation-card">
+                                <img src="empleado1.jpg" class="eval-img">
+                                <div class="eval-info">
+                                    <p><strong><%= evaluacion.empleado ? evaluacion.empleado.nombre : 'Empleado no asignado' %></strong></p>
+                                    <p>Fecha Inicio: <%= evaluacion.fechaInicio ? evaluacion.fechaInicio.toDateString() : 'N/A' %> | Fecha Fin: <%= evaluacion.deadline ? evaluacion.deadline.toDateString() : 'Sin fecha' %></p>
+                                    <br>
+                                    <p class="eval-status"><%= evaluacion.formulario ? evaluacion.formulario.titulo : 'Formulario no asignado' %></p>
+                                </div>
+                                <div class="eval-summary">
+                                    <a href="/evaluaciones/preview/<%= evaluacion._id %>" class="btn">Ver Evaluación</a>
+                                </div>
                             </div>
-                            <div class="eval-summary">
-                                <a href="/evaluaciones/preview/<%= evaluacion._id %>" class="btn">Ver Evaluación</a>
-                            </div>
-                        </div>
+                        <% } %>
                     <% }) %>
+                <% } else if (user && (user.rol == 'Empleado')) { %>
+                    <% evaluaciones.forEach(evaluacion => { %>
+                        <% if (evaluacion.formulario.tipo === 'autoevaluacion'&& String(evaluacion.empleado._id) === String(user._id) && evaluacion.completed != true) { %>
+                            <div class="evaluation-card">
+                                <img src="empleado1.jpg" class="eval-img">
+                                <div class="eval-info">
+                                    <p><strong><%= evaluacion.empleado ? evaluacion.empleado.nombre : 'Empleado no asignado' %></strong></p>
+                                    <p>Fecha Inicio: <%= evaluacion.fechaInicio ? evaluacion.fechaInicio.toDateString() : 'N/A' %> | Fecha Fin: <%= evaluacion.deadline ? evaluacion.deadline.toDateString() : 'Sin fecha' %></p>
+                                    <br>
+                                    <p class="eval-status"><%= evaluacion.formulario ? evaluacion.formulario.titulo : 'Formulario no asignado' %></p>
+                                </div>
+                                <div class="eval-summary">
+                                    <a href="/evaluaciones/my-autoevaluacion/<%= evaluacion._id %>" class="btn">Responder Evaluación</a>
+                                </div>
+                            </div>
+                        <% } %>    
+                    <% }) %>
+                <% } %>
 
-                </section>
+            </section>
 
+            <!-- Solo mostrar cuando el usuario tenga el rol apropiado -->
+            <% if (user && (user.rol === 'Administrador' || user.rol === 'Intermediario' || user.rol === 'Evaluador')) { %>    
                 <aside class="right-panel">
                     <div class="filter-section">
                         <h3>Filtrar por</h3>
@@ -104,62 +136,78 @@
                             </div>
                         </div>
                     </div>
-                   
                     <div class="evaluation-actions">
                         <a href="/evaluaciones/new" id="nuevaEvaluacionBtn">Nueva Evaluación</a>
                     </div>
-
                 </aside>
-                
-            </div>
+            <% } %>
+        </div>
 
-            <section class="evaluation-finished">
-                <h2>Evaluaciones Finalizadas</h2>
-            
-                <!-- Aquí continúa el ciclo de evaluaciones -->
+        <section class="evaluation-finished">
+            <h2>Evaluaciones Finalizadas</h2>
+
+            <% if (user && (user.rol === 'Administrador' || user.rol === 'Intermediario' || user.rol === 'Evaluador')) { %>
                 <% evaluaciones.forEach(evaluacion => { %>
-                    <div class="evaluation-card">
-                        <img src="empleado1.jpg" class="eval-img">
-                        <div class="eval-info">
-                            <p><strong><%= evaluacion.empleado.nombre %></strong></p>
-                            <p>Fecha Inicio: xxxx | Fecha Fin: xxxx </p>
-                            <br>
-                            <p class="eval-status"><%= evaluacion.formulario.titulo %></p>
-                        </div>
-                        <div class="eval-summary">
-                            <p><%= evaluacion.formulario.titulo %></p>
-                            <div class="eval-icons">
-                                <i class="fas fa-download download-icon"></i>
-                                <i class="fas fa-filter filter-icon"></i>
+                    <% if (evaluacion.formulario.tipo === 'evaluacion' || evaluacion.completed === true) { %>
+                        <div class="evaluation-card">
+                            <img src="empleado1.jpg" class="eval-img">
+                            <div class="eval-info">
+                                <% if (evaluacion.empleado) { %>
+                                    <p><strong><%= evaluacion.empleado.nombre %> <%= evaluacion.empleado.apellido %></strong></p>
+                                <% } else { %>
+                                    <p><strong>Empleado no asignado</strong></p>
+                                <% } %>
+                                <p>Fecha Fin: <%= evaluacion.deadline %></p>
+                                <br>
+                                <p class="eval-status"><%= evaluacion.formulario.titulo %></p>
                             </div>
+                            <div class="eval-summary">
+                                <p><%= evaluacion.formulario.titulo %></p>
+                                <div class="eval-icons">
+                                    <i class="fas fa-download download-icon"></i>
+                                    <i class="fas fa-filter filter-icon"></i>
+                                </div>
+                            </div>
+                            <a href="/evaluaciones/preview/<%= evaluacion._id %>" class="btn">Ver Evaluaciones</a>
                         </div>
-                        <!-- Corrected link to show "Ver Evaluación" and point to the preview path -->
-                        <a href="/evaluaciones/preview/<%= evaluacion._id %>" class="btn">Ver Evaluaciones</a>
-                    </div>
+                    <% } %>
                 <% }) %>
-            
-            </section>
-            <!-- Botón para crear una nueva evaluación -->
-            
+            <% } %>
 
-        </main>
-    </div>
+            <!-- Evaluaciones vista empleado -->
+            <% if (user && (user.rol === 'Empleado')) { %>
+                <% evaluaciones.forEach(evaluacion => { %>
+                    <% if (evaluacion.formulario.tipo === 'autoevaluacion'&& String(evaluacion.empleado._id) === String(user._id) && evaluacion.completed == true) { %>
+                        <div class="evaluation-card">
+                            <img src="empleado1.jpg" class="eval-img">
+                            <div class="eval-info">
+                                <% if (evaluacion.empleado) { %>
+                                    <p><strong><%= evaluacion.empleado.nombre %> <%= evaluacion.empleado.apellido %></strong></p>
+                                <% } else { %>
+                                    <p><strong>Empleado no asignado</strong></p>
+                                <% } %>
+                                <p>Fecha Fin: <%= evaluacion.deadline %></p>
+                                <br>
+                                <p class="eval-status"><%= evaluacion.formulario.titulo %></p>
+                            </div>
+                            <div class="eval-summary">
+                                <p><%= evaluacion.formulario.titulo %></p>
+                                <div class="eval-icons">
+                                    <i class="fas fa-download download-icon"></i>
+                                    <i class="fas fa-filter filter-icon"></i>
+                                </div>
+                            </div>
+                            <a href="/evaluaciones/preview/<%= evaluacion._id %>" class="btn">Ver Evaluaciones</a>
+                        </div>
+                    <% } %>
+                <% }) %>
+            <% } %>
+        </section>
+    </main>
 
     <script>
-        const dropdownBtn = document.querySelector('.dropdown-btn');
-        const dropdownContainer = document.querySelector('.dropdown-container');
-
-        dropdownBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            dropdownContainer.classList.toggle('active');
-        });
-
-        // Botón para crear nueva evaluación
-        //document.getElementById('nuevaEvaluacionBtn').addEventListener('click', function() {
-          //  window.location.href = '/evaluaciones/new';
-        //});
+        
     </script>
 </body>
 
 </html>
-

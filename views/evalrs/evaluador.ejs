@@ -8,17 +8,26 @@
     <link rel="stylesheet" href="/empleado.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" type="image/png" href="https://ugc.production.linktr.ee/mj5IciCyRk2puUukygYa_kmwAn8AE84X4N3S5?io=true&size=avatar-v3_0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Incluir SweetAlert2 -->
 
 </head>
 
 <body>
-    <nav> <%- include('../partials/navbar') %> </nav>
+    <% if (user && user.rol === 'Administrador') { %>
+        <nav><%- include('../partials/navbar') %> </nav>
+    <% } else if (user && user.rol === 'Evaluador') { %>
+        <nav><%- include('../partials/navbarEval') %> </nav>
+    <% } else if (user && user.rol === 'Intermediario') { %>
+        <nav><%- include('../partials/navbarInter') %> </nav>
+    <% } else { %>
+        <p>Navbar error</p>
+    <% } %> 
 
         <!-- Panel principal -->
         <main class="main-content">
             <header class="header">
                 <div class="user-section">
-                    <img src="" alt="Empleado" class="user-img">
+                    <img src="<%= evaluador.imagePath ? '/' + evaluador.imagePath : '/img/user.png' %>" alt="Empleado" class="user-img">
                     <div class="user-info">
                         <h2><%= evaluador.nombre %>  <%= evaluador.apellido %></h2>
                         <p>Evaluador</p>
@@ -29,7 +38,17 @@
                 <div class="combobox-container">
                     <form id="deleteEvalrs" method="POST" action="/evaluadores/eliminar/<%= evaluador._id %>" style="display:none;">
                     </form>
-                
+                    
+                    <% if (user && user.rol === 'Administrador') { %>
+                        <button class="btn-disable" onclick="popupEliminar('<%= evaluador._id %>')">Desactivar</button>
+                    <% } %>
+                    
+                    <label for="employee-options">Designar como:</label>
+                    <select id="employee-options">
+                        <option value="option1">Empleado regular</option>
+                        <option value="option2">Evaluador</option>
+                        <option value="option3">Intermediario</option>
+                    </select>
                 </div>
                 
                 <!--<div class="header-options">
@@ -123,15 +142,30 @@
 
     <script>
         function popupEliminar(empleadoId) {
-
-            const form = document.getElementById('deleteEvalrs')
-
-            if (form && confirm('estas seguro')){
-                form.action = '/evaluadores/eliminar/' + empleadoId
-                form.submit()
-            }else{}
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¡No podrás revertir esta acción!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, Desactivar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const form = document.getElementById('deleteEvalrs');
+                    if (form){
+                        form.action = '/evaluadores/eliminar/' + empleadoId
+                        form.submit()
+                    }else{
+                        console.error('Delete form not found!');
+                    }
+                }
+            });
         }
     </script>
+
+   
 </body>
 
 </html>

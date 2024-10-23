@@ -11,9 +11,15 @@
 </head>
 
 <body>
-    <nav>
-        <%- include('../partials/navbar') %>
-    </nav>
+    <% if (user && user.rol === 'Administrador') { %>
+        <nav><%- include('../partials/navbar') %> </nav>
+    <% } else if (user && user.rol === 'Evaluador') { %>
+        <nav><%- include('../partials/navbarEval') %> </nav>
+    <% } else if (user && user.rol === 'Intermediario') { %>
+        <nav><%- include('../partials/navbarInter') %> </nav>
+    <% } else { %>
+        <p>Navbar error</p>
+    <% } %> 
 
     <!-- Panel principal -->
     <main class="main-content">
@@ -21,12 +27,13 @@
             <%- include('../partials/header') %>
         </header>
         
+        
         <!-- Lista de empleados -->
         <section class="employee-list">
             <% for (let empleado of empleados) { %>
                 <div class="employee">
                     <a href="/empleados/<%= empleado._id %>">
-                        <img src="empleado1.jpg" alt="Empleado">
+                        <img src="<%= empleado.imagePath ? '/' + empleado.imagePath : '/img/user.png' %>" alt="Empleado">
                         <div class="employee-info">
                             <h3><%= empleado.nombre %> <%= empleado.apellido %></h3>
                             <p>Rol: <%= empleado.rol %></p>

@@ -34,6 +34,11 @@ const formularioSchema = new mongoose.Schema({
     isActive: {
         type: Boolean,
         default: true
+    },
+    tipo: {
+        type: String,
+        enum: ['evaluacion', 'autoevaluacion'],
+        required: true,
     }
 })
 

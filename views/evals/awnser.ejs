@@ -7,14 +7,25 @@
     <link rel="stylesheet" href="/awnser.css">
 </head>
 <body>
-    <nav> <%- include('../partials/navbar') %> </nav>
+  <% if (user && user.rol === 'Administrador') { %>
+    <nav><%- include('../partials/navbar') %> </nav>
+  <% } else if (user && user.rol === 'Evaluador') { %>
+      <nav><%- include('../partials/navbarEval') %> </nav>
+  <% } else if (user && user.rol === 'Intermediario') { %>
+      <nav><%- include('../partials/navbarInter') %> </nav>
+  <% } else if (user && user.rol === 'Empleado') { %>
+    <nav><%- include('../partials/navbarUser') %> </nav>
+  <% } else { %>
+      <p>Navbar error</p>
+  <% } %> 
     <div class="container">
         <h2 class="pepe">Formulario: <%= formulario.titulo %></h2>
 
         <!-- Formulario para responder preguntas -->
         <form method="POST" action="/evaluaciones/save-evaluacion">
             <input type="hidden" name="formulario" value="<%= formulario._id %>">
-            <input type="hidden" name="empleado" value="<%= empleado %>">
+            <input type="hidden" name="empleado" value="<%= evaluacion.empleado._id %>">
+            <input type="hidden" name="tipo" value="<%= evaluacion.formulario.tipo %>">
         
             <!-- Questions and responses -->
             <div id="preguntasContainer">
@@ -47,7 +58,7 @@
             </div>
         
             <!-- Show the selected employee -->
-            <h4>Empleado: <%= empleado %></h4>
+            <h4>Empleado: <%= empleado.nombre %> <%= empleado.apellido %></h4>
         
             <!-- Submit the form -->
             <button type="submit">Guardar Evaluación</button>

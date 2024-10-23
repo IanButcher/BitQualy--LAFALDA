@@ -6,11 +6,11 @@ const Formulario = require('../Schemas/formularioSchema')
 const mongoose = require('mongoose')
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-//const { initializePassportSession } = require('./middleware/passportConfig')
-//const  roleAuthorization = require('../middleware/roleAuth')
+const  roleAuthorization = require('../middleware/roleAuth')
 
 // GET route --> Display Formularios
-router.get('/formularios', async (req, res) => {
+router.get('/formularios', roleAuthorization(['Administrador']), async (req, res) => {
+
     try {
         const formularios = await Formulario.find({ isActive: true })
         res.render('forms/formularios', { formularios: formularios })
@@ -22,12 +22,12 @@ router.get('/formularios', async (req, res) => {
 })
 
 // GET route --> Mostrar creador de formularios
-router.get('/formularios/new', (req, res) => {
+router.get('/formularios/new', roleAuthorization(['Administrador']), (req, res) => {
     res.render('forms/new') 
 })
 
 // Get route --> Mostrar updater de formulario
-router.get('/formularios/preview/:id', async (req, res)=>{
+router.get('/formularios/preview/:id', roleAuthorization(['Administrador']), async (req, res)=>{
     const { id } = req.params
     const formulario = await Formulario.findById(id)
     if (formulario) {
@@ -38,10 +38,10 @@ router.get('/formularios/preview/:id', async (req, res)=>{
 })
 
 // POST route --> save/insert Formulario
-router.post('/formularios/save-form', async (req, res) => {
+router.post('/formularios/save-form', roleAuthorization(['Administrador']), async (req, res) => {
     try {
         // Extraer toda la informacion del ejs
-        const { 'form-title': titulo, ...formData } = req.body
+        const { 'form-title': titulo, 'form-type': tipo, ...formData } = req.body
 
         // Procesar preguntas
         const questions = []
@@ -72,7 +72,8 @@ router.post('/formularios/save-form', async (req, res) => {
 
         // Crear instancia Formulario 
         const newFormulario = new Formulario({
-            titulo,  
+            titulo,
+            tipo,  
             questions  
         });
 
@@ -88,7 +89,7 @@ router.post('/formularios/save-form', async (req, res) => {
 })
 
 // PUT route --> Delete Form
-router.post('/formularios/eliminar/:id', async (req, res) => {
+router.post('/formularios/eliminar/:id', roleAuthorization(['Administrador']), async (req, res) => {
     try {
         const formularioId = req.params.id
         console.log('Formulario ID:', formularioId) 
@@ -107,25 +108,25 @@ router.post('/formularios/eliminar/:id', async (req, res) => {
 })
 
 // PUT route --> Update Formulario
-router.put('/formularios/:id', async (req, res) => {
+router.put('/formularios/:id', roleAuthorization(['Administrador']), async (req, res) => {
     try {
         const { id } = req.params;
-        const { 'form-title': titulo, 'deleted-questions': deletedQuestionIds, ...formData } = req.body;
+        const { 'form-title': titulo, 'form-type': tipo, 'deleted-questions': deletedQuestionIds, ...formData } = req.body
 
         // Find the Formulario
-        const formulario = await Formulario.findById(id);
+        const formulario = await Formulario.findById(id)
 
         if (!formulario) {
-            return res.status(404).send('Formulario not found');
+            return res.status(404).send('Formulario not found')
         }
 
         // Start with the existing questions
-        let updatedQuestions = [...formulario.questions];
+        let updatedQuestions = [...formulario.questions]
 
         // Process the questions from the form
         let questionIndex = 1;
         while (formData[`question${questionIndex}`]) {
-            const questionId = formData[`question${questionIndex}_id`]; // Existing question ID (if any)
+            const questionId = formData[`question${questionIndex}_id`] // Existing question ID (if any)
 
             const question = {
                 titulo: formData[`question${questionIndex}`],
@@ -137,36 +138,37 @@ router.put('/formularios/:id', async (req, res) => {
 
             // Handle multiple-choice or checkbox options
             if (question.tipo === 'multiple' || question.tipo === 'checkbox') {
-                let optionIndex = 1;
+                let optionIndex = 1
                 while (formData[`option${questionIndex}_${optionIndex}`]) {
-                    question.options.push(formData[`option${questionIndex}_${optionIndex}`]);
-                    optionIndex++;
+                    question.options.push(formData[`option${questionIndex}_${optionIndex}`])
+                    optionIndex++
                 }
             }
 
             // If the question has an ID, update the existing question
             if (questionId) {
-                const existingQuestionIndex = updatedQuestions.findIndex(q => q._id.toString() === questionId);
+                const existingQuestionIndex = updatedQuestions.findIndex(q => q._id.toString() === questionId)
                 if (existingQuestionIndex !== -1) {
-                    updatedQuestions[existingQuestionIndex] = { ...updatedQuestions[existingQuestionIndex], ...question };
+                    updatedQuestions[existingQuestionIndex] = { ...updatedQuestions[existingQuestionIndex], ...question }
                 }
             } else {
                 // Otherwise, it's a new question
-                updatedQuestions.push(question);
+                updatedQuestions.push(question)
             }
 
-            questionIndex++;
+            questionIndex++
         }
 
         // Handle deletion of questions
         if (deletedQuestionIds) {
-            const idsToDelete = deletedQuestionIds.split(',');  // Convert string into array of IDs
-            updatedQuestions = updatedQuestions.filter(q => !idsToDelete.includes(q._id.toString()));
+            const idsToDelete = deletedQuestionIds.split(',')  // Convert string into array of IDs
+            updatedQuestions = updatedQuestions.filter(q => !idsToDelete.includes(q._id.toString()))
         }
 
         // Update the Formulario with the new title and questions
-        formulario.titulo = titulo;
-        formulario.questions = updatedQuestions;
+        formulario.titulo = titulo
+        formulario.questions = updatedQuestions
+        formulario.tipo = tipo
 
         // Save the updated Formulario
         await formulario.save();
