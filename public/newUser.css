@@ -46,6 +46,7 @@ body, html {
 
 .form-group input[type="text"],
 .form-group input[type="password"],
+.form-group input[type="email"],
 .form-group select {
     width: 100%;
     padding: 10px;
@@ -56,6 +57,7 @@ body, html {
 }
 
 .form-group input[type="text"]:focus,
+.form-group input[type="email"],
 .form-group input[type="password"]:focus {
     border-color: #888;
 }

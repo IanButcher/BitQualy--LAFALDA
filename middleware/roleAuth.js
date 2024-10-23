@@ -8,11 +8,11 @@ const bcryptjs = require('bcryptjs')
 function roleAuthorization(roles) {
     return function (req, res, next) {
         if (!req.isAuthenticated()) { // Asegurarse que este logueado
-            return res.status(401).json({ message: 'Unauthorized' })
+            return res.redirect('/')
         }
   
         if (!roles.includes(req.user.rol)) { // Revisar si el rol lo permite
-            return res.status(403).json({ message: 'Forbidden: Insufficient permissions' })
+            return res.redirect('/home')
         }
   
         next() 

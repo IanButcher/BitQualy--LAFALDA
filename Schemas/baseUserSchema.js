@@ -29,6 +29,10 @@ const baseUserSchema = new mongoose.Schema({
     minlength: 6, 
     maxlength: 128 // Maximo de 128 para el encriptado
   },
+  imagePath: {
+    type: String,
+    required: false
+  },
   estaActivo: { 
     type: Boolean, 
     default: true 
