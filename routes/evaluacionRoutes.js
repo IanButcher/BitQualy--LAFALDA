@@ -37,7 +37,7 @@ router.get('/evaluaciones/new', roleAuthorization(['Administrador', 'Evaluador']
             res.status(500).send('Error interno del servidor')
         }
     } else {
-        res.redirect('/');
+        res.redirect('/')
     }
 })
 
@@ -49,7 +49,6 @@ router.get('/evaluaciones/buscar', roleAuthorization(['Administrador', 'Evaluado
             nombre: { $regex: `^${nombre}`, $options: 'i' }, // Search for names that start with the input
             estaActivo: true
         });
-
         // Render the search results in the 'empleados' view (assuming you use the same view)
         res.render('evals/evaluaciones', { evaluacion, user: req.user })
     } catch (error) {

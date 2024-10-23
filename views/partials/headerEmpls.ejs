@@ -1,5 +1,6 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,29 +8,28 @@
     <link rel="stylesheet" href="/header.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body>
     <header class="header">
         <!-- Nueva Sección de Búsqueda -->
-        <form action="/empleados/buscar" method="GET">
-            <input type="text" id="searchHandler" name="nombre" placeholder="Buscar empleado por nombre"/>
-            <button type="submit">Buscar</button>
-
+        <form class="search-section" action="/empleados/buscar" method="GET">
+            <input type="text" id="searchHandler" name="nombre" placeholder="Buscar empleado por nombre" />
         </form>
 
 
-        <div id="empleadoResultados"></div>
-        
-        <div class="header-options">
-            <i class="fas fa-bell"></i>
-            <img src="https://infonegocios.info/content/cards/82843_Carina%20Campo%20-%20Bitsion.png" alt="Carina Campo" class="profile-img">
+        <div id="empleadoResultados "></div>
+
+        <div class="header-options ">
+            <i class="fas fa-bell "></i>
+            <img src="https://infonegocios.info/content/cards/82843_Carina%20Campo%20-%20Bitsion.png " alt="Carina Campo " class="profile-img ">
         </div>
 
-        <div class="notification-popup" id="notificationPopup">
-            <div class="popup-header">
+        <div class="notification-popup " id="notificationPopup ">
+            <div class="popup-header ">
                 <h3>Notificaciones</h3>
-                <i class="fas fa-times close-popup"></i>
+                <i class="fas fa-times close-popup "></i>
             </div>
-                <!-- <div class="popup-body">
+            <!-- <div class="popup-body ">
                     <% // if (notificaciones.length != 0) { %>
                     <% // for (notificacion of notificaciones) {%>
                         <p>No tienes nuevas notificaciones</p>
@@ -37,13 +37,12 @@
                     <% // } %>
                 <% // } %> 
             </div> -->
-        </div> 
+        </div>
     </header>
 
     <script>
-
         // JavaScript para el popup de notificaciones
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded ", function() {
                 // Seleccionamos los elementos necesarios
                 const bellIcon = document.querySelector('.fa-bell');
                 const notificationPopup = document.getElementById('notificationPopup');
@@ -66,12 +65,12 @@
                     }
                 })
             })
-
+            // no se por que pero no esta funcionando la actualizacion a tiempo real 
         function debounce(func, delay) {
             let timeoutId;
             return function(...args) {
                 if (timeoutId) {
-                    clearTimeout(timeoutId)  // Cancela la llamada anterior si el usuario sigue escribiendo
+                    clearTimeout(timeoutId) // Cancela la llamada anterior si el usuario sigue escribiendo
                 }
                 timeoutId = setTimeout(() => {
                     func.apply(this, args)
@@ -79,41 +78,49 @@
             }
         }
 
-        const searchEmpleado = document.getElementById('searchEmpleado') 
-        const searchHandler = debounce(function () {
-            const searchValue = this.value
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchEmpleado');
 
-            if (searchValue.length > 1) {
-                fetch(`/empleados/buscar?nombre=${encodeURIComponent(searchValue)}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        const empleados = data.empleados
-                        const resultadosDiv = document.getElementById('empleadoResultados')
-                        resultadosDiv.innerHTML = ''  // Limpiar los resultados anteriores
+            // Evento keydown para capturar cuando el usuario presiona Enter
+            searchInput.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
 
-                        if (empleados.length === 0) {
-                            resultadosDiv.innerHTML = '<p>No se encontraron empleados.</p>'
-                        } else {
-                            empleados.forEach(empleado => {
-                                const empleadoItem = document.createElement('p')
-                                empleadoItem.textContent = empleado.nombre
-                                resultadosDiv.appendChild(empleadoItem)
+                    const searchEmpleado = searchInput.value
+
+                    if (searchEmpleado.length > 0) {
+                        const url = `/empleados/buscar?valor=${encodeURIComponent(searchEmpleado)}`
+                        console.log(`URL generada: ${url}`);
+
+                        // Realizar la solicitud fetch al servidor
+                        fetch(url)
+                            .then(response => response.json())
+                            .then(data => {
+                                const empleados = data.empleados;
+                                const resultadosDiv = document.getElementById('empleadoResultados')
+                                resultadosDiv.innerHTML = ''
+
+                                if (empleados.length === 0) {
+                                    resultadosDiv.innerHTML = '<p>No se encontraron empleados.</p>'
+                                } else {
+                                    empleados.forEach(empleado => {
+                                        const empleadoItem = document.createElement('p')
+                                        empleadoItem.textContent = `${empleado.nombre} ${empleado.apellido} (Legajo: ${empleado.legajo})`
+                                        resultadosDiv.appendChild(empleadoItem)
+                                    })
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error al realizar la búsqueda:', error)
                             });
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error al realizar la búsqueda:', error)
-                    });
-            } else {
-                document.getElementById('empleadoResultados').innerHTML = '' // Limpiar resultados si no hay input
-            }
-        }, 100) // Ajusta el tiempo de debounce (en milisegundos)
-    
-
-        // Asigna el debounce a la entrada del campo de búsqueda
-        searchEmpleado.addEventListener('input', searchHandler);
+                    } else {
+                        alert('Por favor ingrese un valor en el campo de búsqueda')
+                    }
+                }
+            })
+        })
     </script>
 
 </body>
-</html>
 
+</html>

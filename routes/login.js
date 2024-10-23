@@ -21,15 +21,14 @@ router.get('/user-creator', roleAuthorization(['Administrador']), (req, res) => 
 })
 
 // POST route --> Create User
-router.post('/save-new-user', roleAuthorization(['Administrador']), async (req, res) => {
+router.post('/save-new-user', roleAuthorization(['Administrador']), async(req, res) => {
     const { nombre, apellido, legajo, rol, password } = req.body;
     try {
         // Check legajo
         const legajoChecker = await baseUserSchema.findOne({ legajo })
-        if (legajoChecker){
+        if (legajoChecker) {
             res.send('El legajo ya esta en uso, clickee en la flechita para volver atras y recuperar los datos ingresados')
-        }
-        else {
+        } else {
             // Basado en el rol
             let newUser;
             switch (rol) {
@@ -48,7 +47,7 @@ router.post('/save-new-user', roleAuthorization(['Administrador']), async (req, 
                 default:
                     return res.status(400).json({ message: 'Invalid role selected' })
             }
-            
+
             // Save usuario
             await newUser.save()
             console.log(newUser)
@@ -87,5 +86,3 @@ app.post('/login', (req, res, next) => {
 
 
 module.exports = router;
-
-
