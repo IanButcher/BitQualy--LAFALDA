@@ -8,6 +8,7 @@ const baseUserSchema = require('../Schemas/baseUserSchema')
 const Notification = require('../Schemas/notificationSchema')
 const mongoose = require('mongoose')
 const  roleAuthorization = require('../middleware/roleAuth')
+const nodemailer = require('nodemailer')
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
@@ -45,7 +46,7 @@ router.get('/evaluaciones/new', roleAuthorization(['Administrador', 'Evaluador']
             res.status(500).send('Error interno del servidor')
         }
     } else {
-        res.redirect('/');
+        res.redirect('/')
     } 
 })
 
@@ -53,6 +54,8 @@ router.get('/evaluaciones/new', roleAuthorization(['Administrador', 'Evaluador']
 router.post('/evaluaciones/assign-autoevaluacion', roleAuthorization(['Administrador', 'Evaluador']), async (req, res) => {
     try {
         const { empleadoId, formularioId, deadline } = req.body
+        const empleado = await baseUserSchema.findById(empleadoId)
+        console.log(empleado)
 
         const newEvaluacion = new Evaluacion({
             formulario: formularioId,
@@ -67,9 +70,12 @@ router.post('/evaluaciones/assign-autoevaluacion', roleAuthorization(['Administr
         // Notificaciones
         const notification = new Notification({
             message: `Se te ha asignado una nueva autoevaluación.`,
-            user: empleadoId
+            user: empleado
         })
         await notification.save()
+
+        // Notify (by email)
+        
 
         res.status(200).send('Autoevaluacion asignada correctamente')
     } catch (error) {
@@ -121,12 +127,14 @@ router.get('/evaluaciones/answer/:id', roleAuthorization(['Administrador', 'Eval
             const { empleado } = req.query
             console.log(`Formulario ID: ${id}, Empleado: ${empleado}`)
             const formulario = await Formulario.findById(id).populate('questions')
+            const empleadoObject = await baseUserSchema.findById(empleado)
+
             if (!formulario || formulario.isActive != true) {
                 return res.status(404).send('Formulario no encontrado')
             }
     
             // Render a new page with the preguntas and the selected empleado
-            res.render('evals/awnserNormal', { formulario, empleado, user: req.user })
+            res.render('evals/awnserNormal', { formulario, empleado: empleadoObject, user: req.user })
         } catch (error) {
             console.error('Error fetching formulario:', error)
             res.redirect('/evaluaciones/new')

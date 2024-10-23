@@ -116,7 +116,7 @@
                 <% evaluaciones.forEach(evaluacion => { %>
                     <% if (evaluacion.formulario.tipo === 'evaluacion' || evaluacion.completed === true) { %>
                         <div class="evaluation-card">
-                            <img src="<%= evaluacion.empleado.imagePath ? '/' + empleado.imagePath : '/img/user.png' %>" class="eval-img">
+                            <img src="<%= evaluacion.empleado && evaluacion.empleado.imagePath ? '/' + evaluacion.empleado.imagePath : '/img/user.png' %>" class="eval-img">
                             <div class="eval-info">
                                 <% if (evaluacion.empleado) { %>
                                     <p><strong><%= evaluacion.empleado.nombre %> <%= evaluacion.empleado.apellido %></strong></p>

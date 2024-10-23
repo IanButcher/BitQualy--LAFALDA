@@ -44,17 +44,20 @@
                     <div class="respuesta-item">
                         <h3><%= pregunta.titulo %></h3>
                         <p><%= pregunta.descripcion %></p>
-        
+            
                         <div>
                             <%
-                            // Try splitting the answer string based on "Respuesta: " or "Seleccionado(s): "
-                            const rawRespuesta = evaluacion.respuestas[index]; 
-                            
-                            // Split based on "Respuesta: " and "Seleccionado(s): " and get the last part
-                            const respuesta = rawRespuesta.split(/Respuesta: |Seleccionado\(s\): /).pop().trim();
-
+                            // Get the answer or provide a default message if undefined
+                            const rawRespuesta = evaluacion.respuestas && evaluacion.respuestas[index] ? evaluacion.respuestas[index] : 'Sin respuesta';
+            
+                            // Check if rawRespuesta can be split or just use the default response
+                            let respuesta = rawRespuesta;
+                            if (typeof rawRespuesta === 'string') {
+                                respuesta = rawRespuesta.split(/Respuesta: |Seleccionado\(s\): /).pop().trim();
+                            }
+            
                             %>
-        
+            
                             <% if (pregunta.tipo === 'texto') { %>
                                 <!-- Text question -->
                                 <input class="inputs-texto" type="text" value="<%= respuesta %>" disabled>
@@ -77,7 +80,7 @@
                     </div>
                 <% }) %>
             </div>
-        </div>
+            
                 
         <a class="button" href="/evaluaciones">Volver a las evaluaciones</a>
 
