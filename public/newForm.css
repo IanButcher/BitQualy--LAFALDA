@@ -85,7 +85,6 @@ select:focus {
 }
 
 /* Estilos de botones */
-/* Estilos de botones */
 .modify-buttons {
     display: flex;
     justify-content: flex-start;
@@ -109,11 +108,9 @@ select:focus {
     margin-right: 0; /* Elimina el margen del último botón */
 }
 
-
 .btn-download {
     background-color: #2a36d4;
     color: white;
-
 }
 
 .btn-cancel {
@@ -172,11 +169,6 @@ select:focus {
 .btn-add:hover {
     background-color: #14aa00;
     color: white;
-    border: none;
-    border-radius: 20px; /* Aumento del redondeado */
-    padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
-    cursor: pointer;
-    transition: background-color 0.3s;
 }
 
 .btn-save:hover {
@@ -187,8 +179,6 @@ select:focus {
     background-color: #4a90e2;
 }
 
-.btn-cancel:hover,
-.btn-delete:hover,
 .btn-add-option:hover {
     background-color: #357ab8;
 }
@@ -199,19 +189,10 @@ select:focus {
 
 /* Estilos de los íconos */
 .btn-icon {
-    width: 25px; /* Ajusta el tamaño */
-    height: 25px; /* Ajusta el tamaño */
-    margin-right: 7px; /* Espacio entre el ícono y el texto */
-
-}
-
-/* Estilos de los íconos */
-.btn-icon {
-    width: 26px; /* Ajusta el tamaño a lo que necesites */
-    height: 26px; /* Ajusta el tamaño a lo que necesites */
+    width: 26px; /* Ajusta el tamaño */
+    height: 26px; /* Ajusta el tamaño */
     margin-right: 5px; /* Espacio entre el ícono y el texto */
 }
-
 
 /* Estilos de las opciones */
 .options-group {
