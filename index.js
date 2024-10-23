@@ -1,5 +1,6 @@
 // Modulos
 const express = require('express')
+const router = express.Router()
 const path = require('path')
 const mongoose = require('mongoose')
 const { initializePassportSession, passport } = require('./middleware/passportConfig')
@@ -38,6 +39,7 @@ const loginRoutes = require('./routes/login')
 const empleadoRoutes = require('./routes/empleadoRoutes')
 const evaluadorRoutes = require('./routes/evaluadorRoutes')
 const intermediarioRoutes = require('./routes/intermediarioRoutes')
+const notificationRoutes = require('./routes/notificacionRoutes')
 
 // Login route con passport
 app.post('/login', passport.authenticate('local', {
@@ -91,6 +93,8 @@ app.use('/', loginRoutes)
 app.use('/', empleadoRoutes)
 app.use('/', evaluadorRoutes)
 app.use('/', intermediarioRoutes)
+app.use('/', notificationRoutes)
+
 
 // Start the server
 app.listen(puerto, () => {

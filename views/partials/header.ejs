@@ -13,6 +13,7 @@
         <div class="search-section">
             <input type="text" placeholder="Buscar ...">
             <i class="fas fa-search search-icon"></i>
+            <span class="notification-count"></span>
         </div>
         
         <div class="header-options">
@@ -61,6 +62,20 @@
                     }
                 });
             });
+
+    </script>
+    <script>
+        // Connect to the SSE stream
+        const eventSource = new EventSource('/notifications/sse');
+    
+        eventSource.onmessage = function(event) {
+            const notification = JSON.parse(event.data)
+            const popupBody = document.getElementById('popupBody')
+    
+            const notificationItem = document.createElement('p')
+            notificationItem.textContent = notification.message
+            popupBody.appendChild(notificationItem)
+        }
     </script>
 
 </body>
