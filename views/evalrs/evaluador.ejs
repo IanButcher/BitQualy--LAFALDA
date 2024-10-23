@@ -27,7 +27,7 @@
         <main class="main-content">
             <header class="header">
                 <div class="user-section">
-                    <img src="/img/user.png" alt="Empleado" class="user-img">
+                    <img src="<%= evaluador.imagePath ? '/' + evaluador.imagePath : '/img/user.png' %>" alt="Empleado" class="user-img">
                     <div class="user-info">
                         <h2><%= evaluador.nombre %>  <%= evaluador.apellido %></h2>
                         <p>Evaluador</p>

@@ -27,7 +27,10 @@ Para la ejecución del proyecto se necesitarán los siguientes software y herram
 
 --------
 #### Instalación
-Para poder acceder al desarrollo es necesario clonar el repositorio del proyecto que se encuentra en la plataforma de GITHUB.
+
+> [!NOTE]  
+> Para poder acceder al desarrollo es necesario clonar el repositorio del proyecto que se encuentra en la plataforma de GITHUB.
+
 
 1- Clonar el repositorio:
 
@@ -115,18 +118,19 @@ Cada rol tiene acceso limitado a determinadas funcionalidades según sus permiso
 - **PUT /formularios/:id**: Actualiza un formulario con sus correcciones.
 
 #### Endpoints
-> Importante:
-Al ser una base de datos local, todos los datos enviados y recibidos seran a su propia base de datos
+
+> [!IMPORTANT]  
+> Al ser una base de datos local, todos los datos enviados y recibidos seran a su propia base de datos
 
 ----
 #### Estructura del proyecto
 
    ```
-   ├── middleware  # Lógica de intercambio de información
-   ├── public           # Archivos estáticos (Imagenes, HTML, CSS, JS)
+   ├── middleware  # Lógica de intercambio de información y configuraciones
+   ├── public           # Archivos estáticos (Imagenes, CSS, JS)
    ├── routes           # Definición de rutas para la API
    ├── Schemas       # Definición de esquemas de la base de datos (MongoDB)
-   ├── views            # Plantillas HTML
+   ├── views            # Plantillas EJS
    index.js                 # Archivo principal (conexión al servidor, rutas, base de datos, middleware) 
    ```
 

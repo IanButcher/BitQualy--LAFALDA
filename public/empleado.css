@@ -4,6 +4,15 @@
     box-sizing: border-box;
 }
 
+/*Ayuda porfa*/
+.user-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 2px solid #ddd;
+}
+
 body, html {
     font-family: Arial, sans-serif;
     height: 100%;
@@ -136,11 +145,12 @@ body, html {
 
 .eval-info p {
     margin: 3px 0;
-    color: #555;
+    
+    font-weight: bold;
 }
 
-.eval-status {
-    color: #fff;
+.eval-status  {
+    color: #ffffff;
     background-color: #007bff;
     padding: 3px 8px;
     border-radius: 15px;
