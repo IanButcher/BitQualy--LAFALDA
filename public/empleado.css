@@ -146,11 +146,12 @@ body, html {
 
 .eval-info p {
     margin: 3px 0;
-    color: #555;
+    
+    font-weight: bold;
 }
 
-.eval-status {
-    color: #fff;
+.eval-status  {
+    color: #ffffff;
     background-color: #007bff;
     padding: 3px 8px;
     border-radius: 15px;

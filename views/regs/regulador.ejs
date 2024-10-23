@@ -26,7 +26,7 @@
                     <img src="<%= intermediario.imagePath ? '/' + intermediario.imagePath : '/img/user.png' %>" alt="Empleado" class="user-img">
                     <div class="user-info">
                         <h2><%= intermediario.nombre %>  <%= intermediario.apellido %></h2>
-                        <p>Regulador</p>
+                        <p>Intermediariop>
                         <p>Número de legajo: <%= intermediario.legajo %> | DNI: XXXX</p>
                     </div>
                 </div>
@@ -54,23 +54,18 @@
             <div class="filter-panel-container">
                 <section class="evaluation-section">
                     <h2>Evaluaciones por revisar</h2>
-                    <div class="evaluation-card">
-                        <img src="empleado1.jpg" alt="Franco Siccardi" class="eval-img">
-                        <div class="eval-info">
-                            <p><strong><%= intermediario.nombre %>  <%= intermediario.apellido %></strong></p>
-                            <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
-                            <p class="eval-status">Autoevaluación</p>
-                        </div>
-                    </div>
 
-                    <div class="evaluation-card">
-                        <img src="empleado1.jpg" alt="Franco Siccardi" class="eval-img">
-                        <div class="eval-info">
-                            <p><strong><%= intermediario.nombre %>  <%= intermediario.apellido %></strong></p>
-                            <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
-                            <p class="eval-status">Evaluación de Análisis</p>
+                    <% for (evaluacion of evaluaciones) {%>
+                        <div class="evaluation-card">
+                            <img src="<%= evaluacion.empleado.imagePath ? '/' + intermediario.imagePath : '/img/user.png' %>" alt="Empleado" class="eval-img">
+                            <div class="eval-info">
+                                <p><strong><%= intermediario.nombre %>  <%= intermediario.apellido %></strong></p>
+                                <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
+                                <p class="eval-status">Autoevaluación</p>
+                            </div>
                         </div>
-                    </div>
+                    <% } %>
+
                 </section>
 
                 <aside class="right-panel">
