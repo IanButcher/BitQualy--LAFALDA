@@ -37,7 +37,7 @@
                     <% evaluaciones.forEach(evaluacion => { %>
                         <% if (evaluacion.formulario.tipo === 'autoevaluacion' || evaluacion.completed === false) { %>
                             <div class="evaluation-card">
-                                <img src="empleado1.jpg" class="eval-img">
+                                <img src="<%= evaluacion.empleado.imagePath ? '/' + empleado.imagePath : '/img/user.png' %>" class="eval-img">
                                 <div class="eval-info">
                                     <p><strong><%= evaluacion.empleado ? evaluacion.empleado.nombre : 'Empleado no asignado' %></strong></p>
                                     <p>Fecha Inicio: <%= evaluacion.fechaInicio ? evaluacion.fechaInicio.toDateString() : 'N/A' %> | Fecha Fin: <%= evaluacion.deadline ? evaluacion.deadline.toDateString() : 'Sin fecha' %></p>
@@ -54,7 +54,7 @@
                     <% evaluaciones.forEach(evaluacion => { %>
                         <% if (evaluacion.formulario.tipo === 'autoevaluacion'&& String(evaluacion.empleado._id) === String(user._id) && evaluacion.completed != true) { %>
                             <div class="evaluation-card">
-                                <img src="empleado1.jpg" class="eval-img">
+                                <img src="<%= evaluacion.empleado.imagePath ? '/' + empleado.imagePath : '/img/user.png' %>" class="eval-img">
                                 <div class="eval-info">
                                     <p><strong><%= evaluacion.empleado ? evaluacion.empleado.nombre : 'Empleado no asignado' %></strong></p>
                                     <p>Fecha Inicio: <%= evaluacion.fechaInicio ? evaluacion.fechaInicio.toDateString() : 'N/A' %> | Fecha Fin: <%= evaluacion.deadline ? evaluacion.deadline.toDateString() : 'Sin fecha' %></p>
@@ -116,7 +116,7 @@
                 <% evaluaciones.forEach(evaluacion => { %>
                     <% if (evaluacion.formulario.tipo === 'evaluacion' || evaluacion.completed === true) { %>
                         <div class="evaluation-card">
-                            <img src="empleado1.jpg" class="eval-img">
+                            <img src="<%= evaluacion.empleado.imagePath ? '/' + empleado.imagePath : '/img/user.png' %>" class="eval-img">
                             <div class="eval-info">
                                 <% if (evaluacion.empleado) { %>
                                     <p><strong><%= evaluacion.empleado.nombre %> <%= evaluacion.empleado.apellido %></strong></p>
@@ -145,7 +145,7 @@
                 <% evaluaciones.forEach(evaluacion => { %>
                     <% if (evaluacion.formulario.tipo === 'autoevaluacion'&& String(evaluacion.empleado._id) === String(user._id) && evaluacion.completed == true) { %>
                         <div class="evaluation-card">
-                            <img src="empleado1.jpg" class="eval-img">
+                            <img src="<%= evaluacion.empleado.imagePath ? '/' + empleado.imagePath : '/img/user.png' %>" class="eval-img">
                             <div class="eval-info">
                                 <% if (evaluacion.empleado) { %>
                                     <p><strong><%= evaluacion.empleado.nombre %> <%= evaluacion.empleado.apellido %></strong></p>

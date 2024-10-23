@@ -5,6 +5,7 @@ const router = express.Router()
 const Formulario = require('../Schemas/formularioSchema')
 const Evaluacion = require('../Schemas/evaluacionSchema')
 const baseUserSchema = require('../Schemas/baseUserSchema')
+const Notification = require('../Schemas/notificationSchema')
 const mongoose = require('mongoose')
 const  roleAuthorization = require('../middleware/roleAuth')
 app.use(express.urlencoded({ extended: true }))
@@ -59,12 +60,20 @@ router.post('/evaluaciones/assign-autoevaluacion', roleAuthorization(['Administr
             assignedBy: req.user._id,
             deadline: new Date(deadline),
             completed: false
-        });
+        })
 
         await newEvaluacion.save()
 
+        // Notificaciones
+        const notification = new Notification({
+            message: `Se te ha asignado una nueva autoevaluación.`,
+            user: empleadoId
+        })
+        await notification.save()
+
         res.status(200).send('Autoevaluacion asignada correctamente')
     } catch (error) {
+        console.log(error)
         res.status(500).send('Error assigning autoevaluacion: ' + error.message)
     }
 });
@@ -77,23 +86,21 @@ router.get('/evaluaciones/my-autoevaluacion/:id', roleAuthorization(['Empleado']
         const evaluacion = await Evaluacion.findById(id).populate('formulario').populate('empleado')
         
         if (!evaluacion) {
-            return res.status(404).send('Evaluación no encontrada')
+            return res.redirect('/evaluaciones')
         }
-        if (evaluacion.completed == true) {
-            return res.status(403).send('Esta evaluación ya ha sido completada y no puede ser modificada.')
+
+        const currentDate = new Date()
+        if (evaluacion.completed == true || currentDate >= evaluacion.deadline) {
+            return res.redirect('/evaluaciones')
         }
 
         // Render the 'awnser.ejs' template with both evaluacion and user
         res.render('evals/awnser', { evaluacion, formulario: evaluacion.formulario, user: req.user, empleado: evaluacion.empleado ? evaluacion.empleado.nombre : 'Empleado no asignado' })
     } catch (error) {
         console.error('Error fetching evaluation:', error)
-        res.status(500).send('Error interno del servidor')
+        res.redirect('/evaluaciones/new')
     }
-});
-
-  
-
-  
+})
 
 //app.get('/formularios/:id/preguntas', async (req, res) => {
     //try {
@@ -122,7 +129,7 @@ router.get('/evaluaciones/answer/:id', roleAuthorization(['Administrador', 'Eval
             res.render('evals/awnserNormal', { formulario, empleado, user: req.user })
         } catch (error) {
             console.error('Error fetching formulario:', error)
-            res.status(500).send('Error interno del servidor')
+            res.redirect('/evaluaciones/new')
         }
     } else {
         res.redirect('/')
@@ -137,10 +144,10 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
 
         const formulario = await Formulario.findById(formularioId).populate('questions')
         if (!formulario) {
-            return res.status(404).send('Formulario no encontrado')
+            return res.redirect('/evaluaciones/new')
         }
 
-        // Format the answers to ensure they are strings
+        // Formatear respuestas
         const respuestasFormateadas = formulario.questions.map((question, index) => {
             const respuesta = respuestas[index]
         
@@ -151,9 +158,9 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
             } else {
                 return respuesta.toString()
             }
-        });
+        })
 
-        // Logic for autoevaluaciones (update existing evaluation)
+        // Update autoevaluacion
         if (tipo === 'autoevaluacion') {
             const evaluacion = await Evaluacion.findOne({ formulario: formularioId, empleado: empleado })
             if (!evaluacion) {
@@ -164,14 +171,14 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
             await evaluacion.save()
         }
         
-        // Logic for normal evaluaciones (create a new evaluation)
+        // Crear evaluacion normal
         else if (tipo === 'evaluacion') {
             const nuevaEvaluacion = new Evaluacion({
                 formulario: formulario._id,
                 empleado: empleado,
                 respuestas: respuestasFormateadas,
-                completed: true // Mark as completed immediately
-            });
+                completed: true 
+            })
             await nuevaEvaluacion.save()
         }
 
@@ -189,19 +196,17 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
 router.get('/evaluaciones/preview/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async (req, res) => {
     if (req.user) {
         try {
-            const { id } = req.params;  // Evaluation ID
+            const { id } = req.params
     
-            // Find the evaluation by ID and populate the associated form and questions
             const evaluacion = await Evaluacion.findById(id).populate({
                 path: 'formulario',
-                populate: { path: 'questions' }  // Populate questions within the form
-            });
+                populate: { path: 'questions' }  
+            })
     
             if (!evaluacion) {
                 return res.status(404).send('Evaluación no encontrada')
             }
     
-            // Render a view for displaying the evaluation (non-editable)
             res.render('evals/evaluacion', { evaluacion, user: req.user })
         } catch (error) {
             console.error('Error fetching evaluation:', error)
