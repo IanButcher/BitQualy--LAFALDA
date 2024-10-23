@@ -11,9 +11,13 @@
     <header class="header">
         <!-- Nueva Sección de Búsqueda -->
         <form action="/empleados/buscar" method="GET">
-            <input type="text" id="searchEmpleado" name="nombre" placeholder="Buscar empleado por nombre"/>
+            <input type="text" id="searchHandler" name="nombre" placeholder="Buscar empleado por nombre"/>
             <button type="submit">Buscar</button>
+
         </form>
+
+
+        <div id="empleadoResultados"></div>
         
         <div class="header-options">
             <i class="fas fa-bell"></i>
@@ -37,6 +41,7 @@
     </header>
 
     <script>
+
         // JavaScript para el popup de notificaciones
         document.addEventListener("DOMContentLoaded", function() {
                 // Seleccionamos los elementos necesarios
@@ -54,13 +59,59 @@
                     notificationPopup.style.display = 'none';
                 });
 
-                // Cerrar el popup si se hace clic fuera de él
+                // Cerrar el popup si se hace calic fuera de él
                 window.addEventListener('click', function(e) {
                     if (e.target !== notificationPopup && e.target !== bellIcon) {
                         notificationPopup.style.display = 'none';
                     }
-                });
-            });
+                })
+            })
+
+        function debounce(func, delay) {
+            let timeoutId;
+            return function(...args) {
+                if (timeoutId) {
+                    clearTimeout(timeoutId)  // Cancela la llamada anterior si el usuario sigue escribiendo
+                }
+                timeoutId = setTimeout(() => {
+                    func.apply(this, args)
+                }, delay)
+            }
+        }
+
+        const searchEmpleado = document.getElementById('searchEmpleado') 
+        const searchHandler = debounce(function () {
+            const searchValue = this.value
+
+            if (searchValue.length > 1) {
+                fetch(`/empleados/buscar?nombre=${encodeURIComponent(searchValue)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const empleados = data.empleados
+                        const resultadosDiv = document.getElementById('empleadoResultados')
+                        resultadosDiv.innerHTML = ''  // Limpiar los resultados anteriores
+
+                        if (empleados.length === 0) {
+                            resultadosDiv.innerHTML = '<p>No se encontraron empleados.</p>'
+                        } else {
+                            empleados.forEach(empleado => {
+                                const empleadoItem = document.createElement('p')
+                                empleadoItem.textContent = empleado.nombre
+                                resultadosDiv.appendChild(empleadoItem)
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error al realizar la búsqueda:', error)
+                    });
+            } else {
+                document.getElementById('empleadoResultados').innerHTML = '' // Limpiar resultados si no hay input
+            }
+        }, 100) // Ajusta el tiempo de debounce (en milisegundos)
+    
+
+        // Asigna el debounce a la entrada del campo de búsqueda
+        searchEmpleado.addEventListener('input', searchHandler);
     </script>
 
 </body>
