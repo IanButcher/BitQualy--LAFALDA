@@ -5,31 +5,29 @@ body {
     margin: 0;
     padding: 0;
     color: #333;
-    display: flex; /* Habilita flexbox en el body */
-    flex-direction: column; /* Asegura que los hijos se apilen verticalmente */
-    align-items: center; /* Centra horizontalmente los hijos */
-    height: 100vh; /* Asegura que el body ocupe toda la altura de la ventana */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
 }
 
 /* Contenedor principal */
 .container {
     display: flex;
-    flex-grow: 1; /* Permite que el contenedor principal ocupe el espacio disponible */
-    justify-content: space-between; /* Asegura que los paneles estén separados */
-    width: 100%; /* Asegura que el contenedor ocupe el 100% del ancho */
+    flex-grow: 1;
+    justify-content: space-between;
+    width: 100%;
 }
-
 
 /* Contenido principal */
 .maincontent {
-    flex-grow: 1; /* Hace que el contenido principal ocupe todo el espacio restante */
+    flex-grow: 1;
     padding: 50px;
-    margin-left: 250px; /* Mueve el contenido principal a la derecha del sidebar */
+    margin-left: 250px;
     background-color: #fff;
     overflow-y: auto;
-    margin-right: 2px; /* Da espacio al panel derecho */
 }
- 
+
 /* Estilos del usuario */
 .user-info {
     display: flex;
@@ -74,7 +72,7 @@ select {
     width: 80%;
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 20px; /* Aumento del redondeado */
+    border-radius: 20px;
     box-sizing: border-box;
     transition: border-color 0.3s, background-color 0.3s;
 }
@@ -90,12 +88,21 @@ select:focus {
 /* Estilos de botones */
 .modify-buttons {
     display: flex;
-    justify-content: flex-start; /* Alinear los botones hacia la izquierda */
-    margin-top: 10px; /* Mantener el margen superior */
+    justify-content: flex-start;
+    margin-top: 10px;
 }
 
-.modify-buttons button {
-    margin-right: 10px; /* Ajusta este valor para controlar el espacio entre los botones */
+.modify-buttons button,
+.modify-buttons a {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    margin-right: 15px; /* Espacio entre botones */
+    border: none;
+    background: transparent; /* Elimina fondo predeterminado */
+    transition: background-color 0.3s;
 }
 
 .modify-buttons button:last-child {
@@ -106,41 +113,64 @@ select:focus {
 .btn-download {
     background-color: #2a36d4;
     color: white;
-    border: none;
-    border-radius: 20px; /* Aumento del redondeado */
-    padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
-    cursor: pointer;
-    transition: background-color 0.3s;
-    font-size: 14px;
+
 }
 
 .btn-cancel {
-    background-color: #d42a2a;
-    color: white;
-    border: none;
-    border-radius: 20px; /* Aumento del redondeado */
-    padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s;
+    background-color: #d42a2a; /* Fondo rojo por defecto */
+    color: white; /* Color del texto blanco */
+    border: none; /* Sin borde */
+    border-radius: 20px; /* Bordes redondeados */
+    padding: 10px 20px; /* Espaciado del botón */
+    transition: background-color 0.3s, color 0.3s; /* Transición suave */
+}
+
+/* Cambiar el fondo a rojo oscuro al hacer hover */
+.btn-cancel:hover {
+    background-color: #b22222; /* Fondo rojo oscuro al hacer hover */
+    color: white; /* Color del texto blanco al hacer hover */
 }
 
 .btn-add-option {
     background-color: #38df40;
     color: white;
-    border: none;
-    border-radius: 20px; /* Aumento del redondeado */
-    padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
-    cursor: pointer;
-    transition: background-color 0.3s;
-    font-size: 14px;
 }
 
-.btn-delete,
-.btn-add,
+/* Estilo específico para el botón de añadir */
+.btn-add {
+    background-color: white; /* Fondo blanco por defecto */
+    color: #38df40; /* Color del texto verde */
+    border: 2px solid #38df40; /* Borde verde */
+    padding: 10px 20px; /* Espaciado del botón */
+    border-radius: 20px; /* Bordes redondeados */
+    transition: background-color 0.3s, color 0.3s; /* Transición suave */
+}
+
+.btn-add:hover {
+    background-color: #38df40; /* Fondo verde al hacer hover */
+    color: white; /* Color del texto blanco al hacer hover */
+}
+
+/* Estilos para el botón de eliminar */
+.btn-delete {
+    background-color: white; /* Fondo blanco por defecto */
+    color: #d42a2a; /* Color del texto rojo */
+    border: 2px solid #d42a2a; /* Borde rojo */
+    border-radius: 20px; /* Bordes redondeados */
+    padding: 10px 20px; /* Espaciado del botón */
+    transition: background-color 0.3s, color 0.3s; /* Transición suave */
+}
+
+/* Cambiar el fondo a rojo y el texto a blanco al hacer hover */
+.btn-delete:hover {
+    background-color: #d42a2a; /* Fondo rojo al hacer hover */
+    color: white; /* Color del texto blanco al hacer hover */
+}
+
+/* Estilos para el botón de guardar */
 .btn-save,
 .btn-add:hover {
-    background-color: #4a90e2;
+    background-color: #14aa00;
     color: white;
     border: none;
     border-radius: 20px; /* Aumento del redondeado */
@@ -162,6 +192,26 @@ select:focus {
 .btn-add-option:hover {
     background-color: #357ab8;
 }
+
+.btn-cancel:hover {
+    background-color: #b40101;
+}
+
+/* Estilos de los íconos */
+.btn-icon {
+    width: 25px; /* Ajusta el tamaño */
+    height: 25px; /* Ajusta el tamaño */
+    margin-right: 7px; /* Espacio entre el ícono y el texto */
+
+}
+
+/* Estilos de los íconos */
+.btn-icon {
+    width: 26px; /* Ajusta el tamaño a lo que necesites */
+    height: 26px; /* Ajusta el tamaño a lo que necesites */
+    margin-right: 5px; /* Espacio entre el ícono y el texto */
+}
+
 
 /* Estilos de las opciones */
 .options-group {
@@ -186,26 +236,55 @@ iframe {
 
 /* Estilos para el input de porcentaje */
 .percentage-input {
-    width: 80%; /* Mantiene el input del porcentaje alineado con otros inputs */
+    width: 80%;
     padding: 10px;
-    border: 2px solid #4a90e2; /* Color de borde por defecto */
+    border: 2px solid #4a90e2;
     border-radius: 20px;
     box-sizing: border-box;
-    background-color: #e7f4ff; /* Color de fondo */
-    transition: border-color 0.3s; /* Transición suave para el cambio de color */
+    background-color: #e7f4ff;
+    transition: border-color 0.3s;
 }
 
 /* Borde rojo para porcentaje < 20 */
 .red-border {
-    border-color: #dc3545; /* Rojo */
+    border-color: #dc3545;
 }
 
 /* Borde azul para 20 <= porcentaje < 70 */
 .blue-border {
-    border-color: #007bff; /* Azul */
+    border-color: #007bff;
 }
 
 /* Borde verde para porcentaje >= 70 */
 .green-border {
-    border-color: #28a745; /* Verde */
+    border-color: #28a745;
+}
+
+/* Estilos adicionales para el Numeric Up Down */
+.percentage-input {
+    width: auto;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.notification-icon,
+.user-photo {
+    position: absolute;
+    right: 55px;
+    top: 60px;
+}
+
+#NavNF {
+    .sidebar {
+        width: 210px; 
+        background-color: #333;
+        color: white;
+        padding: 20px;
+        position: fixed; 
+        top: 0;
+        left: 0;
+        height: 100%;
+    }
 }
