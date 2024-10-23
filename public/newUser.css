@@ -1,3 +1,14 @@
+:root {
+    --color-gris-claro: #f4f4f4;
+    --color-blanco: #fff;
+    --color-gris: #ccc;
+    --color-gris-oscuro: #575757;
+    --color-gris-enfoque: #888;
+    --color-verde: #28a745;
+    --color-verde-hover: #218838;
+    --color-rojo: #dc3545;
+    --color-rojo-hover: #c82333;
+}
 * {
     margin: 0;
     padding: 0;
@@ -7,7 +18,7 @@
 body, html {
     font-family: Arial, sans-serif;
     height: 100%;
-    background-color: #f4f4f4;
+    background-color: var(--color-gris-claro);
 }
 
 .container {
@@ -22,7 +33,7 @@ body, html {
 .main-content {
     flex-grow: 1;
     padding: 50px;
-    background-color: #fff;
+    background-color: var(--color-blanco);
     overflow-y: auto;
 }
 
@@ -50,14 +61,14 @@ body, html {
     width: 100%;
     padding: 10px;
     font-size: 16px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-gris);
     border-radius: 5px;
     box-sizing: border-box;
 }
 
 .form-group input[type="text"]:focus,
 .form-group input[type="password"]:focus {
-    border-color: #888;
+    border-color: var(--color-gris-enfoque);
 }
 
 /* Contenedor de imagen */
@@ -72,7 +83,7 @@ body, html {
     margin-right: 20px;
     width: 150px;
     height: 150px;
-    border: 2px solid #575757;
+    border: 2px solid var(--color-gris-oscuro);
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -83,8 +94,8 @@ body, html {
 
 .change-photo-text {
     position: absolute;
-    color: white;
-    background-color: #575757;
+    color: var(--color-blanco);
+    background-color: var(--color-gris-oscuro);
     padding: 5px;
     border-radius: 5px;
     font-size: 14px;
@@ -111,7 +122,7 @@ body, html {
 }
 
 .btn-submit {
-    background-color: #28a745;
+    background-color: var(--color-verde);
     color: white;
     padding: 10px 20px;
     font-size: 16px;
@@ -123,12 +134,12 @@ body, html {
 }
 
 .btn-submit:hover {
-    background-color: #218838;
+    background-color: var(--color-verde-hover);
 }
 
 .btn-cancel {
-    background-color: #dc3545;
-    color: white;
+    background-color: var(--color-rojo);
+    color: var(--color-blanco);
     padding: 10px 20px;
     font-size: 16px;
     font-weight: bold;
@@ -138,7 +149,7 @@ body, html {
 }
 
 .btn-cancel:hover {
-    background-color: #c82333;
+    background-color: var(--color-rojo-hover);
 }
 
 .password-container {
@@ -149,7 +160,7 @@ body, html {
     width: 100%;
     padding: 10px 40px 10px 15px;
     font-size: 16px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-gris);
     border-radius: 5px;
     box-sizing: border-box;
 }
@@ -160,7 +171,7 @@ body, html {
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
-    color: #888;
+    color: var(--color-gris-enfoque);
     font-size: 18px;
 }
 
@@ -170,7 +181,7 @@ a {
 
 .navbar-item a {
     text-decoration: none !important;
-    color: white;
+    color: var(--color-blanco);
 }
 
 .contenedor-evaluaciones a {

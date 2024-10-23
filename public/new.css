@@ -1,3 +1,12 @@
+:root {
+    --color-gris-claro: #f4f4f4;
+    --color-gris: #ccc;
+    --color-gris-texto: #555;
+    --color-blanco: #ffffff;
+    --color-azul: #007bff;
+    --color-azul-hover: #0056b3;
+    --color-texto: #333;
+}
 /* General Styles */
 * {
     margin: 0;
@@ -8,13 +17,13 @@
 body, html {
     font-family: 'Arial', sans-serif;
     height: 100%;
-    background-color: #f4f4f4;
+    background-color: var(--color-gris-claro);
 }
 
 h2 {
     margin-bottom: 20px;
     font-size: 1.5rem;
-    color: #333;
+    color:  var(--color-texto);
 }
 
 
@@ -26,13 +35,13 @@ h2 {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f4f4f4;
+    background-color: var(--color-gris-claro);
    
 }
 
 /* Formulario */
 .form-container {
-    background-color: white;
+    background-color: var(--color-blanco);
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
@@ -49,21 +58,21 @@ h2 {
     display: block;
     margin-bottom: 8px;
     font-weight: bold;
-    color: #555;
+    color: var(--color-gris-texto);
 }
 
 .form-group select {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-gris);
     border-radius: 5px;
     font-size: 1rem;
-    background-color: #fff;
+    background-color: var(--color-blanco);
     transition: border-color 0.3s ease;
 }
 
 .form-group select:focus {
-    border-color: #007bff;
+    border-color: var(--color-azul);
     outline: none;
 }
 
@@ -71,8 +80,8 @@ h2 {
 .btn-aceptar {
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
-    color: white;
+    background-color: var(--color-azul);
+    color: var(--color-blanco);
     border: none;
     border-radius: 5px;
     font-size: 1rem;
@@ -81,7 +90,7 @@ h2 {
 }
 
 .btn-aceptar:hover {
-    background-color: #0056b3;
+    background-color: var(--color-azul-hover);
 }
 
 /* Media Queries para pantallas pequeñas */

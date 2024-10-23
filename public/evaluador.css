@@ -1,3 +1,4 @@
+/*le falta variables*/
 * {
     margin: 0;
     padding: 0;
@@ -7,7 +8,7 @@
 body, html {
     font-family: Arial, sans-serif;
     height: 100%;
-    background-color: #f4f4f4;
+    background-color: var(--color-fondo);
 }
 
 .container {

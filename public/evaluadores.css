@@ -1,3 +1,14 @@
+:root {
+    --color-bg: #f4f4f4;              /* Fondo general del cuerpo */
+    --color-main-bg: #fff;           /* Fondo principal del contenido */
+    --color-border: #ccc;             /* Color del borde de los elementos */
+    --color-primary: #28a745;        /* Color primario para botones */
+    --color-primary-hover: #218838;  /* Color al pasar el mouse en el botón crear */
+    --color-text-title: #333;        /* Color del texto del título */
+    --color-text-subtitle: #555;     /* Color del texto secundario */
+    --color-hover-name: #1a73e8;     /* Color al hacer hover sobre el nombre del empleado */
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -7,14 +18,13 @@
 body, html {
     font-family: Arial, sans-serif;
     height: 100%;
-    background-color: #f4f4f4;
+    background-color: var(--color-bg);
 }
 
 .container {
     display: flex;
     height: 100vh;
 }
-
 
 .help-section {
     margin-top: auto;
@@ -23,7 +33,7 @@ body, html {
 .main-content {
     flex-grow: 1;
     padding: 50px;
-    background-color: #fff;
+    background-color: var(--color-main-bg);
     overflow-y: auto;
 }
 
@@ -48,7 +58,7 @@ body, html {
     width: 400px;
     padding: 12px 45px 12px 15px;
     font-size: 18px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-border);
     border-radius: 25px;
     transition: width 0.3s ease;
 }
@@ -76,7 +86,7 @@ body, html {
 .filters select {
     padding: 8px;
     font-size: 16px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-border);
     border-radius: 25px;
     outline: none;
     transition: border-color 0.3s ease;
@@ -99,7 +109,7 @@ body, html {
 .employee {
     display: flex;
     align-items: center;   /* Alinea el contenido verticalmente */
-    background-color: #fff;
+    background-color: var(--color-main-bg);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -133,19 +143,19 @@ body, html {
 .employee-info h3 {
     margin-bottom: 5px;
     font-size: 18px;
-    color: #333;
+    color: var(--color-text-title);
     font-weight: bold;
 }
 
 .employee-info p {
     margin: 3px 0;
     font-size: 14px;
-    color: #555;
+    color: var(--color-text-subtitle);
 }
 
 /* Efecto de color en el nombre */
 .employee-info h3:hover {
-    color: #1a73e8;  /* Cambia el color del nombre al hacer hover */
+    color: var(--color-hover-name);  /* Cambia el color del nombre al hacer hover */
 }
 
 /* Pequeño detalle adicional: estilo del enlace */
@@ -156,6 +166,7 @@ body, html {
     align-items: center;
     width: 100%;
 }
+
 /* Dropdown content adjustments */
 .dropdown-content {
     border: none;
@@ -170,7 +181,7 @@ body, html {
 .dropdown-content a i {
     font-size: 16px;
     margin-right: 10px;
-    padding-right:10px  ;
+    padding-right: 10px;
 }
 
 .dropdown-content a:last-child {
@@ -199,30 +210,10 @@ body, html {
     .employee-info h3 {
         font-size: 16px;
     }
-    .employee-info p{
-      margin-bottom: 5px;
 
-    }  
-    
-}
-
-.dropdown-content {
-    border: none;
-    padding: 0;
-    background-color: transparent;
-}
-
-.dropdown-btn {
-    text-decoration: none;
-}
-
-.dropdown-content a i {
-    font-size: 16px;
-    margin-right: 10px;
-}
-
-.dropdown-content a:last-child {
-    margin-bottom: 0;
+    .employee-info p {
+        margin-bottom: 5px;
+    }
 }
 
 .create-section {
@@ -232,7 +223,7 @@ body, html {
 
 .btn-create {
     display: inline-block;
-    background-color: #28a745;
+    background-color: var(--color-primary);
     color: white;
     padding: 10px 20px;
     font-size: 16px;
@@ -247,7 +238,6 @@ body, html {
 }
 
 .btn-create:hover {
-    background-color: #218838;
+    background-color: var(--color-primary-hover);
     transform: scale(1.05);
 }
-
