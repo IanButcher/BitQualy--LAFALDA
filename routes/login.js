@@ -14,14 +14,14 @@ const roleAuthorization = require('../middleware/roleAuth')
 router.get('/', (req, res) => {
     res.render('index')
 })
-
+ roleAuthorization(['Administrador'])
 // GET route --> User Creator
-router.get('/user-creator', roleAuthorization(['Administrador']), (req, res) => {
+router.get('/user-creator', (req, res) => {
     res.render('newUsers')
 })
 
 // POST route --> Create User
-router.post('/save-new-user', roleAuthorization(['Administrador']), async (req, res) => {
+router.post('/save-new-user', async (req, res) => {
     const { nombre, apellido, legajo, rol, password } = req.body;
     try {
         // Check legajo
