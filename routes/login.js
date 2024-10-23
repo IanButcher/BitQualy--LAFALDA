@@ -84,8 +84,23 @@ app.post('/login', (req, res, next) => {
     })(req, res, next)
 })
 
+//GET route --> log out & destroy session
+router.get('/logout', (req, res, next) => {
+    if (req.session) {
+        req.logout(function(err) {
+            if (err) {
+                return next(err)
+            }
+            req.session.destroy(() => {
+                res.redirect('/')
+            })
+        })
+    } else {
+        res.redirect('/')
+    }
+});
 
 
-module.exports = router;
+module.exports = router
 
 
