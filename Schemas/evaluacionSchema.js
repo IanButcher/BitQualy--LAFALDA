@@ -1,6 +1,7 @@
 // evaluationSchema.js
 const mongoose = require('mongoose')
 const Formulario = require('./formularioSchema')
+const BaseUser = require('./baseUserSchema')
 
 const comentarioSchema = new mongoose.Schema({
     intermediario: {
@@ -23,8 +24,22 @@ const evaluacionSchema = new mongoose.Schema({
         required: true
     },
     empleado: {
-        type: String, // Id
-        required: true
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'BaseUser', 
+        required: true 
+    },
+    assignedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'BaseUser'
+    },
+    deadline: {
+        type: Date,
+        required: false
+    },  
+    completed: {
+        type: Boolean,
+        required: true,
+        default: true
     },
     respuestas: {
         type: [String],

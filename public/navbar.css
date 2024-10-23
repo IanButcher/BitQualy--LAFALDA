@@ -18,6 +18,13 @@
     height: 100%;
 }
 
+.nav-link.active {
+    background-color: #575757;  /* Color de fondo del enlace activo */
+    font-weight: bold;
+    border-left: 4px solid rgb(158, 18, 18); /* Indicador visual en el lateral */
+}
+
+
 /* Asegúrate de que el contenido principal ocupe el resto del espacio */
 .main-content {
     flex-grow: 1; /* Hace que el contenido principal ocupe todo el espacio restante */
@@ -46,6 +53,8 @@
 
 .sidebar nav .menu-item a {
     color: white;
+    font-weight: bold;
+    font-size: 17px;
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -79,7 +88,7 @@ a {
 .sidebar .gestion-section .dropdown-btn {
     font-weight: bold;
     display: flex;
-    justify-content: space-between;
+    font-size: 17px;
     align-items: center;
     padding: 10px 0;
     cursor: pointer;

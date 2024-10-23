@@ -67,7 +67,7 @@ body, html {
 
 /* Fija la posición del título dentro del formulario */
 .login-titulo {
-    max-width: 300px;
+    max-width: 250px;
     margin-bottom: 2px;
     display: block;
     margin-left: auto;
