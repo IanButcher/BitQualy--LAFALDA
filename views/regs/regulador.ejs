@@ -23,7 +23,7 @@
         <main class="main-content">
             <header class="header">
                 <div class="user-section">
-                    <img href="/public/img/user.png" alt="Empleado" >
+                    <img src="<%= intermediario.imagePath ? '/' + intermediario.imagePath : '/img/user.png' %>" alt="Empleado" class="user-img">
                     <div class="user-info">
                         <h2><%= intermediario.nombre %>  <%= intermediario.apellido %></h2>
                         <p>Regulador</p>

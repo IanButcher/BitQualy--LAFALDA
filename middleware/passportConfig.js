@@ -11,12 +11,12 @@ passport.use(new LocalStrategy({ usernameField: 'legajo' }, async (legajo, passw
     // Ensure legajo is treated as a number
     const user = await User.findOne({ legajo: parseInt(legajo) })
     if (!user) {
-      return done(null, false, { message: 'Invalid credentials' })
+      return done(null, false, { message: 'Credenciales inválidas. Verifica tu legajo y contraseña.' })
     }
 
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
-      return done(null, false, { message: 'Invalid credentials' })
+      return done(null, false, { message: 'Credenciales inválidas. Verifica tu legajo y contraseña.' })
     }
 
     return done(null, user)
