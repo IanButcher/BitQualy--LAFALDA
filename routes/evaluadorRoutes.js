@@ -7,6 +7,7 @@ const Empleado = require('../Schemas/empleadoSchema')
 const Evaluador = require('../Schemas/evaluadorSchema')
 const Intermediario = require('../Schemas/intermediarioSchema')
 const baseUserSchema = require('../Schemas/baseUserSchema')
+const Evaluaciones = require('../Schemas/evaluacionSchema')
 const  roleAuthorization = require('../middleware/roleAuth')
 
 //GET route --> All evaluadores
@@ -25,10 +26,12 @@ router.get('/evaluadores/:id', roleAuthorization(['Administrador', 'Evaluador', 
         try {
             const id = req.params.id
             const evaluador = await Evaluador.findById(id)
+            const evaluaciones = await Evaluaciones.find({ empleado: evaluador._id})
+            const evalCreadas = await Evaluaciones.find({ assignedBy: evaluador._id})
             if (!evaluador) {
                 return res.status(404).send('Evaluador no encontrado')
             }
-            res.render('evalrs/evaluador', { evaluador, user: req.user })
+            res.render('evalrs/evaluador', { evaluador, evaluaciones, user: req.user })
         } catch (error) {
             console.error(error)
             res.status(500).send('Error del servidor')

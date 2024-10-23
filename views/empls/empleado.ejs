@@ -59,23 +59,17 @@
             <div class="filter-panel-container">
                 <section class="evaluation-section">
                     <h2>Evaluaciones Asignadas</h2>
-                    <div class="evaluation-card">
-                        <!-- <img src="empleado1.jpg" alt="Franco Siccardi" class="eval-img"> -->
-                        <div class="eval-info">
-                            <p><strong><%= empleado.nombre %></strong></p>
-                            <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
-                            <p class="eval-status">Autoevaluación</p>
+                    <% for (evaluacion of evaluaciones) {%>
+                        <div class="evaluation-card">
+                            <img src="<%= evaluacion.empleado.imagePath ? '/' + intermediario.imagePath : '/img/user.png' %>" alt="Franco Siccardi" class="eval-img">
+                            <div class="eval-info">
+                                <p><strong><%= evaluacion.empleado.nombre %> <%= evaluacion.empleado.apellido %></strong></p>
+                                <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
+                                <p class="eval-status">Autoevaluación</p>
+                            </div>
                         </div>
-                    </div>
+                    <% } %>
 
-                    <div class="evaluation-card">
-                        <!--<img src="empleado1.jpg" alt="Franco Siccardi" class="eval-img">-->
-                        <div class="eval-info">
-                            <p><strong><%= empleado.nombre %></strong></p>
-                            <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
-                            <p class="eval-status">Evaluación de Análisis</p>
-                        </div>
-                    </div>
                 </section>
 
                 <aside class="right-panel">
