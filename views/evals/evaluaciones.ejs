@@ -108,18 +108,43 @@
                 <aside class="right-panel">
                     <div class="filter-section">
                         <h3>Filtrar por</h3>
-                       
-                        <select class="filter-select">
-                            <option value="periodo">Periodo</option>
-                            <option value="mastomenos">Legajo mayor a menor</option>
-                            <option value="menostomas">Legajo menor a mayor</option>
-                            <option value="name">Nombre</option>
-                        </select>
                         
-                        <div class="busqueda icono-busqueda busqueda-2 seccion-busqueda">
-                            <input type="text" placeholder="Buscar ...">
-                            <i class="fas fa-search search-icon"></i>
-                        </div>
+                        <form action="/evaluaciones" method="GET" id="filterForm">
+                            <select class="filter-select" id="filterSelect" name="filter">
+                                <option value="">Seleccionar filtro</option>
+                                <option value="periodo">Periodo</option>
+                                <option value="asc">Legajo Ascendente</option>
+                                <option value="desc">Legajo Descendente</option>
+                                <option value="name">Nombre</option>
+                            </select>
+                            
+                            <!-- Hidden by default, shown dynamically based on the selection -->
+                            <div class="filter-inputs">
+                                <div class="filter-periodo" style="display:none;">
+                                    <label for="periodoStart">Desde:</label>
+                                    <input type="date" id="periodoStart" name="periodoStart">
+                                    <label for="periodoEnd">Hasta:</label>
+                                    <input type="date" id="periodoEnd" name="periodoEnd">
+                                    <div class="busqueda icono-busqueda busqueda-2 seccion-busqueda">
+                                        <input type="text" placeholder="Buscar ..." id="searchInput">
+                                        <i class="fas fa-search search-icon"></i>
+                                    </div>
+                                </div>
+            
+                                <!-- Styled search bar for 'Nombre' filter -->
+                                <div class="filter-name" style="display:none;">
+                                    <div class="busqueda icono-busqueda busqueda-2 seccion-busqueda">
+                                        <input type="text" placeholder="Buscar por nombre..." id="nombre" name="nombre">
+                                        <i class="fas fa-search search-icon"></i>
+                                    </div>
+                                </div>
+            
+                                <!-- No input for legajo, handled directly in backend sorting -->
+                            </div>
+            
+                            <button type="submit">Buscar</button>
+                        </form>
+            
                         <div class="status-buttons">
                             <div class="status-button evaluate2">
                                 <span class="green-dot"></span>
@@ -140,8 +165,25 @@
                         <a href="/evaluaciones/new" id="nuevaEvaluacionBtn">Nueva Evaluación</a>
                     </div>
                 </aside>
+            
+                
             <% } %>
-        </div>
+            
+            <script>
+                // Show appropriate input fields based on the selected filter
+                document.getElementById('filterSelect').addEventListener('change', function() {
+                    const filter = this.value;
+                    
+                    document.querySelector('.filter-periodo').style.display = 'none';
+                    document.querySelector('.filter-name').style.display = 'none';
+                    
+                    if (filter === 'periodo') {
+                        document.querySelector('.filter-periodo').style.display = 'block';
+                    } else if (filter === 'name') {
+                        document.querySelector('.filter-name').style.display = 'block';
+                    }
+                });
+            </script>
 
         <section class="evaluation-finished">
             <h2>Evaluaciones Finalizadas</h2>

@@ -14,23 +14,86 @@ app.use(express.json())
 router.get('/evaluaciones', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async (req, res) => {
     if (req.user) {
         try {
-            let query = {}
+            let query = {};
+            let sort = {};  // To handle sorting based on legajo
+
+            // For Empleado role, filter by their evaluations
             if (req.user.rol === 'Empleado') {
-                query = { empleado: req.user._id, 'formulario.tipo': 'autoevaluacion' }
+                query.empleado = req.user._id;
+                query['formulario.tipo'] = 'autoevaluacion';
             }
-            const evaluaciones = await Evaluacion.find()
-                .populate('formulario')
-                .populate('empleado')
-                .populate('assignedBy')
-            res.render('evals/evaluaciones', { evaluaciones, user: req.user })
+
+            // Handle filtering
+            const { filter, periodoStart, periodoEnd, nombre } = req.query;
+
+            // Name search (concatenate nombre and apellido and then search)
+            let aggregationPipeline = [
+                {
+                    $lookup: {
+                        from: 'users',  // Assuming 'users' collection holds empleados
+                        localField: 'empleado',
+                        foreignField: '_id',
+                        as: 'empleado'
+                    }
+                },
+                { $unwind: '$empleado' }
+            ];
+
+            if (filter === 'name' && nombre) {
+                const regex = new RegExp(nombre, 'i'); // case-insensitive search
+                aggregationPipeline.push({
+                    $match: {
+                        $expr: {
+                            $regexMatch: {
+                                input: { $concat: ['$empleado.nombre', ' ', '$empleado.apellido'] },  // concatenate nombre and apellido
+                                regex: regex
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Period filter
+            if (filter === 'periodo' && periodoStart && periodoEnd) {
+                aggregationPipeline.push({
+                    $match: {
+                        createdAt: {
+                            $gte: new Date(periodoStart),
+                            $lte: new Date(periodoEnd)
+                        }
+                    }
+                });
+            }
+
+            // Legajo sorting
+            if (filter === 'asc') {
+                aggregationPipeline.push({
+                    $sort: { 'empleado.legajo': 1 }
+                });
+            } else if (filter === 'desc') {
+                aggregationPipeline.push({
+                    $sort: { 'empleado.legajo': -1 }
+                });
+            }
+
+            console.log('Aggregation Pipeline:', aggregationPipeline);  // Log the pipeline for debugging
+
+            // Run aggregation
+            const evaluaciones = await Evaluacion.aggregate(aggregationPipeline)
+                .exec();
+
+            console.log('Evaluaciones found:', evaluaciones.length);  // Log the number of evaluations found
+
+            res.render('evals/evaluaciones', { evaluaciones, user: req.user });
         } catch (error) {
-            console.error('Error fetching evaluations:', error)
-            res.status(500).send('Error interno del servidor')
+            console.error('Error fetching evaluations:', error);
+            res.status(500).send('Error interno del servidor');
         }
     } else {
-        res.redirect('/')
+        res.redirect('/');
     }
-})
+});
+
 
 
 // GET route --> Mostrar evaluacion especifica
