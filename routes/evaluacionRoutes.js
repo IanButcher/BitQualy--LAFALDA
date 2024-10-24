@@ -7,6 +7,7 @@ const Evaluacion = require('../Schemas/evaluacionSchema')
 const baseUserSchema = require('../Schemas/baseUserSchema')
 const mongoose = require('mongoose')
 const  roleAuthorization = require('../middleware/roleAuth')
+const nodemailer = require('nodemailer')
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
@@ -63,6 +64,8 @@ router.post('/evaluaciones/assign-autoevaluacion', roleAuthorization(['Administr
 
         await newEvaluacion.save()
 
+        const empleado = await baseUserSchema.findById(empleadoId)
+
         await baseUserSchema.findByIdAndUpdate(empleadoId, {
             $push: { evaluacionesAsignadas: newEvaluacion._id }
         })
@@ -70,11 +73,35 @@ router.post('/evaluaciones/assign-autoevaluacion', roleAuthorization(['Administr
             $push: { evaluaciones: newEvaluacion._id }
         })
 
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'bitqualypassmanager@gmail.com',
+                pass: 'yoif nkxt bqkl zsrf'
+            }
+        })
+
+        const mailOptions = {
+            from: 'bitqualypassmanager@gmail.com',
+            to: empleado.email,  
+            subject: '¡Te han asignado una evaluación!',
+            text: `Hola ${empleado.nombre},\n\n¡Te han asignado una nueva evaluación que debes realizar!\n\nTienes hasta ${newEvaluacion.deadline} para completarla.\n`
+        }
+
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.log('Error sending email:', error)
+                return res.status(500).send('Error sending email')
+            }
+            console.log('Correo enviado:', info.response)
+            res.redirect('/home')
+        })
+
         res.status(200).send('Autoevaluacion asignada correctamente')
     } catch (error) {
         res.status(500).send('Error assigning autoevaluacion: ' + error.message)
     }
-});
+})
 
 
 // GET route --> Ver autoevaluacion

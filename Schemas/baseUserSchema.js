@@ -18,11 +18,15 @@ const baseUserSchema = new mongoose.Schema({
     trim: true 
   },
   legajo: {
-    type: Number,
+    type: String,
     required: true,
     trim: true,
     min: 3,
-},
+  },
+  email: {
+    type: String,
+    required: true
+  },
   password: { 
     type: String, 
     required: true,
