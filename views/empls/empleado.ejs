@@ -7,184 +7,236 @@
     <title>Gestión de Evaluaciones</title>
     <link rel="stylesheet" href="/empleado.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="icon" type="image/png" href="https://ugc.production.linktr.ee/mj5IciCyRk2puUukygYa_kmwAn8AE84X4N3S5?io=true&size=avatar-v3_0">
+    <link rel="icon" type="image/png"
+        href="https://ugc.production.linktr.ee/mj5IciCyRk2puUukygYa_kmwAn8AE84X4N3S5?io=true&size=avatar-v3_0">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Incluir SweetAlert2 -->
 
 </head>
 
 <body>
-    <% if (user && user.rol === 'Administrador') { %>
+    <% if (user && user.rol==='Administrador' ) { %>
         <nav><%- include('../partials/navbar') %> </nav>
-    <% } else if (user && user.rol === 'Evaluador') { %>
-        <nav><%- include('../partials/navbarEval') %> </nav>
-    <% } else if (user && user.rol === 'Intermediario') { %>
-        <nav><%- include('../partials/navbarInter') %> </nav>
-    <% } else { %>
-        <p>Navbar error</p>
-    <% } %>    
-        <!-- Panel principal -->
-        <main class="main-content">
-            <header class="header">
-                <div class="user-section">
-                    <img src="<%= empleado.imagePath ? '/' + empleado.imagePath : '/img/user.png' %>" alt="Empleado" class="user-img">
-                    <div class="user-info">
-                        <h2><%= empleado.nombre %> <%= empleado.apellido %></h2>
-                        <p>Empleado</p>
-                        <p>Número de legajo: <%= empleado.legajo %></p>
-                    </div>
-                </div>
-
-                <div class="combobox-container">
-                    <!-- Hidden form to handle employee deactivation -->
-                    <form id="deleteEmpls" method="POST">
-                        <input type="hidden" name="_method" value="PUT">
-                    </form>
-                    
-                    <!-- Button to trigger the form submission -->
-                    <% if (user && user.rol === 'Administrador') { %>
-                        <button class="btn-disable" onclick="popupEliminar('<%= empleado._id %>')">Desactivar</button>
+        <% } else if (user && user.rol==='Evaluador' ) { %>
+            <nav><%- include('../partials/navbarEval') %> </nav>
+            <% } else if (user && user.rol==='Intermediario' ) { %>
+                <nav><%- include('../partials/navbarInter') %> </nav>
+                <% } else { %>
+                    <p>Navbar error</p>
                     <% } %>
-                    
-                    <form id="updateEmpls" method="POST">
-                        <input type="hidden" name="_method" value="PUT">
-                        <input type="hidden" name="rol" id="newRole"> <!-- Input oculto para el nuevo rol -->
-                    </form>
+                        <!-- Panel principal -->
+                        <main class="main-content">
+                            <header class="header">
+                                <div class="user-section">
+                                    <img src="<%= empleado.imagePath ? '/' + empleado.imagePath : '/img/user.png' %>"
+                                        alt="Empleado" class="user-img">
+                                    <div class="user-info">
+                                        <h2>
+                                            <%= empleado.nombre %>
+                                                <%= empleado.apellido %>
+                                        </h2>
+                                        <p>Empleado</p>
+                                        <p>Número de legajo: <%= empleado.legajo %>
+                                        </p>
+                                    </div>
+                                </div>
 
-                    <label for="employee-options">Designar como:</label>
-                    <select id="employee-options">
-                        <option value="Empleado">Empleado</option>
-                        <option value="Evaluador">Evaluador</option>
-                        <option value="Intermediario">Intermediario</option>
-                    </select>
+                                <div class="combobox-container">
+                                    <!-- Hidden form to handle employee deactivation -->
+                                    <form id="deleteEmpls" method="POST">
+                                        <input type="hidden" name="_method" value="PUT">
+                                    </form>
 
-                    
-                    <% if (user && user.rol === 'Administrador') { %>
-                        <button class="btn-disable" onclick="popupActualizar('<%= empleado._id %>')">Actualizar</button>
-                    <% } %>
-                </div>
+                                    <!-- Button to trigger the form submission -->
+                                    <% if (user && user.rol==='Administrador' ) { %>
+                                        <button class="btn-disable"
+                                            onclick="popupEliminar('<%= empleado._id %>')">Desactivar</button>
+                                        <% } %>
 
-                    <%- include('../partials/headerU') %>
-            </header>
+                                            <form id="updateEmpls" method="POST">
+                                                <input type="hidden" name="_method" value="PUT">
+                                                <input type="hidden" name="rol" id="newRole">
+                                                <!-- Input oculto para el nuevo rol -->
+                                                <script>
+                                                    console.log("Formulario de actualización renderizado");
+                                                </script>
+                                            </form>
 
-            <div class="filter-panel-container">
-                <section class="evaluation-section">
-                    <h2>Evaluaciones Asignadas</h2>
-                    <div class="evaluation-card">
-                        <div class="eval-info">
-                            <p><strong><%= empleado.nombre %></strong></p>
-                            <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
-                            <p class="eval-status">Autoevaluación</p>
-                        </div>
-                    </div>
+                                            <label for="employee-options">Designar como:</label>
+                                            <select id="employee-options">
+                                                <option value="Empleado">Empleado</option>
+                                                <option value="Evaluador">Evaluador</option>
+                                                <option value="Intermediario">Intermediario</option>
+                                            </select>
 
-                    <div class="evaluation-card">
-                       
-                        <div class="eval-info">
-                            <p><strong><%= empleado.nombre %></strong></p>
-                            <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
-                            <p class="eval-status">Evaluación de Análisis</p>
-                        </div>
-                    </div>
-                </section>
 
-                <aside class="right-panel">
-                    <div class="filter-section">
-                        <h3>Filtrar por</h3>
-                        <select class="filter-select">
-                            <option value="periodo">Periodo</option>
-                            <option value="mastomenos">Legajo mayor a menor</option>
-                            <option value="menostomas">Legajo menor a mayor</option>
-                            <option value="name">Nombre</option>
-                        </select>
-                    
-                        <div class="status-buttons">
-                            <div class="status-button pending">
-                                <span class="red-dot"></span>
-                                <span>Pendientes</span>
-                                <span class="count">0</span>
+                                            <% if (user && user.rol==='Administrador' ) { %>
+                                                <button class="btn-disable"
+                                                    onclick="popupActualizar('<%= empleado._id %>')">Actualizar</button>
+                                                <script>
+                                                    console.log("Botón de Actualizar renderizado para el empleado con ID: <%= empleado._id %>");
+                                                </script>
+                                                <% } %>
+                                </div>
+
+                                <%- include('../partials/headerU') %>
+                            </header>
+
+                            <div class="filter-panel-container">
+                                <section class="evaluation-section">
+                                    <h2>Evaluaciones Asignadas</h2>
+                                    <div class="evaluation-card">
+                                        <div class="eval-info">
+                                            <p><strong>
+                                                    <%= empleado.nombre %>
+                                                </strong></p>
+                                            <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
+                                            <p class="eval-status">Autoevaluación</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="evaluation-card">
+
+                                        <div class="eval-info">
+                                            <p><strong>
+                                                    <%= empleado.nombre %>
+                                                </strong></p>
+                                            <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
+                                            <p class="eval-status">Evaluación de Análisis</p>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <aside class="right-panel">
+                                    <div class="filter-section">
+                                        <h3>Filtrar por</h3>
+                                        <select class="filter-select">
+                                            <option value="periodo">Periodo</option>
+                                            <option value="mastomenos">Legajo mayor a menor</option>
+                                            <option value="menostomas">Legajo menor a mayor</option>
+                                            <option value="name">Nombre</option>
+                                        </select>
+
+                                        <div class="status-buttons">
+                                            <div class="status-button pending">
+                                                <span class="red-dot"></span>
+                                                <span>Pendientes</span>
+                                                <span class="count">0</span>
+                                            </div>
+                                            <div class="status-button evaluate">
+                                                <span class="green-dot"></span>
+                                                <span>Evaluar</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </aside>
                             </div>
-                            <div class="status-button evaluate">
-                                <span class="green-dot"></span>
-                                <span>Evaluar</span>
-                            </div>
-                        </div>
-                    </div>
-                </aside>
-            </div>
 
-            <section class="evaluation-finished">
-                <h2>Evaluaciones Finalizadas</h2>
-                <div class="evaluation-card">
-                    
-                    <div class="eval-info">
-                        <p><strong><%= empleado.nombre %></strong></p>
-                        <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
-                        <p>Autoevaluación</p>
-                        <div class="progress-bar">
-                            <div class="progress" style="width: 40%;"></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
+                            <section class="evaluation-finished">
+                                <h2>Evaluaciones Finalizadas</h2>
+                                <div class="evaluation-card">
 
-    <script>
-        function popupEliminar(empleadoId) {
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: "¡No podrás revertir esta acción!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, Desactivar',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const form = document.getElementById('deleteEmpls');
-                    if (form){
-                        form.action = '/empleados/eliminar/' + empleadoId
-                         form.submit()
-                    }else{
-                        console.error('Delete form not found!');
-                    }
-                }
-            });
-        }
-    </script>
-    <script>
-        function popupActualizar(empleadoId) {
-            // Obtener el valor seleccionado en el combobox
-            console.log('ID del empleado:', empleadoId); // Mostrar el _id en la consola
-            console.log('actualizacion', document.getElementById('updateEmpls'));
-            
-            const selectedRole = document.getElementById('employee-options').value;
-            document.getElementById('newRole').value = selectedRole; 
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: "¡Cambiarás el rol del usuario a " + selectedRole + "!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#28a745',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, Actualizar ',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const form = document.getElementById('updateEmpls'); //CAMBIAR A ACTUALIZAR!!!!!
-                    
-                    if (form){
-                        form.action = '/empleados/update/' + empleadoId;
-                        console.log('Form action:', form.action);
-                        form.submit()
-                    }else{
-                        console.error('Update form not found!');
-                    }
-                }
-            });
-        }
-    </script>
+                                    <div class="eval-info">
+                                        <p><strong>
+                                                <%= empleado.nombre %>
+                                            </strong></p>
+                                        <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
+                                        <p>Autoevaluación</p>
+                                        <div class="progress-bar">
+                                            <div class="progress" style="width: 40%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </main>
+                        </div>
+
+                        <script>
+                            function popupEliminar(empleadoId) {
+                                Swal.fire({
+                                    title: '¿Estás seguro?',
+                                    text: "¡No podrás revertir esta acción!",
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#3085d6',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Sí, Desactivar',
+                                    cancelButtonText: 'Cancelar'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        const form = document.getElementById('deleteEmpls');
+                                        if (form) {
+                                            form.action = '/empleados/eliminar/' + empleadoId
+                                            form.submit()
+                                        } else {
+                                            console.error('Delete form not found!');
+                                        }
+                                    }
+                                });
+                            }
+                        </script>
+                        <script>
+                            function popupActualizar(empleadoId) {
+
+                                console.log('ID del empleado:', empleadoId); // Mostrar el _id en la consola
+                                console.log('actualizacion', document.getElementById('updateEmpls'));
+
+                                // Obtener el valor seleccionado en el combobox
+                                const selectedRole = document.getElementById('employee-options').value;
+
+                                console.log('Rol seleccionado:', selectedRole);
+
+                                // Asignar el valor del rol al campo oculto del formulario
+                                document.getElementById('newRole').value = selectedRole;
+
+                                // Si el rol seleccionado es "Empleado", no realiza ninguna acción y muestra un mensaje
+                                if (selectedRole === 'Empleado') {
+                                    Swal.fire({
+                                        title: 'No es necesario cambiar el rol',
+                                        text: "El usuario ya es un empleado. No se realizará ninguna acción.",
+                                        icon: 'info',
+                                        confirmButtonColor: '#3085d6',
+                                        confirmButtonText: 'Ok'
+                                    });
+                                    return; // Detiene la ejecución de la función
+                                }
+
+                                // Mostrar alerta de confirmación para otros roles
+                                Swal.fire({
+                                    title: '¿Estás seguro?',
+                                    text: "¡Cambiarás el rol del usuario a " + selectedRole + "!",
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#28a745',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Sí, Actualizar ',
+                                    cancelButtonText: 'Cancelar'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        const form = document.getElementById('updateEmpls');
+
+                                        if (form) {
+                                            // Usamos un switch para cambiar la ruta según el rol seleccionado
+                                            switch (selectedRole) {
+                                                case 'Intermediario':
+                                                    form.action = '/reguladores/actualizar/' + empleadoId;                                      
+                                                    break;
+                                                case 'Evaluador':
+                                                    form.action = '/evaluadores/actualizar/' + empleadoId;
+                                                    break;
+                                                default:
+                                                    console.error('Rol no válido');
+                                                    return; // Si el rol no es válido, salimos de la función
+                                            }
+
+                                            console.log('Form action:', form.action);
+                                            form.submit();
+                                        } else {
+                                            console.error('Update form not found!');
+                                        }
+                                    }
+                                });
+                            }
+                        </script>
 </body>
 
 </html>

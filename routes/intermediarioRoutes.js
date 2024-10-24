@@ -8,7 +8,9 @@ const Evaluador = require('../Schemas/evaluadorSchema')
 const Intermediario = require('../Schemas/intermediarioSchema')
 const baseUserSchema = require('../Schemas/baseUserSchema')
 const roleAuthorization = require('../middleware/roleAuth')
+const methodOverride = require('method-override')
 
+app.use(methodOverride('_method'))
 
 //GET route --> All evaluadores
 router.get('/reguladores', roleAuthorization(['Administrador', 'Intermediario']), async (req, res) => {
@@ -60,9 +62,15 @@ router.post('/reguladores/eliminar/:id', roleAuthorization(['Administrador']), a
 })
 
 // PUT route --> Actualizar rol de regulador
-router.put('/reguladores/actualizar/:id', roleAuthorization(['Administrador']), async (req, res) => {
+router.put('/reguladores/actualizar/:id', roleAuthorization(['Administrador','Empleado', 'Intermediario','Evaluador']), async (req, res) => {
+    
     const reguladoresId = req.params.id; // ID del regulador a actualizar
+    console.log('reguladoresId', reguladoresId);
+
     const { nuevoRol } = req.body; // El nuevo rol enviado desde el frontend
+    console.log('nuevo rol', nuevoRol);
+
+    console.log('Rol enviado: desde intermediario', req.body.rol);
 
     // Validar si el ID es válido
     if (!mongoose.isValidObjectId(reguladoresId)) {
@@ -70,7 +78,7 @@ router.put('/reguladores/actualizar/:id', roleAuthorization(['Administrador']), 
     }
 
     // Verificar si el rol enviado es válido (por ejemplo, "evaluador" o "intermediario")
-    const rolesPermitidos = ['evaluador', 'intermediario', 'empleado'];
+    const rolesPermitidos = ['Evaluador', 'Intermediario', 'Empleado'];
     if (!rolesPermitidos.includes(nuevoRol)) {
         return res.status(400).send('Rol inválido');
     }
@@ -90,6 +98,7 @@ router.put('/reguladores/actualizar/:id', roleAuthorization(['Administrador']), 
         console.error('Error actualizando rol:', error);
         res.status(500).send('Error en el servidor');
     }
+    
 });
 
 module.exports = router

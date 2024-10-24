@@ -43,12 +43,13 @@ router.get('/empleados/:id', roleAuthorization(['Administrador', 'Evaluador', 'I
 })
 
 // PUT route --> Actualizar cualquier atributo del empleado, incluyendo el rol
-router.put('/empleados/update/:id', roleAuthorization(['Administrador']), async (req, res) => {
+router.put('/empleados/actualizar/:id', roleAuthorization(['Administrador', 'Empleado', 'Evaluador', 'Intermediario']), async (req, res) => {
     if (req.user) {
         try {
             const id = req.params.id;
             const { rol } = req.body;  // Recibes el nuevo rol del cuerpo de la solicitud
 
+            console.log('Rol enviado: desde empleado', req.body.rol);
             // Verificar si el nuevo rol es válido (opcional, pero recomendable)
             const rolesPermitidos = ['Evaluador', 'Intermediario', 'Empleado'];
             if (rol && !rolesPermitidos.includes(rol)) {
