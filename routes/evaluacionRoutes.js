@@ -15,74 +15,42 @@ router.get('/evaluaciones', roleAuthorization(['Administrador', 'Evaluador', 'In
     if (req.user) {
         try {
             let query = {};
-            let sort = {};  // To handle sorting based on legajo
+            const { nombre, periodoStart, periodoEnd, tiempoFinStart, tiempoFinEnd, sortOrder } = req.query;
 
-            // For Empleado role, filter by their evaluations
+            // Role-based filtering for Empleado
             if (req.user.rol === 'Empleado') {
                 query.empleado = req.user._id;
                 query['formulario.tipo'] = 'autoevaluacion';
             }
 
-            // Handle filtering
-            const { filter, periodoStart, periodoEnd, nombre } = req.query;
-
-            // Name search (concatenate nombre and apellido and then search)
-            let aggregationPipeline = [
-                {
-                    $lookup: {
-                        from: 'users',  // Assuming 'users' collection holds empleados
-                        localField: 'empleado',
-                        foreignField: '_id',
-                        as: 'empleado'
-                    }
-                },
-                { $unwind: '$empleado' }
-            ];
-
-            if (filter === 'name' && nombre) {
-                const regex = new RegExp(nombre, 'i'); // case-insensitive search
-                aggregationPipeline.push({
-                    $match: {
-                        $expr: {
-                            $regexMatch: {
-                                input: { $concat: ['$empleado.nombre', ' ', '$empleado.apellido'] },  // concatenate nombre and apellido
-                                regex: regex
-                            }
-                        }
-                    }
-                });
+            // Name search (using $or to match first name or last name)
+            if (nombre) {
+                const regex = new RegExp(nombre, 'i');  // case-insensitive
+                query['$or'] = [
+                    { 'empleado.nombre': regex },
+                    { 'empleado.apellido': regex }
+                ];
             }
 
-            // Period filter
-            if (filter === 'periodo' && periodoStart && periodoEnd) {
-                aggregationPipeline.push({
-                    $match: {
-                        createdAt: {
-                            $gte: new Date(periodoStart),
-                            $lte: new Date(periodoEnd)
-                        }
-                    }
-                });
+            // Period filter (createdAt)
+            if (periodoStart && periodoEnd) {
+                query.createdAt = {
+                    $gte: new Date(periodoStart),
+                    $lte: new Date(periodoEnd)
+                };
             }
 
-            // Legajo sorting
-            if (filter === 'asc') {
-                aggregationPipeline.push({
-                    $sort: { 'empleado.legajo': 1 }
-                });
-            } else if (filter === 'desc') {
-                aggregationPipeline.push({
-                    $sort: { 'empleado.legajo': -1 }
-                });
+            // Tiempo Fin filter (deadline)
+            if (tiempoFinStart && tiempoFinEnd) {
+                query.deadline = {
+                    $gte: new Date(tiempoFinStart),
+                    $lte: new Date(tiempoFinEnd)
+                };
             }
 
-            console.log('Aggregation Pipeline:', aggregationPipeline);  // Log the pipeline for debugging
-
-            // Run aggregation
-            const evaluaciones = await Evaluacion.aggregate(aggregationPipeline)
-                .exec();
-
-            console.log('Evaluaciones found:', evaluaciones.length);  // Log the number of evaluations found
+            // Execute query with optional sorting
+            const sortOptions = sortOrder === 'asc' ? { 'empleado.legajo': 1 } : { 'empleado.legajo': -1 };
+            const evaluaciones = await Evaluacion.find(query).sort(sortOptions).exec();
 
             res.render('evals/evaluaciones', { evaluaciones, user: req.user });
         } catch (error) {
@@ -93,6 +61,7 @@ router.get('/evaluaciones', roleAuthorization(['Administrador', 'Evaluador', 'In
         res.redirect('/');
     }
 });
+
 
 
 
