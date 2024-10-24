@@ -20,20 +20,32 @@ router.get('/', (req, res) => {
 
 // GET route --> User Creator
 router.get('/user-creator', roleAuthorization(['Administrador']), (req, res) => {
+<<<<<<< Updated upstream
     res.render('newUsers')
+=======
+    if (req.user) {
+        try {
+            res.render('empls/empleado', { empleado, user: req.user })
+        } catch {
+            console.error(error)
+            res.status(500).send('Error del servidor')
+        }
+    } else {
+        res.redirect('/')
+    }
+>>>>>>> Stashed changes
 })
 
 // POST route --> Create User
-router.post('/save-new-user', upload.single('image'), roleAuthorization(['Administrador']), async (req, res) => {
+router.post('/save-new-user', upload.single('image'), roleAuthorization(['Administrador']), async(req, res) => {
     const { nombre, apellido, legajo, rol, email } = req.body
     const imagePath = req.file ? req.file.path : null
     try {
         // Check legajo
         const legajoChecker = await baseUserSchema.findOne({ legajo })
-        if (legajoChecker){
+        if (legajoChecker) {
             res.send('El legajo ya esta en uso, clickee en la flechita para volver atras para recuperar los datos ingresados')
-        }
-        else {
+        } else {
             // Basado en el rol
             const password = crypto.randomBytes(8).toString('hex')
             let newUser;
@@ -53,7 +65,7 @@ router.post('/save-new-user', upload.single('image'), roleAuthorization(['Admini
                 default:
                     return res.redirect('/user-creator')
             }
-            
+
             // Save usuario
             await newUser.save()
 
@@ -72,12 +84,12 @@ router.post('/save-new-user', upload.single('image'), roleAuthorization(['Admini
                 subject: 'Cuenta creada - Tu contraseña',
                 text: `Hola ${nombre},\n\nTu cuenta de BitQualy ha sido creada. Tu contraseña es: ${password}\nPor favor cámbiala después de iniciar sesión.`
             }
-    
+
             transporter.sendMail(mailOptions, (error, info) => {
                 if (error) {
                     console.log(error)
                     return res.redirect('/user-creator')
-                    
+
                 }
                 console.log('Correo enviado: ' + info.response)
                 res.redirect('/home-admin')
@@ -85,7 +97,7 @@ router.post('/save-new-user', upload.single('image'), roleAuthorization(['Admini
 
             // Redirect
             console.log(newUser)
-            //res.redirect('/home-admin')
+                //res.redirect('/home-admin')
         }
 
     } catch (error) {
@@ -117,6 +129,25 @@ app.post('/login', (req, res, next) => {
     })(req, res, next)
 })
 
+router.get('/myAccount', (req, res) => {
+    res.render('myAccount', { user: req.user })
+
+})
+
+router.post('/myAccount/update', upload.single('image'), async(req, res) => {
+    try {
+        // Obtenemos el path de la imagen subida por multer
+        const imagePath = req.file ? `uploads/images/${req.file.filename}` : req.user.imagePath
+
+        await User.findByIdAndUpdate(req.user._id, { imagePath: imagePath })
+
+        res.redirect('/myAccount')
+    } catch (err) {
+        console.error(err)
+        res.status(500).send('Error actualizando la imagen')
+    }
+})
+
 //GET route --> log out & destroy session
 router.get('/logout', (req, res, next) => {
     if (req.session) {
@@ -135,5 +166,3 @@ router.get('/logout', (req, res, next) => {
 
 
 module.exports = router
-
-

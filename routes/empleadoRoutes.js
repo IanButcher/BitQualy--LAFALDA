@@ -10,20 +10,23 @@ const baseUserSchema = require('../Schemas/baseUserSchema')
 const roleAuthorization = require('../middleware/roleAuth')
 
 
+
 app.use(roleAuthorization)
 
+const upload = multer({ storage: storage })
+
 //GET route --> All evaluadores
-router.get('/empleados', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async (req, res) => {
+router.get('/empleados', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async(req, res) => {
     if (req.user) {
         const empleados = await Empleado.find({ estaActivo: true })
-        res.render('empls/empleados', { empleados, user: req.user })  
+        res.render('empls/empleados', { empleados, user: req.user })
     } else {
         res.redirect('/');
     }
 })
 
 // GET route --> Evaluador Especifico
-router.get('/empleados/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async (req, res) => {
+router.get('/empleados/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async(req, res) => {
     if (req.user) {
         try {
             const id = req.params.id
@@ -38,11 +41,11 @@ router.get('/empleados/:id', roleAuthorization(['Administrador', 'Evaluador', 'I
         }
     } else {
         res.redirect('/');
-    } 
+    }
 })
 
-router.post('/empleados/eliminar/:id', roleAuthorization(['Administrador']), async (req, res) => {
-    const empleadoId = req.params.id  
+router.post('/empleados/eliminar/:id', roleAuthorization(['Administrador']), async(req, res) => {
+    const empleadoId = req.params.id
     if (!mongoose.isValidObjectId(empleadoId)) {
         return res.status(400).send('ID inválido')
     }
@@ -59,5 +62,6 @@ router.post('/empleados/eliminar/:id', roleAuthorization(['Administrador']), asy
         res.status(500).send('Error en el servidor')
     }
 })
+
 
 module.exports = router

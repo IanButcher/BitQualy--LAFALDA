@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="eS">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/header.css">
+    <title>EDIT MY ACCOUNT</title>
+</head>
+
+<body>
+    <form action="/myAccount" method="POST" enctype="multipart/form-data">
+        <div class="image-preview" onclick="document.getElementById('foto').click();">
+            <img id="image-preview-img" src="<%= user.imagePath ? '/' + user.imagePath : '/img/user.png' %>" alt="Vista previa de la foto" style="display: block; max-width: 150px; max-height: 150px;" />
+            <span class="change-photo-text">Haz clic aquí para cambiar la foto</span>
+        </div>
+
+        <input type="file" id="foto" name="image" accept="image/*" onchange="previewImage(event);" style="display: none;">
+        <button type="submit" id="btn-crear" class="btn-submit">Crear Usuario</button>
+    </form>
+    <script>
+        function previewImage(event) {
+            const input = event.target
+            const reader = new FileReader()
+
+            reader.onload = function() {
+                const imagePreview = document.getElementById('image-preview-img')
+                imagePreview.src = reader.result
+                imagePreview.style.display = 'block'
+            }
+            if (input.files && input.files[0]) {
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+</body>
+
+</html>

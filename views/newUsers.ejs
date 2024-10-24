@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,13 +17,16 @@
         top: 100px;
     }
 </style>
+
 <body>
-    <nav> <%- include('./partials/navbar') %> </nav>
+    <nav>
+        <%- include('./partials/navbar') %>
+    </nav>
 
     <!-- Panel principal -->
     <main class="main-content">
         <header class="header notificacion-icon user-photo">
-            <%- include('./partials/headerU') %> 
+            <%- include('./partials/headerU') %>
         </header>
 
         <!-- Important: Add enctype="multipart/form-data" -->
@@ -51,7 +55,10 @@
                 </div>
             </div>
 
+<<<<<<< Updated upstream
             <!-- Resto del formulario -->
+=======
+>>>>>>> Stashed changes
             <div class="form-grid">
                 <div class="form-group">
                     <label for="legajo">Legajo</label>
@@ -71,7 +78,20 @@
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" placeholder="Ingresa el email" required minlength="8" size="25">
+<<<<<<< Updated upstream
                 </div>                    
+=======
+                </div>
+
+                <div class="form-group">
+                    <label for="email1">Confirmar Email</label>
+                    <input type="email" id="email1" name="email1" placeholder="Ingresa el email" required minlength="8" size="25">
+                </div>
+
+                <p id="error-msg" class="error-msg" style="display: none;">
+                    <i class="fas fa-exclamation-triangle"></i> Los correos no coinciden.
+                </p>
+>>>>>>> Stashed changes
 
                 <div class="form-buttons">
                     <button type="submit" class="btn-submit">Crear Usuario</button>
@@ -84,16 +104,53 @@
     <script>
         // Preview the selected image
         let imgLoaded = false
+
         function previewImage(event) {
             const reader = new FileReader();
             reader.onload = function() {
                 const output = document.getElementById('image-preview-img');
                 output.src = reader.result;
-                output.style.display = 'block';  // Display the image preview
+                output.style.display = 'block'; // Display the image preview
                 imgLoaded = true
             };
-            reader.readAsDataURL(event.target.files[0]);  // Load the file and display it
+            reader.readAsDataURL(event.target.files[0]); // Load the file and display it
         }
+<<<<<<< Updated upstream
+=======
+
+
+        const email = document.querySelector('#email');
+        const email1 = document.querySelector('#email1');
+        const btnCrear = document.querySelector('#btn-crear');
+        const errorMsg = document.querySelector('#error-msg');
+
+        // Función para validar los correos y habilitar/deshabilitar el botón
+        function validarEmails() {
+            if (email.value === email1.value && email.value !== "") {
+                errorMsg.style.display = 'none'; // Oculta el mensaje de error
+                btnCrear.disabled = false; // Habilita el botón si los correos coinciden
+            } else {
+                errorMsg.style.display = 'block'; // Muestra el mensaje de error
+                btnCrear.disabled = true; // Deshabilita el botón si no coinciden
+            }
+        }
+
+        // Eventos que se activan al cambiar el valor de los inputs de email
+        email.addEventListener('input', validarEmails);
+        email1.addEventListener('input', validarEmails);
+
+        // Función para vista previa de la imagen
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const output = document.getElementById('image-preview-img');
+                output.src = reader.result;
+                output.style.display = 'block'; // Mostrar la imagen de vista previa
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+>>>>>>> Stashed changes
     </script>
 </body>
+
 </html>
