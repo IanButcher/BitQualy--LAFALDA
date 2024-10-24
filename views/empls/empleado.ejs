@@ -44,12 +44,23 @@
                     <% if (user && user.rol === 'Administrador') { %>
                         <button class="btn-disable" onclick="popupEliminar('<%= empleado._id %>')">Desactivar</button>
                     <% } %>
+                    
+                    <form id="updateEmpls" method="POST">
+                        <input type="hidden" name="_method" value="PUT">
+                        <input type="hidden" name="rol" id="newRole"> <!-- Input oculto para el nuevo rol -->
+                    </form>
+
                     <label for="employee-options">Designar como:</label>
                     <select id="employee-options">
-                        <option value="option1">Empleado regular</option>
-                        <option value="option2">Evaluador</option>
-                        <option value="option3">Intermediario</option>
+                        <option value="Empleado">Empleado</option>
+                        <option value="Evaluador">Evaluador</option>
+                        <option value="Intermediario">Intermediario</option>
                     </select>
+
+                    
+                    <% if (user && user.rol === 'Administrador') { %>
+                        <button class="btn-disable" onclick="popupActualizar('<%= empleado._id %>')">Actualizar</button>
+                    <% } %>
                 </div>
 
                     <%- include('../partials/headerU') %>
@@ -59,7 +70,6 @@
                 <section class="evaluation-section">
                     <h2>Evaluaciones Asignadas</h2>
                     <div class="evaluation-card">
-                        <!-- <img src="empleado1.jpg" alt="Franco Siccardi" class="eval-img"> -->
                         <div class="eval-info">
                             <p><strong><%= empleado.nombre %></strong></p>
                             <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
@@ -68,7 +78,7 @@
                     </div>
 
                     <div class="evaluation-card">
-                        <!--<img src="empleado1.jpg" alt="Franco Siccardi" class="eval-img">-->
+                       
                         <div class="eval-info">
                             <p><strong><%= empleado.nombre %></strong></p>
                             <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
@@ -105,7 +115,7 @@
             <section class="evaluation-finished">
                 <h2>Evaluaciones Finalizadas</h2>
                 <div class="evaluation-card">
-                    <!--<img src="empleado1.jpg" alt="Franco Siccardi" class="eval-img">-->
+                    
                     <div class="eval-info">
                         <p><strong><%= empleado.nombre %></strong></p>
                         <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
@@ -138,6 +148,38 @@
                          form.submit()
                     }else{
                         console.error('Delete form not found!');
+                    }
+                }
+            });
+        }
+    </script>
+    <script>
+        function popupActualizar(empleadoId) {
+            // Obtener el valor seleccionado en el combobox
+            console.log('ID del empleado:', empleadoId); // Mostrar el _id en la consola
+            console.log('actualizacion', document.getElementById('updateEmpls'));
+            
+            const selectedRole = document.getElementById('employee-options').value;
+            document.getElementById('newRole').value = selectedRole; 
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¡Cambiarás el rol del usuario a " + selectedRole + "!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#28a745',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, Actualizar ',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const form = document.getElementById('updateEmpls'); //CAMBIAR A ACTUALIZAR!!!!!
+                    
+                    if (form){
+                        form.action = '/empleados/update/' + empleadoId;
+                        console.log('Form action:', form.action);
+                        form.submit()
+                    }else{
+                        console.error('Update form not found!');
                     }
                 }
             });

@@ -8,7 +8,7 @@ const Regulador = require('../Schemas/intermediarioSchema')
 const baseUserSchema = require('../Schemas/baseUserSchema')
 const Administrador = require('../Schemas/adminSchema')
 const { initializePassportSession, passport } = require('../middleware/passportConfig')
-const roleAuthorization = require('../middleware/roleAuth')
+//const roleAuthorization = require('../middleware/roleAuth')
 const crypto = require('crypto')
 const nodemailer = require('nodemailer')
 const upload = require('../middleware/multerConfig')
@@ -19,12 +19,12 @@ router.get('/', (req, res) => {
 })
 
 // GET route --> User Creator
-router.get('/user-creator', roleAuthorization(['Administrador']), (req, res) => {
+router.get('/user-creator',  (req, res) => {
     res.render('newUsers')
 })
 
 // POST route --> Create User
-router.post('/save-new-user', upload.single('image'), roleAuthorization(['Administrador']), async (req, res) => {
+router.post('/save-new-user', upload.single('image'),  async (req, res) => {
     const { nombre, apellido, legajo, rol, email } = req.body
     const imagePath = req.file ? req.file.path : null
     try {

@@ -59,5 +59,37 @@ router.post('/reguladores/eliminar/:id', roleAuthorization(['Administrador']), a
     }
 })
 
+// PUT route --> Actualizar rol de regulador
+router.put('/reguladores/actualizar/:id', roleAuthorization(['Administrador']), async (req, res) => {
+    const reguladoresId = req.params.id; // ID del regulador a actualizar
+    const { nuevoRol } = req.body; // El nuevo rol enviado desde el frontend
+
+    // Validar si el ID es válido
+    if (!mongoose.isValidObjectId(reguladoresId)) {
+        return res.status(400).send('ID inválido');
+    }
+
+    // Verificar si el rol enviado es válido (por ejemplo, "evaluador" o "intermediario")
+    const rolesPermitidos = ['evaluador', 'intermediario', 'empleado'];
+    if (!rolesPermitidos.includes(nuevoRol)) {
+        return res.status(400).send('Rol inválido');
+    }
+
+    try {
+        const result = await Intermediario.findByIdAndUpdate(
+            reguladoresId, 
+            { rol: nuevoRol }, 
+            { new: true } // Devolver el documento actualizado
+        );
+        if (result) {
+            res.redirect('/reguladores'); // Redirigir o enviar una respuesta adecuada
+        } else {
+            res.status(404).send('Regulador no encontrado');
+        }
+    } catch (error) {
+        console.error('Error actualizando rol:', error);
+        res.status(500).send('Error en el servidor');
+    }
+});
 
 module.exports = router
