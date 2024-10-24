@@ -1,3 +1,14 @@
+:root {
+    --color-bg: #fff;                /* Fondo del popup de notificaciones */
+    --color-header-text: #333;       /* Texto del encabezado */
+    --color-icon: #777;              /* Color de los iconos del header */
+    --color-icon-hover: #888;        /* Color de los iconos al pasar el mouse */
+    --color-border: #ddd;            /* Color del borde del perfil y el popup */
+    --color-popup-bg: #fff;          /* Fondo del popup */
+    --color-popup-header: #333;      /* Texto del encabezado del popup */
+    --color-popup-body-text: #666;   /* Texto del cuerpo del popup */
+}
+
 /* Estilos del Header */
 .header {
     display: flex;
@@ -15,15 +26,20 @@
 
 .header-options i {
     font-size: 1.5em;
-    color: #777;
+    color: var(--color-icon);
     cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.header-options i:hover {
+    color: var(--color-icon-hover); /* Cambia el color al pasar el mouse */
 }
 
 .profile-img {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    border: 2px solid #ddd;
+    border: 2px solid var(--color-border);
 }
 
 /* Nueva Sección de Búsqueda */
@@ -53,7 +69,7 @@
     right: 15px;
     top: 50%;
     transform: translateY(-50%);
-    color: #888; /* Ajuste de color */
+    color: var(--color-icon-hover); /* Ajuste de color */
     pointer-events: none;
 }
 
@@ -64,12 +80,12 @@
     top: 60px;
     right: 20px;
     width: 300px;
-    background-color: #fff;
+    background-color: var(--color-popup-bg);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     padding: 20px;
-    color: #333;
+    color: var(--color-popup-body-text);
 }
 
 /* Encabezado del popup */
@@ -77,7 +93,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--color-border);
     padding-bottom: 10px;
     margin-bottom: 10px;
 }
@@ -85,12 +101,12 @@
 .popup-header h3 {
     margin: 0;
     font-size: 18px;
-    color: #333;
+    color: var(--color-popup-header);
 }
 
 .close-popup {
     cursor: pointer;
-    color: #333;
+    color: var(--color-popup-header);
 }
 
 /* Cuerpo del popup */
@@ -98,7 +114,7 @@
     max-height: 200px;
     overflow-y: auto;
     font-size: 14px;
-    color: #666;
+    color: var(--color-popup-body-text);
 }
 
 .popup-body p {
@@ -112,7 +128,7 @@
     padding: 10px;
     border-bottom: 1px solid #eee;
     font-size: 14px;
-    color: #333;
+    color: var(--color-popup-body-text);
 }
 
 .popup-body .notification:hover {

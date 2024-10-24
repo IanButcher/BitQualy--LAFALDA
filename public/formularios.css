@@ -1,3 +1,18 @@
+:root {
+    --color-bg: #f4f4f4;              /* Fondo general del cuerpo */
+    --color-main-bg: #fff;           /* Fondo principal del contenido */
+    --color-border: #ccc;             /* Color del borde de los elementos */
+    --color-primary: green;           /* Color principal para botones */
+    --color-primary-hover: hwb(113 11% 0%); /* Color del botón al pasar el mouse */
+    --color-modify: rgb(213, 138, 0); /* Color del botón de modificar */
+    --color-eliminar-bg: #e9e8e8;     /* Fondo de la sección de eliminar */
+    --color-eliminar-text: #000;      /* Color del texto de eliminar */
+    --color-eliminar-preview-bg: #0fb400c4; /* Fondo del botón de vista previa */
+    --color-eliminar-preview-hover: #33a100; /* Color al pasar el mouse en el botón de vista previa */
+    --color-eliminar-button-bg: #b30c00d0; /* Fondo del botón de eliminar */
+    --color-eliminar-button-hover: #be0000; /* Color al pasar el mouse en el botón de eliminar */
+}
+
 /* General Styles */
 * {
     margin: 0;
@@ -8,7 +23,7 @@
 body, html {
     font-family: Arial, sans-serif;
     height: 100%;
-    background-color: #f4f4f4;
+    background-color: var(--color-bg);
 }
 
 .container {
@@ -20,7 +35,7 @@ body, html {
 .main-content {
     flex-grow: 1;
     padding: 40px;
-    background-color: #fff;
+    background-color: var(--color-main-bg);
     overflow-y: auto;
 }
 
@@ -145,7 +160,7 @@ body, html {
 .header .search-section input {
     padding: 10px 20px;
     border-radius: 25px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-border);
 }
 
 .header .search-icon {
@@ -180,12 +195,13 @@ body, html {
 
 .form-list select {
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-border);
     border-radius: 25px;
     font-size: 16px;
 }
 
 .btn-filter {
+    background-color: var(--color-primary);
     background-color: #e50c21e0;
     color: white;
     border: none;
@@ -198,7 +214,7 @@ body, html {
 }
 
 .btn-filter:hover {
-    background-color: #b30c00d0;
+    background-color: var(--color-primary-hover);
 }
 
 .preview-section {
@@ -208,7 +224,7 @@ body, html {
 .preview-frame {
     width: 100%;
     height: 400px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-border);
     border-radius: 8px;
     margin-bottom: 20px;
 }
@@ -218,6 +234,7 @@ body, html {
 }
 
 .btn-modify {
+    background-color: var(--color-modify);
     background-color: #218838;
     color: white;
     padding: 10px 40px;
@@ -232,12 +249,51 @@ body, html {
 
 /* Estilos para el contenedor eliminar */
 .eliminar {
-    background-color: #d4d4d4; /* Fondo rojo suave */
+    background-color: var(--color-eliminar-bg);
     padding: 20px;
     border-radius: 8px;
     margin: 20px 0;
 }
 
 .eliminar h3 {
+    color: var(--color-eliminar-text);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-bottom: 10px;
+}
+
+.eliminar a.btn-preview {
+    display: inline-block;
+    background-color: var(--color-eliminar-preview-bg);
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.35s ease, transform 0.6s ease; /* Animación suave */
+}
+
+.eliminar a.btn-preview:hover {
+    background-color: var(--color-eliminar-preview-hover);
+    transform: scale(1.1); /* Agranda el botón un 10% */
+}
+
+.eliminar button {
+    background-color: var(--color-eliminar-button-bg);
+    color: white;
+    border: none;
+    padding: 10px 19px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 15px;
+    transition: background-color 0.35s ease, transform 0.6s ease; /* Animación suave */
+    font-size: 16px;
+}
+
+.eliminar button:hover {
+    background-color: var(--color-eliminar-button-hover);
+    transform: scale(1.1); /* Agranda el botón un 10% */
+}
+
+.eliminar form {
+    display: inline;
     color: #dc3545; /* Color del texto */
 }

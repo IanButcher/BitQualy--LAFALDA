@@ -1,3 +1,14 @@
+  
+  :root {
+    --color-gris-claro: #f4f4f4;
+    --color-blanco: #ffffff;
+    --color-gris: #ccc;
+    --color-azul: #007bff;
+    --color-azul-hover: #0056b3;
+    --color-verde: #28a745;
+    --color-rojo: #dc3545;
+    --color-rojo-hover: #c82333;
+}
   /* Estilos generales */
   * {
     margin: 0;
@@ -8,7 +19,7 @@
 body, html {
     font-family: Arial, sans-serif;
     height: 100%;
-    background-color: #f4f4f4;
+    background-color: var(--color-gris-claro);
 }
 
 .container {
@@ -46,7 +57,7 @@ body, html {
 
 /* Estilos del formulario */
 .form-editor {
-    background-color: white;
+    background-color: var(--color-blanco);
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -68,7 +79,7 @@ body, html {
 .form-group select {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-gris);
     border-radius: 4px;
 }
 
@@ -80,37 +91,37 @@ button {
 }
 
 .btn-add {
-    background-color: #007bff;
+    background-color: var(--color-azul);
     color: white;
 }
 
 .btn-add:hover {
-    background-color: #0056b3;
+    background-color: var(--color-azul-hover);
 }
 
 .btn-save {
-    background-color: #28a745;
-    color: white;
+    background-color: var(--color-verde);
+    color: var(--color-blanco);
     margin-right: 10px;
 }
 
 .btn-cancel {
-    background-color: #dc3545;
-    color: white;
+    background-color: var(--color-rojo);
+    color: var(--color-blanco);
 }
 
 .btn-delete {
-    background-color: #dc3545;
-    color: white;
+    background-color: var(--color-rojo);
+    color: var(--color-blanco);
 }
 
 .btn-delete:hover {
-    background-color: #c82333;
+    background-color: var(--color-rojo-hover);
 }
 
 .preview-section {
     margin-top: 20px;
-    background-color: white;
+    background-color: var(--color-blanco);
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

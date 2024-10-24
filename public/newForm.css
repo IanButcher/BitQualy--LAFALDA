@@ -1,10 +1,28 @@
+:root {
+    --color-gris-claro: #f4f7fa;
+    --color-negro-suave: #333;
+    --color-blanco: #fff;
+    --color-gris: #ccc;
+    --color-azul: #4a90e2;
+    --color-azul-hover: #357ab8;
+    --color-azul-oscuro: #2a36d4;
+    --color-rojo: #d42a2a;
+    --color-verde: #38df40;
+    --color-verde-oscuro: #28a745;
+    --color-azul-porcentaje: #007bff;
+    --color-rojo-porcentaje: #dc3545;
+    --color-azul-fondo: #e7f4ff;
+    --color-borde-izquierdo: #e0e0e0;
+}
+
+
 /* Estilos generales */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f4f7fa;
+    background-color: var(--color-gris-claro);
     margin: 0;
     padding: 0;
-    color: #333;
+    color: var(--color-negro-suave);
     display: flex; /* Habilita flexbox en el body */
     flex-direction: column; /* Asegura que los hijos se apilen verticalmente */
     align-items: center; /* Centra horizontalmente los hijos */
@@ -25,7 +43,7 @@ body {
     flex-grow: 1; /* Hace que el contenido principal ocupe todo el espacio restante */
     padding: 50px;
     margin-left: 250px; /* Mueve el contenido principal a la derecha del sidebar */
-    background-color: #fff;
+    background-color: var(--color-blanco);
     overflow-y: auto;
     margin-right: 2px; /* Da espacio al panel derecho */
 }
@@ -49,7 +67,7 @@ body {
 }
 
 h2 {
-    color: #4a90e2;
+    color: var(--color-azul);
 }
 
 /* Estilos del formulario */
@@ -73,7 +91,7 @@ textarea,
 select {
     width: 80%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-gris);
     border-radius: 20px; /* Aumento del redondeado */
     box-sizing: border-box;
     transition: border-color 0.3s, background-color 0.3s;
@@ -83,7 +101,7 @@ input[type="text"]:focus,
 input[type="number"]:focus,
 textarea:focus,
 select:focus {
-    border-color: #4a90e2;
+    border-color: var(--color-azul);
 }
 
 /* Estilos de botones */
@@ -104,8 +122,8 @@ select:focus {
 
 
 .btn-download {
-    background-color: #2a36d4;
-    color: white;
+    background-color: var(--color-azul-oscuro);
+    color: var(--color-blanco);
     border: none;
     border-radius: 20px; /* Aumento del redondeado */
     padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
@@ -115,8 +133,8 @@ select:focus {
 }
 
 .btn-cancel {
-    background-color: #d42a2a;
-    color: white;
+    background-color: var(--color-rojo);
+    color: var(--color-blanco);
     border: none;
     border-radius: 20px; /* Aumento del redondeado */
     padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
@@ -126,8 +144,8 @@ select:focus {
 }
 
 .btn-add-option {
-    background-color: #38df40;
-    color: white;
+    background-color: var(--color-verde);
+    color: var(--color-blanco);
     border: none;
     border-radius: 20px; /* Aumento del redondeado */
     padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
@@ -140,8 +158,8 @@ select:focus {
 .btn-add,
 .btn-save,
 .btn-add:hover {
-    background-color: #4a90e2;
-    color: white;
+    background-color: var(--color-azul);
+    color: var(--color-blanco);
     border: none;
     border-radius: 20px; /* Aumento del redondeado */
     padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
@@ -150,24 +168,24 @@ select:focus {
 }
 
 .btn-save:hover {
-    background-color: #4a90e2;
+    background-color: var(--color-azul);
 }
 
 .btn-download:hover {
-    background-color: #4a90e2;
+    background-color: var(--color-azul);
 }
 
 .btn-cancel:hover,
 .btn-delete:hover,
 .btn-add-option:hover {
-    background-color: #357ab8;
+    background-color: var(--color-azul-hover);
 }
 
 /* Estilos de las opciones */
 .options-group {
     margin-top: 10px;
     padding-left: 20px;
-    border-left: 2px solid #e0e0e0;
+    border-left: 2px solid var(--color-borde-izquierdo);
 }
 
 .option-item {
@@ -188,24 +206,24 @@ iframe {
 .percentage-input {
     width: 80%; /* Mantiene el input del porcentaje alineado con otros inputs */
     padding: 10px;
-    border: 2px solid #4a90e2; /* Color de borde por defecto */
+    border: 2px solid var(--color-azul); /* Color de borde por defecto */
     border-radius: 20px;
     box-sizing: border-box;
-    background-color: #e7f4ff; /* Color de fondo */
+    background-color: var(--color-azul-fondo); /* Color de fondo */
     transition: border-color 0.3s; /* Transición suave para el cambio de color */
 }
 
 /* Borde rojo para porcentaje < 20 */
 .red-border {
-    border-color: #dc3545; /* Rojo */
+    border-color: var(--color-rojo-porcentaje); /* Rojo */
 }
 
 /* Borde azul para 20 <= porcentaje < 70 */
 .blue-border {
-    border-color: #007bff; /* Azul */
+    border-color: var(--color-azul-porcentaje); /* Azul */
 }
 
 /* Borde verde para porcentaje >= 70 */
 .green-border {
-    border-color: #28a745; /* Verde */
+    border-color: var(--color-verde-oscuro); /* Verde */
 }

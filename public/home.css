@@ -1,15 +1,28 @@
+:root {
+    --color-bg: #1a1a1a;           /* Fondo general */
+    --color-text: white;           /* Texto principal */
+    --color-hover: #575757;        /* Color de fondo al hacer hover */
+    --color-border: white;         /* Color del borde */
+    --color-popup-bg: #fff;        /* Fondo del popup de notificaciones */
+    --color-popup-text: #333;      /* Texto del popup */
+    --color-popup-body-text: #666; /* Texto del cuerpo del popup */
+}
+
+/* Reinicio de márgenes y paddings */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Estilos generales del body y html */
 body, html {
     font-family: Arial, sans-serif;
     height: 100%;
-    background-color: #1a1a1a;
+    background-color: var(--color-bg);
 }
 
+/* Contenedor principal de la página */
 .home-container {
     display: flex;
     flex-direction: column;
@@ -21,12 +34,14 @@ body, html {
     text-align: center;
 }
 
+/* Estilo del logo */
 .logo img {
     max-width: 40%; /* Asegura que la imagen del logo se ajuste al tamaño del contenedor */
     height: auto;
     margin-bottom: 10px;
 }
 
+/* Estilos del menú principal */
 .main-nav {
     padding-top: 10px;
     display: flex;
@@ -35,8 +50,9 @@ body, html {
     flex-wrap: wrap; /* Permite que los elementos se muevan a una nueva línea en pantallas pequeñas */
 }
 
+/* Estilos para los items del menú */
 .nav-item {
-    color: white;
+    color: var(--color-text);
     text-decoration: none;
     text-align: center;
     font-size: 18px;
@@ -46,7 +62,6 @@ body, html {
     align-items: center;
     transition: transform 0.3s ease;
     position: relative;
-    
     border-radius: 10px;
     width: 150px;
     margin: 10px;
@@ -67,15 +82,16 @@ body, html {
     font-size: 24px;
 }
 
-/* Menú desplegable */
-.gestion-section:hover{
+/* Estilos para el menú desplegable */
+.gestion-section:hover {
     transform: scale(1.1);
-    border-color: white; /* El borde cambia a blanco cuando pasas el mouse */
+    border-color: var(--color-border); /* El borde cambia a blanco cuando pasas el mouse */
     animation: border-animation 0.5s forwards; /* Animación al hacer hover */
 }
+
 .gestion-section {
     position: relative;
-    color: white;
+    color: var(--color-text);
     text-decoration: none;
     text-align: center;
     font-size: 18px;
@@ -109,7 +125,7 @@ body, html {
 
 /* Estilos individuales para cada item del dropdown */
 .dropdown-item {
-    color: white;
+    color: var(--color-text);
     text-decoration: none;
     padding: 10px 20px;
     display: flex;
@@ -122,7 +138,7 @@ body, html {
 }
 
 .dropdown-item:hover {
-    border-color: white; /* Aplica borde solo a cada item cuando pasas el mouse */
+    border-color: var(--color-border); /* Aplica borde solo a cada item cuando pasas el mouse */
     animation: border-animation 0.5s forwards;
 }
 
@@ -132,10 +148,11 @@ body, html {
         border-color: transparent;
     }
     100% {
-        border-color: white;
+        border-color: var(--color-border);
     }
 }
 
+/* Estilos de los iconos en el encabezado */
 .header-icons {
     position: absolute;
     top: 20px;
@@ -143,7 +160,7 @@ body, html {
 }
 
 .icon {
-    color: white;
+    color: var(--color-text);
     margin-left: 10px;
     cursor: pointer; /* Aplica cursor de puntero solo al icono de la campana */
 }
@@ -155,12 +172,12 @@ body, html {
     top: 60px;
     right: 20px;
     width: 300px;
-    background-color: #fff;
+    background-color: var(--color-popup-bg);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     padding: 20px;
-    color: #333;
+    color: var(--color-popup-text);
 }
 
 /* Encabezado del popup */
@@ -176,12 +193,12 @@ body, html {
 .popup-header h3 {
     margin: 0;
     font-size: 18px;
-    color: #333;
+    color: var(--color-popup-text);
 }
 
 .close-popup {
     cursor: pointer;
-    color: #333;
+    color: var(--color-popup-text);
 }
 
 /* Cuerpo del popup */
@@ -189,7 +206,7 @@ body, html {
     max-height: 200px;
     overflow-y: auto;
     font-size: 14px;
-    color: #666;
+    color: var(--color-popup-body-text);
 }
 
 .popup-body p {
@@ -203,7 +220,7 @@ body, html {
     padding: 10px;
     border-bottom: 1px solid #eee;
     font-size: 14px;
-    color: #333;
+    color: var(--color-popup-text);
 }
 
 .popup-body .notification:hover {

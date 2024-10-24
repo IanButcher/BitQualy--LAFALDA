@@ -1,3 +1,12 @@
+:root{
+    --negro:#0000;
+    --blanco:#fff;
+    --gris:#ccc;
+    --rojo_claro:#e4002b;
+    --rojo_oscuro:#c20025;
+}
+
+
 * {
     margin: 0;
     padding: 0;
@@ -19,7 +28,7 @@ body, html {
 /* Panel izquierdo con imagen de fondo */
 .left-panel {
     width: 40%;
-    background-color: #000;
+    background-color: var(--negro);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -28,7 +37,7 @@ body, html {
 
 .left-panel .logo-section {
     text-align: center;
-    color: white;
+    color: var(--blanco);
 }
 
 .logo {
@@ -56,7 +65,7 @@ body, html {
 }
 
 .login-form {
-    background-color: white;
+    background-color: var(--blanco);
     padding: 60px;
     border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -89,7 +98,7 @@ body, html {
 .input-group input {
     width: 100%;
     padding: 12px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--gris);
     border-radius: 5px;
     font-size: 1.1rem;
     margin-right: 30px; /* Espacio para el ícono */
@@ -107,8 +116,8 @@ body, html {
 .login-button {
     width: 100%;
     padding: 15px;
-    background-color: #e4002b;
-    color: white;
+    background-color: var(--rojo_claro);
+    color: var(--blanco);
     border: none;
     border-radius: 5px;
     font-size: 1.3rem;
@@ -117,7 +126,7 @@ body, html {
 }
 
 .login-button:hover {
-    background-color: #c20025;
+    background-color: var(--rojo_oscuro);
 }
 
 /* Media queries para responsividad */

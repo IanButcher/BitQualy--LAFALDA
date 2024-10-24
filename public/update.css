@@ -1,10 +1,24 @@
+:root {
+    --color-fondo: #f4f7fa; /* Color de fondo */
+    --color-blanco: #ffffff; /* Color blanco */
+    --color-gris: #ccc; /* Color gris */
+    --color-gris-oscuro: #333; /* Color gris oscuro */
+    --color-azul: #4a90e2; /* Color azul */
+    --color-azul-oscuro: #2a36d4; /* Color azul oscuro */
+    --color-rojo: #d42a2a; /* Color rojo */
+    --color-verde: #38df40; /* Color verde */
+    --color-verde-oscuro: #28a745; /* Color verde oscuro */
+    --color-azul-claro: #e7f4ff; /* Color azul claro */
+    --color-gris-claro: #e0e0e0; /* Color gris claro */
+}
+
 /* Estilos generales */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f4f7fa;
+    background-color: var(--color-fondo); /* Cambiado a variable */
     margin: 0;
     padding: 0;
-    color: #333;
+    color: var(--color-gris-oscuro); /* Cambiado a variable */
     display: flex; /* Habilita flexbox en el body */
     flex-direction: column; /* Asegura que los hijos se apilen verticalmente */
     align-items: center; /* Centra horizontalmente los hijos */
@@ -15,7 +29,7 @@ body {
     padding: 40px; /* Ajusta el espacio alrededor del contenido */
     width: 100%; /* Asegura que ocupe el ancho completo */
     max-width: 800px; /* Ancho máximo del contenido */
-    background-color: #fff;
+    background-color: var(--color-blanco); /* Cambiado a variable */
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     margin-top: 20px; /* Añade un margen superior para espaciarlo del navbar */
@@ -29,7 +43,7 @@ body {
 }
 
 h2 {
-    color: #4a90e2;
+    color: var(--color-azul); /* Cambiado a variable */
 }
 
 /* Estilos del formulario */
@@ -53,7 +67,7 @@ textarea,
 select {
     width: 80%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-gris); /* Cambiado a variable */
     border-radius: 20px; /* Aumento del redondeado */
     box-sizing: border-box;
     transition: border-color 0.3s, background-color 0.3s;
@@ -63,10 +77,9 @@ input[type="text"]:focus,
 input[type="number"]:focus,
 textarea:focus,
 select:focus {
-    border-color: #4a90e2;
+    border-color: var(--color-azul); /* Cambiado a variable */
 }
 
-/* Estilos de botones */
 /* Estilos de botones */
 .modify-buttons {
     display: flex;
@@ -74,19 +87,19 @@ select:focus {
     margin-top: 40px; /* Aumenta este margen para más espacio entre inputs y botones */
 }
 
-
-.btn-download{
-    background-color: #2a36d4;
-    color: white;
+.btn-download {
+    background-color: var(--color-azul-oscuro); /* Cambiado a variable */
+    color: var(--color-blanco); /* Cambiado a variable */
     border: none;
     border-radius: 20px; /* Aumento del redondeado */
     padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
     cursor: pointer;
     transition: background-color 0.3s;
 }
-.btn-cancel{
-    background-color: #d42a2a;
-    color: white;
+
+.btn-cancel {
+    background-color: var(--color-rojo); /* Cambiado a variable */
+    color: var(--color-blanco); /* Cambiado a variable */
     border: none;
     border-radius: 20px; /* Aumento del redondeado */
     padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
@@ -95,8 +108,8 @@ select:focus {
 }
 
 .btn-add-option {
-    background-color: #38df40;
-    color: white;
+    background-color: var(--color-verde); /* Cambiado a variable */
+    color: var(--color-blanco); /* Cambiado a variable */
     border: none;
     border-radius: 20px; /* Aumento del redondeado */
     padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
@@ -125,8 +138,8 @@ select:focus {
 }
 .btn-delete,
 .btn-add:hover {
-    background-color: #4a90e2;
-    color: white;
+    background-color: var(--color-azul); /* Cambiado a variable */
+    color: var(--color-blanco); /* Cambiado a variable */
     border: none;
     border-radius: 20px; /* Aumento del redondeado */
     padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
@@ -134,9 +147,9 @@ select:focus {
     transition: background-color 0.3s;
 }
 
-.btn-save:hover{
-    background-color: #4a90e2;
-    color: white;
+.btn-save:hover {
+    background-color: var(--color-azul); /* Cambiado a variable */
+    color: var(--color-blanco); /* Cambiado a variable */
     border: none;
     border-radius: 20px; /* Aumento del redondeado */
     padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
@@ -144,9 +157,9 @@ select:focus {
     transition: background-color 0.3s;
 }
 
-.btn-download:hover{
-    background-color: #4a90e2;
-    color: white;
+.btn-download:hover {
+    background-color: var(--color-azul); /* Cambiado a variable */
+    color: var(--color-blanco); /* Cambiado a variable */
     border: none;
     border-radius: 20px; /* Aumento del redondeado */
     padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
@@ -165,12 +178,11 @@ select:focus {
     background-color: #0c6e32;
 }
 
-
 /* Estilos de las opciones */
 .options-group {
     margin-top: 10px;
     padding-left: 20px;
-    border-left: 2px solid #e0e0e0;
+    border-left: 2px solid var(--color-gris-claro); /* Cambiado a variable */
 }
 
 .option-item {
@@ -186,14 +198,15 @@ iframe {
     border: none;
     border-radius: 5px;
 }
+
 /* Estilos para el input de porcentaje */
 .percentage-input {
     width: 100%;
     padding: 10px;
-    border: 2px solid #4a90e2; /* Color de borde por defecto */
+    border: 2px solid var(--color-azul); /* Cambiado a variable */
     border-radius: 20px;
     box-sizing: border-box;
-    background-color: #e7f4ff; /* Color de fondo */
+    background-color: var(--color-azul-claro); /* Cambiado a variable */
     transition: border-color 0.3s; /* Transición suave para el cambio de color */
 }
 
@@ -209,5 +222,5 @@ iframe {
 
 /* Borde verde para porcentaje >= 70 */
 .green-border {
-    border-color: #28a745; /* Verde */
+    border-color: var(--color-verde-oscuro); /* Cambiado a variable */
 }

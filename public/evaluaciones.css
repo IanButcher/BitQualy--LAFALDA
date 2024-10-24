@@ -1,3 +1,21 @@
+:root {
+    --color-fondo: #f4f4f4; /* Color de fondo */
+    --color-blanco: #ffffff; /* Color blanco */
+    --color-gris-claro: #f9f9f9; /* Color gris claro */
+    --color-gris: #ccc; /* Color gris */
+    --color-gris-oscuro: #666; /* Color gris oscuro */
+    --color-negro: black; /* Color negro */
+    --color-rojo: red; /* Color rojo */
+    --color-verde: #28a745; /* Color verde */
+    --color-verde-oscuro: #218838; /* Color verde oscuro */
+    --color-azul: #007bff; /* Color azul */
+    --color-texto-encabezado: #333; /* Color del texto del encabezado */
+    --color-texto-subencabezado: #888; /* Color del texto secundario */
+    --color-fondo-progreso: #e0e0e0; /* Color de fondo de la barra de progreso */
+    --color-sombra: rgba(0, 0, 0, 0.1); /* Color de sombra */
+}
+
+/* Reseteo y estilos básicos */
 * {
     margin: 0;
     padding: 0;
@@ -7,7 +25,7 @@
 body, html {
     font-family: Arial, sans-serif;
     height: 100%;
-    background-color: #f4f4f4;
+    background-color: var(--color-fondo);
 }
 
 .container {
@@ -23,21 +41,20 @@ body, html {
 .main-content {
     flex-grow: 1;
     padding: 50px;
-    background-color: #fff;
+    background-color: var(--color-blanco);
     overflow-y: auto;
     margin-right: 20px; /* Da espacio al panel derecho */
 }
 
 .right-panel {
     width: 250px;
-    background-color: #f9f9f9;
+    background-color: var(--color-gris-claro);
     padding: 20px;
     margin-left: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px var(--color-sombra);
     flex-shrink: 0; /* Evita que el panel derecho cambie de tamaño */
 }
-
 
 .header {
     display: flex;
@@ -62,7 +79,7 @@ input[type="search"] {
     height: 40px;  /* Altura del campo */
     padding-left: 15px;  /* Espaciado interno a la izquierda */
     padding-right: 40px; /* Espaciado interno a la derecha */
-    border: 2px solid red;
+    border: 2px solid var(--color-rojo);
     border-radius: 25px;
     font-size: 16px;
     box-sizing: border-box;
@@ -75,22 +92,12 @@ input[type="search"] {
     right: 15px;
     transform: translateY(-50%);
     font-size: 16px;
-    color: red;
+    color: var(--color-rojo);
     cursor: pointer;
 }
 
-
 .search-section input:focus {
     width: 450px;
-}
-
-.search-icon {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #888;
-    pointer-events: none;
 }
 
 .filters {
@@ -103,32 +110,24 @@ input[type="search"] {
 .filters select {
     padding: 8px;
     font-size: 16px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-gris);
     border-radius: 25px;
     outline: none;
     transition: border-color 0.3s ease;
 }
 
 .filters select:focus {
-    border-color: #888;
+    border-color: var(--color-texto-subencabezado);
 }
 
 /* Estilos generales */
-body, html {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
-
 .main-content {
     padding: 20px;
-    background-color: #ffffff;
+    background-color: var(--color-blanco);
     margin: 0 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px var(--color-sombra);
 }
-
 
 /* Sección de Evaluaciones */
 .evaluation-section, .evaluation-finished {
@@ -137,7 +136,7 @@ body, html {
 
 .evaluation-section h2, .evaluation-finished h2 {
     font-size: 1.3em;
-    color: #333;
+    color: var(--color-texto-encabezado);
     margin-bottom: 15px;
 }
 
@@ -149,13 +148,9 @@ body, html {
     border-radius: 12px;
     background-color: #f7f7f7;
     width: 600px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px var(--color-sombra);
     margin-top: 30px;
 }
-
-/* Sección de perfil e información */
-/* Contenedor principal de la evaluación */
-
 
 /* Imagen del evaluado */
 .eval-photo img {
@@ -166,27 +161,24 @@ body, html {
     margin-right: 15px; /* Espacio entre la imagen y el texto */
 }
 
-/* Contenedor de los detalles de la evaluación */
-
-
 /* Nombre del evaluado */
 .eval-name {
     font-size: 1em;
-    color: #333;
+    color: var(--color-texto-encabezado);
     margin: 0;
 }
 
 /* Fechas de la evaluación */
 .eval-dates {
     font-size: 0.9em;
-    color: #666;
+    color: var(--color-gris-oscuro);
     margin: 5px 0;
 }
 
 /* Estado de la evaluación */
 .eval-status {
     font-size: 0.85em;
-    color: #007bff;
+    color: var(--color-azul);
     font-weight: bold;
 }
 
@@ -202,7 +194,6 @@ body, html {
     }
 }
 
-
 .evaluator {
     font-weight: bold;
 }
@@ -215,10 +206,6 @@ body, html {
 }
 
 /* Puntos de calificación */
-
-
-
-
 .rating-dot {
     width: 10px;
     height: 10px;
@@ -228,7 +215,7 @@ body, html {
 }
 
 .rating-dot.red {
-    background-color: red;
+    background-color: var(--color-rojo);
 }
 
 .eval-summary {
@@ -241,7 +228,7 @@ body, html {
     position: relative;
     width: 120px;
     height: 25px;
-    background-color: #e0e0e0;
+    background-color: var(--color-fondo-progreso);
     border-radius: 50px;
     overflow: hidden;
     margin-bottom: 5px;
@@ -249,7 +236,7 @@ body, html {
 
 .progress {
     height: 100%;
-    background-color: black;
+    background-color: var(--color-negro);
     border-radius: 50px;
 }
 
@@ -258,7 +245,7 @@ body, html {
     width: 100%;
     text-align: center;
     font-size: 12px;
-    color: white;
+    color: var(--color-blanco);
     top: 4px;
 }
 
@@ -268,10 +255,7 @@ body, html {
     font-size: 14px;
 }
 
-.download-icon {
-    cursor: pointer;
-}
-
+.download-icon,
 .filter-icon {
     cursor: pointer;
 }
@@ -282,11 +266,10 @@ body, html {
     font-weight: bold;
 }
 
-
 /* Additional styles for the filter and buttons */
 .filter-section h3 {
     font-size: 1.2em;
-    color: #333;
+    color: var(--color-texto-encabezado);
     margin-bottom: 15px;
 }
 
@@ -294,7 +277,7 @@ body, html {
     width: 100%;
     padding: 8px;
     font-size: 16px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-gris);
     border-radius: 5px;
     margin-bottom: 15px;
 }
@@ -319,34 +302,32 @@ body, html {
     background-color: #f7f9fc;
     padding: 15px;
     border-radius: 10px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 15px var(--color-sombra);
     font-family: 'Arial', sans-serif;
-    color: #333;
+    color: var(--color-texto-encabezado);
     z-index: 1000; /* Asegura que el panel esté por encima de otros elementos */
 }
-
-
 
 #nuevaEvaluacionBtn {
     display: inline-block;
     margin-top: 20px; /* Espacio superior para separación */
     width: 100%; /* Botón de ancho completo */
     text-align: center;
-    background-color: #28a745; /* Fondo verde */
-    color: white; /* Texto blanco */
+    background-color: var(--color-verde); /* Fondo verde */
+    color: var(--color-blanco); /* Texto blanco */
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px var(--color-sombra);
     transition: background-color 0.3s ease, transform 0.2s ease;
     text-decoration: none; /* Eliminar subrayado */
 }
 
 #nuevaEvaluacionBtn:hover {
-    background-color: #218838;
+    background-color: var(--color-verde-oscuro);
     transform: translateY(-2px);
 }
 
@@ -355,7 +336,7 @@ body, html {
 /* Título de la sección de filtro */
 .filter-section h3 {
     font-size: 1.2em; /* Ajusta el tamaño del título para hacerlo más pequeño */
-    color: #000000;
+    color: var(--color-negro); /* Cambiado a variable */
     margin-bottom: 10px;
     font-weight: 600;
     letter-spacing: 1px;
@@ -366,15 +347,15 @@ body, html {
     width: 100%;
     padding: 8px; /* Reducir el padding */
     font-size: 0.9em; /* Ajustar el tamaño de fuente */
-    color: #333;
-    border: 1px solid #ddd;
+    color: var(--color-texto-encabezado); /* Cambiado a variable */
+    border: 1px solid var(--color-gris); /* Cambiado a variable */
     border-radius: 12px; /* Reducir el border-radius */
-    background-color: #fff;
+    background-color: var(--color-blanco); /* Cambiado a variable */
     transition: border-color 0.3s ease;
 }
 
 .filter-select:focus {
-    border-color: #007bff;
+    border-color: var(--color-azul); /* Cambiado a variable */
     outline: none;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
@@ -388,7 +369,7 @@ body, html {
 
 .filter-order label {
     font-size: 0.9em;
-    color: #555;
+    color: var(--color-gris-oscuro); /* Cambiado a variable */
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -404,11 +385,11 @@ body, html {
 }
 
 .blue-dot {
-    background-color: #007bff;
+    background-color: var(--color-azul); /* Cambiado a variable */
 }
 
 .yellow-dot {
-    background-color: #f1c40f;
+    background-color: #f1c40f; /* Mantengo este color ya que no está definido en las variables */
 }
 
 /* Botones de estado */
@@ -423,7 +404,7 @@ body, html {
     justify-content: space-between;
     align-items: center;
     padding: 12px;
-    background-color: #fff;
+    background-color: var(--color-blanco); /* Cambiado a variable */
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
@@ -437,23 +418,23 @@ body, html {
 
 /* Botón de Pendientes */
 .status-button.pending {
-    border-left: 5px solid #ce1500;
+    border-left: 5px solid #ce1500; /* Mantengo este color ya que no está definido en las variables */
 }
 
 .status-button.pending .red-dot {
-    background-color: #ce1500;
+    background-color: #ce1500; /* Mantengo este color ya que no está definido en las variables */
 }
 
 /* Botón de Evaluar */
 .status-button.evaluate {
-    border-left: 5px solid #a72828;
+    border-left: 5px solid #a72828; /* Mantengo este color ya que no está definido en las variables */
 }
 .status-button.evaluate2 {
     border-left: 5px solid #28a745;
 }
 
 .status-button.evaluate .green-dot {
-    background-color: #28a745;
+    background-color: var(--color-verde); /* Cambiado a variable */
 }
 
 /* Estilos para los puntos de estado */
@@ -464,9 +445,11 @@ body, html {
     display: inline-block;
     margin-right: 10px;
 }
+
 .status-button.evaluate .red-dot {
-    background-color: #f11616;
+    background-color: #f11616; /* Mantengo este color ya que no está definido en las variables */
 }
+
 .red-dot {
     width: 10px;
     height: 10px;
@@ -474,17 +457,25 @@ body, html {
     display: inline-block;
     margin-right: 10px;
 }
+
 /* Contador de evaluaciones pendientes */
 .status-button .count {
-    background-color: #df1600;
-    color: white;
+    background-color: #df1600; /* Mantengo este color ya que no está definido en las variables */
+    color: var(--color-blanco); /* Cambiado a variable */
     padding: 3px 8px;
     border-radius: 12px;
     font-size: 0.85em;
     font-weight: bold;
 }
 
-
+.status-button.evaluate .triangle {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid var(--color-verde); /* Cambiado a variable */
+    margin-left: 10px;
+}
 
 /* Responsive para dispositivos más pequeños */
 @media (max-width: 768px) {
@@ -494,12 +485,41 @@ body, html {
     }
 }
 
+/* Sección de búsqueda */
+.search-section {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 30px;
+    margin-top: 50px;
+}
+
+.search-section input {
+    width: 500px;
+    padding: 12px 45px 12px 15px;
+    font-size: 18px;
+    border: 1px solid var(--color-rojo); /* Cambiado a variable */
+    border-radius: 25px;
+    transition: width 0.3s ease;
+    height: 50px;
+}
 
 
+<<<<<<< HEAD
+.search-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-rojo); /* Cambiado a variable */
+    pointer-events: none;
+}
+ 
+=======
+>>>>>>> 63c8bd70bf5c040343d6b3df39ac7f2aa274b9a1
 #nuevaEvaluacionBtn {
     position: relative; /* Elimina position: absolute para que esté dentro del flujo del panel */
-    background-color: #28a745; /* Fondo verde */
-    color: white; /* Texto blanco */
+    background-color: var(--color-verde); /* Cambiado a variable */
+    color: var(--color-blanco); /* Cambiado a variable */
     padding: 12px 75px; /* Padding más pequeño para reducir el largo */
     border: none; /* Sin borde */
     border-radius: 5px; /* Bordes redondeados */
@@ -514,14 +534,12 @@ body, html {
     margin-left: 0px;
 }
 
-
-
-
-
-
 #nuevaEvaluacionBtn:active {
-    background-color: #1e7e34; /* Even darker when pressed */
+    background-color: var(--color-verde-oscuro); /* Cambiado a variable */
     transform: scale(1); /* Reset scale on click */
+<<<<<<< HEAD
+}
+=======
 }
 .status-button .count2 {
     background-color: #1e7e34;
@@ -531,3 +549,4 @@ body, html {
     font-size: 0.85em;
     font-weight: bold;
 }
+>>>>>>> 63c8bd70bf5c040343d6b3df39ac7f2aa274b9a1

@@ -1,3 +1,16 @@
+:root {
+    --color-fondo: #f4f4f4; /* Color de fondo */
+    --color-blanco: #ffffff; /* Color blanco */
+    --color-gris: #ccc; /* Color gris */
+    --color-gris-oscuro: #333; /* Color gris oscuro */
+    --color-gris-medio: #555; /* Color gris medio */
+    --color-azul: #1a73e8; /* Color azul */
+    --color-verde: #28a745; /* Color verde */
+    --color-verde-oscuro: #218838; /* Color verde oscuro */
+    --color-sombra: rgba(0, 0, 0, 0.1); /* Color de sombra */
+}
+
+/* Estilos globales */
 * {
     margin: 0;
     padding: 0;
@@ -7,14 +20,13 @@
 body, html {
     font-family: Arial, sans-serif;
     height: 100%;
-    background-color: #f4f4f4;
+    background-color: var(--color-fondo); /* Cambiado a variable */
 }
 
 .container {
     display: flex;
     height: 100vh;
 }
-
 
 .help-section {
     margin-top: auto;
@@ -23,7 +35,7 @@ body, html {
 .main-content {
     flex-grow: 1;
     padding: 50px;
-    background-color: #fff;
+    background-color: var(--color-blanco); /* Cambiado a variable */
     overflow-y: auto;
 }
 
@@ -48,7 +60,7 @@ body, html {
     width: 400px;
     padding: 12px 45px 12px 15px;
     font-size: 18px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-gris); /* Cambiado a variable */
     border-radius: 25px;
     transition: width 0.3s ease;
 }
@@ -76,7 +88,7 @@ body, html {
 .filters select {
     padding: 8px;
     font-size: 16px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-gris); /* Cambiado a variable */
     border-radius: 25px;
     outline: none;
     transition: border-color 0.3s ease;
@@ -99,10 +111,10 @@ body, html {
 .employee {
     display: flex;
     align-items: center;   /* Alinea el contenido verticalmente */
-    background-color: #fff;
+    background-color: var(--color-blanco); /* Cambiado a variable */
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px var(--color-sombra); /* Cambiado a variable */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     text-align: left;  /* Alinea el contenido a la izquierda */
     width: 100%;  /* Asegura que las tarjetas ocupen todo el ancho disponible */
@@ -133,19 +145,19 @@ body, html {
 .employee-info h3 {
     margin-bottom: 5px;
     font-size: 18px;
-    color: #333;
+    color: var(--color-gris-oscuro); /* Cambiado a variable */
     font-weight: bold;
 }
 
 .employee-info p {
     margin: 3px 0;
     font-size: 14px;
-    color: #555;
+    color: var(--color-gris-medio); /* Cambiado a variable */
 }
 
 /* Efecto de color en el nombre */
 .employee-info h3:hover {
-    color: #1a73e8;  /* Cambia el color del nombre al hacer hover */
+    color: var(--color-azul);  /* Cambia el color del nombre al hacer hover */
 }
 
 /* Pequeño detalle adicional: estilo del enlace */
@@ -156,6 +168,7 @@ body, html {
     align-items: center;
     width: 100%;
 }
+
 /* Dropdown content adjustments */
 .dropdown-content {
     border: none;
@@ -170,7 +183,7 @@ body, html {
 .dropdown-content a i {
     font-size: 16px;
     margin-right: 10px;
-    padding-right:10px  ;
+    padding-right:10px;
 }
 
 .dropdown-content a:last-child {
@@ -199,30 +212,10 @@ body, html {
     .employee-info h3 {
         font-size: 16px;
     }
-    .employee-info p{
-      margin-bottom: 5px;
 
+    .employee-info p {
+        margin-bottom: 5px;
     }  
-    
-}
-
-.dropdown-content {
-    border: none;
-    padding: 0;
-    background-color: transparent;
-}
-
-.dropdown-btn {
-    text-decoration: none;
-}
-
-.dropdown-content a i {
-    font-size: 16px;
-    margin-right: 10px;
-}
-
-.dropdown-content a:last-child {
-    margin-bottom: 0;
 }
 
 .create-section {
@@ -232,8 +225,8 @@ body, html {
 
 .btn-create {
     display: inline-block;
-    background-color: #28a745;
-    color: white;
+    background-color: var(--color-verde); /* Cambiado a variable */
+    color: var(--color-blanco); /* Cambiado a variable */
     padding: 10px 20px;
     font-size: 16px;
     font-weight: bold;
@@ -247,7 +240,6 @@ body, html {
 }
 
 .btn-create:hover {
-    background-color: #218838;
+    background-color: var(--color-verde-oscuro); /* Cambiado a variable */
     transform: scale(1.05);
 }
-

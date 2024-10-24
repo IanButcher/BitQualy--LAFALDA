@@ -1,8 +1,19 @@
+:root {
+    --color-fondo: #f5f5f5; /* Color de fondo */
+    --color-blanco: #ffffff; /* Color blanco */
+    --color-gris: #ccc; /* Color gris */
+    --color-gris-oscuro: #333; /* Color gris oscuro */
+    --color-gris-claro: #fafafa; /* Color gris claro */
+    --color-verde: #2ecc71; /* Color verde */
+    --color-verde-oscuro: #27ae60; /* Color verde oscuro */
+    --color-gris-medio: #7f8c8d; /* Color gris medio */
+}
+
 /* Estilos globales */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f5f5f5;
-    color: #333;
+    background-color: var(--color-fondo); /* Cambiado a variable */
+    color: var(--color-gris-oscuro); /* Cambiado a variable */
     margin: 0;
     padding: 0;
     display: flex;
@@ -13,17 +24,17 @@ body {
 }
 
 /* Contenedor principal */
-.container{
+.container {
     flex-grow: 1;
     padding: 50px;
     margin-left: 250px;
-    background-color: #fff;
+    background-color: var(--color-blanco); /* Cambiado a variable */
     overflow-y: auto;
 }
 
 /* Estilo de los títulos de las preguntas */
 h3 {
-    color: #333;
+    color: var(--color-gris-oscuro); /* Cambiado a variable */
     font-size: 1.4em;
     margin-top: 20px;
     margin-bottom: 10px;
@@ -35,32 +46,31 @@ h3 {
     margin-left: -200px; /* Alinear a la izquierda */
 }
 
-
 /* Ícono de edición junto al título */
 h3 button {
     background-color: transparent;
     border: none;
     font-size: 1.2em;
     cursor: pointer;
-    color: #7f8c8d;
+    color: var(--color-gris-medio); /* Cambiado a variable */
     margin-left: 10px;
     transition: color 0.3s ease;
 }
 
 h3 button:hover {
-    color: #2ecc71;
+    color: var(--color-verde); /* Cambiado a variable */
 }
 
 /* Estilo de los campos de texto */
 input[type="text"] {
     width: 300%;
     padding: 12px 15px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-gris); /* Cambiado a variable */
     border-radius: 8px;
     margin-bottom: 20px;
     font-size: 1em;
-    color: #333;
-    background-color: #fafafa;
+    color: var(--color-gris-oscuro); /* Cambiado a variable */
+    background-color: var(--color-gris-claro); /* Cambiado a variable */
     transition: border 0.3s ease-in-out;
     display: block;
     margin-left: -200px; /* Alinear a la izquierda */
@@ -72,12 +82,11 @@ label {
     align-items: center;
     font-size: 1.2em;
     margin-bottom: 15px;
-    color: #333;
+    color: var(--color-gris-oscuro); /* Cambiado a variable */
     cursor: pointer;
     text-align: left;
     margin-left: -200px; /* Alinear a la izquierda */
 }
-
 
 input[type="radio"], input[type="checkbox"] {
     margin-right: 10px;
@@ -86,8 +95,8 @@ input[type="radio"], input[type="checkbox"] {
 
 /* Botón de Guardar dentro del contenedor */
 button {
-    background-color: #2ecc71;
-    color: white;
+    background-color: var(--color-verde); /* Cambiado a variable */
+    color: var(--color-blanco); /* Cambiado a variable */
     padding: 12px 30px;
     border: none;
     border-radius: 25px;
@@ -101,9 +110,8 @@ button {
     margin-left: -200px; /* Alinear a la izquierda */
 }
 
-
 button:hover {
-    background-color: #27ae60;
+    background-color: var(--color-verde-oscuro); /* Cambiado a variable */
 }
 
 /* Ajuste del espacio entre los elementos del formulario */
@@ -136,7 +144,8 @@ button:hover {
         width: 100%;
     }
 }
-p  {
+
+p {
     display: block;
     margin-block-start: 1em;
     margin-block-end: 1em;
@@ -144,16 +153,17 @@ p  {
     margin-inline-end: 0px;
     unicode-bidi: isolate;
     margin-left: -200px; /* Alinear a la izquierda */
-
 }
 
 .pepe {
     margin-left: 120px;
 }
+
 h3 {
     margin-top: 20px;
     font-size: 1.4rem;
 }
-.nude{
+
+.nude {
     margin-left: -200px;
 }

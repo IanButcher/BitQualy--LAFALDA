@@ -1,3 +1,11 @@
+:root {
+    --color-gris-oscuro: #333;
+    --color-gris-hover: #575757;
+    --color-blanco: #fff;
+    --color-transparente: transparent;
+}
+
+
 /* Navbar Styles */
 /* Asegúrate de que el contenedor padre tenga un layout flexible */
 
@@ -9,8 +17,8 @@
 /* Sidebar fijo */
 .sidebar {
     width: 250px; /* Asegúrate de que tenga un ancho fijo */
-    background-color: #333;
-    color: white;
+    background-color: var(--color-gris-oscuro);
+    color: var(--color-blanco);
     padding: 20px;
     position: fixed; /* Fija el sidebar a la izquierda */
     top: 0;
@@ -30,7 +38,7 @@
     flex-grow: 1; /* Hace que el contenido principal ocupe todo el espacio restante */
     padding: 50px;
     margin-left: 250px; /* Mueve el contenido principal a la derecha del sidebar */
-    background-color: #fff;
+    background-color: var(--color-blanco);
     overflow-y: auto;
 }
 
@@ -52,7 +60,7 @@
 }
 
 .sidebar nav .menu-item a {
-    color: white;
+    color: var(--color-blanco);
     font-weight: bold;
     font-size: 17px;
     text-decoration: none;
@@ -67,7 +75,7 @@
 }
 
 .sidebar nav .menu-item a:hover {
-    background-color: #575757;
+    background-color: var(--color-gris-hover);
     transform: scale(1.05);
 }
 
@@ -78,7 +86,7 @@ a {
 
 .navbar-item a {
     text-decoration: none !important;
-    color: white;
+    color: var(--color-blanco);
 }
 
 .contenedor-evaluaciones a {
@@ -92,13 +100,13 @@ a {
     align-items: center;
     padding: 10px 0;
     cursor: pointer;
-    color: white;
+    color: var(--color-blanco);
     background-color: transparent;
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .sidebar .gestion-section .dropdown-btn:hover {
-    background-color: #575757;
+    background-color: var(--color-gris-hover);
     transform: scale(1.05);
 }
 
@@ -124,7 +132,7 @@ a {
 }
 
 .sidebar .gestion-section .dropdown-container .menu-item a {
-    color: white;
+    color: var(--color-blanco);
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -138,7 +146,7 @@ a {
 }
 
 .sidebar .gestion-section .dropdown-container .menu-item a:hover {
-    background-color: #575757;
+    background-color: var(--color-gris-hover);
     transform: scale(1.05);
 }
 

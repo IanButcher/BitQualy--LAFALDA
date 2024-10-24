@@ -1,16 +1,27 @@
+:root {
+    --color-fondo: #f4f4f4; /* Color de fondo */
+    --color-blanco: #ffffff; /* Color blanco */
+    --color-gris-claro: #fafafa; /* Color gris claro */
+    --color-gris: #ccc; /* Color gris */
+    --color-gris-oscuro: #333; /* Color gris oscuro */
+    --color-verde: #2ecc71; /* Color verde */
+    --color-verde-oscuro: #27ae60; /* Color verde oscuro */
+    --color-sombra: rgba(0, 0, 0, 0.1); /* Color de sombra */
+    --color-azul: #007bff; /* Color azul */
+}
+
 /* Estilos globales */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    
 }
 
 body, html {
     font-family: Arial, sans-serif;
     height: 100%;
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: var(--color-fondo); /* Cambiado a variable */
+    color: var(--color-gris-oscuro); /* Cambiado a variable */
     padding-left: 70px;
     align-items: center;
     min-height: 100vh;
@@ -18,18 +29,17 @@ body, html {
 
 /* Panel principal */
 .main-content {
-    background-color: #fff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: var(--color-blanco); /* Cambiado a variable */
+    box-shadow: 0 4px 12px var(--color-sombra); /* Cambiado a variable */
     padding: 20px;
     width: 90%; /* Ancho adaptable */
     max-width: 800px; /* Máximo ancho */
     margin: 20px 0; /* Espaciado superior e inferior */
-    
 }
 
 /* Estilo de los encabezados */
 h1, h2, h3 {
-    color: #333;
+    color: var(--color-gris-oscuro); /* Cambiado a variable */
     margin: 10px 0;
 }
 
@@ -40,17 +50,17 @@ h1, h2, h3 {
 
 /* Estilo de cada respuesta */
 .respuesta-item {
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-gris); /* Cambiado a variable */
     border-radius: 8px;
     padding: 15px;
     margin-bottom: 15px;
-    background-color: #fafafa; /* Fondo claro */
+    background-color: var(--color-gris-claro); /* Cambiado a variable */
 }
 
 .inputs-texto {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-gris); /* Cambiado a variable */
     border-radius: 4px;
 }
 
@@ -62,24 +72,24 @@ table {
 }
 
 th, td {
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-gris); /* Cambiado a variable */
     padding: 10px;
     text-align: left;
 }
 
 th {
-    background-color: #f0f0f0; /* Color de fondo del encabezado */
+    background-color: var(--color-gris-claro); /* Cambiado a variable */
 }
 
 td {
-    background-color: #ffffff; /* Color de fondo de las celdas */
+    background-color: var(--color-blanco); /* Cambiado a variable */
 }
 
 /* Enlaces */
 a {
     display: inline-block;
     margin-top: 20px;
-    color: #2ecc71; /* Color verde */
+    color: var(--color-verde); /* Cambiado a variable */
     text-decoration: none;
 }
 
@@ -104,8 +114,8 @@ a:hover {
 .button {
     display: inline-block; /* Muestra como un bloque en línea */
     padding: 10px 20px; /* Espaciado interno */
-    background-color: #2ecc71; /* Color de fondo */
-    color: white; /* Color del texto */
+    background-color: var(--color-verde); /* Cambiado a variable */
+    color: var(--color-blanco); /* Cambiado a variable */
     text-decoration: none; /* Sin subrayado */
     border-radius: 5px; /* Bordes redondeados */
     font-size: 16px; /* Tamaño de fuente */
@@ -114,9 +124,8 @@ a:hover {
 }
 
 .button:hover {
-    background-color: #27ae60; /* Color más oscuro al pasar el ratón */
+    background-color: var(--color-verde-oscuro); /* Cambiado a variable */
 }
-
 
 /* Estilo responsive */
 @media (max-width: 600px) {
@@ -137,4 +146,3 @@ a:hover {
         font-size: 1.2em;
     }
 }
-
