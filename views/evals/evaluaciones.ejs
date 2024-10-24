@@ -165,26 +165,10 @@
                         <a href="/evaluaciones/new" id="nuevaEvaluacionBtn">Nueva Evaluación</a>
                     </div>
                 </aside>
-            
-                
+              
             <% } %>
             
-            <script>
-                // Show appropriate input fields based on the selected filter
-                document.getElementById('filterSelect').addEventListener('change', function() {
-                    const filter = this.value;
-                    
-                    document.querySelector('.filter-periodo').style.display = 'none';
-                    document.querySelector('.filter-name').style.display = 'none';
-                    
-                    if (filter === 'periodo') {
-                        document.querySelector('.filter-periodo').style.display = 'block';
-                    } else if (filter === 'name') {
-                        document.querySelector('.filter-name').style.display = 'block';
-                    }
-                });
-            </script>
-
+            
         <section class="evaluation-finished">
             <h2>Evaluaciones Finalizadas</h2>
 
@@ -248,7 +232,19 @@
     </main>
 
     <script>
-        
+        // Show appropriate input fields based on the selected filter
+        document.getElementById('filterSelect').addEventListener('change', function() {
+            const filter = this.value;
+            
+            document.querySelector('.filter-periodo').style.display = 'none';
+            document.querySelector('.filter-name').style.display = 'none';
+            
+            if (filter === 'periodo') {
+                document.querySelector('.filter-periodo').style.display = 'block';
+            } else if (filter === 'name') {
+                document.querySelector('.filter-name').style.display = 'block';
+            }
+        });
     </script>
 </body>
 

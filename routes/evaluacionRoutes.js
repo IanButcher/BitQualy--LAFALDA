@@ -12,55 +12,51 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 router.get('/evaluaciones', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async (req, res) => {
-    if (req.user) {
-        try {
-            let query = {};
-            const { nombre, periodoStart, periodoEnd, tiempoFinStart, tiempoFinEnd, sortOrder } = req.query;
+    try {
+        const { nombreApellido, periodoStart, periodoEnd, tiempoFinStart, tiempoFinEnd, sortOrder } = req.query
+        let query = {}
 
-            // Role-based filtering for Empleado
-            if (req.user.rol === 'Empleado') {
-                query.empleado = req.user._id;
-                query['formulario.tipo'] = 'autoevaluacion';
-            }
-
-            // Name search (using $or to match first name or last name)
-            if (nombre) {
-                const regex = new RegExp(nombre, 'i');  // case-insensitive
-                query['$or'] = [
-                    { 'empleado.nombre': regex },
-                    { 'empleado.apellido': regex }
-                ];
-            }
-
-            // Period filter (createdAt)
-            if (periodoStart && periodoEnd) {
-                query.createdAt = {
-                    $gte: new Date(periodoStart),
-                    $lte: new Date(periodoEnd)
-                };
-            }
-
-            // Tiempo Fin filter (deadline)
-            if (tiempoFinStart && tiempoFinEnd) {
-                query.deadline = {
-                    $gte: new Date(tiempoFinStart),
-                    $lte: new Date(tiempoFinEnd)
-                };
-            }
-
-            // Execute query with optional sorting
-            const sortOptions = sortOrder === 'asc' ? { 'empleado.legajo': 1 } : { 'empleado.legajo': -1 };
-            const evaluaciones = await Evaluacion.find(query).sort(sortOptions).exec();
-
-            res.render('evals/evaluaciones', { evaluaciones, user: req.user });
-        } catch (error) {
-            console.error('Error fetching evaluations:', error);
-            res.status(500).send('Error interno del servidor');
+        // Role-based filtering for Empleado
+        if (req.user.rol === 'Empleado') {
+            query.empleado = req.user._id
+            query['formulario.tipo'] = 'autoevaluacion'
         }
-    } else {
-        res.redirect('/');
+
+        // Filter by nombre or apellido if input is provided
+        if (nombreApellido) {
+            const regex = new RegExp(nombreApellido, 'i')
+            query['$or'] = [
+                { 'empleado.nombre': regex },
+                { 'empleado.apellido': regex }
+            ];
+        }
+
+        // Filter by createdAt (periodo) if both dates are provided
+        if (periodoStart || periodoEnd) {
+            query.createdAt = {}
+            if (periodoStart) query.createdAt.$gte = new Date(periodoStart)
+            if (periodoEnd) query.createdAt.$lte = new Date(periodoEnd)
+        }
+
+        // Filter by deadline (tiempo fin) if both dates are provided
+        if (tiempoFinStart || tiempoFinEnd) {
+            query.deadline = {}
+            if (tiempoFinStart) query.deadline.$gte = new Date(tiempoFinStart)
+            if (tiempoFinEnd) query.deadline.$lte = new Date(tiempoFinEnd)
+        }
+
+        // Determine sorting order based on user input
+        const sortOptions = sortOrder === 'asc' ? { 'empleado.legajo': 1 } : (sortOrder === 'desc' ? { 'empleado.legajo': -1 } : {})
+
+        // Fetch evaluations based on filters and sorting
+        const evaluaciones = await Evaluacion.find(query).sort(sortOptions).exec()
+        res.render('evals/evaluaciones', { evaluaciones, user: req.user })
+
+    } catch (error) {
+        console.error('Error fetching evaluations:', error)
+        res.status(500).send('Error interno del servidor')
     }
-});
+})
 
 
 
