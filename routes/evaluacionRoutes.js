@@ -63,6 +63,13 @@ router.post('/evaluaciones/assign-autoevaluacion', roleAuthorization(['Administr
 
         await newEvaluacion.save()
 
+        await baseUserSchema.findByIdAndUpdate(empleadoId, {
+            $push: { evaluacionesAsignadas: newEvaluacion._id }
+        })
+        await baseUserSchema.findByIdAndUpdate(req.user._id, {
+            $push: { evaluaciones: newEvaluacion._id }
+        })
+
         res.status(200).send('Autoevaluacion asignada correctamente')
     } catch (error) {
         res.status(500).send('Error assigning autoevaluacion: ' + error.message)
@@ -71,7 +78,7 @@ router.post('/evaluaciones/assign-autoevaluacion', roleAuthorization(['Administr
 
 
 // GET route --> Ver autoevaluacion
-router.get('/evaluaciones/my-autoevaluacion/:id', roleAuthorization(['Empleado']), async (req, res) => {
+router.get('/evaluaciones/my-autoevaluacion/:id', roleAuthorization(['Empleado', 'Administrador', 'Intermediario', 'Evaluador']), async (req, res) => {
     try {
         const { id } = req.params;  
         const evaluacion = await Evaluacion.findById(id).populate('formulario').populate('empleado')
@@ -162,6 +169,10 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
             evaluacion.respuestas = respuestasFormateadas
             evaluacion.completed = true
             await evaluacion.save()
+            await baseUserSchema.findByIdAndUpdate(empleado, {
+                $pull: { evaluacionesAsignadas: evaluacion._id },
+                $push: { evaluacionesCompletadas: evaluacion._id }
+            })
         }
         
         // Logic for normal evaluaciones (create a new evaluation)
@@ -169,10 +180,14 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
             const nuevaEvaluacion = new Evaluacion({
                 formulario: formulario._id,
                 empleado: empleado,
+                assignedBy: req.user._id,
                 respuestas: respuestasFormateadas,
-                completed: true // Mark as completed immediately
+                completed: true 
             });
             await nuevaEvaluacion.save()
+            await baseUserSchema.findByIdAndUpdate(req.user._id, {
+                $push: { evaluacionesHechas: newEvaluacion._id }
+            })
         }
 
         // Redirect after saving

@@ -27,11 +27,14 @@ router.get('/evaluadores/:id', roleAuthorization(['Administrador', 'Evaluador', 
             const id = req.params.id
             const evaluador = await Evaluador.findById(id)
             const evaluaciones = await Evaluaciones.find({ empleado: evaluador._id})
-            const evalCreadas = await Evaluaciones.find({ assignedBy: evaluador._id})
+            const evaluacionesCreadas = await Evaluaciones.find({ assignedBy: evaluador._id, completed: false})
+            const evaluacionesCreadasyResueltas = await Evaluaciones.find({ assignedBy: evaluador._id, completed: true})
+            const evaluacionesAsignadas = evaluaciones.filter(evaluacion => !evaluacion.completed)
+            const evaluacionesCompletadas = evaluaciones.filter(evaluacion => evaluacion.completed)
             if (!evaluador) {
                 return res.status(404).send('Evaluador no encontrado')
             }
-            res.render('evalrs/evaluador', { evaluador, evaluaciones, user: req.user })
+            res.render('evalrs/evaluador', { evaluador, evaluaciones, evaluacionesAsignadas, evaluacionesCompletadas, evaluacionesCreadas, evaluacionesCreadasyResueltas, user: req.user })
         } catch (error) {
             console.error(error)
             res.status(500).send('Error del servidor')

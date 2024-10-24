@@ -34,49 +34,43 @@
                         <p>Número de legajo: <%= empleado.legajo %></p>
                     </div>
                 </div>
-
-                <div class="combobox-container">
                     <!-- Hidden form to handle employee deactivation -->
-                    <form id="deleteEmpls" method="POST">
-                        <input type="hidden" name="_method" value="PUT">
-                    </form>
                     
-                    <!-- Button to trigger the form submission -->
-                    <% if (user && user.rol === 'Administrador') { %>
-                        <button class="btn-disable" onclick="popupEliminar('<%= empleado._id %>')">Desactivar</button>
-                    <% } %>
-                    <label for="employee-options">Designar como:</label>
-                    <select id="employee-options">
-                        <option value="option1">Empleado regular</option>
-                        <option value="option2">Evaluador</option>
-                        <option value="option3">Intermediario</option>
-                    </select>
-                </div>
-
+                    
                     <%- include('../partials/headerU') %>
             </header>
 
             <div class="filter-panel-container">
                 <section class="evaluation-section">
                     <h2>Evaluaciones Asignadas</h2>
-                    <% for (evaluacion of evaluaciones) {%>
-                        <div class="evaluation-card">
-                            <img src="<%= evaluacion.empleado.imagePath ? '/' + intermediario.imagePath : '/img/user.png' %>" alt="Franco Siccardi" class="eval-img">
-                            <div class="eval-info">
-                                <p><strong><%= evaluacion.empleado.nombre %> <%= evaluacion.empleado.apellido %></strong></p>
-                                <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
-                                <p class="eval-status">Autoevaluación</p>
+                    
+                    <% if (evaluacionesAsignadas.length > 0) { %>
+                        <% evaluacionesAsignadas.forEach(evaluacion => { %>
+                            <div class="evaluation-card">
+                                <img src="<%= evaluacion.empleado.imagePath ? '/' + empleado.imagePath : '/img/user.png' %>" alt="Franco Siccardi" class="eval-img">
+                                <div class="eval-info">
+                                    <p><strong><%= evaluacion.formulario ? evaluacion.formulario.titulo : 'Formulario no asignado' %></strong></p>
+                                    <p>Fecha de inicio: <%= evaluacion.fechaInicio ? evaluacion.fechaInicio.toDateString() : 'N/A' %></p>
+                                    <p>Fecha límite: <%= evaluacion.deadline ? evaluacion.deadline.toDateString() : 'Sin fecha' %></p>
+                                </div>
                             </div>
-                        </div>
+                        <% }) %>
+                    <% } else { %>
+                        <p>No hay evaluaciones pendientes.</p>
                     <% } %>
 
                 </section>
 
+                <form id="deleteEmpls" method="POST">
+                    <input type="hidden" name="_method" value="PUT">
+                </form>
                 <aside class="right-panel">
                     <div class="filter-section">
                         <h3>Estado de empleado</h3>
-                        <button class="btn-disable" onclick="popupEliminar('<%= empleado._id %>')">Desactivar</button>
-                        <br>
+                        <% if (user && user.rol === 'Administrador') { %>
+                            <button class="btn-disable" onclick="popupEliminar('<%= empleado._id %>')">Desactivar</button>
+                        <% } %>
+                            <br>
                         <br>
                         <select id="employee-options">
                             <option value="" disabled selected>Designar como...</option>
@@ -101,7 +95,12 @@
                             <div class="status-button pending">
                                 <span class="red-dot"></span>
                                 <span>Pendientes</span>
-                                <span class="count">0</span>
+                                <span class="count"><%= evaluacionesAsignadas.length %></span>
+                            </div>
+                            <div class="status-button evaluate">
+                                <span class="green-dot" ></span>
+                                <span>Completadas</span>
+                                <span class="count" style="background-color: #28a745;"><%= evaluacionesCompletadas.length %></span>
                             </div>
                             <br>
                             <div class="evaluation-actions">
@@ -114,18 +113,21 @@
             </div>
 
             <section class="evaluation-finished">
-                <h2>Evaluaciones Finalizadas</h2>
-                <div class="evaluation-card">
-                    <!--<img src="empleado1.jpg" alt="Franco Siccardi" class="eval-img">-->
-                    <div class="eval-info">
-                        <p><strong><%= empleado.nombre %></strong></p>
-                        <p>Fecha Inicio: 34/11/56 | Fecha Fin: 34/11/56</p>
-                        <p>Autoevaluación</p>
-                        <div class="progress-bar">
-                            <div class="progress" style="width: 40%;"></div>
+                <h2>Evaluaciones Completadas</h2>
+                <% if (evaluacionesCompletadas.length > 0) { %>
+                    <% evaluacionesCompletadas.forEach(evaluacion => { %>
+                        <div class="evaluation-card">
+                            <img src="<%= evaluacion.empleado.imagePath ? '/' + evaluacion.empleado.imagePath : '/img/user.png' %>" alt="Empleado" class="eval-img">
+                            <div class="eval-info">
+                                <p><strong><%= evaluacion.formulario ? evaluacion.formulario.titulo : 'Formulario no asignado' %></strong></p>
+                                <p>Fecha de finalización: <%= evaluacion.deadline ? evaluacion.deadline.toDateString() : 'Sin fecha' %></p>
+                                <a href="/evaluaciones/preview/<%= evaluacion._id %>" class="btn">Ver Evaluación</a>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    <% }) %>
+                <% } else { %>
+                    <p>No hay evaluaciones finalizadas.</p>
+                <% } %>
             </section>
         </main>
     </div>
