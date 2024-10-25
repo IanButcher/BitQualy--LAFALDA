@@ -71,6 +71,36 @@
     transform: scale(1.05);
 }
 
+/* Botón Logout estilizado igual que los demás botones */
+.sidebar .logout {
+    position: absolute;
+    bottom: 20px; /* Ajusta según la distancia que quieras del borde inferior */
+    width: 100%;
+    padding: 10px 0;
+}
+
+.sidebar .logout a {
+    color: white;
+    font-weight: bold;
+    font-size: 17px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    margin-right: 50px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.sidebar .logout a i {
+    margin-right: 10px;
+}
+
+.sidebar .logout a:hover {
+    background-color: #575757;
+    transform: scale(1.05);
+}
+
+
 /* Dropdown section */
 a {
     text-decoration: none;
@@ -90,7 +120,7 @@ a {
     display: flex;
     font-size: 17px;
     align-items: center;
-    padding: 10px 0;
+    padding: 10px 2px;
     cursor: pointer;
     color: white;
     background-color: transparent;

@@ -68,13 +68,17 @@ body, html {
 }
 
 /* Menú desplegable */
-.gestion-section:hover{
-    transform: scale(1.1);
-    border-color: white; /* El borde cambia a blanco cuando pasas el mouse */
-    animation: border-animation 0.5s forwards; /* Animación al hacer hover */
-}
+/* Gestion-section mismo estilo que los otros botones */
+/* Igualar el estilo del botón Gestión con los demás botones */
 .gestion-section {
     position: relative;
+    margin: 10px; /* Ajuste para que tenga la misma separación que los otros botones */
+    width: 130px;
+    width: 130px;
+    height: 84px;
+}
+
+.gestion-section .dropdown-toggle {
     color: white;
     text-decoration: none;
     text-align: center;
@@ -84,57 +88,69 @@ body, html {
     flex-direction: column;
     align-items: center;
     transition: transform 0.3s ease;
-    position: relative;
-    border: 2px solid transparent; /* Borde invisible inicialmente */
     border-radius: 10px;
-    width: 150px;
+    width: 110px;
+    height: 78px;
     margin: 10px;
+    margin-top: -1px;
 }
 
-.gestion-section.active .dropdown-container {
-    display: flex;
-}
-
-/* Estilo para el contenedor del dropdown (desplegable) */
-.dropdown-container {
-    display: none;
-    flex-direction: column;
-    margin-top: 10px;
-}
-
-/* Mostrar el dropdown cuando está activo */
-.gestion-section.active .dropdown-container {
-    display: flex;
-}
-
-/* Estilos individuales para cada item del dropdown */
-.dropdown-item {
-    color: white;
-    text-decoration: none;
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    border: 2px solid transparent; /* Borde inicialmente invisible */
-    border-radius: 10px;
-    font-size: 12px;
-    transition: all 0.3s ease;
-}
-
-.dropdown-item:hover {
-    border-color: white; /* Aplica borde solo a cada item cuando pasas el mouse */
+.gestion-section .dropdown-toggle:hover {
+    transform: scale(1.1);
     animation: border-animation 0.5s forwards;
 }
 
-/* Animación del borde */
-@keyframes border-animation {
-    0% {
-        border-color: transparent;
-    }
-    100% {
-        border-color: white;
-    }
+.gestion-section .dropdown-toggle i {
+    font-size: 24px;
 }
+
+.gestion-section .dropdown-toggle i:last-child {
+    margin-top: 5px;
+    font-size: 14px; /* Tamaño de la flecha */
+}
+
+/* Ajustar el dropdown-container para que no tape el botón */
+.dropdown-container {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px; /* Asegura que el menú se despliegue debajo del botón */
+    left: 0;
+    background-color: #333;
+    border-radius: 10px;
+    width: 150px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
+
+/* Mostrar el dropdown cuando esté activo */
+.gestion-section.active .dropdown-container {
+    display: flex;
+    margin-left: -10px;
+}
+
+/* Estilo de los items del menú desplegable */
+.dropdown-item {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    transition: background 0.3s ease;
+    margin-left: 11px;
+}
+
+.dropdown-item i {
+    margin-right: 10px;
+}
+
+.dropdown-item:hover {
+    background-color: #444;
+}
+
+
+
 
 .header-icons {
     position: absolute;

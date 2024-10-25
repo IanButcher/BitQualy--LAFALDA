@@ -30,11 +30,16 @@
             <!-- Formulario de Creación de Evaluador -->
             <div class="image-and-fields">
                 <!-- Vista previa de la imagen -->
-                <div class="image-preview" onclick="document.getElementById('foto').click();">
-                    <img id="image-preview-img" alt="Vista previa de la foto" style="display: none;" />
-                    <span class="change-photo-text">Haz clic aquí para cambiar la foto</span>
-                </div>
-                <input type="file" id="foto" name="image" accept="image/*" onchange="previewImage(event);" style="display: none;">
+                <div class="image-and-info">
+                    <div class="image-preview" onclick="document.getElementById('photo-input').click();">
+                        <img id="profile-photo" src="default-profile.png">
+                        <div class="overlay">
+                            <i class="fas fa-camera"></i>
+                            <span>Cambiar Foto del Perfil</span>
+                        </div>
+                    </div>
+                    <input type="file" id="photo-input" accept="image/*" onchange="previewImage(event)" style="display:none;">
+                </div>                              
                 <div class="form-fields">
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
@@ -87,19 +92,36 @@
     </main>
 
     <script>
-        // Preview the selected image
-        let imgLoaded = false
-        function previewImage(event) {
-            const reader = new FileReader();
-            reader.onload = function() {
-                const output = document.getElementById('image-preview-img');
-                output.src = reader.result;
-                output.style.display = 'block';  // Display the image preview
-                imgLoaded = true
-            };
-            reader.readAsDataURL(event.target.files[0]);  // Load the file and display it
-        }
+       // function previewImage(event) {
+         //   const file = event.target.files[0]; // Obtiene el archivo cargado
 
+            // Verifica si el archivo es una imagen
+            //if (file && file.type.startsWith('image/')) {
+              //  const reader = new FileReader();
+
+                // Cuando se carga el archivo, actualiza el 'src' de la imagen
+                //reader.onload = function(e) {
+                  //  const output = document.getElementById('profile-photo');
+                    //output.src = e.target.result; // Actualiza la imagen de perfil con el archivo seleccionado
+                    //output.style.display = 'block'; // Muestra la imagen
+                //};
+
+                // Lee el archivo cargado como una URL de datos
+                //reader.readAsDataURL(file);
+            //} else {
+              //  alert("Por favor, selecciona un archivo de imagen válido."); // Mensaje de error si el archivo no es una imagen
+    //        }
+      //  }
+
+        function previewImage(event){
+            const reader = new FileReader()
+            reader.onload = function (){
+                const output = document.getElementById('profile-photo')
+                output.src = reader.result
+                output.style.display = 'block'
+            }
+            reader.readAsDataURL(event.target.files[0])
+        }
         
         const email = document.querySelector('#email');
         const email1 = document.querySelector('#email1');
@@ -121,16 +143,10 @@
         email.addEventListener('input', validarEmails);
         email1.addEventListener('input', validarEmails);
 
-        // Función para vista previa de la imagen
-        function previewImage(event) {
-            const reader = new FileReader();
-            reader.onload = function() {
-                const output = document.getElementById('image-preview-img');
-                output.src = reader.result;
-                output.style.display = 'block'; // Mostrar la imagen de vista previa
-            };
-            reader.readAsDataURL(event.target.files[0]);
-        }
+        
+        
+
+
 
 
     </script>
