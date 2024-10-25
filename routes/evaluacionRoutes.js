@@ -73,6 +73,8 @@ router.post('/evaluaciones/assign-autoevaluacion', roleAuthorization(['Administr
             $push: { evaluaciones: newEvaluacion._id }
         })
 
+        // https://stackoverflow.com/questions/49870196/how-to-define-custom-domain-email-in-nodemailer
+        
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
