@@ -67,42 +67,61 @@ body, html {
     display: flex;
     align-items: flex-start;
     margin-bottom: 20px;
+
 }
 
 .image-preview {
     position: relative;
-    margin-right: 20px;
     width: 150px;
     height: 150px;
-    border: 2px solid #575757;
+    border: 3px solid #28a745;
     border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     overflow: hidden;
     cursor: pointer;
+    margin-bottom: 10px;
 }
 
-.change-photo-text {
+.image-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.overlay {
     position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo oscuro semitransparente */
     color: white;
-    background-color: #575757;
-    padding: 5px;
-    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease; /* Suaviza la aparición del overlay */
+}
+
+.overlay i {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.overlay span {
     font-size: 14px;
     text-align: center;
 }
 
-.image-preview img {
-    max-width: 100%;
-    max-height: 100%;
-    display: block;
-    border-radius: 50%;
+/* Mostrar overlay al hacer hover */
+.image-preview:hover .overlay {
+    opacity: 1;
 }
 
 .form-fields {
     display: flex;
     flex-direction: column;
+    margin-left: 24px;
 }
 
 .form-buttons {

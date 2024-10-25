@@ -36,7 +36,7 @@ router.get('/user-creator', roleAuthorization(['Administrador']), (req, res) => 
 // POST route --> Create User
 router.post('/save-new-user', upload.single('image'), roleAuthorization(['Administrador']), async(req, res) => {
     const { nombre, apellido, legajo, rol, email, dni } = req.body
-    const imagePath = req.file ? req.file.path : null
+    const imagePath = req.file ? 'uploads/images/' + req.file.filename : null;
     try {
         // Check legajo
         const legajoChecker = await baseUserSchema.findOne({ legajo })
@@ -137,6 +137,7 @@ router.post('/my-account/update', upload.single('image'), roleAuthorization(['Ad
     if (req.user){
         try {
             // Get data
+            console.log("File data:", req.file)
             const updates = {}
             if (req.body.email) updates.email = req.body.email
             if (req.body.password) {
@@ -147,6 +148,7 @@ router.post('/my-account/update', upload.single('image'), roleAuthorization(['Ad
 
             // Update in DB
             await baseUserSchema.findByIdAndUpdate(req.user._id, updates)
+            console.log("Updated user image path:", updates.imagePath);
 
             // Redirect 
             res.redirect('/my-account')

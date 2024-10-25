@@ -18,7 +18,7 @@ const baseUserSchema = new mongoose.Schema({
         trim: true
     },
     legajo: {
-        type: Number,
+        type: String,
         required: true,
         trim: true,
         min: 3,
@@ -28,6 +28,10 @@ const baseUserSchema = new mongoose.Schema({
         required: true,
         minlength: 6,
         maxlength: 128 // Maximo de 128 para el encriptado
+    },
+    email: {
+        type: String,
+        required: true
     },
     imagePath: {
         type: String,

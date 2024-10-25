@@ -8,7 +8,37 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Incluir SweetAlert2 -->
     <link rel="icon" type="image/png" href="https://ugc.production.linktr.ee/mj5IciCyRk2puUukygYa_kmwAn8AE84X4N3S5?io=true&size=avatar-v3_0">
+    <style>
+        .notification-icon,
+        .user-photo {
+            position: absolute;
+            right: 50px;
+            top: 100px;
+        }
 
+        .busqueda input {
+        width: 100%;
+        padding: 12px 45px 12px 15px;
+        font-size: 18px;
+        border: 1px solid #ccc;
+        border-radius: 25px;
+        transition: width 0.3s ease;
+        height: 50px;
+    }
+
+    .icono-busqueda {
+        right: 15px;
+        top: 110px;
+        transform: translateY(-50%);
+        color: #888; /* Ajuste de color */
+    }
+
+    /* Ajuste para evitar superposición */
+    .busqueda {
+        margin-top: 20px; /* Agrega un espacio debajo del dropdown */
+    }
+       
+    </style>
 </head>
 <body>
     <div class="container">
@@ -24,35 +54,58 @@
             <div class="form-section">
                 <div class="form-list">
                     <h2>Plantillas Formularios</h2>
-                    <a href="/formularios/new" class="btn-modify">New</a>
-                    <button class="btn-filter">Filtrar</button>
+        
                 </div>
+                <aside class="right-panel">
+                    <div class="filter-section">
+                        <h3>Filtrar por</h3>
+                       
+                        
+                        
+                        <div class="busqueda icono-busqueda busqueda-2 seccion-busqueda">
+                            <input type="text" placeholder="Buscar ...">
+                            <i class="fas fa-search search-icon"></i>
+                        </div>
+                        <div class="status-buttons">
+                            <div class="status-button evaluate2">
+                                <span class="green-dot"></span>
+                                <span>Completas</span>
+                                <span class="count2">0</span>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="status-buttons">
+                            <div class="status-button evaluate">
+                                <span class="red-dot"></span>
+                                <span>Incompletas</span>
+                                <span class="count">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="evaluation-actions">
+                        <a href="/formularios/new" id="nuevaEvaluacionBtn">Nuevo formulario</a>
+                    </div>
+                </aside>
                 <!-- Cartas de formularios -->
                 <div class="form-cards">
                     <% for (formulario of formularios) { %>
                     <div class="card">
                         <h3><%= formulario.titulo %></h3>
-                
-                        <!-- Botón de Vista Previa -->
-                        <a href="/formularios/preview/<%= formulario._id %>" class="btn-icon" title="Vista Previa">
-                            <i class="fas fa-eye"></i> Vista Previa
-                        </a>
-                
-                        <!-- Botones de Eliminar y Descargar alineados horizontalmente -->
-                        <form id="deleteForm" method="POST">
-                            <input type="hidden" name="_method" value="PUT">
-                        </form>
+                        <h6><%= formulario.nombre %></h6>
                         <div class="card-buttons">
+                            <a href="/formularios/preview/<%= formulario._id %>" class="btn-icon" title="Vista Previa">
+                                <i class="fas fa-eye"></i>
+                            </a>
                             <button onclick="popupEliminar('<%= formulario._id %>')" class="btn-icon" title="Eliminar">
-                                <i class="fas fa-trash"></i> Eliminar
+                                <i class="fas fa-trash"></i> 
                             </button>
                             <a href="/formularios/descargar/<%= formulario._id %>" class="btn-icon" title="Descargar">
-                                <i class="fas fa-download"></i> Descargar
+                                <i class="fas fa-download"></i> 
                             </a>
                         </div>
                     </div>
                     <% } %>
-                </div>                
+                </div>
             </div>
         </div>
     </div>

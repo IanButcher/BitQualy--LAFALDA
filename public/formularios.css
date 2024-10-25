@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    
 }
 
 body, html {
@@ -27,7 +28,7 @@ body, html {
 /* Estilos de las cartas */
 .form-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Asegura que las tarjetas se distribuyan según el ancho disponible */
+    grid-template-columns: 1fr; /* Una tarjeta por fila */
     gap: 20px;
     padding-top: 20px;
 }
@@ -39,10 +40,10 @@ body, html {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease;
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
-    width: 100%; /* La tarjeta ocupará el ancho disponible */
-    word-wrap: break-word; /* Permite que el contenido del título haga salto de línea si es necesario */
+    align-items: center;
+    width: 65%;
+    word-wrap: break-word;
     box-sizing: border-box;
 }
 
@@ -51,84 +52,96 @@ body, html {
 }
 
 .card h3 {
-    font-size: 24px;
+    font-size: 18px;
     color: #333;
-    text-align: center;
-    margin-bottom: 15px;
-    white-space: normal; /* Permite el salto de línea */
-    word-wrap: break-word; /* Hace que el título largo salte de línea si es necesario */
-}
-
-.card-buttons {
-    display: flex;
-    justify-content: flex-start; /* Alinea los botones a la izquierda */
-    gap: 10px; /* Espacio entre los botones */
-    flex-wrap: wrap; /* Asegura que los botones bajen de línea si son muchos */
-    margin-top: 10px;
-}
-
-/* Nueva sección para mantener los botones en su posición */
-.fixed-buttons {
-    position: sticky; /* Cambia a fixed si deseas que se mantengan en la pantalla */
-    top: 0; /* Ajusta esto según sea necesario */
-    background-color: #fff; /* Asegúrate de que el fondo sea visible */
-    padding: 10px 0; /* Espaciado alrededor */
-    z-index: 10; /* Asegúrate de que estén por encima de otros elementos */
-}
-
-.card-footer {
-    margin-top: 20px;
+    margin: 0;
+    font-weight: bold;
 }
 
 .card-content {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 
-/* Botones */
+.card-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+}
+
+.card-text p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+}
+/* Asegúrate de que los botones dentro de la tarjeta se alineen correctamente */
+.card-buttons {
+    display: flex; /* Alinea los botones horizontalmente */
+    gap: 10px; /* Espacio entre los botones */
+    justify-content: flex-start; /* Alinea los botones a la izquierda */
+    align-items: center; /* Alinea verticalmente los botones al centro */
+}
+
 .btn-icon {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 16px;
+    background-color: transparent; /* Fondo transparente para que solo se vea el icono */
+    color: #000; /* Iconos en color negro */
+    padding: 8px; /* Tamaño reducido para hacer los botones más pequeños */
+    border: none; /* Elimina bordes */
+    border-radius: 50%; /* Hace los botones redondeados si lo deseas */
+    font-size: 18px; /* Tamaño del icono */
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    cursor: pointer; /* Cambia el cursor al pasar sobre los iconos */
 }
 
 .btn-icon i {
-    margin-right: 8px;
+    font-size: 18px; /* Ajusta el tamaño de los iconos */
 }
 
-.btn-icon[title="Eliminar"] {
-    background-color: #dc3545;
+.btn-icon:hover {
+    background-color: rgba(0, 0, 0, 0.1); /* Leve sombreado al hacer hover */
+    transform: scale(1.1); /* Aumenta ligeramente el tamaño al hacer hover */
 }
 
+/* Hover específico para el botón de eliminar */
 .btn-icon[title="Eliminar"]:hover {
-    background-color: #b02a37;
+    background-color: rgba(255, 0, 0, 0.1); /* Sombra roja al hacer hover en Eliminar */
 }
 
-.btn-icon[title="Descargar"] {
-    background-color: #28a745;
-}
-
-.btn-icon[title="Descargar"]:hover {
-    background-color: #218838;
-}
-
-.btn-icon[title="Vista Previa"] {
-    background-color: #007bff;
-    width: 100%;
-    text-align: center;
-}
-
+/* Hover específico para el botón de vista previa */
 .btn-icon[title="Vista Previa"]:hover {
-    background-color: #0056b3;
+    background-color: rgba(0, 0, 255, 0.1); /* Sombra azul al hacer hover en Vista Previa */
 }
+
+/* Hover específico para el botón de descargar */
+.btn-icon[title="Descargar"]:hover {
+    background-color: rgba(55, 145, 37, 0.1); /* Sombra verde al hacer hover en Descargar */
+}
+
+
+
+/* Ajuste del pie de tarjeta */
+.card-footer {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.card-footer a {
+    font-size: 14px;
+    color: #6f42c1;
+    text-decoration: none;
+}
+
+.card-footer a:hover {
+    color: #5a32a3;
+}
+
 
 /* Header */
 .header {
@@ -169,7 +182,6 @@ body, html {
     display: flex; /* Usamos flex para alinear los botones */
     justify-content: flex-end; /* Alineamos al inicio */
     gap: 10px; /* Espaciado entre los botones */
-    
 }
 
 .form-list h2 {
@@ -188,7 +200,7 @@ body, html {
 .btn-filter {
     background-color: #e50c21e0;
     color: white;
-    border: none;
+    border: none; /* Elimina el borde */
     padding: 10px 40px;
     border-radius: 25px;
     transition: background-color 0.5s ease;
@@ -226,8 +238,9 @@ body, html {
     text-decoration: none;
     font-size: 13px;
 }
-.btn-modify :hover{
-    transform: translateY(-5px);  /* Efecto hover: eleva ligeramente la tarjeta */
+
+.btn-modify:hover {
+    transform: translateY(-5px);
 }
 
 /* Estilos para el contenedor eliminar */
@@ -240,4 +253,225 @@ body, html {
 
 .eliminar h3 {
     color: #dc3545; /* Color del texto */
+}
+
+.right-panel {
+    position: fixed; /* Fijo en la pantalla */
+    top: 246px; /* Ajusta la posición desde la parte superior */
+    right: 60px; /* Acerca el panel más al lado izquierdo */
+    width: 300px; /* Ancho del panel */
+    background-color: #f7f9fc;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    z-index: 1000; /* Asegura que el panel esté por encima de otros elementos */
+}
+
+
+
+#nuevaEvaluacionBtn {
+    display: inline-block;
+    margin-top: 20px; /* Espacio superior para separación */
+    width: 100%; /* Botón de ancho completo */
+    text-align: center;
+    background-color: #28a745; /* Fondo verde */
+    color: white; /* Texto blanco */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-decoration: none; /* Eliminar subrayado */
+}
+
+#nuevaEvaluacionBtn:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+
+
+/* Título de la sección de filtro */
+.filter-section h3 {
+    font-size: 1.2em; /* Ajusta el tamaño del título para hacerlo más pequeño */
+    color: #000000;
+    margin-bottom: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* Estilo del select para filtros */
+.filter-select {
+    width: 100%;
+    padding: 8px; /* Reducir el padding */
+    font-size: 0.9em; /* Ajustar el tamaño de fuente */
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 12px; /* Reducir el border-radius */
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+}
+
+.filter-select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Orden de filtros (Más reciente/antigua) */
+.filter-order {
+    margin: 15px 0; /* Reducir el espacio entre filtros */
+    display: flex;
+    justify-content: space-between;
+}
+
+.filter-order label {
+    font-size: 0.9em;
+    color: #555;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+/* Estilos para los puntos de colores */
+.blue-dot, .yellow-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.blue-dot {
+    background-color: #007bff;
+}
+
+.yellow-dot {
+    background-color: #f1c40f;
+}
+
+/* Botones de estado */
+.status-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.status-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.status-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Botón de Pendientes */
+.status-button.pending {
+    border-left: 5px solid #ce1500;
+}
+
+.status-button.pending .red-dot {
+    background-color: #ce1500;
+}
+
+/* Botón de Evaluar */
+.status-button.evaluate {
+    border-left: 5px solid #a72828;
+}
+.status-button.evaluate2 {
+    border-left: 5px solid #28a745;
+}
+
+.status-button.evaluate .green-dot {
+    background-color: #28a745;
+}
+
+/* Estilos para los puntos de estado */
+.green-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 10px;
+}
+.status-button.evaluate .red-dot {
+    background-color: #f11616;
+}
+.red-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 10px;
+}
+/* Contador de evaluaciones pendientes */
+.status-button .count {
+    background-color: #df1600;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.85em;
+    font-weight: bold;
+}
+
+
+
+/* Responsive para dispositivos más pequeños */
+@media (max-width: 768px) {
+    .right-panel {
+        max-width: 100%;
+        margin: 0;
+    }
+}
+
+
+
+#nuevaEvaluacionBtn {
+    position: relative; /* Elimina position: absolute para que esté dentro del flujo del panel */
+    background-color: #28a745; /* Fondo verde */
+    color: white; /* Texto blanco */
+    padding: 12px 75px; /* Padding más pequeño para reducir el largo */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    font-size: 14px; /* Tamaño del texto */
+    font-weight: bold; /* Texto en negrita */
+    cursor: pointer; /* Aparece como un puntero */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transiciones suaves */
+    width: auto; /* Elimina el ancho completo */
+    white-space: nowrap; /* Evita que el texto se rompa en varias líneas */
+    margin-top: 25px; /* Espaciado superior */
+    margin-left: 0px;
+}
+
+
+
+
+
+
+#nuevaEvaluacionBtn:active {
+    background-color: #1e7e34; /* Even darker when pressed */
+    transform: scale(1); /* Reset scale on click */
+}
+.status-button .count2 {
+    background-color: #1e7e34;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.85em;
+    font-weight: bold;
 }
