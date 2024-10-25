@@ -10,13 +10,13 @@
 <body>
     <div class="container">
         <% if (user && user.rol === 'Administrador') { %>
-            <nav><%- include('../partials/navbar') %> </nav>
+            <nav><%- include('./partials/navbar') %> </nav>
         <% } else if (user && user.rol === 'Evaluador') { %>
-            <nav><%- include('../partials/navbarEval') %> </nav>
+            <nav><%- include('./partials/navbarEval') %> </nav>
         <% } else if (user && user.rol === 'Intermediario') { %>
-            <nav><%- include('../partials/navbarInter') %> </nav>
+            <nav><%- include('./partials/navbarInter') %> </nav>
         <% } else if (user && user.rol === 'Empleado') { %>
-            <nav><%- include('../partials/navbarUser') %> </nav>
+            <nav><%- include('./partials/navbarUser') %> </nav>
         <% } else { %>
             <p>Navbar error</p>
         <% } %>
