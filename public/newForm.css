@@ -67,17 +67,79 @@ h2 {
     font-weight: bold;
 }
 
-input[type="text"],
-input[type="number"],
-textarea,
-select {
-    width: 80%;
+/* Estilo para input de texto */
+/* Estilo para el input de texto */
+input[type="text"] {
+    width: 400px; /* Ajustar el ancho del input */
     padding: 10px;
+    font-size: 16px;
     border: 1px solid #ccc;
-    border-radius: 20px; /* Aumento del redondeado */
+    border-radius: 10px;
+    box-sizing: border-box;
+    display: inline-block; /* Para que se alinee con el select */
+    vertical-align: middle; /* Alineación vertical */
+    margin-right: 10px; /* Espacio a la derecha del input */
+}
+
+/* Estilo para select */
+select {
+    width: 200px; /* Ajustar el ancho del select */
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    display: inline-block; /* Para alinearse con el input */
+    vertical-align: middle; /* Alineación vertical */
+    
+}
+
+
+input[type="text"]:focus {
+    border-color: #007bff;
+    background-color: #f0f8ff;
+}
+
+/* Estilo para input numérico */
+input[type="number"] {
+    width: 200px; /* Diferente ancho para el input numérico */
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 50px; /* Menos redondeado */
     box-sizing: border-box;
     transition: border-color 0.3s, background-color 0.3s;
 }
+
+input[type="number"]:focus {
+    border-color: #28a745;
+    background-color: #e9f7ef;
+}
+
+/* Estilo para textarea */
+textarea {
+    width: 85%; /* Ancho más grande para textarea */
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+textarea:focus {
+    border-color: #ff9800;
+    background-color: #fff7e6;
+}
+
+/* Estilo para select */
+
+
+select:focus {
+    border-color: #4a90e2;
+    background-color: #e7f4ff;
+}
+
 
 input[type="text"]:focus,
 input[type="number"]:focus,
@@ -104,7 +166,7 @@ select:focus {
 
 
 .btn-download {
-    background-color: #2a36d4;
+    background-color: #36bb2a;
     color: white;
     border: none;
     border-radius: 20px; /* Aumento del redondeado */
@@ -112,6 +174,7 @@ select:focus {
     cursor: pointer;
     transition: background-color 0.3s;
     font-size: 14px;
+    margin-left: 200px;
 }
 
 .btn-cancel {
@@ -123,6 +186,7 @@ select:focus {
     cursor: pointer;
     font-size: 14px;
     transition: background-color 0.3s;
+    margin-left: 200px;
 }
 
 .btn-add-option {
@@ -136,9 +200,27 @@ select:focus {
     font-size: 14px;
 }
 
-.btn-delete,
+.btn-delete{
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 20px; /* Aumento del redondeado */
+    padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: 400px;
+}
+
 .btn-add,
-.btn-save,
+.btn-save{
+    background-color: #4ae251;
+    color: white;
+    border: none;
+    border-radius: 20px; /* Aumento del redondeado */
+    padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 .btn-add:hover {
     background-color: #4a90e2;
     color: white;
@@ -154,7 +236,7 @@ select:focus {
 }
 
 .btn-download:hover {
-    background-color: #4a90e2;
+    background-color: #2f9e3e;
 }
 
 .btn-cancel:hover,
@@ -208,4 +290,16 @@ iframe {
 /* Borde verde para porcentaje >= 70 */
 .green-border {
     border-color: #28a745; /* Verde */
+}
+.opcion1{
+        width: 200px; /* Ajustar el ancho del select */
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        display: inline-block; /* Para alinearse con el input */
+        vertical-align: middle; /* Alineación vertical */
+        margin-left: 600px;
+        margin-top: -110px;
 }
