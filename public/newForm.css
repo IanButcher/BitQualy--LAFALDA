@@ -226,6 +226,10 @@ select:focus {
     transition: background-color 0.3s;
     margin-left: 750px;
     margin-top: 12px;
+    display: flex;  /* Alinea los elementos en una fila horizontal */
+    align-items: center;  /* Alinea los elementos verticalmente en el centro */
+    gap: 20px;  /* Espacio entre los elementos */
+    
 }
 .btn-save{
     background-color: #4ae251;
@@ -353,6 +357,7 @@ iframe {
 /* Estilos para contenedores de preguntas y opciones */
 .question-container {
     border: 1px solid #ddd;
+    width: 750px;
     padding: 20px;
     border-radius: 8px;
     margin-bottom: 20px;
@@ -383,3 +388,4 @@ iframe {
 .btn-delete-option:hover {
     color: #ff0000;
 }
+

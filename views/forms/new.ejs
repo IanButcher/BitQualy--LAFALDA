@@ -66,21 +66,32 @@
                                 <option value="evaluacion">Evaluacion</option>
                                 <option value="autoevaluacion">Autoevaluacion</option>
                             </select>
-                            <button type="button" class="btn-add" id="add-question-btn"><i class="fas fa-plus"></i>
-                            </button>
+                            
                         </div>
+                        
 
                         <!-- Pregunta dinámica -->
-                         <div id="additional-questions"></div>
+                         
 
                         <!-- Botón para agregar nuevas preguntas -->
-                           
-
-                        <div class="modify-buttons">
-                            <button type="submit" class="btn-save" id="save-form-btn">Guardar Cambios</button> <!-- Submit button -->
-                            <button type="button" class="btn-download" id="download-pdf-btn">Descargar PDF</button> <!-- PDF download button -->
-                            <a href="/formularios" class="btn-cancel">Cancelar</a>
-                        </div>
+                        
+                            <div class="lol">
+                                <!-- Contenedor de preguntas adicionales -->
+                                <div id="additional-questions">
+                                    <button type="button" class="btn-add" id="add-question-btn">
+                                        <i class="fas fa-plus"></i> Añadir Pregunta
+                                    </button>
+                                </div>
+                        
+                                <!-- Sección de botones de modificación -->
+                                <div class="modify-buttons">
+                                    <button type="submit" class="btn-save" id="save-form-btn">Guardar Cambios</button>
+                                    <button type="button" class="btn-download" id="download-pdf-btn">Descargar PDF</button>
+                                    <a href="/formularios" class="btn-cancel">Cancelar</a>
+                                </div>
+                            </div>
+                        
+                      
                     </form>
                 </div>
 
@@ -92,6 +103,8 @@
             </div>
         </div>
     </div>
+   
+
     
     <script>
         
