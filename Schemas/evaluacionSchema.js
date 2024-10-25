@@ -24,9 +24,9 @@ const evaluacionSchema = new mongoose.Schema({
         required: true
     },
     empleado: {
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'BaseUser', 
-        required: true 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'BaseUser',
+        required: true
     },
     assignedBy: {
         type: mongoose.Schema.Types.ObjectId,
@@ -35,7 +35,7 @@ const evaluacionSchema = new mongoose.Schema({
     deadline: {
         type: Date,
         required: false
-    },  
+    },
     createdAt: {
         type: Date,
         required: true,
@@ -50,7 +50,13 @@ const evaluacionSchema = new mongoose.Schema({
         type: [String],
         required: true
     },
-    comentarios: [comentarioSchema]
+    comentarios: [comentarioSchema],
+
+    score: {
+        type: Number,
+        required: true,
+        default: 0
+    }
 });
 
 const Evaluacion = mongoose.model('Evaluacion', evaluacionSchema);

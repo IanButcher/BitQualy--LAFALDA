@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,34 +17,71 @@
         top: 100px;
     }
 </style>
+
 <body>
-    <nav> <%- include('./partials/navbar') %> </nav>
+    <nav>
+        <%- include('./partials/navbar') %>
+    </nav>
 
     <!-- Panel principal -->
     <main class="main-content">
         <header class="header notificacion-icon user-photo">
-            <%- include('./partials/headerU') %> 
+            <%- include('./partials/headerU') %>
         </header>
 
         <!-- Important: Add enctype="multipart/form-data" -->
         <form id="formulario" method="POST" action="/save-new-user" enctype="multipart/form-data">
             <!-- Formulario de Creación de Evaluador -->
-            <div class="image-and-fields">
-                <!-- Vista previa de la imagen -->
-                <div class="image-and-info">
-                    <div class="image-preview" onclick="document.getElementById('photo-input').click();">
-                        <img id="profile-photo" src="default-profile.png">
-                        <div class="overlay">
-                            <i class="fas fa-camera"></i>
-                            <span>Cambiar Foto del Perfil</span>
+            <!--<div class="image-and-fields">
+                <!-- Vista previa de la imagen
+                <div class="image-preview" onclick="document.getElementById('foto').click();">
+                    <img id="foto" alt="Vista previa de la foto" style="display: none;" />
+                    <span class="change-photo-text">Haz clic aquí para cambiar la foto</span>
+                    <!-- Mensaje indicativo 
+                </div>
+
+            </div>
+            <div class="image-preview" onclick="document.getElementById('foto').click();">
+                <input type="file" id="foto" name="image" accept="image/*" onchange="previewImage(event);" style="display: none;">
+            </div>
+            
+            <div class="form-fields">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" placeholder="Ingresa el nombre" required minlength="4" maxlength="16" size="16">
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="apellido">Apellido</label>
+                    <input type="text" id="apellido" name="apellido" placeholder="Ingresa el apellido" required minlength="4" maxlength="16" size="16"> -->
+                    <div class="image-and-info">
+                        <div class="image-preview" onclick="document.getElementById('foto').click();">
+                            <!-- Ensure the ID matches what the JavaScript function is targeting -->
+                            <img id="profile-photo" src="/img/user.png" alt="Profile Preview">
+                            <div class="overlay">
+                                <i class="fas fa-camera"></i>
+                                <span>Cambiar Foto del Perfil</span>
+                            </div>
                         </div>
+                        <input type="file" id="foto" name="image" accept="image/*" onchange="previewImage(event);" style="display:none;">
                     </div>
-                    <input type="file" id="photo-input" accept="image/*" onchange="previewImage(event)" style="display:none;">
-                </div>                              
+                    
+                    <script>
+                        function previewImage(event) {
+                            const reader = new FileReader()
+                            reader.onload = function() {
+                                const output = document.getElementById('profile-photo')
+                                output.src = reader.result
+                                output.style.display = 'block'
+                            };
+                            reader.readAsDataURL(event.target.files[0])
+                        }
+                    </script>
+                                                
                 <div class="form-fields">
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
-                        <input type="text" id="nombre" name="nombre" placeholder="Ingresa el nombre" required minlength="4" maxlength="16" size="16">
+                        <input type="text" id="nombre" name="nombre" placeholder="Ingresa el nombre" required minlength="3" maxlength="16" size="16">
                     </div>
                     <br>
                     <div class="form-group">
@@ -52,11 +90,14 @@
                     </div>
                 </div>
             </div>
-        
+            </div>
+
+            <!-- Resto del formulario -->
+
             <div class="form-grid">
                 <div class="form-group">
                     <label for="legajo">Legajo</label>
-                    <input type="text" id="legajo" name="legajo" placeholder="Ingresa el legajo" required minlength="4" maxlength="16" size="25">
+                    <input type="text" id="legajo" name="legajo" placeholder="Ingresa el legajo" required minlength="3" maxlength="10" size="25">
                 </div>
                 <div class="form-group">
                     <label for="rol">Rol</label>
@@ -68,61 +109,48 @@
                         <option value="administrador">Administrador</option>
                     </select>
                 </div>
-        
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Ingresa el email" required minlength="8" size="25">
-                </div>   
-                
-                <div class="form-group">
-                    <label for="email1">Confirmar Email</label>
-                    <input type="email" id="email1" name="email1" placeholder="Ingresa el email" required minlength="8" size="25">
-                </div>   
-        
-                <p id="error-msg" class="error-msg" style="display: none;">
-                    <i class="fas fa-exclamation-triangle"></i> Los correos no coinciden.
-                </p>
-                        
-                <div class="form-buttons">
-                    <button type="submit" id="btn-crear" class="btn-submit" disabled>Crear Usuario</button>
-                    <a href="/empleados" class="btn-cancel">Cancelar</a>
-                </div>
+            </div>
+            <div class="form-group">
+                <label for="dni">DNI</label>
+                <input type="text" id="dni" name="dni" placeholder="Ingresa el DNI" required minlength="8" size="25">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Ingresa el email" required minlength="8" size="25">
+            </div>
+
+            <div class="form-group">
+                <label for="email1">Confirmar Email</label>
+                <input type="email" id="email1" name="email1" placeholder="Ingresa el email" required minlength="8" size="25">
+            </div>
+
+            <p id="error-msg" class="error-msg" style="display: none;">
+                <i class="fas fa-exclamation-triangle"></i> Los correos no coinciden.
+            </p>
+
+            <div class="form-buttons">
+                <button type="submit" class="btn-submit">Crear Usuario</button>
+                <a href="/empleados" class="btn-cancel">Cancelar</a>
+            </div>
+
             </div>
         </form>
     </main>
 
     <script>
-       // function previewImage(event) {
-         //   const file = event.target.files[0]; // Obtiene el archivo cargado
+        // Preview the selected image
+        let imgLoaded = false
 
-            // Verifica si el archivo es una imagen
-            //if (file && file.type.startsWith('image/')) {
-              //  const reader = new FileReader();
-
-                // Cuando se carga el archivo, actualiza el 'src' de la imagen
-                //reader.onload = function(e) {
-                  //  const output = document.getElementById('profile-photo');
-                    //output.src = e.target.result; // Actualiza la imagen de perfil con el archivo seleccionado
-                    //output.style.display = 'block'; // Muestra la imagen
-                //};
-
-                // Lee el archivo cargado como una URL de datos
-                //reader.readAsDataURL(file);
-            //} else {
-              //  alert("Por favor, selecciona un archivo de imagen válido."); // Mensaje de error si el archivo no es una imagen
-    //        }
-      //  }
-
-        function previewImage(event){
-            const reader = new FileReader()
-            reader.onload = function (){
-                const output = document.getElementById('profile-photo')
-                output.src = reader.result
-                output.style.display = 'block'
-            }
-            reader.readAsDataURL(event.target.files[0])
-        }
-        
+//        function previewImage(event) {
+  //          const reader = new FileReader();
+    //        reader.onload = function() {
+      //          const output = document.getElementById('image-preview-img');
+        //        output.src = reader.result;
+          //      output.style.display = 'block'; // Display the image preview
+            //    imgLoaded = true
+//            };
+  //          reader.readAsDataURL(event.target.files[0]); // Load the file and display it
+    //    }
         const email = document.querySelector('#email');
         const email1 = document.querySelector('#email1');
         const btnCrear = document.querySelector('#btn-crear');
@@ -143,12 +171,19 @@
         email.addEventListener('input', validarEmails);
         email1.addEventListener('input', validarEmails);
 
-        
-        
-
-
-
-
+        // Función para vista previa de la imagen
+        //function previewImage(event) {
+          //  const reader = new FileReader();
+            //reader.onload = function() {
+              //  const output = document.getElementById('image-preview-img');
+                //output.src = reader.result;
+//                output.style.display = 'block' // Mostrar la imagen de vista previa
+  //          }
+    //        reader.readAsDataURL(event.target.files[0])
+      //  }
     </script>
 </body>
+
+</html>
+
 </html>
