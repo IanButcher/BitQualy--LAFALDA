@@ -10,15 +10,19 @@
 </head>
 
 <body>
-    <form action="/myAccount" method="POST" enctype="multipart/form-data">
-        <div class="image-preview" onclick="document.getElementById('foto').click();">
-            <img id="image-preview-img" src="<%= user.imagePath ? '/' + user.imagePath : '/img/user.png' %>" alt="Vista previa de la foto" style="display: block; max-width: 150px; max-height: 150px;" />
-            <span class="change-photo-text">Haz clic aquí para cambiar la foto</span>
-        </div>
+    <form action="/myAccount/update" method="POST" enctype="multipart/form-data">
+        <label for="email">Email:</label>
+        <input type="email" name="email" value="<%= user.email %>" required>
 
-        <input type="file" id="foto" name="image" accept="image/*" onchange="previewImage(event);" style="display: none;">
-        <button type="submit" id="btn-crear" class="btn-submit">Crear Usuario</button>
+        <label for="password">New Password:</label>
+        <input type="password" name="password" placeholder="Enter new password">
+
+        <label for="profile-photo">Profile Photo:</label>
+        <input type="file" name="image">
+
+        <button type="submit">Update Profile</button>
     </form>
+
     <script>
         function previewImage(event) {
             const input = event.target

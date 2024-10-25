@@ -7,6 +7,7 @@ const Evaluador = require('../Schemas/evaluadorSchema')
 const Regulador = require('../Schemas/intermediarioSchema')
 const baseUserSchema = require('../Schemas/baseUserSchema')
 const Administrador = require('../Schemas/adminSchema')
+const bcrypt = require('bcryptjs')
 const { initializePassportSession, passport } = require('../middleware/passportConfig')
 const roleAuthorization = require('../middleware/roleAuth')
 const crypto = require('crypto')
@@ -126,20 +127,35 @@ app.post('/login', (req, res, next) => {
     })(req, res, next)
 })
 
+// GET route --> me page
 router.get('/myAccount', (req, res) => {
     res.render('myAccount', { user: req.user })
 })
 
-router.post('/myAccount/update', upload.single('image'), async(req, res) => {
-    try {
-        const imagePath = req.file ? `uploads/images/${req.file.filename}` : req.user.imagePath
+// POST route --> update pfp, pass & mail
+router.post('/myAccount/update', upload.single('image'), async (req, res) => {
+    if (req.user){
+        try {
+            // Collect updated data
+            const updates = {}
+            if (req.body.email) updates.email = req.body.email
+            if (req.body.password) {
+                const hashedPassword = await bcrypt.hash(req.body.password, 10)
+                updates.password = hashedPassword
+            }
+            if (req.file) updates.imagePath = `uploads/images/${req.file.filename}`
 
-        await User.findByIdAndUpdate(req.user._id, { imagePath: imagePath })
+            // Update user in database
+            await baseUserSchema.findByIdAndUpdate(req.user._id, updates)
 
-        res.redirect('/myAccount')
-    } catch (err) {
-        console.error(err)
-        res.status(500).send('Error actualizando la imagen')
+            // Redirect after successful update
+            res.redirect('/myAccount')
+        } catch (err) {
+            console.error(err);
+            res.status(500).send('Error actualizando la cuenta')
+        }
+    } else {
+        res.redirect('/')
     }
 })
 
