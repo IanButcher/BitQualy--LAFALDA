@@ -117,15 +117,18 @@ router.get('/evaluaciones/my-autoevaluacion/:id', roleAuthorization(['Empleado',
             return res.status(403).send('Esta evaluación ya ha sido completada y no puede ser modificada.')
         }
 
+        const now = new Date()
+        if (evaluacion.deadline && evaluacion.deadline < now) {
+            return res.redirect('/evaluaciones')
+        }
+
         // Render the 'awnser.ejs' template with both evaluacion and user
         res.render('evals/awnser', { evaluacion, formulario: evaluacion.formulario, user: req.user, empleado: evaluacion.empleado ? evaluacion.empleado.nombre : 'Empleado no asignado' })
     } catch (error) {
         console.error('Error fetching evaluation:', error)
         res.status(500).send('Error interno del servidor')
     }
-});
-
-  
+})
 
   
 
@@ -152,7 +155,6 @@ router.get('/evaluaciones/answer/:id', roleAuthorization(['Administrador', 'Eval
                 return res.status(404).send('Formulario no encontrado')
             }
     
-            // Render a new page with the preguntas and the selected empleado
             res.render('evals/awnserNormal', { formulario, empleado, user: req.user })
         } catch (error) {
             console.error('Error fetching formulario:', error)
