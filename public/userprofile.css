@@ -137,17 +137,17 @@ input:disabled {
 }
 
 .password-group {
-    position: relative;
+    position: relative; /* Esto permite que el ícono se posicione dentro del input */
 }
 
 .toggle-password {
     position: absolute;
-    right: 10px;
-    top: 50%;
+    right: 14px;
+    top: 68%;
     transform: translateY(-50%);
     cursor: pointer;
-    color: #007bff;
-    font-size: 14px;
+    color: #000000;
+    font-size: 18px;
 }
 
 .edit-buttons {
