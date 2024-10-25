@@ -70,7 +70,7 @@ h2 {
 /* Estilo para input de texto */
 /* Estilo para el input de texto */
 input[type="text"] {
-    width: 400px; /* Ajustar el ancho del input */
+    width: 500px; /* Ajustar el ancho del input */
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
@@ -201,14 +201,14 @@ select:focus {
 }
 
 .btn-delete{
-    background-color: #4a90e2;
-    color: white;
+    background-color: transparent;
+    color: rgb(5, 5, 5);
     border: none;
     border-radius: 20px; /* Aumento del redondeado */
     padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
     cursor: pointer;
     transition: background-color 0.3s;
-    margin-left: 400px;
+    margin-left: 0px;
 }
 
 .btn-add,
@@ -240,11 +240,13 @@ select:focus {
 }
 
 .btn-cancel:hover,
-.btn-delete:hover,
+
 .btn-add-option:hover {
     background-color: #357ab8;
 }
-
+.btn-delete:hover{
+    background-color: #d42a2a;
+}
 /* Estilos de las opciones */
 .options-group {
     margin-top: 10px;
@@ -302,4 +304,14 @@ iframe {
         vertical-align: middle; /* Alineación vertical */
         margin-left: 600px;
         margin-top: -110px;
+}
+.alineados{
+    display: flex;  /* Alinea los elementos en una fila horizontal */
+    align-items: center;  /* Alinea los elementos verticalmente en el centro */
+    gap: 20px;  /* Espacio entre los elementos */
+}
+.alineados2{
+    display: flex;  /* Alinea los elementos en una fila horizontal */
+    align-items: center;  /* Alinea los elementos verticalmente en el centro */
+    gap: 20px;  /* Espacio entre los elementos */
 }

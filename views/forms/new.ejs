@@ -57,6 +57,7 @@
 
                     <form id="form-modification" method="POST" action="/formularios/save-form">
                         <div class="form-group">
+                            
                             <label for="titulo">Título del Formulario:</label>
                             <input type="text" id="form-title" name="form-title" value="Autoevaluación" required>
                             
@@ -89,7 +90,7 @@
             </div>
         </div>
     </div>
-
+    
     <script>
         
 
@@ -103,24 +104,29 @@
 
             const newQuestion = `
                 <div class="form-group" id="question-group-${questionNumber}">
-                    <label for="question${questionNumber}">Pregunta ${questionNumber}:</label>
-                    <input type="text" id="question${questionNumber}" name="question${questionNumber}" required>
+                    
+                    <div class="alineados2">
+                     <label for="question${questionNumber}">Pregunta ${questionNumber}:</label>
+                     <input type="text" id="question${questionNumber}" name="question${questionNumber}" required>
+                     <button type="button" class="btn-delete" onclick="deleteQuestion(${questionNumber})"><i class="fas fa-trash"></i> </button>
+                    </div>
 
                     <!-- Descripción de la pregunta -->
                     <label for="description${questionNumber}">Descripción:</label>
                     <textarea id="description${questionNumber}" name="description${questionNumber}"></textarea>
 
-                    <!-- Porcentaje -->
-                    <label for="percentage${questionNumber}">Porcentaje:</label>
-                    <input type="number" class="percentage-input" id="percentage${questionNumber}" name="percentage${questionNumber}" min="0" max="100" required oninput="updateColor(${questionNumber}), maxPorcentage(${questionNumber}) ">
+                    <div class="alineados">
+                        <label for="percentage${questionNumber}">Porcentaje:</label>
+                        <input type="number" class="percentage-input" id="percentage${questionNumber}" name="percentage${questionNumber}" min="0" max="100" required oninput="updateColor(${questionNumber}), maxPorcentage(${questionNumber}) ">
 
-                    <!-- Tipo de pregunta -->
-                    <label for="type${questionNumber}">Tipo de Pregunta:</label>
-                    <select name="type${questionNumber}" id="type${questionNumber}" onchange="toggleOptions(${questionNumber})">
-                        <option value="texto">Texto</option>
-                        <option value="multiple">Opción Múltiple</option>
-                        <option value="checkbox">Checkbox</option>
-                    </select>
+                        <!-- Tipo de pregunta -->
+                        <label for="type${questionNumber}">Tipo de Pregunta:</label>
+                        <select name="type${questionNumber}" id="type${questionNumber}" onchange="toggleOptions(${questionNumber})">
+                            <option value="texto">Texto</option>
+                            <option value="multiple">Opción Múltiple</option>
+                            <option value="checkbox">Checkbox</option>
+                        </select>
+                    </div>
 
                     <!-- Opciones dinámicas -->
                     <div class="options-group" id="options${questionNumber}" style="display:none;">
@@ -133,8 +139,7 @@
                         <button type="button" class="btn-add-option" onclick="addOption(${questionNumber})">Añadir Opción</button>
                     </div>
 
-                    <!-- Botón para eliminar pregunta -->
-                    <button type="button" class="btn-delete" onclick="deleteQuestion(${questionNumber})">Eliminar Pregunta</button>
+                    
                 </div>
             `;
             additionalQuestions.insertAdjacentHTML('beforeend', newQuestion);
