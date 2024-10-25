@@ -12,6 +12,7 @@ const roleAuthorization = require('../middleware/roleAuth')
 
 app.use(roleAuthorization)
 
+
 //GET route --> All evaluadores
 router.get('/empleados', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async(req, res) => {
     if (req.user) {
@@ -51,7 +52,7 @@ router.post('/empleados/eliminar/:id', roleAuthorization(['Administrador']), asy
     }
 
     try {
-        const result = await Empleado.findByIdAndUpdate(empleadoId, { estaActivo: false });
+        const result = await Empleado.findByIdAndUpdate(empleadoId, { estaActivo: false, endline: Date.now });
         if (result) {
             res.redirect('/empleados')
         } else {

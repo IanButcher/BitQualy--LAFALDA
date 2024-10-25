@@ -41,7 +41,7 @@ const baseUserSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    deadline: {
+    endline: {
         type: Date,
         required: false
     },
