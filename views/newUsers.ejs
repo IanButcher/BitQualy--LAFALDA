@@ -37,17 +37,16 @@
                 <div class="image-preview" onclick="document.getElementById('foto').click();">
                     <img id="image-preview-img" alt="Vista previa de la foto" style="display: none;" />
                     <span class="change-photo-text">Haz clic aquí para cambiar la foto</span>
-                    <<<<<<< HEAD <!-- Mensaje indicativo -->
+                    <!-- Mensaje indicativo -->
                 </div>
 
                 <!-- Updated file input -->
                 <input type="file" id="foto" name="image" accept="image/*" onchange="previewImage(event);" style="display: none;">
                 <!-- Name changed to 'image' -->
-
                 <!-- Campos de Nombre y Apellido -->
-                =======
+
             </div>
-            <input type="file" id="foto" name="image" accept="image/*" onchange="previewImage(event);" style="display: none;"> >>>>>>> 19851a382fe834ce3438f240b717c71cd1f304bc
+            <input type="file" id="foto" name="image" accept="image/*" onchange="previewImage(event);" style="display: none;">
             <div class="form-fields">
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
@@ -78,29 +77,11 @@
                         <option value="administrador">Administrador</option>
                     </select>
                 </div>
-                <<<<<<< HEAD </div>
-                    <div class="form-group">
-                        <label for="dni">DNI</label>
-                        <input type="text" id="dni" name="dni" required minlength="8" size="25">
-                    </div>
-
             </div>
-
             <div class="form-group">
-                <label for="email1">Confirmar Email</label>
-                <input type="email" id="email1" name="email1" placeholder="Ingresa el email" required minlength="8" size="25">
+                <label for="dni">DNI</label>
+                <input type="text" id="dni" name="dni" placeholder="Ingresa el DNI" required minlength="8" size="25">
             </div>
-
-            <p id="error-msg" class="error-msg" style="display: none;">
-                <i class="fas fa-exclamation-triangle"></i> Los correos no coinciden.
-            </p>
-
-            <div class="form-buttons">
-                <button type="submit" class="btn-submit">Crear Usuario</button>
-                <a href="/empleados" class="btn-cancel">Cancelar</a>
-            </div>
-            =======
-
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" placeholder="Ingresa el email" required minlength="8" size="25">
@@ -116,10 +97,10 @@
             </p>
 
             <div class="form-buttons">
-                <button type="submit" id="btn-crear" class="btn-submit" disabled>Crear Usuario</button>
+                <button type="submit" class="btn-submit">Crear Usuario</button>
                 <a href="/empleados" class="btn-cancel">Cancelar</a>
             </div>
-            >>>>>>> 19851a382fe834ce3438f240b717c71cd1f304bc
+
             </div>
         </form>
     </main>
@@ -137,19 +118,7 @@
                 imgLoaded = true
             };
             reader.readAsDataURL(event.target.files[0]); // Load the file and display it
-        } <<
-        <<
-        <<
-        < HEAD
-
-            ===
-            ===
-            = >>>
-            >>>
-            >
-            19851 a382fe834ce3438f240b717c71cd1f304bc
-
-
+        }
         const email = document.querySelector('#email');
         const email1 = document.querySelector('#email1');
         const btnCrear = document.querySelector('#btn-crear');
@@ -176,22 +145,10 @@
             reader.onload = function() {
                 const output = document.getElementById('image-preview-img');
                 output.src = reader.result;
-                output.style.display = 'block'; // Mostrar la imagen de vista previa
-            };
-            reader.readAsDataURL(event.target.files[0]);
-        } <<
-        <<
-        <<
-        < HEAD
-            ===
-            ===
-            =
-
-
-            >>>
-            >>>
-            >
-            19851 a382fe834ce3438f240b717c71cd1f304bc
+                output.style.display = 'block' // Mostrar la imagen de vista previa
+            }
+            reader.readAsDataURL(event.target.files[0])
+        }
     </script>
 </body>
 
