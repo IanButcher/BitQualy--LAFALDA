@@ -37,22 +37,31 @@
                 <div class="image-preview" onclick="document.getElementById('foto').click();">
                     <img id="image-preview-img" alt="Vista previa de la foto" style="display: none;" />
                     <span class="change-photo-text">Haz clic aquí para cambiar la foto</span>
+                    <!-- Mensaje indicativo -->
                 </div>
+
+                <!-- Updated file input -->
                 <input type="file" id="foto" name="image" accept="image/*" onchange="previewImage(event);" style="display: none;">
-                <div class="form-fields">
-                    <div class="form-group">
-                        <label for="nombre">Nombre</label>
-                        <input type="text" id="nombre" name="nombre" placeholder="Ingresa el nombre" required minlength="4" maxlength="16" size="16">
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <label for="apellido">Apellido</label>
-                        <input type="text" id="apellido" name="apellido" placeholder="Ingresa el apellido" required minlength="4" maxlength="16" size="16">
-                    </div>
+                <!-- Name changed to 'image' -->
+                <!-- Campos de Nombre y Apellido -->
+
+            </div>
+            <input type="file" id="foto" name="image" accept="image/*" onchange="previewImage(event);" style="display: none;">
+            <div class="form-fields">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" placeholder="Ingresa el nombre" required minlength="4" maxlength="16" size="16">
                 </div>
+                <br>
+                <div class="form-group">
+                    <label for="apellido">Apellido</label>
+                    <input type="text" id="apellido" name="apellido" placeholder="Ingresa el apellido" required minlength="4" maxlength="16" size="16">
+                </div>
+            </div>
             </div>
 
             <!-- Resto del formulario -->
+
             <div class="form-grid">
                 <div class="form-group">
                     <label for="legajo">Legajo</label>
@@ -68,25 +77,30 @@
                         <option value="administrador">Administrador</option>
                     </select>
                 </div>
-        
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Ingresa el email" required minlength="8" size="25">
-                </div>   
-                
-                <div class="form-group">
-                    <label for="email1">Confirmar Email</label>
-                    <input type="email" id="email1" name="email1" placeholder="Ingresa el email" required minlength="8" size="25">
-                </div>   
-        
-                <p id="error-msg" class="error-msg" style="display: none;">
-                    <i class="fas fa-exclamation-triangle"></i> Los correos no coinciden.
-                </p>
-                        
-                <div class="form-buttons">
-                    <button type="submit" id="btn-crear" class="btn-submit" disabled>Crear Usuario</button>
-                    <a href="/empleados" class="btn-cancel">Cancelar</a>
-                </div>
+            </div>
+            <div class="form-group">
+                <label for="dni">DNI</label>
+                <input type="text" id="dni" name="dni" placeholder="Ingresa el DNI" required minlength="8" size="25">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Ingresa el email" required minlength="8" size="25">
+            </div>
+
+            <div class="form-group">
+                <label for="email1">Confirmar Email</label>
+                <input type="email" id="email1" name="email1" placeholder="Ingresa el email" required minlength="8" size="25">
+            </div>
+
+            <p id="error-msg" class="error-msg" style="display: none;">
+                <i class="fas fa-exclamation-triangle"></i> Los correos no coinciden.
+            </p>
+
+            <div class="form-buttons">
+                <button type="submit" class="btn-submit">Crear Usuario</button>
+                <a href="/empleados" class="btn-cancel">Cancelar</a>
+            </div>
+
             </div>
         </form>
     </main>
@@ -105,8 +119,6 @@
             };
             reader.readAsDataURL(event.target.files[0]); // Load the file and display it
         }
-
-        
         const email = document.querySelector('#email');
         const email1 = document.querySelector('#email1');
         const btnCrear = document.querySelector('#btn-crear');
@@ -133,13 +145,13 @@
             reader.onload = function() {
                 const output = document.getElementById('image-preview-img');
                 output.src = reader.result;
-                output.style.display = 'block'; // Mostrar la imagen de vista previa
-            };
-            reader.readAsDataURL(event.target.files[0]);
+                output.style.display = 'block' // Mostrar la imagen de vista previa
+            }
+            reader.readAsDataURL(event.target.files[0])
         }
-
-
     </script>
 </body>
+
+</html>
 
 </html>

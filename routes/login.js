@@ -35,7 +35,7 @@ router.get('/user-creator', roleAuthorization(['Administrador']), (req, res) => 
 
 // POST route --> Create User
 router.post('/save-new-user', upload.single('image'), roleAuthorization(['Administrador']), async(req, res) => {
-    const { nombre, apellido, legajo, rol, email } = req.body
+    const { nombre, apellido, legajo, rol, email, dni } = req.body
     const imagePath = req.file ? req.file.path : null
     try {
         // Check legajo
@@ -48,16 +48,16 @@ router.post('/save-new-user', upload.single('image'), roleAuthorization(['Admini
             let newUser;
             switch (rol) {
                 case 'empleado':
-                    newUser = new Empleado({ nombre, apellido, legajo, password, email, imagePath })
+                    newUser = new Empleado({ nombre, apellido, legajo, password, email, imagePath, dni })
                     break;
                 case 'evaluador':
-                    newUser = new Evaluador({ nombre, apellido, legajo, password, email, imagePath })
+                    newUser = new Evaluador({ nombre, apellido, legajo, password, email, imagePath, dni })
                     break;
                 case 'regulador':
-                    newUser = new Regulador({ nombre, apellido, legajo, password, email, imagePath })
+                    newUser = new Regulador({ nombre, apellido, legajo, password, email, imagePath, dni })
                     break;
                 case 'administrador':
-                    newUser = new Administrador({ nombre, apellido, legajo, password, email, imagePath })
+                    newUser = new Administrador({ nombre, apellido, legajo, password, email, imagePath, dni })
                     break;
                 default:
                     return res.redirect('/user-creator')
@@ -128,15 +128,15 @@ app.post('/login', (req, res, next) => {
 })
 
 // GET route --> me page
-router.get('/myAccount', (req, res) => {
+router.get('/my-account', roleAuthorization(['Administrador', 'Empleado', 'Intermediario', 'Evaluador']), (req, res) => {
     res.render('myAccount', { user: req.user })
 })
 
 // POST route --> update pfp, pass & mail
-router.post('/myAccount/update', upload.single('image'), async (req, res) => {
+router.post('/my-account/update', upload.single('image'), roleAuthorization(['Administrador', 'Empleado', 'Intermediario', 'Evaluador']), async (req, res) => {
     if (req.user){
         try {
-            // Collect updated data
+            // Get data
             const updates = {}
             if (req.body.email) updates.email = req.body.email
             if (req.body.password) {
@@ -145,14 +145,14 @@ router.post('/myAccount/update', upload.single('image'), async (req, res) => {
             }
             if (req.file) updates.imagePath = `uploads/images/${req.file.filename}`
 
-            // Update user in database
+            // Update in DB
             await baseUserSchema.findByIdAndUpdate(req.user._id, updates)
 
-            // Redirect after successful update
-            res.redirect('/myAccount')
+            // Redirect 
+            res.redirect('/my-account')
         } catch (err) {
             console.error(err);
-            res.status(500).send('Error actualizando la cuenta')
+            res.redirect('/my-account')
         }
     } else {
         res.redirect('/')
@@ -173,7 +173,7 @@ router.get('/logout', (req, res, next) => {
     } else {
         res.redirect('/')
     }
-});
+})
 
 
 module.exports = router

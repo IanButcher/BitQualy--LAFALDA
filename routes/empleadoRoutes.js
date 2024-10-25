@@ -28,7 +28,7 @@ router.get('/empleados/:id', roleAuthorization(['Administrador', 'Evaluador', 'I
         try {
             const id = req.params.id
             const empleado = await Empleado.findById(id)
-            const evaluaciones = await Evaluaciones.find({ empleado: empleado._id})
+            const evaluaciones = await Evaluaciones.find({ empleado: empleado._id })
             const evaluacionesAsignadas = evaluaciones.filter(evaluacion => !evaluacion.completed)
             const evaluacionesCompletadas = evaluaciones.filter(evaluacion => evaluacion.completed)
             if (!empleado) {
