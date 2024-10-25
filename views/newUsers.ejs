@@ -30,14 +30,14 @@
         </header>
 
         <!-- Important: Add enctype="multipart/form-data" -->
-        <form method="POST" action="/save-new-user" enctype="multipart/form-data">
+        <form id="formulario" method="POST" action="/save-new-user" enctype="multipart/form-data">
             <!-- Formulario de Creación de Evaluador -->
             <div class="image-and-fields">
                 <!-- Vista previa de la imagen -->
                 <div class="image-preview" onclick="document.getElementById('foto').click();">
                     <img id="image-preview-img" alt="Vista previa de la foto" style="display: none;" />
                     <span class="change-photo-text">Haz clic aquí para cambiar la foto</span>
-                    <!-- Mensaje indicativo -->
+                    <<<<<<< HEAD <!-- Mensaje indicativo -->
                 </div>
 
                 <!-- Updated file input -->
@@ -45,17 +45,23 @@
                 <!-- Name changed to 'image' -->
 
                 <!-- Campos de Nombre y Apellido -->
-                <div class="form-fields">
-                    <div class="form-group">
-                        <label for="nombre">Nombre</label>
-                        <input type="text" id="nombre" name="nombre" placeholder="Ingresa el nombre" required minlength="4" maxlength="16" size="16">
-                    </div>
-                    <div class="form-group">
-                        <label for="apellido">Apellido</label>
-                        <input type="text" id="apellido" name="apellido" placeholder="Ingresa el apellido" required minlength="4" maxlength="16" size="16">
-                    </div>
+                =======
+            </div>
+            <input type="file" id="foto" name="image" accept="image/*" onchange="previewImage(event);" style="display: none;"> >>>>>>> 19851a382fe834ce3438f240b717c71cd1f304bc
+            <div class="form-fields">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" placeholder="Ingresa el nombre" required minlength="4" maxlength="16" size="16">
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="apellido">Apellido</label>
+                    <input type="text" id="apellido" name="apellido" placeholder="Ingresa el apellido" required minlength="4" maxlength="16" size="16">
                 </div>
             </div>
+            </div>
+
+            <!-- Resto del formulario -->
 
             <div class="form-grid">
                 <div class="form-group">
@@ -72,11 +78,11 @@
                         <option value="administrador">Administrador</option>
                     </select>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="dni">DNI</label>
-                <input type="text" id="dni" name="dni" required minlength="8" size="25">
-            </div>
+                <<<<<<< HEAD </div>
+                    <div class="form-group">
+                        <label for="dni">DNI</label>
+                        <input type="text" id="dni" name="dni" required minlength="8" size="25">
+                    </div>
 
             </div>
 
@@ -93,6 +99,27 @@
                 <button type="submit" class="btn-submit">Crear Usuario</button>
                 <a href="/empleados" class="btn-cancel">Cancelar</a>
             </div>
+            =======
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Ingresa el email" required minlength="8" size="25">
+            </div>
+
+            <div class="form-group">
+                <label for="email1">Confirmar Email</label>
+                <input type="email" id="email1" name="email1" placeholder="Ingresa el email" required minlength="8" size="25">
+            </div>
+
+            <p id="error-msg" class="error-msg" style="display: none;">
+                <i class="fas fa-exclamation-triangle"></i> Los correos no coinciden.
+            </p>
+
+            <div class="form-buttons">
+                <button type="submit" id="btn-crear" class="btn-submit" disabled>Crear Usuario</button>
+                <a href="/empleados" class="btn-cancel">Cancelar</a>
+            </div>
+            >>>>>>> 19851a382fe834ce3438f240b717c71cd1f304bc
             </div>
         </form>
     </main>
@@ -110,7 +137,17 @@
                 imgLoaded = true
             };
             reader.readAsDataURL(event.target.files[0]); // Load the file and display it
-        }
+        } <<
+        <<
+        <<
+        < HEAD
+
+            ===
+            ===
+            = >>>
+            >>>
+            >
+            19851 a382fe834ce3438f240b717c71cd1f304bc
 
 
         const email = document.querySelector('#email');
@@ -142,7 +179,19 @@
                 output.style.display = 'block'; // Mostrar la imagen de vista previa
             };
             reader.readAsDataURL(event.target.files[0]);
-        }
+        } <<
+        <<
+        <<
+        < HEAD
+            ===
+            ===
+            =
+
+
+            >>>
+            >>>
+            >
+            19851 a382fe834ce3438f240b717c71cd1f304bc
     </script>
 </body>
 

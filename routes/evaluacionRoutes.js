@@ -7,6 +7,7 @@ const Evaluacion = require('../Schemas/evaluacionSchema')
 const baseUserSchema = require('../Schemas/baseUserSchema')
 const mongoose = require('mongoose')
 const  roleAuthorization = require('../middleware/roleAuth')
+const nodemailer = require('nodemailer')
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
@@ -63,15 +64,50 @@ router.post('/evaluaciones/assign-autoevaluacion', roleAuthorization(['Administr
 
         await newEvaluacion.save()
 
+        const empleado = await baseUserSchema.findById(empleadoId)
+
+        await baseUserSchema.findByIdAndUpdate(empleadoId, {
+            $push: { evaluacionesAsignadas: newEvaluacion._id }
+        })
+        await baseUserSchema.findByIdAndUpdate(req.user._id, {
+            $push: { evaluaciones: newEvaluacion._id }
+        })
+
+        // https://stackoverflow.com/questions/49870196/how-to-define-custom-domain-email-in-nodemailer
+        
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'bitqualypassmanager@gmail.com',
+                pass: 'yoif nkxt bqkl zsrf'
+            }
+        })
+
+        const mailOptions = {
+            from: 'bitqualypassmanager@gmail.com',
+            to: empleado.email,  
+            subject: '¡Te han asignado una evaluación!',
+            text: `Hola ${empleado.nombre},\n\n¡Te han asignado una nueva evaluación que debes realizar!\n\nTienes hasta ${newEvaluacion.deadline} para completarla.\n`
+        }
+
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.log('Error sending email:', error)
+                return res.status(500).send('Error sending email')
+            }
+            console.log('Correo enviado:', info.response)
+            res.redirect('/home')
+        })
+
         res.status(200).send('Autoevaluacion asignada correctamente')
     } catch (error) {
         res.status(500).send('Error assigning autoevaluacion: ' + error.message)
     }
-});
+})
 
 
 // GET route --> Ver autoevaluacion
-router.get('/evaluaciones/my-autoevaluacion/:id', roleAuthorization(['Empleado']), async (req, res) => {
+router.get('/evaluaciones/my-autoevaluacion/:id', roleAuthorization(['Empleado', 'Administrador', 'Intermediario', 'Evaluador']), async (req, res) => {
     try {
         const { id } = req.params;  
         const evaluacion = await Evaluacion.findById(id).populate('formulario').populate('empleado')
@@ -83,15 +119,18 @@ router.get('/evaluaciones/my-autoevaluacion/:id', roleAuthorization(['Empleado']
             return res.status(403).send('Esta evaluación ya ha sido completada y no puede ser modificada.')
         }
 
+        const now = new Date()
+        if (evaluacion.deadline && evaluacion.deadline < now) {
+            return res.redirect('/evaluaciones')
+        }
+
         // Render the 'awnser.ejs' template with both evaluacion and user
         res.render('evals/awnser', { evaluacion, formulario: evaluacion.formulario, user: req.user, empleado: evaluacion.empleado ? evaluacion.empleado.nombre : 'Empleado no asignado' })
     } catch (error) {
         console.error('Error fetching evaluation:', error)
         res.status(500).send('Error interno del servidor')
     }
-});
-
-  
+})
 
   
 
@@ -118,7 +157,6 @@ router.get('/evaluaciones/answer/:id', roleAuthorization(['Administrador', 'Eval
                 return res.status(404).send('Formulario no encontrado')
             }
     
-            // Render a new page with the preguntas and the selected empleado
             res.render('evals/awnserNormal', { formulario, empleado, user: req.user })
         } catch (error) {
             console.error('Error fetching formulario:', error)
@@ -162,6 +200,10 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
             evaluacion.respuestas = respuestasFormateadas
             evaluacion.completed = true
             await evaluacion.save()
+            await baseUserSchema.findByIdAndUpdate(empleado, {
+                $pull: { evaluacionesAsignadas: evaluacion._id },
+                $push: { evaluacionesCompletadas: evaluacion._id }
+            })
         }
         
         // Logic for normal evaluaciones (create a new evaluation)
@@ -169,10 +211,14 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
             const nuevaEvaluacion = new Evaluacion({
                 formulario: formulario._id,
                 empleado: empleado,
+                assignedBy: req.user._id,
                 respuestas: respuestasFormateadas,
-                completed: true // Mark as completed immediately
+                completed: true 
             });
             await nuevaEvaluacion.save()
+            await baseUserSchema.findByIdAndUpdate(req.user._id, {
+                $push: { evaluacionesHechas: newEvaluacion._id }
+            })
         }
 
         // Redirect after saving

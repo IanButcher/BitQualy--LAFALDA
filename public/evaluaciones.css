@@ -448,6 +448,9 @@ body, html {
 .status-button.evaluate {
     border-left: 5px solid #a72828;
 }
+.status-button.evaluate2 {
+    border-left: 5px solid #28a745;
+}
 
 .status-button.evaluate .green-dot {
     background-color: #28a745;
@@ -481,14 +484,7 @@ body, html {
     font-weight: bold;
 }
 
-.status-button.evaluate .triangle {
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 10px solid #28a745;
-    margin-left: 10px;
-}
+
 
 /* Responsive para dispositivos más pequeños */
 @media (max-width: 768px) {
@@ -497,37 +493,9 @@ body, html {
         margin: 0;
     }
 }
-/* search seccion */
-.search-section {
-    position: relative;
-    display: inline-block;
-    margin-bottom: 30px;
-    margin-top: 50px;
-}
 
-.search-section input {
-    width: 500px;
-    padding: 12px 45px 12px 15px;
-    font-size: 18px;
-    border: 1px solid rgb(255, 0, 0);
-    border-radius: 25px;
-    transition: width 0.3s ease;
-    height: 50px;
-}
 
-.search-section input:focus {
-    width: 450px;
-}
 
-.search-icon {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: rgb(228, 0, 0);
-    pointer-events: none;
-}
- 
 #nuevaEvaluacionBtn {
     position: relative; /* Elimina position: absolute para que esté dentro del flujo del panel */
     background-color: #28a745; /* Fondo verde */
@@ -554,4 +522,12 @@ body, html {
 #nuevaEvaluacionBtn:active {
     background-color: #1e7e34; /* Even darker when pressed */
     transform: scale(1); /* Reset scale on click */
+}
+.status-button .count2 {
+    background-color: #1e7e34;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.85em;
+    font-weight: bold;
 }

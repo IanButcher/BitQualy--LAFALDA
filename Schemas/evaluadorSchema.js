@@ -19,8 +19,15 @@ const evaluadorSchema = new mongoose.Schema({
             ref: 'Evaluacion' 
         }
     ],
-    // Evaluaciones que evaluo
+    // Evaluaciones que asigno
     evaluaciones: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Evaluacion' 
+        }
+    ],
+    // Evaluaciones que evaluo (hizo el)
+    evaluacionesHechas: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Evaluacion' 

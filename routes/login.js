@@ -17,13 +17,13 @@ const upload = require('../middleware/multerConfig')
 router.get('/', (req, res) => {
     res.render('index')
 })
-
+ 
 // GET route --> User Creator
 router.get('/user-creator', roleAuthorization(['Administrador']), (req, res) => {
     if (req.user) {
         try {
-            res.render('empls/empleado', { empleado, user: req.user })
-        } catch {
+            res.render('newUsers', { user: req.user })
+        } catch (error){
             console.error(error)
             res.status(500).send('Error del servidor')
         }
@@ -64,8 +64,13 @@ router.post('/save-new-user', upload.single('image'), roleAuthorization(['Admini
 
             // Save usuario
             await newUser.save()
+            
+            // Save into admin created users
+            await baseUserSchema.findByIdAndUpdate(req.user._id, {
+                $push: { usuariosCreados: newUser._id }
+            })
 
-            // Enviar mail con contraseña
+            // Notify via mail
             const transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
@@ -90,10 +95,6 @@ router.post('/save-new-user', upload.single('image'), roleAuthorization(['Admini
                 console.log('Correo enviado: ' + info.response)
                 res.redirect('/home-admin')
             })
-
-            // Redirect
-            console.log(newUser)
-                //res.redirect('/home-admin')
         }
 
     } catch (error) {
@@ -127,12 +128,10 @@ app.post('/login', (req, res, next) => {
 
 router.get('/myAccount', (req, res) => {
     res.render('myAccount', { user: req.user })
-
 })
 
 router.put('/myAccount/update', upload.single('image'), async(req, res) => {
     try {
-        // Obtenemos el path de la imagen subida por multer
         const imagePath = req.file ? `uploads/images/${req.file.filename}` : req.user.imagePath
 
         await User.findByIdAndUpdate(req.user._id, { imagePath: imagePath })

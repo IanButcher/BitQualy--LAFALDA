@@ -7,13 +7,10 @@ const Empleado = require('../Schemas/empleadoSchema')
 const Evaluador = require('../Schemas/evaluadorSchema')
 const Intermediario = require('../Schemas/intermediarioSchema')
 const baseUserSchema = require('../Schemas/baseUserSchema')
+const Evaluaciones = require('../Schemas/evaluacionSchema')
 const roleAuthorization = require('../middleware/roleAuth')
 
-
-
 app.use(roleAuthorization)
-
-//const upload = multer({ storage: storage })
 
 //GET route --> All evaluadores
 router.get('/empleados', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async(req, res) => {
@@ -31,10 +28,13 @@ router.get('/empleados/:id', roleAuthorization(['Administrador', 'Evaluador', 'I
         try {
             const id = req.params.id
             const empleado = await Empleado.findById(id)
+            const evaluaciones = await Evaluaciones.find({ empleado: empleado._id })
+            const evaluacionesAsignadas = evaluaciones.filter(evaluacion => !evaluacion.completed)
+            const evaluacionesCompletadas = evaluaciones.filter(evaluacion => evaluacion.completed)
             if (!empleado) {
                 return res.status(404).send('Evaluador no encontrado')
             }
-            res.render('empls/empleado', { empleado, user: req.user })
+            res.render('empls/empleado', { empleado, evaluaciones, evaluacionesAsignadas, evaluacionesCompletadas, user: req.user })
         } catch (error) {
             console.error(error)
             res.status(500).send('Error del servidor')
