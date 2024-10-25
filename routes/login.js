@@ -17,7 +17,7 @@ const upload = require('../middleware/multerConfig')
 router.get('/', (req, res) => {
     res.render('index')
 })
-
+ 
 // GET route --> User Creator
 router.get('/user-creator', roleAuthorization(['Administrador']), (req, res) => {
 <<<<<<< Updated upstream

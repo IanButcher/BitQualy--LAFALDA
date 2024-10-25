@@ -30,24 +30,21 @@
         </header>
 
         <!-- Important: Add enctype="multipart/form-data" -->
-        <form method="POST" action="/save-new-user" enctype="multipart/form-data">
+        <form id="formulario" method="POST" action="/save-new-user" enctype="multipart/form-data">
             <!-- Formulario de Creación de Evaluador -->
             <div class="image-and-fields">
                 <!-- Vista previa de la imagen -->
                 <div class="image-preview" onclick="document.getElementById('foto').click();">
                     <img id="image-preview-img" alt="Vista previa de la foto" style="display: none;" />
-                    <span class="change-photo-text">Haz clic aquí para cambiar la foto</span> <!-- Mensaje indicativo -->
+                    <span class="change-photo-text">Haz clic aquí para cambiar la foto</span>
                 </div>
-
-                <!-- Updated file input -->
-                <input type="file" id="foto" name="image" accept="image/*" onchange="previewImage(event);" style="display: none;"> <!-- Name changed to 'image' -->
-
-                <!-- Campos de Nombre y Apellido -->
+                <input type="file" id="foto" name="image" accept="image/*" onchange="previewImage(event);" style="display: none;">
                 <div class="form-fields">
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
                         <input type="text" id="nombre" name="nombre" placeholder="Ingresa el nombre" required minlength="4" maxlength="16" size="16">
                     </div>
+                    <br>
                     <div class="form-group">
                         <label for="apellido">Apellido</label>
                         <input type="text" id="apellido" name="apellido" placeholder="Ingresa el apellido" required minlength="4" maxlength="16" size="16">
@@ -74,27 +71,23 @@
                         <option value="administrador">Administrador</option>
                     </select>
                 </div>
-
+        
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" placeholder="Ingresa el email" required minlength="8" size="25">
-<<<<<<< Updated upstream
-                </div>                    
-=======
-                </div>
-
+                </div>   
+                
                 <div class="form-group">
                     <label for="email1">Confirmar Email</label>
                     <input type="email" id="email1" name="email1" placeholder="Ingresa el email" required minlength="8" size="25">
-                </div>
-
+                </div>   
+        
                 <p id="error-msg" class="error-msg" style="display: none;">
                     <i class="fas fa-exclamation-triangle"></i> Los correos no coinciden.
                 </p>
->>>>>>> Stashed changes
-
+                        
                 <div class="form-buttons">
-                    <button type="submit" class="btn-submit">Crear Usuario</button>
+                    <button type="submit" id="btn-crear" class="btn-submit" disabled>Crear Usuario</button>
                     <a href="/empleados" class="btn-cancel">Cancelar</a>
                 </div>
             </div>
@@ -115,10 +108,8 @@
             };
             reader.readAsDataURL(event.target.files[0]); // Load the file and display it
         }
-<<<<<<< Updated upstream
-=======
 
-
+        
         const email = document.querySelector('#email');
         const email1 = document.querySelector('#email1');
         const btnCrear = document.querySelector('#btn-crear');
@@ -149,7 +140,8 @@
             };
             reader.readAsDataURL(event.target.files[0]);
         }
->>>>>>> Stashed changes
+
+
     </script>
 </body>
 

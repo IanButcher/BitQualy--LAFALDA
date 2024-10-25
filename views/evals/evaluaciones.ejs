@@ -8,6 +8,38 @@
     <link rel="stylesheet" href="evaluaciones.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" type="image/png" href="https://ugc.production.linktr.ee/mj5IciCyRk2puUukygYa_kmwAn8AE84X4N3S5?io=true&size=avatar-v3_0">
+
+    <style>
+        .notification-icon,
+        .user-photo {
+            position: absolute;
+            right: 50px;
+            top: 100px;
+        }
+
+        .busqueda input {
+        width: 100%;
+        padding: 12px 45px 12px 15px;
+        font-size: 18px;
+        border: 1px solid #ccc;
+        border-radius: 25px;
+        transition: width 0.3s ease;
+        height: 50px;
+    }
+
+    .icono-busqueda {
+        right: 15px;
+        top: 110px;
+        transform: translateY(-50%);
+        color: #888; /* Ajuste de color */
+    }
+
+    /* Ajuste para evitar superposición */
+    .busqueda {
+        margin-top: 20px; /* Agrega un espacio debajo del dropdown */
+    }
+       
+    </style>
 </head>
 
 <body>
@@ -23,11 +55,11 @@
         <p>Navbar error</p>
     <% } %>
 
-    <!-- Panel principal -->
-    <main class="main-content">
-        <header>
-            <%- include('../partials/header') %>
-        </header>
+        <!-- Panel principal -->
+        <main class="main-content">
+            <header class="header notificacion-icon user-photo">
+                    <%- include('../partials/headerU') %>
+            </header>
 
         <div class="filter-panel-container">
             <section class="evaluation-section">
@@ -45,7 +77,7 @@
                                     <p class="eval-status"><%= evaluacion.formulario ? evaluacion.formulario.titulo : 'Formulario no asignado' %></p>
                                 </div>
                                 <div class="eval-summary">
-                                    <a href="/evaluaciones/preview/<%= evaluacion._id %>" class="btn">Ver Evaluación</a>
+                                    <p>No Respondida</p>
                                 </div>
                             </div>
                         <% } %>
@@ -76,21 +108,23 @@
                 <aside class="right-panel">
                     <div class="filter-section">
                         <h3>Filtrar por</h3>
+                       
                         <select class="filter-select">
                             <option value="periodo">Periodo</option>
                             <option value="mastomenos">Legajo mayor a menor</option>
                             <option value="menostomas">Legajo menor a mayor</option>
                             <option value="name">Nombre</option>
                         </select>
-                        <div class="filter-order">
-                            <label><span class="blue-dot"></span> Más reciente</label>
-                            <label><span class="yellow-dot"></span> Más antigua</label>
+                        
+                        <div class="busqueda icono-busqueda busqueda-2 seccion-busqueda">
+                            <input type="text" placeholder="Buscar ...">
+                            <i class="fas fa-search search-icon"></i>
                         </div>
                         <div class="status-buttons">
-                            <div class="status-button evaluate">
+                            <div class="status-button evaluate2">
                                 <span class="green-dot"></span>
                                 <span>Completas</span>
-                                
+                                <span class="count2">0</span>
                             </div>
                         </div>
                         <br>
