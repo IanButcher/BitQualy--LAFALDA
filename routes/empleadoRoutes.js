@@ -13,7 +13,7 @@ const roleAuthorization = require('../middleware/roleAuth')
 
 app.use(roleAuthorization)
 
-const upload = multer({ storage: storage })
+//const upload = multer({ storage: storage })
 
 //GET route --> All evaluadores
 router.get('/empleados', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async(req, res) => {

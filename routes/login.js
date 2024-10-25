@@ -20,9 +20,6 @@ router.get('/', (req, res) => {
 
 // GET route --> User Creator
 router.get('/user-creator', roleAuthorization(['Administrador']), (req, res) => {
-<<<<<<< Updated upstream
-    res.render('newUsers')
-=======
     if (req.user) {
         try {
             res.render('empls/empleado', { empleado, user: req.user })
@@ -33,12 +30,11 @@ router.get('/user-creator', roleAuthorization(['Administrador']), (req, res) => 
     } else {
         res.redirect('/')
     }
->>>>>>> Stashed changes
 })
 
 // POST route --> Create User
 router.post('/save-new-user', upload.single('image'), roleAuthorization(['Administrador']), async(req, res) => {
-    const { nombre, apellido, legajo, rol, email } = req.body
+    const { nombre, apellido, legajo, rol, email, dni } = req.body
     const imagePath = req.file ? req.file.path : null
     try {
         // Check legajo
@@ -51,16 +47,16 @@ router.post('/save-new-user', upload.single('image'), roleAuthorization(['Admini
             let newUser;
             switch (rol) {
                 case 'empleado':
-                    newUser = new Empleado({ nombre, apellido, legajo, password, email, imagePath })
+                    newUser = new Empleado({ nombre, apellido, legajo, password, email, imagePath, dni })
                     break;
                 case 'evaluador':
-                    newUser = new Evaluador({ nombre, apellido, legajo, password, email, imagePath })
+                    newUser = new Evaluador({ nombre, apellido, legajo, password, email, imagePath, dni })
                     break;
                 case 'regulador':
-                    newUser = new Regulador({ nombre, apellido, legajo, password, email, imagePath })
+                    newUser = new Regulador({ nombre, apellido, legajo, password, email, imagePath, dni })
                     break;
                 case 'administrador':
-                    newUser = new Administrador({ nombre, apellido, legajo, password, email, imagePath })
+                    newUser = new Administrador({ nombre, apellido, legajo, password, email, imagePath, dni })
                     break;
                 default:
                     return res.redirect('/user-creator')
@@ -134,12 +130,14 @@ router.get('/myAccount', (req, res) => {
 
 })
 
-router.post('/myAccount/update', upload.single('image'), async(req, res) => {
+router.put('/myAccount/update', upload.single('image'), async(req, res) => {
     try {
         // Obtenemos el path de la imagen subida por multer
         const imagePath = req.file ? `uploads/images/${req.file.filename}` : req.user.imagePath
 
         await User.findByIdAndUpdate(req.user._id, { imagePath: imagePath })
+
+        console.log(req.file)
 
         res.redirect('/myAccount')
     } catch (err) {

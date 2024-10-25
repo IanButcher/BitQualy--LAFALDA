@@ -10,6 +10,12 @@
 </head>
 
 <body>
+
+    <h2>
+        <%= user.nombre %>
+            <%= user.apellido %>
+                <%= user.legajo %>
+    </h2>
     <form action="/myAccount" method="POST" enctype="multipart/form-data">
         <div class="image-preview" onclick="document.getElementById('foto').click();">
             <img id="image-preview-img" src="<%= user.imagePath ? '/' + user.imagePath : '/img/user.png' %>" alt="Vista previa de la foto" style="display: block; max-width: 150px; max-height: 150px;" />
@@ -19,6 +25,9 @@
         <input type="file" id="foto" name="image" accept="image/*" onchange="previewImage(event);" style="display: none;">
         <button type="submit" id="btn-crear" class="btn-submit">Crear Usuario</button>
     </form>
+
+
+
     <script>
         function previewImage(event) {
             const input = event.target

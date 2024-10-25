@@ -36,11 +36,13 @@
                 <!-- Vista previa de la imagen -->
                 <div class="image-preview" onclick="document.getElementById('foto').click();">
                     <img id="image-preview-img" alt="Vista previa de la foto" style="display: none;" />
-                    <span class="change-photo-text">Haz clic aquí para cambiar la foto</span> <!-- Mensaje indicativo -->
+                    <span class="change-photo-text">Haz clic aquí para cambiar la foto</span>
+                    <!-- Mensaje indicativo -->
                 </div>
 
                 <!-- Updated file input -->
-                <input type="file" id="foto" name="image" accept="image/*" onchange="previewImage(event);" style="display: none;"> <!-- Name changed to 'image' -->
+                <input type="file" id="foto" name="image" accept="image/*" onchange="previewImage(event);" style="display: none;">
+                <!-- Name changed to 'image' -->
 
                 <!-- Campos de Nombre y Apellido -->
                 <div class="form-fields">
@@ -55,10 +57,6 @@
                 </div>
             </div>
 
-<<<<<<< Updated upstream
-            <!-- Resto del formulario -->
-=======
->>>>>>> Stashed changes
             <div class="form-grid">
                 <div class="form-group">
                     <label for="legajo">Legajo</label>
@@ -74,29 +72,27 @@
                         <option value="administrador">Administrador</option>
                     </select>
                 </div>
+            </div>
+            <div class="form-group">
+                <label for="dni">DNI</label>
+                <input type="text" id="dni" name="dni" required minlength="8" size="25">
+            </div>
 
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Ingresa el email" required minlength="8" size="25">
-<<<<<<< Updated upstream
-                </div>                    
-=======
-                </div>
+            </div>
 
-                <div class="form-group">
-                    <label for="email1">Confirmar Email</label>
-                    <input type="email" id="email1" name="email1" placeholder="Ingresa el email" required minlength="8" size="25">
-                </div>
+            <div class="form-group">
+                <label for="email1">Confirmar Email</label>
+                <input type="email" id="email1" name="email1" placeholder="Ingresa el email" required minlength="8" size="25">
+            </div>
 
-                <p id="error-msg" class="error-msg" style="display: none;">
-                    <i class="fas fa-exclamation-triangle"></i> Los correos no coinciden.
-                </p>
->>>>>>> Stashed changes
+            <p id="error-msg" class="error-msg" style="display: none;">
+                <i class="fas fa-exclamation-triangle"></i> Los correos no coinciden.
+            </p>
 
-                <div class="form-buttons">
-                    <button type="submit" class="btn-submit">Crear Usuario</button>
-                    <a href="/empleados" class="btn-cancel">Cancelar</a>
-                </div>
+            <div class="form-buttons">
+                <button type="submit" class="btn-submit">Crear Usuario</button>
+                <a href="/empleados" class="btn-cancel">Cancelar</a>
+            </div>
             </div>
         </form>
     </main>
@@ -115,8 +111,6 @@
             };
             reader.readAsDataURL(event.target.files[0]); // Load the file and display it
         }
-<<<<<<< Updated upstream
-=======
 
 
         const email = document.querySelector('#email');
@@ -149,8 +143,9 @@
             };
             reader.readAsDataURL(event.target.files[0]);
         }
->>>>>>> Stashed changes
     </script>
 </body>
+
+</html>
 
 </html>
