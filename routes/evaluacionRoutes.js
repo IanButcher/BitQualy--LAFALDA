@@ -6,12 +6,12 @@ const Formulario = require('../Schemas/formularioSchema')
 const Evaluacion = require('../Schemas/evaluacionSchema')
 const baseUserSchema = require('../Schemas/baseUserSchema')
 const mongoose = require('mongoose')
-const  roleAuthorization = require('../middleware/roleAuth')
+const roleAuthorization = require('../middleware/roleAuth')
 const nodemailer = require('nodemailer')
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-router.get('/evaluaciones', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async (req, res) => {
+router.get('/evaluaciones', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async(req, res) => {
     if (req.user) {
         try {
             let query = {}
@@ -34,7 +34,7 @@ router.get('/evaluaciones', roleAuthorization(['Administrador', 'Evaluador', 'In
 
 
 // GET route --> Mostrar evaluacion especifica
-router.get('/evaluaciones/new', roleAuthorization(['Administrador', 'Evaluador']), async (req, res) => {
+router.get('/evaluaciones/new', roleAuthorization(['Administrador', 'Evaluador']), async(req, res) => {
     if (req.user) {
         try {
             const formularios = await Formulario.find({ isActive: true }).populate('questions')
@@ -46,11 +46,11 @@ router.get('/evaluaciones/new', roleAuthorization(['Administrador', 'Evaluador']
         }
     } else {
         res.redirect('/');
-    } 
+    }
 })
 
 // POST route --> Assign autoevaluacion
-router.post('/evaluaciones/assign-autoevaluacion', roleAuthorization(['Administrador', 'Evaluador']), async (req, res) => {
+router.post('/evaluaciones/assign-autoevaluacion', roleAuthorization(['Administrador', 'Evaluador']), async(req, res) => {
     try {
         const { empleadoId, formularioId, deadline } = req.body
 
@@ -74,7 +74,7 @@ router.post('/evaluaciones/assign-autoevaluacion', roleAuthorization(['Administr
         })
 
         // https://stackoverflow.com/questions/49870196/how-to-define-custom-domain-email-in-nodemailer
-        
+
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
@@ -85,7 +85,7 @@ router.post('/evaluaciones/assign-autoevaluacion', roleAuthorization(['Administr
 
         const mailOptions = {
             from: 'bitqualypassmanager@gmail.com',
-            to: empleado.email,  
+            to: empleado.email,
             subject: '¡Te han asignado una evaluación!',
             text: `Hola ${empleado.nombre},\n\n¡Te han asignado una nueva evaluación que debes realizar!\n\nTienes hasta ${newEvaluacion.deadline} para completarla.\n`
         }
@@ -107,11 +107,11 @@ router.post('/evaluaciones/assign-autoevaluacion', roleAuthorization(['Administr
 
 
 // GET route --> Ver autoevaluacion
-router.get('/evaluaciones/my-autoevaluacion/:id', roleAuthorization(['Empleado', 'Administrador', 'Intermediario', 'Evaluador']), async (req, res) => {
+router.get('/evaluaciones/my-autoevaluacion/:id', roleAuthorization(['Empleado', 'Administrador', 'Intermediario', 'Evaluador']), async(req, res) => {
     try {
-        const { id } = req.params;  
+        const { id } = req.params;
         const evaluacion = await Evaluacion.findById(id).populate('formulario').populate('empleado')
-        
+
         if (!evaluacion) {
             return res.status(404).send('Evaluación no encontrada')
         }
@@ -132,31 +132,31 @@ router.get('/evaluaciones/my-autoevaluacion/:id', roleAuthorization(['Empleado',
     }
 })
 
-  
+
 
 //app.get('/formularios/:id/preguntas', async (req, res) => {
-    //try {
-      //  const formulario = await Formulario.findById(req.params.id).populate('preguntas');
-        //res.json({ preguntas: formulario.preguntas });
-    //} catch (error) {
-      //  console.error('Error fetching preguntas:', error);
-        //res.status(500).json({ error: 'Server Error' });
-    //}
+//try {
+//  const formulario = await Formulario.findById(req.params.id).populate('preguntas');
+//res.json({ preguntas: formulario.preguntas });
+//} catch (error) {
+//  console.error('Error fetching preguntas:', error);
+//res.status(500).json({ error: 'Server Error' });
+//}
 //})
 
 // GET route --> Mostrar las preguntas para la evaluación
-router.get('/evaluaciones/answer/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async (req, res) => {
+router.get('/evaluaciones/answer/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async(req, res) => {
     console.log('GET /evaluaciones/answer/:id reached')
     if (req.user) {
         try {
-            const { id } = req.params  // formulario ID
+            const { id } = req.params // formulario ID
             const { empleado } = req.query
             console.log(`Formulario ID: ${id}, Empleado: ${empleado}`)
             const formulario = await Formulario.findById(id).populate('questions')
             if (!formulario || formulario.isActive != true) {
                 return res.status(404).send('Formulario no encontrado')
             }
-    
+
             res.render('evals/awnserNormal', { formulario, empleado, user: req.user })
         } catch (error) {
             console.error('Error fetching formulario:', error)
@@ -169,7 +169,7 @@ router.get('/evaluaciones/answer/:id', roleAuthorization(['Administrador', 'Eval
 
 
 // POST route --> Enviar nueva evaluación
-router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async (req, res) => {
+router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async(req, res) => {
     try {
         const { formulario: formularioId, empleado, respuestas, tipo } = req.body
 
@@ -181,7 +181,7 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
         // Format the answers to ensure they are strings
         const respuestasFormateadas = formulario.questions.map((question, index) => {
             const respuesta = respuestas[index]
-        
+
             if (Array.isArray(respuesta)) {
                 return respuesta.join(', ')
             } else if (typeof respuesta === 'object' && respuesta !== null) {
@@ -189,7 +189,22 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
             } else {
                 return respuesta.toString()
             }
-        });
+        })
+
+        let totalScore = 0
+
+        formulario.questions.forEach((question, index) => {
+            if (question.tipo === 'texto') {
+                const answer = parseFloat(respuestas[index]) // Convert answer to number
+                if (!isNaN(answer)) {
+                    // Calculate weighted score: "i wani hug this gator" answer * (question's porcentaje / 100)
+                    totalScore += (answer * (question.porcentaje / 100))
+                }
+            }
+        })
+
+        // Round totalScore to one decimal place if needed (optional)
+        totalScore = Math.round(totalScore * 10) / 10
 
         // Logic for autoevaluaciones (update existing evaluation)
         if (tipo === 'autoevaluacion') {
@@ -199,13 +214,14 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
             }
             evaluacion.respuestas = respuestasFormateadas
             evaluacion.completed = true
+            evaluacion.score = totalScore
             await evaluacion.save()
             await baseUserSchema.findByIdAndUpdate(empleado, {
                 $pull: { evaluacionesAsignadas: evaluacion._id },
                 $push: { evaluacionesCompletadas: evaluacion._id }
             })
         }
-        
+
         // Logic for normal evaluaciones (create a new evaluation)
         else if (tipo === 'evaluacion') {
             const nuevaEvaluacion = new Evaluacion({
@@ -213,8 +229,9 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
                 empleado: empleado,
                 assignedBy: req.user._id,
                 respuestas: respuestasFormateadas,
-                completed: true 
-            });
+                completed: true,
+                score: totalScore
+            })
             await nuevaEvaluacion.save()
             await baseUserSchema.findByIdAndUpdate(req.user._id, {
                 $push: { evaluacionesHechas: newEvaluacion._id }
@@ -232,21 +249,21 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
 
 
 // GET route --> Preview evaluacion
-router.get('/evaluaciones/preview/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async (req, res) => {
+router.get('/evaluaciones/preview/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async(req, res) => {
     if (req.user) {
         try {
-            const { id } = req.params;  // Evaluation ID
-    
+            const { id } = req.params; // Evaluation ID
+
             // Find the evaluation by ID and populate the associated form and questions
             const evaluacion = await Evaluacion.findById(id).populate({
                 path: 'formulario',
-                populate: { path: 'questions' }  // Populate questions within the form
+                populate: { path: 'questions' } // Populate questions within the form
             });
-    
+
             if (!evaluacion) {
                 return res.status(404).send('Evaluación no encontrada')
             }
-    
+
             // Render a view for displaying the evaluation (non-editable)
             res.render('evals/evaluacion', { evaluacion, user: req.user })
         } catch (error) {
