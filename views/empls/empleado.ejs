@@ -52,19 +52,17 @@
                                             onclick="popupEliminar('<%= empleado._id %>')">Desactivar</button>
                                         <% } %>
 
-                                            <!-- Button to trigger role update -->
+                                        <form action="/empleados/actualizar/<%= empleado._id %>" method="POST">
                                             <label for="employee-options">Designar como:</label>
-                                            <select id="employee-options">
+                                            <select name="rol" id="employee-options">
                                                 <option value="empleado">Empleado</option>
                                                 <option value="evaluador">Evaluador</option>
-                                                <option value="regulador">Intermediario</option>
+                                                <option value="intermediario">Intermediario</option>
                                             </select>
-
-                                            <% if (user && user.rol==='Administrador' ) { %>
-                                                <button class="btn-disable"
-                                                    onclick="actualizarRol('<%= empleado._id %>')">Actualizar
-                                                    Rol</button>
-                                                <% } %>
+                                            <% if (user && user.rol === 'Administrador') { %>
+                                                <button type="submit" class="btn-disable">Actualizar Rol</button>
+                                            <% } %>
+                                        </form>
 
                                                     <!-- Versión anterior con formulario -->
                                                     <!-- <form id="updateEmpls" method="POST">
@@ -216,7 +214,7 @@
                                     cancelButtonText: 'Cancelar'
                                 }).then((result) => {
                                     if (result.isConfirmed) {
-                                        fetch(`/actualizar-rol/${empleadoId}`, {
+                                        fetch(`empleados/actualizar-rol`, {
                                             method: 'PUT',
                                             headers: {
                                                 'Content-Type': 'application/json'

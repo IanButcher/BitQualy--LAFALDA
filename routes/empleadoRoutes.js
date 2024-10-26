@@ -42,43 +42,38 @@ router.get('/empleados/:id', roleAuthorization(['Administrador', 'Evaluador', 'I
     } 
 })
 
-// PUT route --> Actualizar cualquier atributo del empleado, incluyendo el rol
-router.post('/empleados/actualizar/:id', roleAuthorization(['Administrador', 'Empleado', 'Evaluador', 'Intermediario']), async (req, res) => {
+// POST route --> Actualizar cualquier atributo del empleado, incluyendo el rol
+router.post('/empleados/actualizar/:id', roleAuthorization(['Administrador']), async (req, res) => {
     if (req.user) {
         try {
-            const id = req.params.id;
-            const { rol } = req.body;  // Recibes el nuevo rol del cuerpo de la solicitud
+            const id = req.params.id
+            const { rol } = req.body
 
-            console.log('Rol enviado: desde empleado', req.body.rol);
-            // Verificar si el nuevo rol es válido (opcional, pero recomendable)
-            const rolesPermitidos = ['Evaluador', 'Intermediario', 'Empleado'];
+            // Validate role (optional)
+            const rolesPermitidos = ['empleado', 'evaluador', 'intermediario']
             if (rol && !rolesPermitidos.includes(rol)) {
-                return res.status(400).send('Rol no válido');
+                return res.status(400).send('Rol no válido')
             }
 
-            // Buscar y actualizar el empleado por su ID
-            const empleado = await Empleado.findById(id);
+            // Find and update employee
+            const empleado = await baseUserSchema.findById(id)
             if (!empleado) {
-                return res.status(404).send('Empleado no encontrado');
+                return res.status(404).send('Empleado no encontrado')
             }
 
-            // Actualizar el rol del empleado, si fue provisto
-            if (rol) {
-                empleado.rol = rol;
-            }
+            empleado.rol = rol
+            await empleado.save()
 
-            // Guardar los cambios en la base de datos
-            await empleado.save();
-            res.redirect(`/empleados/${id}`);  // Redirigir a la vista del empleado
-
+            res.redirect(`/empleados/${id}`)
         } catch (error) {
-            console.error(error);
-            res.status(500).send('Error del servidor');
+            console.error('Error al actualizar rol:', error)
+            res.status(500).send('Error del servidor')
         }
     } else {
-        res.redirect('/');
+        res.redirect('/')
     }
-});
+})
+
 
 
 router.post('/empleados/eliminar/:id', roleAuthorization(['Administrador']), async (req, res) => {    
@@ -86,7 +81,7 @@ router.post('/empleados/eliminar/:id', roleAuthorization(['Administrador']), asy
     if (!mongoose.isValidObjectId(empleadoId)) {
         return res.status(400).send('ID inválido')
     }
-
+    
     try {
         const result = await Empleado.findByIdAndUpdate(empleadoId, { estaActivo: false });
         console.log("Desde empleadoRoutes.js 2");
