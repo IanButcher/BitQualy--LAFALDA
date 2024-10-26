@@ -13,6 +13,14 @@ const crypto = require('crypto')
 const nodemailer = require('nodemailer')
 const upload = require('../middleware/multerConfig')
 
+const loginRouter = require('./routes/login'); // Ajusta el nombre de la ruta según corresponda
+
+// Para manejar JSON
+app.use(express.json());
+
+// Usar las rutas definidas en el archivo login.js o similar
+app.use('/login', loginRouter); // Monte el router en una ruta, como "/login"
+
 // GET route --> Log In Page
 router.get('/', (req, res) => {
     res.render('index')
@@ -130,6 +138,41 @@ router.get('/logout', (req, res, next) => {
         })
     } else {
         res.redirect('/')
+    }
+});
+
+// PUT route --> Update User Role
+router.put('/actualizar-rol/:id', async (req, res) => {
+    const { id } = req.params;
+    const { nuevoRol } = req.body;
+
+    try {
+        let usuario;
+        switch (nuevoRol) {
+            case 'empleado':
+                usuario = await Empleado.findByIdAndUpdate(id, { rol: nuevoRol }, { new: true });
+                break;
+            case 'evaluador':
+                usuario = await Evaluador.findByIdAndUpdate(id, { rol: nuevoRol }, { new: true });
+                break;
+            case 'regulador':
+                usuario = await Regulador.findByIdAndUpdate(id, { rol: nuevoRol }, { new: true });
+                break;
+            case 'administrador':
+                usuario = await Administrador.findByIdAndUpdate(id, { rol: nuevoRol }, { new: true });
+                break;
+            default:
+                return res.status(400).json({ message: 'Rol no válido' });
+        }
+
+        if (!usuario) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+
+        res.status(200).json({ message: 'Rol actualizado con éxito' });
+    } catch (error) {
+        console.error('Error al actualizar el rol:', error);
+        res.status(500).json({ message: 'Error al actualizar el rol' });
     }
 });
 

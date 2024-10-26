@@ -52,30 +52,43 @@
                                             onclick="popupEliminar('<%= empleado._id %>')">Desactivar</button>
                                         <% } %>
 
-                                            <form id="updateEmpls" method="POST">
-                                                <input type="hidden" name="_method" value="PUT">
-                                                <input type="hidden" name="rol" id="newRole">
-                                                <!-- Input oculto para el nuevo rol -->
-                                                <script>
-                                                    console.log("Formulario de actualización renderizado");
-                                                </script>
-                                            </form>
-
+                                            <!-- Button to trigger role update -->
                                             <label for="employee-options">Designar como:</label>
                                             <select id="employee-options">
+                                                <option value="empleado">Empleado</option>
+                                                <option value="evaluador">Evaluador</option>
+                                                <option value="regulador">Intermediario</option>
+                                            </select>
+
+                                            <% if (user && user.rol==='Administrador' ) { %>
+                                                <button class="btn-disable"
+                                                    onclick="actualizarRol('<%= empleado._id %>')">Actualizar
+                                                    Rol</button>
+                                                <% } %>
+
+                                                    <!-- Versión anterior con formulario -->
+                                                    <!-- <form id="updateEmpls" method="POST">
+                                                <input type="hidden" name="_method" value="PUT">-->
+                                                    <!--<input type="hidden" name="rol" id="newRole">-->
+                                                    <!-- Input oculto para el nuevo rol -->
+                                                    <!--<script>
+                                                    console.log("Formulario de actualización renderizado");
+                                                </script>
+                                                </form>
+
+                                                <label for="employee-options">Designar como:</label>
+                                                <select id="employee-options">
                                                 <option value="Empleado">Empleado</option>
                                                 <option value="Evaluador">Evaluador</option>
                                                 <option value="Intermediario">Intermediario</option>
-                                            </select>
-
-
-                                            <% if (user && user.rol==='Administrador' ) { %>
+                                                </select> -->
+                                                    <!--<% if (user && user.rol==='Administrador' ) { %>
                                                 <button class="btn-disable"
                                                     onclick="popupActualizar('<%= empleado._id %>')">Actualizar</button>
                                                 <script>
                                                     console.log("Botón de Actualizar renderizado para el empleado con ID: <%= empleado._id %>");
                                                 </script>
-                                                <% } %>
+                                            <% } %> -->
                                 </div>
 
                                 <%- include('../partials/headerU') %>
@@ -166,7 +179,7 @@
                                         const form = document.getElementById('deleteEmpls');
                                         if (form) {
                                             form.action = '/empleados/eliminar/' + empleadoId
-                                            form.submit()
+                                            form.submit()                                            
                                         } else {
                                             console.error('Delete form not found!');
                                         }
@@ -174,16 +187,70 @@
                                 });
                             }
                         </script>
+
+                        <!-- Script para actualizar rol del empleado -->
                         <script>
+                            function actualizarRol(empleadoId) {
+                                const selectedRole = document.getElementById('employee-options').value;
+
+                                // Si el rol seleccionado es "empleado" y no es necesario el cambio
+                                if (selectedRole === 'empleado') {
+                                    Swal.fire({
+                                        title: 'No es necesario cambiar el rol',
+                                        text: "El usuario ya es un empleado. No se realizará ninguna acción.",
+                                        icon: 'info',
+                                        confirmButtonColor: '#3085d6',
+                                        confirmButtonText: 'Ok'
+                                    });
+                                    return;
+                                }
+
+                                Swal.fire({
+                                    title: '¿Estás seguro?',
+                                    text: "¡Cambiarás el rol del usuario a " + selectedRole + "!",
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#28a745',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Sí, Actualizar',
+                                    cancelButtonText: 'Cancelar'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        fetch(`/actualizar-rol/${empleadoId}`, {
+                                            method: 'PUT',
+                                            headers: {
+                                                'Content-Type': 'application/json'
+                                            },
+                                            body: JSON.stringify({ nuevoRol: selectedRole })
+                                        })
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                if (data.message) {
+                                                    Swal.fire('Éxito', data.message, 'success');
+                                                } else {
+                                                    Swal.fire('Error', 'No se pudo actualizar el rol.', 'error');
+                                                }
+                                            })
+                                            .catch(error => {
+                                                console.error('Error en la actualización de rol:', error);
+                                                Swal.fire('Error', 'Ocurrió un error al actualizar el rol.', 'error');
+                                            });
+                                    }
+                                });
+                            }
+                        </script>
+
+                        <!-- Version anterior con formulario -->
+                        <!--<script>
                             function popupActualizar(empleadoId) {
 
-                                console.log('ID del empleado:', empleadoId); // Mostrar el _id en la consola
-                                console.log('actualizacion', document.getElementById('updateEmpls'));
+                                //console.log('ID del empleado:', empleadoId); // Mostrar el _id en la consola
+                                //console.log('actualizacion', document.getElementById('updateEmpls'));
 
                                 // Obtener el valor seleccionado en el combobox
                                 const selectedRole = document.getElementById('employee-options').value;
 
-                                console.log('Rol seleccionado:', selectedRole);
+                                //console.log('Rol seleccionado:', selectedRole);
 
                                 // Asignar el valor del rol al campo oculto del formulario
                                 document.getElementById('newRole').value = selectedRole;
@@ -218,7 +285,9 @@
                                             // Usamos un switch para cambiar la ruta según el rol seleccionado
                                             switch (selectedRole) {
                                                 case 'Intermediario':
-                                                    form.action = '/reguladores/actualizar/' + empleadoId;                                      
+                                                    //form.action = '/reguladores/actualizar/' + empleadoId;
+                                                    form.action = '/empleados/actualizar/' + empleadoId;
+
                                                     break;
                                                 case 'Evaluador':
                                                     form.action = '/evaluadores/actualizar/' + empleadoId;
@@ -236,7 +305,7 @@
                                     }
                                 });
                             }
-                        </script>
+                        </script> -->
 </body>
 
 </html>
