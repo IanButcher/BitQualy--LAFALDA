@@ -56,7 +56,7 @@
         </header>
 
         <div class="filter-panel-container">
-            <!-- Buttons for switching views -->
+            <!-- Buttons for switching views
             <div class="evaluation-filters">
                 <button id="myEvaluacionesBtn" onclick="filterMyEvaluaciones()">Mis Evaluaciones</button>
                 <button id="allEvaluacionesBtn" onclick="filterAllEvaluaciones()">Todas las Evaluaciones</button>
@@ -65,7 +65,7 @@
                     <option value="autoevaluacion">Autoevaluaciones</option>
                     <option value="evaluacion">Evaluaciones Normales</option>
                 </select>
-            </div>
+            </div> -->
 
             <section class="evaluation-section">
                 <h2>Evaluaciones Asignadas</h2>
@@ -105,12 +105,13 @@
                 <aside class="right-panel">
                     <div class="filter-section">
                         <h3>Filtrar por</h3>
-                        <select class="filter-select">
-                            <option value="periodo">Periodo</option>
-                            <option value="mastomenos">Legajo mayor a menor</option>
-                            <option value="menostomas">Legajo menor a mayor</option>
-                            <option value="name">Nombre</option>
+                        <select id="evaluationTypeFilter" class="filter-select" onchange="filterEvaluationType()">
+                            <option value="all">Todos</option>
+                            <option value="autoevaluacion">Autoevaluaciones</option>
+                            <option value="evaluacion">Evaluaciones</option>
                         </select>
+                        <button id="myEvaluacionesBtn" onclick="filterMyEvaluaciones()">Mis Evaluaciones</button>
+                        <button id="allEvaluacionesBtn" onclick="filterAllEvaluaciones()">Todas las Evaluaciones</button>
                         <div class="busqueda icono-busqueda busqueda-2 seccion-busqueda">
                             <input type="text" placeholder="Buscar ...">
                             <i class="fas fa-search search-icon"></i>
@@ -147,9 +148,9 @@
                          data-empleado="<%= evaluacion.empleado ? evaluacion.empleado._id : '' %>" 
                          data-assignedBy="<%= evaluacion.assignedBy ? evaluacion.assignedBy._id : '' %>">
                          
-                        <img src="empleado1.jpg" class="eval-img">
+                        <img src="" class="eval-img">
                         <div class="eval-info">
-                            <p><strong><%= evaluacion.empleado ? evaluacion.empleado.nombre : 'Empleado no asignado' %> <%= evaluacion.empleado ? evaluacion.empleado.apellido : '' %></strong></p>
+                            <p><strong><%= evaluacion.empleado ? evaluacion.empleado.nombre + ' ' + evaluacion.empleado.apellido : 'Empleado no asignado' %></strong></p>
                             <p>Fecha Fin: <%= evaluacion.deadline %></p>
                             <br>
                             <p class="eval-status"><%= evaluacion.formulario ? evaluacion.formulario.titulo : 'Formulario no asignado' %></p>
@@ -171,18 +172,18 @@
                 const assignedByUser = card.dataset.assignedBy === "<%= user._id %>"
                 const employeeIsUser = card.dataset.empleado === "<%= user._id %>"
                 if (assignedByUser || employeeIsUser) {
-                    card.style.display = 'block';
+                    card.style.display = 'block'
                 } else {
-                    card.style.display = 'none';
+                    card.style.display = 'none'
                 }
-            });
+            })
         }
 
         function filterAllEvaluaciones() {
             const evaluationCards = document.querySelectorAll('.evaluation-card')
             evaluationCards.forEach(card => {
                 card.style.display = 'block'
-            });
+            })
         }
 
         function filterEvaluationType() {
@@ -193,7 +194,7 @@
                 if (type === 'all' || cardType === type) {
                     card.style.display = 'block'
                 } else {
-
+                    card.style.display = 'none'
                 }
             })
         }

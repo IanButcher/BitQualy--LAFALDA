@@ -4,6 +4,7 @@ const app = express()
 const router = express.Router()
 const Formulario = require('../Schemas/formularioSchema')
 const Evaluacion = require('../Schemas/evaluacionSchema')
+const Comentario = require('../Schemas/comentarioSchema')
 const baseUserSchema = require('../Schemas/baseUserSchema')
 const mongoose = require('mongoose')
 const roleAuthorization = require('../middleware/roleAuth')
@@ -12,6 +13,7 @@ const moment = require('moment')
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
+// GET route --> Todas las evaluaciones
 router.get('/evaluaciones', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async (req, res) => {
     try {
         let query = {}
@@ -248,6 +250,11 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
             evaluacion.completed = true
             await evaluacion.save()
 
+            // Añadir a completadas 
+            await baseUserSchema.findByIdAndUpdate(empleado, {
+                $addToSet: { completedEvaluations: evaluacion._id }
+            })
+
         // Evaluacion
         } else if (tipo === 'evaluacion') {
             const nuevaEvaluacion = new Evaluacion({
@@ -257,11 +264,12 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
                 completed: true
             })
             await nuevaEvaluacion.save()
+
+            await baseUserSchema.findByIdAndUpdate(req.user._id, {
+                $addToSet: { evaluacionesHechas: nuevaEvaluacion._id }
+            })
         }
-        // Añadir a completadas 
-        await baseUserSchema.findByIdAndUpdate(empleado, {
-            $addToSet: { completedEvaluations: evaluacion._id }
-        })
+        
         res.redirect('/evaluaciones')
     } catch (error) {
         console.error('Error guardando la evaluación:', error)
@@ -275,19 +283,18 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
 router.get('/evaluaciones/preview/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async(req, res) => {
     if (req.user) {
         try {
-            const { id } = req.params; // Evaluation ID
+            const { id } = req.params; 
 
-            // Find the evaluation by ID and populate the associated form and questions
             const evaluacion = await Evaluacion.findById(id).populate({
                 path: 'formulario',
-                populate: { path: 'questions' } // Populate questions within the form
-            });
+                populate: { path: 'questions' } 
+            })
 
             if (!evaluacion) {
-                return res.status(404).send('Evaluación no encontrada')
+                return res.redirect('/evaluaciones')
             }
 
-            // Render a view for displaying the evaluation (non-editable)
+            
             res.render('evals/evaluacion', { evaluacion, user: req.user })
         } catch (error) {
             console.error('Error fetching evaluation:', error)
@@ -295,6 +302,56 @@ router.get('/evaluaciones/preview/:id', roleAuthorization(['Administrador', 'Eva
         }
     } else {
         res.redirect('/')
+    }
+})
+
+// POST route --> Add a comment to an evaluacion
+router.post('/evaluaciones/:id/comentarios', roleAuthorization(['Intermediario', 'Administrador']), async (req, res) => {
+    try {
+        const { id } = req.params
+        const { texto } = req.body
+
+        const evaluacion = await Evaluacion.findById(id)
+        if (!evaluacion) {
+            return res.status(404).send('Evaluación no encontrada')
+        }
+
+        // Create and add the comment
+        const comentario = {
+            intermediario: { _id: req.user._id, nombre: req.user.nombre },
+            texto
+        }
+
+        evaluacion.comentarios.push(comentario)
+        await evaluacion.save()
+
+        res.redirect(`/evaluaciones/preview/${id}`)
+    } catch (error) {
+        console.error('Error adding comment:', error)
+        res.status(500).send('Error interno del servidor')
+    }
+})
+
+// DELETE route --> Delete a specific comment from an evaluacion
+router.delete('/evaluaciones/:id/comentarios/:comentarioId', roleAuthorization(['Intermediario', 'Administrador']), async (req, res) => {
+    try {
+        const { id, comentarioId } = req.params
+
+        const evaluacion = await Evaluacion.findById(id)
+        if (!evaluacion) {
+            return res.status(404).send('Evaluación no encontrada')
+        }
+
+        // Find and remove the comment
+        evaluacion.comentarios = evaluacion.comentarios.filter(
+            comentario => comentario._id.toString() !== comentarioId
+        )
+        await evaluacion.save()
+
+        res.redirect(`/evaluaciones/preview/${id}`)
+    } catch (error) {
+        console.error('Error deleting comment:', error)
+        res.status(500).send('Error interno del servidor')
     }
 })
 
