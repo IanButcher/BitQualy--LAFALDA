@@ -8,47 +8,28 @@
 .user-section {
     display: flex;
     align-items: center;
-    padding: 15px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-}
-
-.user-info {
-    margin-left: 15px;
-    text-align: right; /* Alineación a la izquierda */
 }
 
 .user-info h2 {
     font-size: 1.5em;
     color: #333;
-    margin-bottom: 5px;
-    
+    text-align: left;
 }
 
 .user-info p {
-    font-size: 0.9em;
-    color: #666;
+    font-size: 1em;
+    color: #333;
+    text-align: left;
 }
 
-/* Estilo adicional para el contenedor de información */
-.user-info p:first-child {
-    font-weight: bold;
-}
-
-.user-info p:last-child {
-    font-style: italic;
-}
-
-/* Estilo del img de usuario */
 .user-img {
-    width: 60px;  /* Tamaño ajustado */
-    height: 60px; /* Tamaño ajustado */
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    border: 2px solid #007bff; /* Bordes azules */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    border: 2px solid #007bff;
+    margin-right: 10px;
 }
+
 
 body, html {
     font-family: Arial, sans-serif;
