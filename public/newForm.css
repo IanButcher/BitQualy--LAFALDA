@@ -384,10 +384,28 @@ iframe {
 
 /* Botón "Guardar Cambios" */
 .btn-save {
-    background-color:transparent; /* Verde claro */
+    width: 200px;
+    margin-bottom: 12px;
+    padding: 12px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    border: none;
+    border-radius: 25px; /* Botones redondeados */
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+    color: black; /* Color de texto en negro */
+    background-color: transparent; /* Fondo transparente */
+    border: 2px solid black; /* Borde en negro */
+    margin-top: 10px;
 }
 
-.btn-save:hover {
+.btn-save {
     background-color: #3ac23fd0;
 }
 
