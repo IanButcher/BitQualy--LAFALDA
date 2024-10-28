@@ -79,6 +79,7 @@ input[type="text"] {
     display: inline-block; /* Para que se alinee con el select */
     vertical-align: middle; /* Alineación vertical */
     margin-right: 10px; /* Espacio a la derecha del input */
+    margin-top: 1%;
 }
 
 /* Estilo para select */
@@ -125,6 +126,7 @@ textarea {
     border-radius: 10px;
     box-sizing: border-box;
     transition: border-color 0.3s, background-color 0.3s;
+    margin-top: 1%;
 }
 
 textarea:focus {
@@ -166,7 +168,7 @@ select:focus {
 
 
 .btn-download {
-    background-color: #36bb2a;
+    background-color: #3d67da;
     color: white;
     border: none;
     border-radius: 20px; /* Aumento del redondeado */
@@ -175,6 +177,7 @@ select:focus {
     transition: background-color 0.3s;
     font-size: 14px;
     margin-left: 200px;
+    margin-top: 20px;
 }
 
 .btn-cancel {
@@ -187,31 +190,47 @@ select:focus {
     font-size: 14px;
     transition: background-color 0.3s;
     margin-left: 200px;
+    margin-top: 20px;
 }
 
 .btn-add-option {
-    background-color: #38df40;
-    color: white;
+    background-color:transparent;
+    color: rgb(25, 199, 34);
     border: none;
     border-radius: 20px; /* Aumento del redondeado */
     padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
     cursor: pointer;
     transition: background-color 0.3s;
     font-size: 14px;
+    margin-left: 600px;
 }
 
 .btn-delete{
-    background-color: #4a90e2;
-    color: white;
+    background-color: transparent;
+    color: rgb(5, 5, 5);
     border: none;
     border-radius: 20px; /* Aumento del redondeado */
     padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
     cursor: pointer;
     transition: background-color 0.3s;
-    margin-left: 400px;
+    margin-left: 0px;
 }
 
-.btn-add,
+.btn-add{
+    background-color: transparent;
+    color: rgb(8, 8, 8);
+    border: rgb(8, 8, 8);
+    border-radius: 20px; /* Aumento del redondeado */
+    padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: 750px;
+    margin-top: 12px;
+    display: flex;  /* Alinea los elementos en una fila horizontal */
+    align-items: center;  /* Alinea los elementos verticalmente en el centro */
+    gap: 20px;  /* Espacio entre los elementos */
+    
+}
 .btn-save{
     background-color: #4ae251;
     color: white;
@@ -220,16 +239,18 @@ select:focus {
     padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-top: 20px;
 }
 .btn-add:hover {
-    background-color: #4a90e2;
-    color: white;
-    border: none;
+    background-color: transparent;
+    color: rgb(5, 5, 5);
+    border: rgb(8, 8, 8);
     border-radius: 20px; /* Aumento del redondeado */
-    padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
-    cursor: pointer;
-    transition: background-color 0.3s;
+    background-color: rgba(111, 118, 228, 0.1); /* Leve sombreado al hacer hover */
+    transform: scale(1.5); 
 }
+    
+
 
 .btn-save:hover {
     background-color: #4a90e2;
@@ -240,11 +261,13 @@ select:focus {
 }
 
 .btn-cancel:hover,
-.btn-delete:hover,
-.btn-add-option:hover {
-    background-color: #357ab8;
-}
 
+.btn-add-option:hover {
+    background-color: #83bef1;
+}
+.btn-delete:hover{
+    background-color: #d42a2a;
+}
 /* Estilos de las opciones */
 .options-group {
     margin-top: 10px;
@@ -292,14 +315,77 @@ iframe {
     border-color: #28a745; /* Verde */
 }
 .opcion1{
-        width: 200px; /* Ajustar el ancho del select */
-        padding: 10px;
-        font-size: 16px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-sizing: border-box;
-        display: inline-block; /* Para alinearse con el input */
-        vertical-align: middle; /* Alineación vertical */
-        margin-left: 600px;
-        margin-top: -110px;
+    width: 150px; /* Ajustar el ancho del select */
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 50px;
+    box-sizing: border-box;
+    display: inline-block; /* Para alinearse con el input */
+    vertical-align: middle; /* Alineación vertical */
+       
 }
+.alineados{
+    display: flex;  /* Alinea los elementos en una fila horizontal */
+    align-items: center;  /* Alinea los elementos verticalmente en el centro */
+    gap: 20px;  /* Espacio entre los elementos */
+    margin-top: 15px;
+}
+.alineados2{
+    display: flex;  /* Alinea los elementos en una fila horizontal */
+    align-items: center;  /* Alinea los elementos verticalmente en el centro */
+    gap: 20px;  /* Espacio entre los elementos */
+    margin-top: 15px;
+}
+.btn-delete-option{
+    
+    background-color: transparent;
+    color: rgb(5, 5, 5);
+    border: none;
+    border-radius: 20px; /* Aumento del redondeado */
+    padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: 0px;
+}
+.alineados3{
+    display: flex;  /* Alinea los elementos en una fila horizontal */
+    align-items: center;  /* Alinea los elementos verticalmente en el centro */
+    gap: 20px;  /* Espacio entre los elementos */
+    margin-top: 15px;
+}
+/* Estilos para contenedores de preguntas y opciones */
+.question-container {
+    border: 1px solid #ddd;
+    width: 750px;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f4f7fa1f;
+    margin-top: 15px;
+}
+
+.option-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.options-group {
+    padding-top: 10px;
+    padding-left: 20px;
+}
+
+.btn-delete-option, .btn-add-option {
+    color: #4a90e2;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-delete-option:hover {
+    color: #ff0000;
+}
+

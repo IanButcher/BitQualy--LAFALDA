@@ -56,7 +56,8 @@
                     <h3>Editor de Preguntas</h3>
 
                     <form id="form-modification" method="POST" action="/formularios/save-form">
-                        <div class="form-group">
+                        <div class="alineado3">
+                            
                             <label for="titulo">Título del Formulario:</label>
                             <input type="text" id="form-title" name="form-title" value="Autoevaluación" required>
                             
@@ -65,19 +66,32 @@
                                 <option value="evaluacion">Evaluacion</option>
                                 <option value="autoevaluacion">Autoevaluacion</option>
                             </select>
+                            
                         </div>
+                        
 
                         <!-- Pregunta dinámica -->
-                        <div id="additional-questions"></div>
+                         
 
                         <!-- Botón para agregar nuevas preguntas -->
-                        <button type="button" class="btn-add" id="add-question-btn">Añadir Pregunta</button>
-
-                        <div class="modify-buttons">
-                            <button type="submit" class="btn-save" id="save-form-btn">Guardar Cambios</button> <!-- Submit button -->
-                            <button type="button" class="btn-download" id="download-pdf-btn">Descargar PDF</button> <!-- PDF download button -->
-                            <a href="/formularios" class="btn-cancel">Cancelar</a>
-                        </div>
+                        
+                            <div class="lol">
+                                <!-- Contenedor de preguntas adicionales -->
+                                <div id="additional-questions">
+                                    <button type="button" class="btn-add" id="add-question-btn">
+                                        <i class="fas fa-plus"></i> Añadir Pregunta
+                                    </button>
+                                </div>
+                        
+                                <!-- Sección de botones de modificación -->
+                                <div class="modify-buttons">
+                                    <button type="submit" class="btn-save" id="save-form-btn">Guardar Cambios</button>
+                                    <button type="button" class="btn-download" id="download-pdf-btn">Descargar PDF</button>
+                                    <a href="/formularios" class="btn-cancel">Cancelar</a>
+                                </div>
+                            </div>
+                        
+                      
                     </form>
                 </div>
 
@@ -89,191 +103,130 @@
             </div>
         </div>
     </div>
+   
 
+    
     <script>
         
 
+       // Incremento de contador
         let questionCount = 1;
 
+// Obtén elementos del DOM
         const addQuestionBtn = document.getElementById('add-question-btn');
         const additionalQuestions = document.getElementById('additional-questions');
 
-        addQuestionBtn.addEventListener('click', () => {
-            const questionNumber = questionCount++;
+// Evento de botón para añadir preguntas
+    addQuestionBtn.addEventListener('click', () => {
+        const questionNumber = questionCount++;
+        const newQuestion = `
+        <div class="form-group question-container" id="question-group-${questionNumber}">
+            <div class="alineados2">
+                <label for="question${questionNumber}">Pregunta ${questionNumber}:</label>
+                <input type="text" id="question${questionNumber}" name="question${questionNumber}" placeholder="Escribe tu pregunta aquí" required>
+                <label for="type${questionNumber}">Tipo de Pregunta:</label>
+                <select name="type${questionNumber}" id="type${questionNumber}" onchange="toggleOptions(${questionNumber})">
+                    <option value="texto">Texto</option>
+                    <option value="multiple">Opción Múltiple</option>
+                    <option value="checkbox">Checkbox</option>
+                </select>
+                <button type="button" class="btn-delete" onclick="deleteQuestion(${questionNumber})">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
 
-            const newQuestion = `
-                <div class="form-group" id="question-group-${questionNumber}">
-                    <label for="question${questionNumber}">Pregunta ${questionNumber}:</label>
-                    <input type="text" id="question${questionNumber}" name="question${questionNumber}" required>
+            <label for="description${questionNumber}">Descripción:</label>
+            <textarea id="description${questionNumber}" name="description${questionNumber}" placeholder="Descripción opcional..."></textarea>
 
-                    <!-- Descripción de la pregunta -->
-                    <label for="description${questionNumber}">Descripción:</label>
-                    <textarea id="description${questionNumber}" name="description${questionNumber}"></textarea>
+            <div class="alineados">
+                <label for="percentage${questionNumber}">Porcentaje:</label>
+                <input type="number" class="percentage-input" id="percentage${questionNumber}" name="percentage${questionNumber}" min="0" max="100" required oninput="updateColor(${questionNumber}), maxPorcentage(${questionNumber})">
+            </div>
 
-                    <!-- Porcentaje -->
-                    <label for="percentage${questionNumber}">Porcentaje:</label>
-                    <input type="number" class="percentage-input" id="percentage${questionNumber}" name="percentage${questionNumber}" min="0" max="100" required oninput="updateColor(${questionNumber}), maxPorcentage(${questionNumber}) ">
-
-                    <!-- Tipo de pregunta -->
-                    <label for="type${questionNumber}">Tipo de Pregunta:</label>
-                    <select name="type${questionNumber}" id="type${questionNumber}" onchange="toggleOptions(${questionNumber})">
-                        <option value="texto">Texto</option>
-                        <option value="multiple">Opción Múltiple</option>
-                        <option value="checkbox">Checkbox</option>
-                    </select>
-
-                    <!-- Opciones dinámicas -->
-                    <div class="options-group" id="options${questionNumber}" style="display:none;">
-                        <div id="options-container-${questionNumber}">
-                            <div class="option-item">
-                                <label>Opción 1:</label>
-                                <input type="text" name="option${questionNumber}_1">
-                            </div>
-                        </div>
-                        <button type="button" class="btn-add-option" onclick="addOption(${questionNumber})">Añadir Opción</button>
+            <div class="options-group" id="options${questionNumber}" style="display: none;">
+                <div id="options-container-${questionNumber}">
+                    <div class="option-item">
+                        <label>Opción 1:</label>
+                        <input type="text" name="option${questionNumber}_1" placeholder="Escribe una opción">
                     </div>
-
-                    <!-- Botón para eliminar pregunta -->
-                    <button type="button" class="btn-delete" onclick="deleteQuestion(${questionNumber})">Eliminar Pregunta</button>
                 </div>
-            `;
-            additionalQuestions.insertAdjacentHTML('beforeend', newQuestion);
-        });
+                <button type="button" class="btn-add-option" onclick="addOption(${questionNumber})">
+                    <i class="fas fa-plus"></i> Añadir Opción
+                </button>
+            </div>
+        </div>
+    `;
+    additionalQuestions.insertAdjacentHTML('beforeend', newQuestion);
+});
 
-        // Función para agregar opciones dinámicas
-        function addOption(questionNumber) {
-            const optionsContainer = document.getElementById(`options-container-${questionNumber}`);
-            const optionCount = optionsContainer.querySelectorAll('.option-item').length + 1;
+// Función para agregar opciones dinámicas
+function addOption(questionNumber) {
+    const optionsContainer = document.getElementById(`options-container-${questionNumber}`);
+    const optionCount = optionsContainer.querySelectorAll('.option-item').length + 1;
+    const newOption = `
+        <div class="option-item">
+            <label>Opción ${optionCount}:</label>
+            <input type="text" name="option${questionNumber}_${optionCount}" placeholder="Escribe una opción">
+            <button type="button" class="btn-delete-option" onclick="deleteOption(this)">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+    `;
+    optionsContainer.insertAdjacentHTML('beforeend', newOption);
+}
 
-            const newOption = `
-                <div class="option-item">
-                    <label>Opción ${optionCount}:</label>
-                    <input type="text" name="option${questionNumber}_${optionCount}">
-                    <button type="button" class="btn-delete-option" onclick="deleteOption(this)">Eliminar Opción</button>
-                </div>
-            `;
-            optionsContainer.insertAdjacentHTML('beforeend', newOption);
-        }
+// Función para eliminar una pregunta
+function deleteQuestion(questionNumber) {
+    const questionGroup = document.getElementById(`question-group-${questionNumber}`);
+    questionGroup.remove();
+}
 
-        // Función para eliminar una pregunta
-        function deleteQuestion(questionNumber) {
-            const questionGroup = document.getElementById(`question-group-${questionNumber}`);
-            questionGroup.remove();
-        }
+// Función para eliminar una opción
+function deleteOption(optionElement) {
+    optionElement.parentElement.remove();
+}
 
-        // Función para eliminar una opción
-        function deleteOption(optionElement) {
-            optionElement.parentElement.remove();
-        }
+// Mostrar u ocultar opciones dependiendo del tipo de pregunta
+function toggleOptions(questionNumber) {
+    const typeSelect = document.getElementById(`type${questionNumber}`);
+    const optionsGroup = document.getElementById(`options${questionNumber}`);
+    optionsGroup.style.display = typeSelect.value === 'multiple' || typeSelect.value === 'checkbox' ? 'block' : 'none';
+}
 
-        // Mostrar u ocultar opciones dependiendo del tipo de pregunta
-        function toggleOptions(questionNumber) {
-            const typeSelect = document.getElementById(`type${questionNumber}`);
-            const optionsGroup = document.getElementById(`options${questionNumber}`);
-
-            if (typeSelect.value === 'multiple' || typeSelect.value === 'checkbox') {
-                optionsGroup.style.display = 'block';
-            } else {
-                optionsGroup.style.display = 'none';
-            }
-        }
-
-        function TotalMaxPorcentaje() {
-        const percentageInputs = document.querySelectorAll('.percentage-input');
-        let total = 0;
-
-        // Sumar todos los valores de porcentaje
-        percentageInputs.forEach(input => {
-            const value = parseFloat(input.value)
-            if (!isNaN(value)) {
-                total += value;
-            }
-        });
-        if (total > 100) {
-            alert("La suma total de los porcentajes no puede exceder el 100%.");
-            return false;  
-        }
-        return true;  
+// Restricciones de porcentaje (Max 100)
+function maxPorcentage(questionNumber) {
+    const percentageInput = document.getElementById(`percentage${questionNumber}`);
+    if (parseFloat(percentageInput.value) > 100) {
+        alert("El porcentaje no puede ser mayor a 100%.");
+        percentageInput.value = 0;  
+    } else if (!TotalMaxPorcentaje()) {
+        percentageInput.value = 0;
     }
-        // que el porcentage de cada pregunta no supere a 100 o este por debajo de 0
-        function maxPorcentage(questionNumber) {
-        const percentageInput = document.getElementById(`percentage${questionNumber}`);
-        const value = parseFloat(percentageInput.value);
-        if (!isNaN(value)) {
-            if (value > 100) {
-                alert("El porcentaje no puede ser mayor a 100%.");
-                percentageInput.value = 0;  
-            }
-            else {
-                if (TotalMaxPorcentaje() === false)
-                percentageInput.value = 0;  
-            }
-        } else {
-            
-        }
+}
+
+// Total de porcentaje máximo
+function TotalMaxPorcentaje() {
+    let total = Array.from(document.querySelectorAll('.percentage-input')).reduce((acc, input) => {
+        return acc + (parseFloat(input.value) || 0);
+    }, 0);
+    if (total > 100) {
+        alert("La suma total de los porcentajes no puede exceder el 100%.");
+        return false;
     }
-        
-        // Actualizar el color del porcentaje
-        function updateColor(questionNumber) {
-            const percentageInput = document.getElementById(`percentage${questionNumber}`)
-            const value = percentageInput.value
+    return true;
+}
 
-            if (value < 10) {
-                percentageInput.style.backgroundColor = "#f8d7da"; // Red
-            } else if (value <= 20) {
-                percentageInput.style.backgroundColor = "#f5c6cb"; // Light Red
-            } else if (value <= 30) {
-                percentageInput.style.backgroundColor = "#ffeeba"; // Yellow
-            } else if (value <= 40) {
-                percentageInput.style.backgroundColor = "#fff3cd"; // Light Yellow
-            } else if (value <= 50) {
-                percentageInput.style.backgroundColor = "#d4edda"; // Green
-            } else {
-                percentageInput.style.backgroundColor = "#c3e6cb"; // Dark Green
-            }
-        }
+// Función de color para porcentaje
+function updateColor(questionNumber) {
+    const input = document.getElementById(`percentage${questionNumber}`);
+    const value = input.value;
+    input.style.backgroundColor = value < 10 ? "#f8d7da" :
+                                  value <= 20 ? "#f5c6cb" :
+                                  value <= 30 ? "#ffeeba" :
+                                  value <= 40 ? "#fff3cd" :
+                                  value <= 50 ? "#d4edda" : "#c3e6cb";
+}
 
-        // Función para crear el PDF
-        document.getElementById('save-changes-btn').addEventListener('click', (event) => {
-            event.preventDefault(); // Prevenir el envío del formulario
-
-            // Crea un nuevo documento PDF
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-
-            // Título del formulario
-            const title = document.getElementById('form-title').value;
-            doc.setFontSize(18);
-            doc.text(title, 20, 20);
-
-            // Agregar tabla con preguntas
-            const columns = ["Pregunta", "Descripción", "Porcentaje"];
-            const rows = [];
-
-            const questions = document.querySelectorAll('input[name^="question"], textarea[name^="description"], input[name^="percentage"]');
-            for (let i = 0; i < questions.length; i += 3) {
-                const questionText = questions[i].value;
-                const description = questions[i + 1].value;
-                const percentage = questions[i + 2].value;
-
-                rows.push([questionText, description, percentage]);
-            }
-
-            // Crear tabla en el PDF
-            doc.autoTable(columns, rows, { startY: 30 });
-
-            // Guardar PDF en la vista previa
-            const pdfBlob = doc.output('blob');
-            const pdfUrl = URL.createObjectURL(pdfBlob);
-
-            // Mostrar PDF en la vista previa
-            const previewFrame = document.getElementById('preview-frame');
-            previewFrame.src = pdfUrl;
-            previewFrame.style.display = 'block';
-
-            // Guardar PDF
-            doc.save(`${title}.pdf`);
-        });
     </script>
 </body>
 </html>
