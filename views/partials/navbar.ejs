@@ -29,7 +29,7 @@
             </div>
             
             <div class="gestion-section">
-                <a href="#" class="dropdown-btn"><i class="fas fa-tasks"></i> Gestión<i class="fas fa-chevron-down"></i></a>
+                <a href="#" class="dropdown-btn"><br><i class="fas fa-tasks"></i> Gestión<i class="fas fa-chevron-down"></i></a>
                 <div class="dropdown-container">
                     <br>
                     <div class="menu-item">
@@ -42,6 +42,11 @@
                 </div>
             </div>
         </nav>
+
+        <!-- Botón de Logout al final del menú -->
+        <div class="menu-item logout">
+            <a href="/logout" class="nav-link"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+        </div>
     </aside>
 
     <script>
@@ -55,7 +60,7 @@
         });
     
         // JavaScript para resaltar el enlace de la página activa
-        const currentLocation = window.location.pathname; // Cambiado de href a pathname
+        const currentLocation = window.location.pathname;
         const menuLinks = document.querySelectorAll('.nav-link');
         
         menuLinks.forEach(link => {

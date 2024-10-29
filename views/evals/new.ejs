@@ -53,22 +53,30 @@
 
             <!-- Button to submit -->
             <button class="btn-aceptar" type="button" onclick="submitForm()">Aceptar</button>
+            <div id="assignToAll" style="display: none;">
+                <br>
+                <button class="btn-aceptar" type="button" onclick="assignToAll()">Asignar a todos</button>
+            </div>
+            
         </div>
     </div>
 
     <script>
-        // Show/hide deadline input based on formulario type
+        // Show/hide 
         document.getElementById('formularioSelect').addEventListener('change', function () {
             const selectedOption = this.options[this.selectedIndex];
             const tipo = selectedOption.getAttribute('data-tipo')
 
             const deadlineContainer = document.getElementById('deadlineContainer')
+            const assignToAll = document.getElementById('assignToAll')
             if (tipo === 'autoevaluacion') {
                 deadlineContainer.style.display = 'block'
+                assignToAll.style.display = 'block'
             } else {
                 deadlineContainer.style.display = 'none'
+                assignToAll.style.display = 'none'
             }
-        });
+        })
 
         function submitForm() {
             const formularioId = document.getElementById('formularioSelect').value
@@ -80,17 +88,10 @@
 
             if (formularioId && empleadoId) {
                 if (tipo === 'autoevaluacion') {
-                    // Handle autoevaluacion submission
-                    if (!deadline) {
-                        alert("Por favor selecciona una fecha límite.")
-                        return
-                    }
-                    // Send data to the autoevaluacion assignment route
+                    // Handle autoevaluacion assignment
                     fetch('/evaluaciones/assign-autoevaluacion', {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ formularioId, empleadoId, deadline })
                     }).then(response => {
                         if (response.ok) {
@@ -99,17 +100,65 @@
                         } else {
                             alert('Error al asignar la autoevaluación')
                         }
-                    }).catch(error => {
-                        alert('Error al enviar la autoevaluación: ' + error)
                     });
-                } else {
-                    // Normal evaluation submission (redirect to answer page)
-                    window.location.href = `/evaluaciones/answer/${formularioId}?empleado=${empleadoId}`
+                } else if (tipo === 'evaluacion') {
+                    // Handle evaluacion creation and answer redirection
+                    fetch('/evaluaciones/create-evaluacion', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ formularioId, empleadoId, deadline })
+                    }).then(response => {
+                        if (response.redirected) {
+                            window.location.href = response.url
+                        } else {
+                            alert('Error al crear la evaluación')
+                        }
+                    });
                 }
             } else {
                 alert("Por favor selecciona un formulario y un empleado.")
             }
         }
+
+        function assignToAll() {
+            const formularioId = document.getElementById('formularioSelect').value
+            const deadline = document.getElementById('deadline').value
+
+            const selectedOption = document.getElementById('formularioSelect').options[document.getElementById('formularioSelect').selectedIndex]
+            const tipo = selectedOption.getAttribute('data-tipo')
+            if (!formularioId) {
+                alert("Por favor selecciona un formulario.")
+                return;
+            }
+
+            if (tipo === 'autoevaluacion') {
+                if (!deadline) {
+                    alert("Por favor selecciona una fecha límite.")
+                    return;
+                }
+
+                // Send data to the route that assigns autoevaluacion to all active users
+                fetch('/evaluaciones/assign-autoevaluacion-to-all', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ formularioId, deadline })
+                }).then(response => {
+                    if (response.ok) {
+                        alert('Autoevaluación asignada a todos los usuarios activos.')
+                        window.location.href = '/evaluaciones'
+                    } else {
+                        alert('Error al asignar la autoevaluación a todos los usuarios.')
+                    }
+                }).catch(error => {
+                    alert('Error al enviar la autoevaluación: ' + error)
+                })
+            } else {
+                alert("Este botón es solo para autoevaluaciones.")
+            }
+        }
+
     </script>
 </body>
 </html>

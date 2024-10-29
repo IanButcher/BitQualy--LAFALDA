@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Responder Evaluación</title>
     <link rel="stylesheet" href="/awnser.css">
+    <link rel="icon" type="image/png" href="https://ugc.production.linktr.ee/mj5IciCyRk2puUukygYa_kmwAn8AE84X4N3S5?io=true&size=avatar-v3_0">
+
 </head>
 <body>
   <% if (user && user.rol === 'Administrador') { %>
@@ -23,7 +25,10 @@
 
         <!-- Formulario para responder preguntas -->
         <form method="POST" action="/evaluaciones/save-evaluacion">
-            <input type="hidden" name="formulario" value="<%= formulario._id %>">        
+            <input type="hidden" name="formulario" value="<%= formulario._id %>">
+            <input type="hidden" name="empleado" value="<%= evaluacion.empleado._id %>">
+            <input type="hidden" name="tipo" value="<%= evaluacion.formulario.tipo %>">
+ 
             <!-- Questions and responses -->
             <div id="preguntasContainer">
                 <br>

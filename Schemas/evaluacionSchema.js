@@ -2,20 +2,7 @@
 const mongoose = require('mongoose')
 const Formulario = require('./formularioSchema')
 const BaseUser = require('./baseUserSchema')
-
-const comentarioSchema = new mongoose.Schema({
-    intermediario: {
-        type: Object,
-        required: true
-    },
-    texto: {
-        type: String,
-        required: true
-    }
-})
-
-const Comentario = mongoose.model('Comentario', comentarioSchema)
-
+const { comentarioSchema } = require('./comentarioSchema')
 
 const evaluacionSchema = new mongoose.Schema({
     formulario: {
@@ -24,9 +11,9 @@ const evaluacionSchema = new mongoose.Schema({
         required: true
     },
     empleado: {
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'BaseUser', 
-        required: true 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'BaseUser',
+        required: true
     },
     assignedBy: {
         type: mongoose.Schema.Types.ObjectId,
@@ -35,7 +22,12 @@ const evaluacionSchema = new mongoose.Schema({
     deadline: {
         type: Date,
         required: false
-    },  
+    },
+    createdAt: {
+        type: Date,
+        required: true,
+        default: Date.now
+    },
     completed: {
         type: Boolean,
         required: true,
@@ -45,7 +37,13 @@ const evaluacionSchema = new mongoose.Schema({
         type: [String],
         required: true
     },
-    comentarios: [comentarioSchema]
+    comentarios: [comentarioSchema],
+
+    score: {
+        type: Number,
+        required: true,
+        default: 0
+    }
 });
 
 const Evaluacion = mongoose.model('Evaluacion', evaluacionSchema);

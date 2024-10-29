@@ -51,15 +51,18 @@
     margin-bottom: 20px;
 }
 
+/* Alinea los elementos en la misma línea y ajusta el espaciado */
 .sidebar nav .menu-item a {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    gap: 0px;
     color: white;
     font-weight: bold;
     font-size: 17px;
     text-decoration: none;
-    display: flex;
-    align-items: center;
-    padding: 10px 0;
     transition: background-color 0.3s ease, transform 0.3s ease;
+    padding-left: 4px;
 }
 
 .sidebar nav .menu-item a i {
@@ -70,6 +73,37 @@
     background-color: #575757;
     transform: scale(1.05);
 }
+
+/* Botón Logout estilizado igual que los demás botones */
+.sidebar .logout {
+    position: absolute;
+    bottom: 0px; /* Ajusta según la distancia que quieras del borde inferior */
+    width: 100%;
+    padding: 10px 0;
+}
+
+.sidebar .logout a {
+    color: white;
+    font-weight: bold;
+    font-size: 17px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    margin-right: 50px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    padding-left: 10px;
+}
+
+.sidebar .logout a i {
+    margin-right: 10px;
+}
+
+.sidebar .logout a:hover {
+    background-color: #575757;
+    transform: scale(1.05);
+}
+
 
 /* Dropdown section */
 a {
@@ -86,15 +120,19 @@ a {
 }
 
 .sidebar .gestion-section .dropdown-btn {
-    font-weight: bold;
     display: flex;
-    font-size: 17px;
     align-items: center;
-    padding: 10px 0;
-    cursor: pointer;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 17px;
+    padding: 8px;
     color: white;
     background-color: transparent;
+    cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
+    gap: 5px;
+    padding-left: 0px;
+    
 }
 
 .sidebar .gestion-section .dropdown-btn:hover {
@@ -107,13 +145,19 @@ a {
 }
 
 /* Dropdown items */
+
 .sidebar .gestion-section .dropdown-container {
     display: none;
+    flex-direction: column;
+    gap: 1px;
     padding-left: 20px;
+    margin-top: 3px;
 }
 
+
+
 .sidebar .gestion-section .dropdown-container.active {
-    display: block;
+    display: flex; /* Muestra el menú cuando está activo */
 }
 
 .sidebar .gestion-section .dropdown-container .menu-item {
@@ -137,11 +181,6 @@ a {
     margin-right: 10px;
 }
 
-.sidebar .gestion-section .dropdown-container .menu-item a:hover {
-    background-color: #575757;
-    transform: scale(1.05);
-}
-
 /* Vertical line */
 .sidebar .gestion-section .dropdown-container .menu-item .line {
     position: absolute;
@@ -153,6 +192,18 @@ a {
 /* Remove dots */
 .sidebar .gestion-section .dropdown-container .menu-item .dot {
     display: none;
+}
+
+
+.sidebar .gestion-section .dropdown-btn i:last-child {
+    margin-left: auto; /* Separa el icono hacia la derecha */
+}
+
+/* Hover efecto */
+.sidebar nav .menu-item a:hover,
+.sidebar .gestion-section .dropdown-btn:hover {
+    background-color: #575757;
+    transform: scale(1.05);
 }
 
 /* Responsive Design */
