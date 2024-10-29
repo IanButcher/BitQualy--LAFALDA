@@ -79,6 +79,7 @@ input[type="text"] {
     display: inline-block; /* Para que se alinee con el select */
     vertical-align: middle; /* Alineación vertical */
     margin-right: 10px; /* Espacio a la derecha del input */
+    margin-top: 1%;
 }
 
 /* Estilo para select */
@@ -125,6 +126,7 @@ textarea {
     border-radius: 10px;
     box-sizing: border-box;
     transition: border-color 0.3s, background-color 0.3s;
+    margin-top: 1%;
 }
 
 textarea:focus {
@@ -148,102 +150,39 @@ select:focus {
     border-color: #4a90e2;
 }
 
-/* Estilos de botones */
-/* Estilos de botones */
-.modify-buttons {
-    display: flex;
-    justify-content: flex-start; /* Alinear los botones hacia la izquierda */
-    margin-top: 10px; /* Mantener el margen superior */
-}
-
-.modify-buttons button {
-    margin-right: 10px; /* Ajusta este valor para controlar el espacio entre los botones */
-}
-
-.modify-buttons button:last-child {
-    margin-right: 0; /* Elimina el margen del último botón */
-}
 
 
-.btn-download {
-    background-color: #36bb2a;
-    color: white;
-    border: none;
-    border-radius: 20px; /* Aumento del redondeado */
-    padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
-    cursor: pointer;
-    transition: background-color 0.3s;
-    font-size: 14px;
-    margin-left: 200px;
-}
 
-.btn-cancel {
-    background-color: #d42a2a;
-    color: white;
-    border: none;
-    border-radius: 20px; /* Aumento del redondeado */
-    padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s;
-    margin-left: 200px;
-}
+
 
 .btn-add-option {
-    background-color: #38df40;
-    color: white;
+    background-color:transparent;
+    color: rgb(25, 199, 34);
     border: none;
     border-radius: 20px; /* Aumento del redondeado */
     padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
     cursor: pointer;
     transition: background-color 0.3s;
     font-size: 14px;
+    margin-left: 600px;
 }
 
 .btn-delete{
-    background-color: #4a90e2;
-    color: white;
+    background-color: transparent;
+    color: rgb(5, 5, 5);
     border: none;
     border-radius: 20px; /* Aumento del redondeado */
     padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
     cursor: pointer;
     transition: background-color 0.3s;
-    margin-left: 400px;
+    margin-left: 0px;
 }
 
-.btn-add,
-.btn-save{
-    background-color: #4ae251;
-    color: white;
-    border: none;
-    border-radius: 20px; /* Aumento del redondeado */
-    padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-.btn-add:hover {
-    background-color: #4a90e2;
-    color: white;
-    border: none;
-    border-radius: 20px; /* Aumento del redondeado */
-    padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
+ 
 
-.btn-save:hover {
-    background-color: #4a90e2;
-}
 
-.btn-download:hover {
-    background-color: #2f9e3e;
-}
+    
 
-.btn-cancel:hover,
-.btn-delete:hover,
-.btn-add-option:hover {
-    background-color: #357ab8;
-}
 
 /* Estilos de las opciones */
 .options-group {
@@ -292,14 +231,213 @@ iframe {
     border-color: #28a745; /* Verde */
 }
 .opcion1{
-        width: 200px; /* Ajustar el ancho del select */
-        padding: 10px;
-        font-size: 16px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-sizing: border-box;
-        display: inline-block; /* Para alinearse con el input */
-        vertical-align: middle; /* Alineación vertical */
-        margin-left: 600px;
-        margin-top: -110px;
+    width: 150px; /* Ajustar el ancho del select */
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 50px;
+    box-sizing: border-box;
+    display: inline-block; /* Para alinearse con el input */
+    vertical-align: middle; /* Alineación vertical */
+       
+}
+.alineados{
+    display: flex;  /* Alinea los elementos en una fila horizontal */
+    align-items: center;  /* Alinea los elementos verticalmente en el centro */
+    gap: 20px;  /* Espacio entre los elementos */
+    margin-top: 15px;
+}
+.alineados2{
+    display: flex;  /* Alinea los elementos en una fila horizontal */
+    align-items: center;  /* Alinea los elementos verticalmente en el centro */
+    gap: 20px;  /* Espacio entre los elementos */
+    margin-top: 15px;
+}
+.btn-delete-option{
+    
+    background-color: transparent;
+    color: rgb(5, 5, 5);
+    border: none;
+    border-radius: 20px; /* Aumento del redondeado */
+    padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: 0px;
+}
+.alineados3{
+    display: flex;  /* Alinea los elementos en una fila horizontal */
+    align-items: center;  /* Alinea los elementos verticalmente en el centro */
+    gap: 20px;  /* Espacio entre los elementos */
+    margin-top: 15px;
+}
+/* Estilos para contenedores de preguntas y opciones */
+.question-container {
+    border: 1px solid #ddd;
+    width: 750px;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f4f7fa1f;
+    margin-top: 15px;
+}
+
+.option-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.options-group {
+    padding-top: 10px;
+    padding-left: 20px;
+}
+
+.btn-delete-option, .btn-add-option {
+    color: #4a90e2;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-delete-option:hover {
+    color: #ff0000;
+}
+
+/* Estilos para el panel derecho */
+.right-panel {
+    width: 180px; /* Ancho del panel derecho */
+    background-color: #f8f9fa; /* Color de fondo del panel */
+    padding: 20px;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    border-left: 1px solid #ddd;
+    position: fixed;
+    overflow-y: auto;
+    margin-left: 800px;
+    margin-top: 110px;
+}
+
+/* Asegurarse de que el contenedor principal se adapte al panel adicional */
+.container {
+    display: flex;
+}
+
+/* Estilos adicionales para elementos en el panel derecho */
+.right-panel h3 {
+    color: #4a90e2;
+    margin-top: 0;
+}
+
+.right-panel p {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+}
+
+.right-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f0f2f5;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 180px;
+}
+
+.right-panel button,
+.right-panel a {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 12px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    border: none;
+    border-radius: 25px; /* Botones redondeados */
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+    color: black; /* Color de texto en negro */
+    background-color: transparent; /* Fondo transparente */
+    border: 2px solid black; /* Borde en negro */
+}
+
+/* Botón "Añadir Pregunta" */
+.btn-add {
+    background-color:transparent; /* Verde */
+}
+
+.btn-add:hover {
+    background-color: #23c22e96;
+}
+
+.btn-add i {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+/* Botón "Guardar Cambios" */
+.btn-save {
+    width: 200px;
+    margin-bottom: 12px;
+    padding: 12px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    border: none;
+    border-radius: 25px; /* Botones redondeados */
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+    color: black; /* Color de texto en negro */
+    background-color: transparent; /* Fondo transparente */
+    border: 2px solid black; /* Borde en negro */
+    margin-top: 10px;
+}
+
+.btn-save {
+    background-color: #3ac23fd0;
+}
+
+.btn-save i {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+/* Botón "Descargar PDF" */
+.btn-download {
+    background-color:transparent; /* Azul */
+}
+
+.btn-download:hover {
+    background-color: #2b4faab6;
+}
+
+.btn-download i {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+/* Botón "Cancelar" */
+.btn-cancel {
+    background-color:transparent; /* Rojo */
+}
+
+.btn-cancel:hover {
+    background-color: #b32323;
+}
+
+.btn-cancel i {
+    margin-right: 8px;
+    font-size: 18px;
 }

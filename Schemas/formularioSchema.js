@@ -39,6 +39,11 @@ const formularioSchema = new mongoose.Schema({
         type: String,
         enum: ['evaluacion', 'autoevaluacion'],
         required: true,
+    },
+    createdAt: {
+        type: Date,
+        required: true,
+        default: Date.now
     }
 })
 
