@@ -63,6 +63,19 @@
                                 <span>Cambiar Foto del Perfil</span>
                             </div>
                         </div>
+                        <div class="form-fields">
+                            <div class="form-group">
+                                <label for="nombre">Nombre</label>
+                                <input type="text" id="nombre" name="nombre" placeholder="Ingresa el nombre" required minlength="3" maxlength="16" size="16">
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <label for="apellido">Apellido</label>
+                                <input type="text" id="apellido" name="apellido" placeholder="Ingresa el apellido" required minlength="4" maxlength="16" size="16">
+                            </div>
+                        </div>
+                    </div>
+                    </div>
                         <input type="file" id="foto" name="image" accept="image/*" onchange="previewImage(event);" style="display:none;">
                     </div>
                     
@@ -77,20 +90,7 @@
                             reader.readAsDataURL(event.target.files[0])
                         }
                     </script>
-                                                
-                <div class="form-fields">
-                    <div class="form-group">
-                        <label for="nombre">Nombre</label>
-                        <input type="text" id="nombre" name="nombre" placeholder="Ingresa el nombre" required minlength="3" maxlength="16" size="16">
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <label for="apellido">Apellido</label>
-                        <input type="text" id="apellido" name="apellido" placeholder="Ingresa el apellido" required minlength="4" maxlength="16" size="16">
-                    </div>
-                </div>
-            </div>
-            </div>
+
 
             <!-- Resto del formulario -->
 
@@ -110,15 +110,17 @@
                     </select>
                 </div>
             </div>
+            <br>
             <div class="form-group">
                 <label for="dni">DNI</label>
                 <input type="text" id="dni" name="dni" placeholder="Ingresa el DNI" required minlength="8" size="25">
             </div>
+            <br>
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" placeholder="Ingresa el email" required minlength="8" size="25">
             </div>
-
+            <br>
             <div class="form-group">
                 <label for="email1">Confirmar Email</label>
                 <input type="email" id="email1" name="email1" placeholder="Ingresa el email" required minlength="8" size="25">
