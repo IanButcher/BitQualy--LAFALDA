@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,78 +7,54 @@
     <link rel="stylesheet" href="evaluaciones.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" type="image/png" href="https://ugc.production.linktr.ee/mj5IciCyRk2puUukygYa_kmwAn8AE84X4N3S5?io=true&size=avatar-v3_0">
-
     <style>
-        .notification-icon, .user-photo {
-            position: absolute;
-            right: 50px;
-            top: 100px;
-        }
+        .notification-icon, .user-photo { position: absolute; right: 50px; top: 100px; }
         .busqueda input {
-            width: 100%;
-            padding: 12px 45px 12px 15px;
-            font-size: 18px;
-            border: 1px solid #ccc;
-            border-radius: 25px;
-            transition: width 0.3s ease;
-            height: 50px;
+            width: 100%; padding: 12px 45px 12px 15px; font-size: 18px; border: 1px solid #ccc;
+            border-radius: 25px; transition: width 0.3s ease; height: 50px;
         }
-        .icono-busqueda {
-            right: 15px;
-            top: 110px;
-            transform: translateY(-50%);
-            color: #888;
-        }
-        .busqueda {
-            margin-top: 20px;
-        }
+        .icono-busqueda { right: 15px; top: 110px; transform: translateY(-50%); color: #888; }
+        .busqueda { margin-top: 20px; }
     </style>
 </head>
 
 <body>
     <% if (user && user.rol === 'Administrador') { %>
-        <nav><%- include('../partials/navbar') %> </nav>
+        <nav><%- include('../partials/navbar') %></nav>
     <% } else if (user && user.rol === 'Evaluador') { %>
-        <nav><%- include('../partials/navbarEval') %> </nav>
+        <nav><%- include('../partials/navbarEval') %></nav>
     <% } else if (user && user.rol === 'Intermediario') { %>
-        <nav><%- include('../partials/navbarInter') %> </nav>
+        <nav><%- include('../partials/navbarInter') %></nav>
     <% } else if (user && user.rol === 'Empleado') { %>
-        <nav><%- include('../partials/navbarUser') %> </nav>
+        <nav><%- include('../partials/navbarUser') %></nav>
     <% } else { %>
         <p>Navbar error</p>
     <% } %>
 
-    <!-- Main Panel -->
     <main class="main-content">
         <header class="header notificacion-icon user-photo">
             <%- include('../partials/headerU') %>
         </header>
 
         <div class="filter-panel-container">
-            <!-- Buttons for switching views
-            <div class="evaluation-filters">
-                <button id="myEvaluacionesBtn" onclick="filterMyEvaluaciones()">Mis Evaluaciones</button>
-                <button id="allEvaluacionesBtn" onclick="filterAllEvaluaciones()">Todas las Evaluaciones</button>
-                <select id="evaluationTypeFilter" onchange="filterEvaluationType()">
-                    <option value="all">Todos</option>
-                    <option value="autoevaluacion">Autoevaluaciones</option>
-                    <option value="evaluacion">Evaluaciones Normales</option>
-                </select>
-            </div> -->
-
             <section class="evaluation-section">
                 <h2>Evaluaciones Asignadas</h2>
-
                 <% evaluaciones.forEach(evaluacion => { %>
                     <div class="evaluation-card" 
                          data-tipo="<%= evaluacion.formulario.tipo %>" 
                          data-empleado="<%= evaluacion.empleado ? evaluacion.empleado._id : '' %>" 
                          data-assignedBy="<%= evaluacion.assignedBy ? evaluacion.assignedBy._id : '' %>">
                          
-                        <img src="empleado1.jpg" class="eval-img">
+                        <img src="<%= evaluacion.empleado.imagePath ? '/' + evaluacion.empleado.imagePath : '/img/user.png' %>" class="eval-img">
                         <div class="eval-info">
-                            <p><strong><%= evaluacion.empleado ? evaluacion.empleado.nombre : 'Empleado no asignado' %> <%= evaluacion.empleado ? evaluacion.empleado.apellido : '' %></strong></p>
-                            <p>Asignada por: <%= evaluacion.assignedBy ? evaluacion.assignedBy.nombre : 'N/A' %> | Fecha Fin: <%= evaluacion.deadline ? evaluacion.deadline.toDateString() : 'Sin fecha' %></p>
+                            <p><strong><%= evaluacion.empleado ? evaluacion.empleado.nombre + ' ' + evaluacion.empleado.apellido : 'Empleado no asignado' %></strong></p>
+                            <% if (evaluacion.formulario.tipo === 'autoevaluacion') { %>
+                                <p>Asignada por: <%= evaluacion.assignedBy ? evaluacion.assignedBy.nombre + ' ' + evaluacion.assignedBy.apellido : 'N/A' %> | Fecha Fin: <%= moment(evaluacion.deadline).format('ddd MMM DD YYYY') %></p>
+                            <% } else if (evaluacion.formulario.tipo === 'evaluacion') { %>
+                                <p>Asignada por: <%= evaluacion.assignedBy ? evaluacion.assignedBy.nombre + ' ' + evaluacion.assignedBy.apellido : 'N/A' %> | Hecha en: <%= moment(evaluacion.createdAt).format('ddd MMM DD YYYY') %></p>
+                            <% } else { %>
+                                <p>Fecha desconocida</p>
+                            <% } %>
                             <br>
                             <p class="eval-status"><%= evaluacion.formulario ? evaluacion.formulario.titulo : 'Formulario no asignado' %></p>
                         </div>
@@ -100,7 +75,6 @@
                 <% }) %>
             </section>
 
-            <!-- Sidebar Filter Panel (only for specific roles) -->
             <% if (user && (user.rol === 'Administrador' || user.rol === 'Intermediario' || user.rol === 'Evaluador')) { %>    
                 <aside class="right-panel">
                     <div class="filter-section">
@@ -148,10 +122,10 @@
                          data-empleado="<%= evaluacion.empleado ? evaluacion.empleado._id : '' %>" 
                          data-assignedBy="<%= evaluacion.assignedBy ? evaluacion.assignedBy._id : '' %>">
                          
-                        <img src="" class="eval-img">
+                        <img src="<%= evaluacion.empleado.imagePath ? '/' + evaluacion.empleado.imagePath : '/img/user.png' %>" class="eval-img">
                         <div class="eval-info">
                             <p><strong><%= evaluacion.empleado ? evaluacion.empleado.nombre + ' ' + evaluacion.empleado.apellido : 'Empleado no asignado' %></strong></p>
-                            <p>Fecha Fin: <%= evaluacion.deadline %></p>
+                            <p>Fecha Fin: <%= moment(evaluacion.deadline).format('ddd MMM DD YYYY') %></p>
                             <br>
                             <p class="eval-status"><%= evaluacion.formulario ? evaluacion.formulario.titulo : 'Formulario no asignado' %></p>
                         </div>
@@ -167,37 +141,36 @@
 
     <script>
         function filterMyEvaluaciones() {
-            const evaluationCards = document.querySelectorAll('.evaluation-card')
+            const evaluationCards = document.querySelectorAll('.evaluation-card');
             evaluationCards.forEach(card => {
-                const assignedByUser = card.dataset.assignedBy === "<%= user._id %>"
-                const employeeIsUser = card.dataset.empleado === "<%= user._id %>"
-                if (assignedByUser || employeeIsUser) {
-                    card.style.display = 'block'
-                } else {
-                    card.style.display = 'none'
-                }
-            })
+                const assignedByUser = card.dataset.assignedBy === "<%= user._id %>";
+                const employeeIsUser = card.dataset.empleado === "<%= user._id %>";
+                card.style.display = assignedByUser || employeeIsUser ? 'block' : 'none';
+            });
         }
-
+    
         function filterAllEvaluaciones() {
-            const evaluationCards = document.querySelectorAll('.evaluation-card')
+            const evaluationCards = document.querySelectorAll('.evaluation-card');
             evaluationCards.forEach(card => {
-                card.style.display = 'block'
-            })
+                card.style.display = 'block';
+            });
         }
-
+    
         function filterEvaluationType() {
-            const type = document.getElementById('evaluationTypeFilter').value
-            const evaluationCards = document.querySelectorAll('.evaluation-card')
+            const type = document.getElementById('evaluationTypeFilter').value;
+            const evaluationCards = document.querySelectorAll('.evaluation-card');
+            console.log('Filtering type:', type); // Log the type being filtered
             evaluationCards.forEach(card => {
-                const cardType = card.dataset.tipo
+                const cardType = card.dataset.tipo;
+                console.log('Card type:', cardType); // Log each card's type
                 if (type === 'all' || cardType === type) {
-                    card.style.display = 'block'
+                    card.style.display = 'block';
                 } else {
-                    card.style.display = 'none'
+                    card.style.display = 'none';
                 }
-            })
+            });
         }
+    </script>
     </script>
 </body>
 </html>

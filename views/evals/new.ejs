@@ -88,17 +88,10 @@
 
             if (formularioId && empleadoId) {
                 if (tipo === 'autoevaluacion') {
-                    // Handle autoevaluacion submission
-                    if (!deadline) {
-                        alert("Por favor selecciona una fecha límite.")
-                        return
-                    }
-                    // Send data to the autoevaluacion assignment route
+                    // Handle autoevaluacion assignment
                     fetch('/evaluaciones/assign-autoevaluacion', {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ formularioId, empleadoId, deadline })
                     }).then(response => {
                         if (response.ok) {
@@ -107,17 +100,26 @@
                         } else {
                             alert('Error al asignar la autoevaluación')
                         }
-                    }).catch(error => {
-                        alert('Error al enviar la autoevaluación: ' + error)
                     });
-                } else {
-                    // Normal evaluation submission (redirect to answer page)
-                    window.location.href = `/evaluaciones/answer/${formularioId}?empleado=${empleadoId}`
+                } else if (tipo === 'evaluacion') {
+                    // Handle evaluacion creation and answer redirection
+                    fetch('/evaluaciones/create-evaluacion', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ formularioId, empleadoId, deadline })
+                    }).then(response => {
+                        if (response.redirected) {
+                            window.location.href = response.url
+                        } else {
+                            alert('Error al crear la evaluación')
+                        }
+                    });
                 }
             } else {
                 alert("Por favor selecciona un formulario y un empleado.")
             }
         }
+
         function assignToAll() {
             const formularioId = document.getElementById('formularioSelect').value
             const deadline = document.getElementById('deadline').value

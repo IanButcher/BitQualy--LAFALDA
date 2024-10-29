@@ -49,7 +49,6 @@ router.get('/evaluaciones', roleAuthorization(['Administrador', 'Evaluador', 'In
 })
 
 
-
 // GET route --> Mostrar evaluacion especifica
 router.get('/evaluaciones/new', roleAuthorization(['Administrador', 'Evaluador']), async(req, res) => {
     if (req.user) {
@@ -79,7 +78,7 @@ router.post('/evaluaciones/assign-autoevaluacion', roleAuthorization(['Administr
             assignedBy: req.user._id,
             deadline: localDeadline,
             completed: false
-        });
+        })
 
         await newEvaluacion.save()
 
@@ -177,7 +176,6 @@ router.get('/evaluaciones/my-autoevaluacion/:id', roleAuthorization(['Empleado',
             return res.redirect('/evaluaciones')
         }
 
-        // Render the 'awnser.ejs' template with both evaluacion and user
         res.render('evals/awnser', { evaluacion, formulario: evaluacion.formulario, user: req.user, empleado: evaluacion.empleado ? evaluacion.empleado.nombre : 'Empleado no asignado' })
     } catch (error) {
         console.error('Error fetching evaluation:', error)
@@ -185,24 +183,53 @@ router.get('/evaluaciones/my-autoevaluacion/:id', roleAuthorization(['Empleado',
     }
 })
 
-// GET route --> Mostrar las preguntas para la evaluación
-router.get('/evaluaciones/answer/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async(req, res) => {
-    if (req.user) {
-        try {
-            const { id } = req.params 
-            const { empleado } = req.query
-            console.log(`Formulario ID: ${id}, Empleado: ${empleado}`)
-            const formulario = await Formulario.findById(id).populate('questions')
-            if (!formulario || formulario.isActive != true) {
-                return res.redirect('/evaluaciones')
-            }
-            res.render('evals/awnserNormal', { formulario, empleado, user: req.user })
-        } catch (error) {
-            console.error('Error fetching formulario:', error)
-            res.status(500).send('Error interno del servidor')
+// POST route --> Create & redirect
+router.post('/evaluaciones/create-evaluacion', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async (req, res) => {
+    try {
+        const { formularioId, empleadoId, deadline } = req.body
+        const localDeadline = deadline ? moment(deadline, 'YYYY-MM-DD').endOf('day').toDate() : null
+
+        // Create 
+        const newEvaluacion = new Evaluacion({
+            formulario: formularioId,
+            empleado: empleadoId,
+            assignedBy: req.user._id,
+            deadline: localDeadline,
+            completed: false,
+            respuestas: [] 
+        })
+
+        await newEvaluacion.save()
+
+        // Redirect 
+        res.redirect(`/evaluaciones/answer/${newEvaluacion._id}`)
+    } catch (error) {
+        console.error('Error creating evaluacion:', error)
+        res.status(500).send('Error creating evaluacion')
+    }
+});
+
+
+// GET route --> Display form to answer an evaluacion
+router.get('/evaluaciones/answer/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async (req, res) => {
+    try {
+        const { id } = req.params
+        
+        const evaluacion = await Evaluacion.findById(id).populate('formulario').populate('empleado')
+        
+        if (!evaluacion || evaluacion.completed) {
+            return res.redirect('/evaluaciones')
         }
-    } else {
-        res.redirect('/')
+
+        res.render('evals/awnserNormal', {
+            evaluacion,
+            formulario: evaluacion.formulario,
+            empleado: evaluacion.empleado,
+            user: req.user
+        });
+    } catch (error) {
+        console.error('Error displaying evaluation form:', error)
+        res.status(500).send('Error interno del servidor')
     }
 })
 
@@ -210,9 +237,10 @@ router.get('/evaluaciones/answer/:id', roleAuthorization(['Administrador', 'Eval
 // POST route --> Enviar nueva evaluación
 router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async (req, res) => {
     try {
-        const { formulario: formularioId, empleado, respuestas, tipo, deadline } = req.body
+        const { formulario: formularioId, empleado, respuestas, tipo, deadline } = req.body;
+        const formattedDeadline = deadline ? moment(deadline, 'YYYY-MM-DD', true).endOf('day').toDate() : new Date(); // Default to current date if undefined
+        console.log('Received deadline:', formattedDeadline);
 
-        const formattedDeadline = moment(deadline, 'YYYY-MM-DD', true).endOf('day').toDate()
         console.log('Received deadline:', deadline)
         const formulario = await Formulario.findById(formularioId).populate('questions')
         if (!formulario) {
@@ -233,7 +261,7 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
         })
 
         // Autoevaluacion
-        if (tipo === 'autoevaluacion') {
+        if (formulario.tipo === 'autoevaluacion') {
             const evaluacion = await Evaluacion.findOne({ 
                 formulario: formularioId, 
                 empleado: empleado, 
@@ -256,14 +284,16 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
             })
 
         // Evaluacion
-        } else if (tipo === 'evaluacion') {
+        } else if (formulario.tipo === 'evaluacion') {
             const nuevaEvaluacion = new Evaluacion({
                 formulario: formulario._id,
                 empleado: empleado,
                 respuestas: respuestasFormateadas,
+                deadline: formattedDeadline,
                 completed: true
             })
             await nuevaEvaluacion.save()
+            console.log(nuevaEvaluacion)
 
             await baseUserSchema.findByIdAndUpdate(req.user._id, {
                 $addToSet: { evaluacionesHechas: nuevaEvaluacion._id }
@@ -276,8 +306,6 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
         res.status(500).send('Error interno del servidor')
     }
 })
-
-
 
 // GET route --> Preview evaluacion
 router.get('/evaluaciones/preview/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async(req, res) => {
@@ -305,7 +333,7 @@ router.get('/evaluaciones/preview/:id', roleAuthorization(['Administrador', 'Eva
     }
 })
 
-// POST route --> Add a comment to an evaluacion
+// POST route --> Comentarios
 router.post('/evaluaciones/:id/comentarios', roleAuthorization(['Intermediario', 'Administrador']), async (req, res) => {
     try {
         const { id } = req.params
@@ -331,29 +359,5 @@ router.post('/evaluaciones/:id/comentarios', roleAuthorization(['Intermediario',
         res.status(500).send('Error interno del servidor')
     }
 })
-
-// DELETE route --> Delete a specific comment from an evaluacion
-router.delete('/evaluaciones/:id/comentarios/:comentarioId', roleAuthorization(['Intermediario', 'Administrador']), async (req, res) => {
-    try {
-        const { id, comentarioId } = req.params
-
-        const evaluacion = await Evaluacion.findById(id)
-        if (!evaluacion) {
-            return res.status(404).send('Evaluación no encontrada')
-        }
-
-        // Find and remove the comment
-        evaluacion.comentarios = evaluacion.comentarios.filter(
-            comentario => comentario._id.toString() !== comentarioId
-        )
-        await evaluacion.save()
-
-        res.redirect(`/evaluaciones/preview/${id}`)
-    } catch (error) {
-        console.error('Error deleting comment:', error)
-        res.status(500).send('Error interno del servidor')
-    }
-})
-
 
 module.exports = router
