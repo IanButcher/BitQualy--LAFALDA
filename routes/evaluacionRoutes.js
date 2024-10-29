@@ -234,6 +234,7 @@ router.get('/evaluaciones/answer/:id', roleAuthorization(['Administrador', 'Eval
 })
 
 
+
 // POST route --> Enviar nueva evaluación
 router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async (req, res) => {
     try {
@@ -306,6 +307,8 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
         res.status(500).send('Error interno del servidor')
     }
 })
+
+
 
 // GET route --> Preview evaluacion
 router.get('/evaluaciones/preview/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async(req, res) => {

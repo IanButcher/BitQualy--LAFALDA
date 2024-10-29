@@ -39,36 +39,34 @@
         <div class="filter-panel-container">
             <section class="evaluation-section">
                 <h2>Evaluaciones Asignadas</h2>
-                <% evaluaciones.forEach(evaluacion => { %>
-                    <div class="evaluation-card" 
-                         data-tipo="<%= evaluacion.formulario.tipo %>" 
-                         data-empleado="<%= evaluacion.empleado ? evaluacion.empleado._id : '' %>" 
+                <% 
+                const pendingAutoevaluations = evaluaciones
+                    .filter(evaluacion => evaluacion.formulario.tipo === 'autoevaluacion' && !evaluacion.completed)
+                    .sort((a, b) => new Date(b.deadline) - new Date(a.deadline)); 
+                %>
+                
+                <% pendingAutoevaluations.forEach(evaluacion => { %>
+                    <div class="evaluation-card"
+                         data-tipo="<%= evaluacion.formulario.tipo %>"
+                         data-empleado="<%= evaluacion.empleado ? evaluacion.empleado._id : '' %>"
                          data-assignedBy="<%= evaluacion.assignedBy ? evaluacion.assignedBy._id : '' %>">
                          
                         <img src="<%= evaluacion.empleado.imagePath ? '/' + evaluacion.empleado.imagePath : '/img/user.png' %>" class="eval-img">
                         <div class="eval-info">
                             <p><strong><%= evaluacion.empleado ? evaluacion.empleado.nombre + ' ' + evaluacion.empleado.apellido : 'Empleado no asignado' %></strong></p>
-                            <% if (evaluacion.formulario.tipo === 'autoevaluacion') { %>
-                                <p>Asignada por: <%= evaluacion.assignedBy ? evaluacion.assignedBy.nombre + ' ' + evaluacion.assignedBy.apellido : 'N/A' %> | Fecha Fin: <%= moment(evaluacion.deadline).format('ddd MMM DD YYYY') %></p>
-                            <% } else if (evaluacion.formulario.tipo === 'evaluacion') { %>
-                                <p>Asignada por: <%= evaluacion.assignedBy ? evaluacion.assignedBy.nombre + ' ' + evaluacion.assignedBy.apellido : 'N/A' %> | Hecha en: <%= moment(evaluacion.createdAt).format('ddd MMM DD YYYY') %></p>
-                            <% } else { %>
-                                <p>Fecha desconocida</p>
-                            <% } %>
+                            <p>Asignada por: <%= evaluacion.assignedBy ? evaluacion.assignedBy.nombre + ' ' + evaluacion.assignedBy.apellido : 'N/A' %> | Fecha Fin: <%= moment(evaluacion.deadline).format('ddd MMM DD YYYY') %></p>
                             <br>
                             <p class="eval-status"><%= evaluacion.formulario ? evaluacion.formulario.titulo : 'Formulario no asignado' %></p>
                         </div>
                         <div class="eval-summary">
-                            <% if (evaluacion.completed) { %>
-                                <p>Completada</p>
-                            <% } else { %>
+                            <% if (user.rol === 'Administrador' || user.rol === 'Evaluador' || user.rol === 'Intermediario' && String(evaluacion.empleado._id) === String(user._id)) { %>
                                 <p>No Respondida</p>
-                                <% const now = new Date() %>
-                                <% if (evaluacion.deadline < now) { %>
-                                    <p>La fecha limite fue superada</p>
-                                <% } else if (user.rol === 'Empleado' && String(evaluacion.empleado._id) === String(user._id)) { %>
-                                    <a href="/evaluaciones/my-autoevaluacion/<%= evaluacion._id %>" class="btn">Responder Evaluación</a>
-                                <% } %>
+                            <% } %>
+                            <% const now = new Date() %>
+                            <% if (evaluacion.deadline < now) { %>
+                                <p>La fecha limite fue superada</p>
+                            <% } else if (user.rol === 'Empleado' || user.rol === 'Administrador' || user.rol === 'Evaluador' || user.rol === 'Intermediario' && String(evaluacion.empleado._id) === String(user._id)) { %>
+                                <a href="/evaluaciones/my-autoevaluacion/<%= evaluacion._id %>" class="btn">Responder Evaluación</a>
                             <% } %>
                         </div>
                     </div>
@@ -115,26 +113,30 @@
 
         <section class="evaluation-finished">
             <h2>Evaluaciones Finalizadas</h2>
-            <% evaluaciones.forEach(evaluacion => { %>
-                <% if (evaluacion.completed) { %>
-                    <div class="evaluation-card" 
-                         data-tipo="<%= evaluacion.formulario.tipo %>" 
-                         data-empleado="<%= evaluacion.empleado ? evaluacion.empleado._id : '' %>" 
-                         data-assignedBy="<%= evaluacion.assignedBy ? evaluacion.assignedBy._id : '' %>">
-                         
-                        <img src="<%= evaluacion.empleado.imagePath ? '/' + evaluacion.empleado.imagePath : '/img/user.png' %>" class="eval-img">
-                        <div class="eval-info">
-                            <p><strong><%= evaluacion.empleado ? evaluacion.empleado.nombre + ' ' + evaluacion.empleado.apellido : 'Empleado no asignado' %></strong></p>
-                            <p>Fecha Fin: <%= moment(evaluacion.deadline).format('ddd MMM DD YYYY') %></p>
-                            <br>
-                            <p class="eval-status"><%= evaluacion.formulario ? evaluacion.formulario.titulo : 'Formulario no asignado' %></p>
-                        </div>
-                        <div class="eval-summary">
-                            <p><%= evaluacion.formulario.titulo %></p>
-                            <a href="/evaluaciones/preview/<%= evaluacion._id %>" class="btn">Ver Evaluaciones</a>
-                        </div>
+            <% 
+            const completedEvaluations = evaluaciones
+                .filter(evaluacion => evaluacion.completed)
+                .sort((a, b) => new Date(b.deadline) - new Date(a.deadline));
+            %>
+
+            <% completedEvaluations.forEach(evaluacion => { %>
+                <div class="evaluation-card" 
+                     data-tipo="<%= evaluacion.formulario.tipo %>" 
+                     data-empleado="<%= evaluacion.empleado ? evaluacion.empleado._id : '' %>" 
+                     data-assignedBy="<%= evaluacion.assignedBy ? evaluacion.assignedBy._id : '' %>">
+                     
+                    <img src="<%= evaluacion.empleado.imagePath ? '/' + evaluacion.empleado.imagePath : '/img/user.png' %>" class="eval-img">
+                    <div class="eval-info">
+                        <p><strong><%= evaluacion.empleado ? evaluacion.empleado.nombre + ' ' + evaluacion.empleado.apellido : 'Empleado no asignado' %></strong></p>
+                        <p>Fecha Fin: <%= moment(evaluacion.deadline).format('ddd MMM DD YYYY') %></p>
+                        <br>
+                        <p class="eval-status"><%= evaluacion.formulario ? evaluacion.formulario.titulo : 'Formulario no asignado' %></p>
                     </div>
-                <% } %>
+                    <div class="eval-summary">
+                        <p><%= evaluacion.formulario.titulo %></p>
+                        <a href="/evaluaciones/preview/<%= evaluacion._id %>" class="btn">Ver Evaluaciones</a>
+                    </div>
+                </div>
             <% }) %>
         </section>
     </main>
@@ -143,34 +145,23 @@
         function filterMyEvaluaciones() {
             const evaluationCards = document.querySelectorAll('.evaluation-card');
             evaluationCards.forEach(card => {
-                const assignedByUser = card.dataset.assignedBy === "<%= user._id %>";
-                const employeeIsUser = card.dataset.empleado === "<%= user._id %>";
-                card.style.display = assignedByUser || employeeIsUser ? 'block' : 'none';
+                const isAssignedToUser = card.dataset.empleado === "<%= user._id %>";
+                const isAssignedByUser = card.dataset.assignedBy === "<%= user._id %>";
+                
+                card.style.display = (isAssignedToUser || isAssignedByUser) ? 'block' : 'none';
             });
         }
-    
+
         function filterAllEvaluaciones() {
-            const evaluationCards = document.querySelectorAll('.evaluation-card');
-            evaluationCards.forEach(card => {
-                card.style.display = 'block';
-            });
+            document.querySelectorAll('.evaluation-card').forEach(card => card.style.display = 'block');
         }
-    
+
         function filterEvaluationType() {
             const type = document.getElementById('evaluationTypeFilter').value;
-            const evaluationCards = document.querySelectorAll('.evaluation-card');
-            console.log('Filtering type:', type); // Log the type being filtered
-            evaluationCards.forEach(card => {
-                const cardType = card.dataset.tipo;
-                console.log('Card type:', cardType); // Log each card's type
-                if (type === 'all' || cardType === type) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
+            document.querySelectorAll('.evaluation-card').forEach(card => {
+                card.style.display = (type === 'all' || card.dataset.tipo === type) ? 'block' : 'none';
             });
         }
-    </script>
     </script>
 </body>
 </html>
