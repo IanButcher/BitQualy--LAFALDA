@@ -15,36 +15,43 @@ app.use(express.json())
 
 // GET route --> Todas las evaluaciones
 router.get('/evaluaciones', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async (req, res) => {
-    try {
-        let query = {}
-        
-        if (req.user.rol === 'Empleado') {
-            query = { 
-                empleado: req.user._id, 
-                'formulario.tipo': 'autoevaluacion', 
-                $or: [{ completed: true }, { deadline: { $gte: new Date() } }]
+    if (req.user){
+        try {
+            let query = {}
+            
+            if (req.user.rol === 'Empleado') {
+                query = { 
+                    empleado: req.user._id, 
+                    'formulario.tipo': 'autoevaluacion', 
+                    $or: [{ completed: true }, { deadline: { $gte: new Date() } }]
+                }
+            } else if (req.user.rol === 'Evaluador') {
+                query = {
+                    $or: [
+                        { empleado: req.user._id, completed: false }, 
+                        { assignedBy: req.user._id },
+                        { completed: true, 'formulario.tipo': 'evaluacion', empleado: req.user._id }
+                    ]
+                }
+            } else if (req.user.rol === 'Intermediario' || req.user.rol === 'Administrador') {
+                query = {}
             }
-        } else if (req.user.rol === 'Evaluador') {
-            query = {
-                $or: [
-                    { empleado: req.user._id, completed: false }, 
-                    { assignedBy: req.user._id },
-                    { completed: true, 'formulario.tipo': 'evaluacion', empleado: req.user._id }
-                ]
-            }
-        } else if (req.user.rol === 'Intermediario' || req.user.rol === 'Administrador') {
-            query = {}
-        }
-        
-        const evaluaciones = await Evaluacion.find(query)
-            .populate('formulario')
-            .populate('empleado')
-            .populate('assignedBy')
+            
+            const evaluaciones = await Evaluacion.find(query)
+                .populate('formulario')
+                .populate('empleado')
+                .populate('assignedBy')
 
-        res.render('evals/evaluaciones', { evaluaciones, user: req.user })
-    } catch (error) {
-        console.error('Error fetching evaluations:', error)
-        res.redirect('/home')
+            const totalCompletas = evaluaciones.filter(e => e.completed).length
+            const totalIncompletas = evaluaciones.filter(e => !e.completed).length
+            
+            res.render('evals/evaluaciones', { evaluaciones, user: req.user, totalCompletas, totalIncompletas })
+        } catch (error) {
+            console.error('Error fetching evaluations:', error)
+            res.redirect('/home')
+        }
+    } else {
+        res.redirect('/')
     }
 })
 

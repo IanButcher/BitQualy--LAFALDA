@@ -37,7 +37,7 @@
         </header>
 
         <div class="filter-panel-container">
-            <section class="evaluation-section">
+            <section id="evaluaciones-asignadas" class="evaluation-section">
                 <h2>Evaluaciones Asignadas</h2>
                 <% 
                 const pendingAutoevaluations = evaluaciones
@@ -57,7 +57,7 @@
                             <p>Asignada por: <%= evaluacion.assignedBy ? evaluacion.assignedBy.nombre + ' ' + evaluacion.assignedBy.apellido : 'N/A' %> | Fecha Fin: <%= moment(evaluacion.deadline).format('ddd MMM DD YYYY') %></p>
                             <br>
                             <p class="eval-status"><%= evaluacion.formulario ? evaluacion.formulario.titulo : 'Formulario no asignado' %></p>
-                        </div>
+                        </div>  
                         <div class="eval-summary">
                             <% if (user.rol === 'Administrador' || user.rol === 'Evaluador' || user.rol === 'Intermediario' && String(evaluacion.empleado._id) === String(user._id)) { %>
                                 <p>No Respondida</p>
@@ -88,19 +88,19 @@
                             <input type="text" placeholder="Buscar ...">
                             <i class="fas fa-search search-icon"></i>
                         </div>
-                        <div class="status-buttons">
+                        <div id ="completa" class="status-buttons">
                             <div class="status-button evaluate2">
                                 <span class="green-dot"></span>
                                 <span>Completas</span>
-                                <span class="count2">0</span>
+                                <span class="count2"><%= totalCompletas %></span>
                             </div>
                         </div>
                         <br>
-                        <div class="status-buttons">
+                        <div id="incompleta" class="status-buttons">
                             <div class="status-button evaluate">
                                 <span class="red-dot"></span>
                                 <span>Incompletas</span>
-                                <span class="count">0</span>
+                                <span class="count"><%= totalIncompletas %></span>
                             </div>
                         </div>
                     </div>
@@ -111,7 +111,7 @@
             <% } %>
         </div>
 
-        <section class="evaluation-finished">
+        <section id="evaluaciones-finalizadas" class="evaluation-finished">
             <h2>Evaluaciones Finalizadas</h2>
             <% 
             const completedEvaluations = evaluaciones
@@ -143,25 +143,35 @@
 
     <script>
         function filterMyEvaluaciones() {
-            const evaluationCards = document.querySelectorAll('.evaluation-card');
+            const evaluationCards = document.querySelectorAll('.evaluation-card')
             evaluationCards.forEach(card => {
-                const isAssignedToUser = card.dataset.empleado === "<%= user._id %>";
-                const isAssignedByUser = card.dataset.assignedBy === "<%= user._id %>";
+                const isAssignedToUser = card.dataset.empleado === "<%= user._id %>"
+                const isAssignedByUser = card.dataset.assignedBy === "<%= user._id %>"
                 
-                card.style.display = (isAssignedToUser || isAssignedByUser) ? 'block' : 'none';
-            });
+                card.style.display = (isAssignedToUser || isAssignedByUser) ? 'block' : 'none'
+            })
         }
 
         function filterAllEvaluaciones() {
-            document.querySelectorAll('.evaluation-card').forEach(card => card.style.display = 'block');
+            document.querySelectorAll('.evaluation-card').forEach(card => card.style.display = 'block')
         }
 
         function filterEvaluationType() {
-            const type = document.getElementById('evaluationTypeFilter').value;
+            const type = document.getElementById('evaluationTypeFilter').value
             document.querySelectorAll('.evaluation-card').forEach(card => {
-                card.style.display = (type === 'all' || card.dataset.tipo === type) ? 'block' : 'none';
+                card.style.display = (type === 'all' || card.dataset.tipo === type) ? 'block' : 'none'
             });
         }
     </script>
+    <script>
+        document.querySelector('#completa').addEventListener('click', function() {
+            document.getElementById('evaluaciones-finalizadas').scrollIntoView({ behavior: 'smooth' })
+        })
+    
+        document.querySelector('#incompleta').addEventListener('click', function() {
+            document.getElementById('evaluaciones-asignadas').scrollIntoView({ behavior: 'smooth' })
+        })
+    </script>
+    
 </body>
 </html>
