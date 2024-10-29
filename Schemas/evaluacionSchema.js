@@ -36,6 +36,11 @@ const evaluacionSchema = new mongoose.Schema({
         type: Date,
         required: false
     },  
+    createdAt: {
+        type: Date,
+        required: true,
+        default: Date.now
+    },
     completed: {
         type: Boolean,
         required: true,
