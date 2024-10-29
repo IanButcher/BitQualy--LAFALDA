@@ -1,4 +1,5 @@
 // Modulos
+const PDFDocument = require('pdfkit')
 const express = require('express')
 const app = express()
 const router = express.Router()
@@ -14,20 +15,20 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 // GET route --> Todas las evaluaciones
-router.get('/evaluaciones', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async (req, res) => {
+router.get('/evaluaciones', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async(req, res) => {
     try {
         let query = {}
-        
+
         if (req.user.rol === 'Empleado') {
-            query = { 
-                empleado: req.user._id, 
-                'formulario.tipo': 'autoevaluacion', 
+            query = {
+                empleado: req.user._id,
+                'formulario.tipo': 'autoevaluacion',
                 $or: [{ completed: true }, { deadline: { $gte: new Date() } }]
             }
         } else if (req.user.rol === 'Evaluador') {
             query = {
                 $or: [
-                    { empleado: req.user._id, completed: false }, 
+                    { empleado: req.user._id, completed: false },
                     { assignedBy: req.user._id },
                     { completed: true, 'formulario.tipo': 'evaluacion', empleado: req.user._id }
                 ]
@@ -35,7 +36,7 @@ router.get('/evaluaciones', roleAuthorization(['Administrador', 'Evaluador', 'In
         } else if (req.user.rol === 'Intermediario' || req.user.rol === 'Administrador') {
             query = {}
         }
-        
+
         const evaluaciones = await Evaluacion.find(query)
             .populate('formulario')
             .populate('empleado')
@@ -125,7 +126,7 @@ router.post('/evaluaciones/assign-autoevaluacion', roleAuthorization(['Administr
 })
 
 // POST route --> Asignar a todos
-router.post('/evaluaciones/assign-autoevaluacion-to-all', roleAuthorization(['Administrador', 'Evaluador']), async (req, res) => {
+router.post('/evaluaciones/assign-autoevaluacion-to-all', roleAuthorization(['Administrador', 'Evaluador']), async(req, res) => {
     try {
         const { formularioId, deadline } = req.body
         const localDeadline = moment(deadline, 'YYYY-MM-DD').endOf('day').toDate()
@@ -145,10 +146,7 @@ router.post('/evaluaciones/assign-autoevaluacion-to-all', roleAuthorization(['Ad
 
         // Actualizar a todos
         const evaluationIds = evaluations.map(e => e._id)
-        await baseUserSchema.updateMany(
-            { _id: { $in: activeUsers.map(u => u._id) } },
-            { $push: { evaluacionesAsignadas: { $each: evaluationIds } } }
-        );
+        await baseUserSchema.updateMany({ _id: { $in: activeUsers.map(u => u._id) } }, { $push: { evaluacionesAsignadas: { $each: evaluationIds } } });
 
         res.status(200).send('Autoevaluacion asignada a todos los usuarios activos')
     } catch (error) {
@@ -189,7 +187,7 @@ router.get('/evaluaciones/my-autoevaluacion/:id', roleAuthorization(['Empleado',
 router.get('/evaluaciones/answer/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async(req, res) => {
     if (req.user) {
         try {
-            const { id } = req.params 
+            const { id } = req.params
             const { empleado } = req.query
             console.log(`Formulario ID: ${id}, Empleado: ${empleado}`)
             const formulario = await Formulario.findById(id).populate('questions')
@@ -208,7 +206,7 @@ router.get('/evaluaciones/answer/:id', roleAuthorization(['Administrador', 'Eval
 
 
 // POST route --> Enviar nueva evaluación
-router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async (req, res) => {
+router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async(req, res) => {
     try {
         const { formulario: formularioId, empleado, respuestas, tipo, deadline } = req.body
 
@@ -234,11 +232,11 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
 
         // Autoevaluacion
         if (tipo === 'autoevaluacion') {
-            const evaluacion = await Evaluacion.findOne({ 
-                formulario: formularioId, 
-                empleado: empleado, 
+            const evaluacion = await Evaluacion.findOne({
+                formulario: formularioId,
+                empleado: empleado,
                 deadline: { $gte: new Date() },
-                completed: false 
+                completed: false
             })
 
             if (!evaluacion) {
@@ -255,7 +253,7 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
                 $addToSet: { completedEvaluations: evaluacion._id }
             })
 
-        // Evaluacion
+            // Evaluacion
         } else if (tipo === 'evaluacion') {
             const nuevaEvaluacion = new Evaluacion({
                 formulario: formulario._id,
@@ -269,7 +267,7 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
                 $addToSet: { evaluacionesHechas: nuevaEvaluacion._id }
             })
         }
-        
+
         res.redirect('/evaluaciones')
     } catch (error) {
         console.error('Error guardando la evaluación:', error)
@@ -283,18 +281,18 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
 router.get('/evaluaciones/preview/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async(req, res) => {
     if (req.user) {
         try {
-            const { id } = req.params; 
+            const { id } = req.params;
 
             const evaluacion = await Evaluacion.findById(id).populate({
                 path: 'formulario',
-                populate: { path: 'questions' } 
+                populate: { path: 'questions' }
             })
 
             if (!evaluacion) {
                 return res.redirect('/evaluaciones')
             }
 
-            
+
             res.render('evals/evaluacion', { evaluacion, user: req.user })
         } catch (error) {
             console.error('Error fetching evaluation:', error)
@@ -306,7 +304,7 @@ router.get('/evaluaciones/preview/:id', roleAuthorization(['Administrador', 'Eva
 })
 
 // POST route --> Add a comment to an evaluacion
-router.post('/evaluaciones/:id/comentarios', roleAuthorization(['Intermediario', 'Administrador']), async (req, res) => {
+router.post('/evaluaciones/:id/comentarios', roleAuthorization(['Intermediario', 'Administrador']), async(req, res) => {
     try {
         const { id } = req.params
         const { texto } = req.body
@@ -333,7 +331,7 @@ router.post('/evaluaciones/:id/comentarios', roleAuthorization(['Intermediario',
 })
 
 // DELETE route --> Delete a specific comment from an evaluacion
-router.delete('/evaluaciones/:id/comentarios/:comentarioId', roleAuthorization(['Intermediario', 'Administrador']), async (req, res) => {
+router.delete('/evaluaciones/:id/comentarios/:comentarioId', roleAuthorization(['Intermediario', 'Administrador']), async(req, res) => {
     try {
         const { id, comentarioId } = req.params
 
@@ -355,5 +353,93 @@ router.delete('/evaluaciones/:id/comentarios/:comentarioId', roleAuthorization([
     }
 })
 
+router.get('/evaluaciones/:id/pdf', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async(req, res) => {
+    try {
+        const { id } = req.params;
+
+        // Retrieve the evaluation and populate related data
+        const evaluacion = await Evaluacion.findById(id)
+            .populate({
+                path: 'formulario',
+                populate: { path: 'questions' }
+            })
+            .populate('empleado')
+            .populate('assignedBy');
+
+        if (!evaluacion) {
+            return res.status(404).send('Evaluación no encontrada');
+        }
+
+        // Initialize PDF document
+        const doc = new PDFDocument();
+
+        // Set response headers for PDF
+        res.setHeader('Content-Disposition', `attachment; filename=evaluation_${id}.pdf`);
+        res.setHeader('Content-Type', 'application/pdf');
+
+        // Pipe PDF to the response
+        doc.pipe(res);
+
+        // Document title
+        doc.fontSize(18).text('Evaluación Detallada', { align: 'center' });
+        doc.moveDown();
+
+        // Form details
+        doc.fontSize(14).text(`Formulario: ${evaluacion.formulario.titulo || 'N/A'}`);
+        doc.text(`Empleado: ${evaluacion.empleado ? evaluacion.empleado.nombre : 'N/A'}`);
+        doc.text(`Asignado por: ${evaluacion.assignedBy ? evaluacion.assignedBy.nombre : 'N/A'}`);
+        doc.text(`Fecha límite: ${evaluacion.deadline ? evaluacion.deadline.toDateString() : 'Sin fecha'}`);
+        doc.moveDown();
+
+        // Table Header
+        doc.fontSize(14).text('Preguntas y Respuestas:', { underline: true });
+        doc.moveDown();
+
+        // Column positions for table layout
+        const tableTop = doc.y;
+        const columnPositions = {
+            title: 50,
+            description: 200,
+            answer: 350,
+            percentage: 500
+        };
+
+        // Draw header row
+        doc.fontSize(12).text('Título', columnPositions.title, tableTop);
+        doc.text('Descripción', columnPositions.description, tableTop);
+        doc.text('Respuesta', columnPositions.answer, tableTop);
+        doc.text('Porcentaje', columnPositions.percentage, tableTop);
+        doc.moveDown();
+
+        // Draw a line under header
+        doc.moveTo(50, doc.y).lineTo(550, doc.y).stroke();
+
+        // Table rows for each question
+        evaluacion.formulario.questions.forEach((question, index) => {
+            const respuesta = evaluacion.respuestas[index] || 'N/A'; // Match answers to questions
+            const rowY = doc.y + 5; // Small padding above each row
+
+            // Print data in each column
+            doc.text(question.title || 'Sin título', columnPositions.title, rowY);
+            doc.text(question.description || 'Sin descripción', columnPositions.description, rowY);
+            doc.text(respuesta, columnPositions.answer, rowY);
+            doc.text(`${question.porcentaje || 0}%`, columnPositions.percentage, rowY);
+
+            // Move down for the next row
+            doc.moveDown(1.5);
+        });
+
+        // Final score
+        doc.moveDown();
+        doc.fontSize(14).text(`Puntuación Total: ${evaluacion.score}`, { align: 'left' });
+
+        // Finalize PDF file
+        doc.end();
+
+    } catch (error) {
+        console.error('Error generating PDF:', error);
+        res.status(500).send('Error interno del servidor');
+    }
+})
 
 module.exports = router
