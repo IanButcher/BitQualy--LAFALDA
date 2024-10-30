@@ -51,13 +51,11 @@
                 <h2>Crear Formulario</h2>
 
                 <div class="right-panel">
-                    <button type="button" class="btn-add" id="add-question-btn">
-                        <i class="fas fa-plus"></i> Añadir Pregunta
-                    </button>
+                    
                     <div class="modify-buttons">
                         
                         <button type="button" class="btn-download" id="download-pdf-btn">
-                            <i class="fas fa-file-download"></i> Descargar PDF
+                            <i class="fas fa-file-download"></i> PDF
                         </button>
                         <a href="/formularios" class="btn-cancel">
                             <i class="fas fa-times"></i> Cancelar
@@ -77,20 +75,14 @@
                             <label for="titulo">Título del Formulario:</label>
                             <input type="text" id="form-title" name="form-title" value="Autoevaluación" required>
                             
-                            <label for="form-type"></label>
+                            <label for="pruebas-options">Tipo de formulario...</label>
                             <select class="opcion1" id="form-type" name="form-type" required>
                                 <option value="evaluacion">Evaluacion</option>
                                 <option value="autoevaluacion">Autoevaluacion</option>
                             </select>
                             
                         </div>
-                        
-
-                        <!-- Pregunta dinámica -->
-                         
-
-                        <!-- Botón para agregar nuevas preguntas -->
-                        
+            
                             <div class="lol">
                                 <!-- Contenedor de preguntas adicionales -->
                                 <div id="additional-questions">
@@ -101,7 +93,10 @@
                             </div>
                             <div class="boton-guardar">
                                 <button type="submit" class="btn-save" id="save-form-btn">
-                                    <i class="fas fa-save"></i> Guardar Cambios
+                                    <i class="fas fa-save"></i> Guardar 
+                                </button>
+                                <button type="button" class="btn-add" id="add-question-btn">
+                                    <i class="fas fa-plus"></i> Añadir Pregunta
                                 </button>
                             </div>
                             
@@ -150,7 +145,7 @@
             </div>
 
             <label for="description${questionNumber}">Descripción:</label>
-            <textarea id="description${questionNumber}" name="description${questionNumber}" placeholder="Descripción opcional..."></textarea>
+            <textarea id="description${questionNumber}" name="description${questionNumber}" placeholder="Descripción ..."></textarea>
 
             <div class="alineados">
                 <label for="percentage${questionNumber}">Porcentaje:</label>

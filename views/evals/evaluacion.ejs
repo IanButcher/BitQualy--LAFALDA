@@ -5,17 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Preview Evaluación</title>
     <link rel="stylesheet" href="/evaluacion.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="icon" type="image/png" href="https://ugc.production.linktr.ee/mj5IciCyRk2puUukygYa_kmwAn8AE84X4N3S5?io=true&size=avatar-v3_0">
-    
 </head>
 <style>
     .notification-icon,
     .user-photo {
         position: absolute;
-        right: 170px;
-        top: 100px;
-    }   
+        right: 70px; /* Ajustado para ser similar al segundo ejemplo */
+        top: 60px; /* Ajustado para ser similar al segundo ejemplo */
+    }
 </style>              
 <body>
     <% if (user && user.rol === 'Administrador') { %>
@@ -28,47 +27,40 @@
         <p>Navbar error</p>
     <% } %> 
 
-    <!-- Panel principal -->
-    <div class="main-content">
-        <header class="notificacion-icon user-photo"> <%- include('../partials/headerU') %> </header>
-    
-
+    <!-- Contenedor principal -->
+    <div class="main-container">
+        <header class="notification-icon user-photo"> <%- include('../partials/headerU') %> </header>
+        <h1 class="evaluacion-title">Evaluación: <%= evaluacion.formulario.titulo %></h1>
+        
         <!-- Contenido principal de la evaluación -->
         <div class="evaluation-content">
-            <h2>Evaluación: <%= evaluacion.formulario.titulo %></h2>
-            <p><strong>Empleado:</strong> <%= evaluacion.empleado %></p>
-        
-            <!-- Mostrar preguntas y respuestas -->
+            <h4 class="employee-info">Empleado: <%= evaluacion.empleado.nombre %> <%= evaluacion.empleado.apellido %> | <%= evaluacion.empleado.legajo %></h4>
+            <h4 class="employee-info">Evaluador: <%= evaluacion.assignedBy.nombre %> <%= evaluacion.assignedBy.apellido %> | <%= evaluacion.assignedBy.legajo %></h4>
             <div class="respuestas-container">
                 <% evaluacion.formulario.questions.forEach((pregunta, index) => { %>
-                    <div class="respuesta-item">
-                        <h3><%= pregunta.titulo %></h3>
-                        <p><%= pregunta.descripcion %></p>
+                    <div class="form-section">
+                        <p class="label">Pregunta:</p>
+                        <h3 class="question-title"><%= pregunta.titulo %></h3>
+                        <p class="label">Descripción:</p>
+                        <p class="question-description"><%= pregunta.descripcion %></p>
         
                         <div>
                             <%
-                            // Try splitting the answer string based on "Respuesta: " or "Seleccionado(s): "
                             const rawRespuesta = evaluacion.respuestas[index]; 
-                            
-                            // Split based on "Respuesta: " and "Seleccionado(s): " and get the last part
                             const respuesta = rawRespuesta.split(/Respuesta: |Seleccionado\(s\): /).pop().trim();
-
                             %>
         
                             <% if (pregunta.tipo === 'texto') { %>
-                                <!-- Text question -->
-                                <input class="inputs-texto" type="text" value="<%= respuesta %>" disabled>
+                                <input class="input-text" type="text" value="<%= respuesta %>" disabled>
                             <% } else if (pregunta.tipo === 'multiple') { %>
-                                <!-- Multiple choice (radio button) question -->
                                 <% pregunta.options.forEach(option => { %>
-                                    <label>
+                                    <label class="label-option">
                                         <input type="radio" disabled <%= respuesta.includes(option) ? 'checked' : '' %>> <%= option %>
                                     </label><br>
                                 <% }) %>
                             <% } else if (pregunta.tipo === 'checkbox') { %>
-                                <!-- Checkbox question -->
                                 <% pregunta.options.forEach(option => { %>
-                                    <label>
+                                    <label class="label-option">
                                         <input type="checkbox" disabled <%= respuesta.includes(option) ? 'checked' : '' %>> <%= option %>
                                     </label><br>
                                 <% }) %>
@@ -78,28 +70,27 @@
                 <% }) %>
             </div>
         </div>
+
         <% if (user.rol === 'Intermediario' || user.rol === 'Administrador') { %>
-            <h3>Comentarios</h3>
-            <ul>
+            <h3 class="comentarios-titulo">Comentarios <i class="fas fa-comments"></i></h3>
+            <ul class="comentarios-lista">
                 <% evaluacion.comentarios.forEach(comentario => { %>
-                    <li>
-                        <strong><%= comentario.intermediario.nombre %>:</strong> <%= comentario.texto %>
-                        <form action="/evaluaciones/<%= evaluacion._id %>/comentarios/<%= comentario._id %>?_method=DELETE" method="POST" style="display: inline;">
-                            <button type="submit">Eliminar</button>
-                        </form>
+                    <li class="comentario-item">
+                        <strong class="comentario-nombre"><%= comentario.intermediario.nombre %>:</strong>
+                        <span class="comentario-texto"><%= comentario.texto %></span>
                     </li>
                 <% }) %>
             </ul>
-        
-            <form action="/evaluaciones/<%= evaluacion._id %>/comentarios" method="POST">
-                <label for="texto">Nuevo Comentario:</label>
-                <textarea name="texto" id="texto" required></textarea>
-                <button type="submit">Agregar Comentario</button>
+
+            <form action="/evaluaciones/<%= evaluacion._id %>/comentarios" method="POST" class="nuevo-comentario-form">
+                <label for="texto" class="nuevo-comentario-label">Nuevo Comentario:</label>
+                <textarea name="texto" id="texto" required class="nuevo-comentario-textarea"></textarea>
+                <button class="nuevo-comentario-boton button" type="submit"><i class="fas fa-plus"></i> Agregar Comentario</button>
             </form>
         <% } %>
         
         <a class="button" href="/evaluaciones">Volver a las evaluaciones</a>
-
+    </div>
 
     <script>
     </script>

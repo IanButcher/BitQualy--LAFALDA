@@ -166,6 +166,15 @@ body, html {
     margin-right: 15px; /* Espacio entre la imagen y el texto */
 }
 
+/* Limitar el tamaño de la imagen en la tarjeta de evaluación */
+.eval-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 2px solid #ddd;
+}
+
 /* Contenedor de los detalles de la evaluación */
 
 
@@ -530,4 +539,31 @@ body, html {
     border-radius: 12px;
     font-size: 0.85em;
     font-weight: bold;
+}
+/* Estilos para los botones dentro de .btn-evals */
+/* Estilos para los botones dentro de .btn-evals */
+.btn-evals {
+    display: flex; /* Alineación horizontal */
+    gap: 6px; /* Espacio entre botones */
+}
+
+.btn-evals button {
+    flex: 1; /* Los botones se expanden proporcionalmente dentro del contenedor */
+    background-color: transparent; /* Fondo transparente */
+    border: 1px solid black; /* Borde negro más delgado */
+    color: black; /* Texto en negro */
+    padding: 2px 10px; /* Tamaño reducido */
+    font-size: 14px; /* Tamaño de fuente reducido */
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 4px; /* Bordes ligeramente redondeados */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Efecto hover para los botones */
+.btn-evals button:hover {
+    background-color: #f0f0f0; /* Fondo gris claro al hacer hover */
+    color: black; /* Texto en negro */
 }
