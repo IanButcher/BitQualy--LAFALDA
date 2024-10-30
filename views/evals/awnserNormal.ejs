@@ -6,7 +6,6 @@
     <title>Responder Evaluación</title>
     <link rel="stylesheet" href="/awnser.css">
     <link rel="icon" type="image/png" href="https://ugc.production.linktr.ee/mj5IciCyRk2puUukygYa_kmwAn8AE84X4N3S5?io=true&size=avatar-v3_0">
-
 </head>
 <body>
   <% if (user && user.rol === 'Administrador') { %>
@@ -20,73 +19,74 @@
   <% } else { %>
       <p>Navbar error</p>
   <% } %> 
-    <div class="container">
-        <h2 class="pepe">Formulario: <%= formulario.titulo %></h2>
+
+    <div class="main-container">
+        <h2 class="section-title">Formulario: <%= formulario.titulo %></h2>
 
         <!-- Formulario para responder preguntas -->
         <form method="POST" action="/evaluaciones/save-evaluacion">
             <input type="hidden" name="formulario" value="<%= formulario._id %>">
             <input type="hidden" name="empleado" value="<%= evaluacion.empleado._id %>">
             <input type="hidden" name="tipo" value="<%= evaluacion.formulario.tipo %>">
- 
-            <!-- Questions and responses -->
+        
+            <!-- Preguntas y respuestas -->
             <div id="preguntasContainer">
                 <br>
                 <% formulario.questions.forEach((pregunta, index) => { %>
-                    <div>
-                      <h3><%= pregunta.titulo %></h3>
-                      <p><%= pregunta.descripcion %></p>
+                    <div class="form-section">
+                      <h3 class="question-title"><%= pregunta.titulo %></h3>
+                      <p class="question-description"><%= pregunta.descripcion %></p>
                   
                       <% if (pregunta.tipo === 'texto') { %>
-                        <input type="text" name="respuestas[<%= index %>]" required>
+                        <input type="text" name="respuestas[<%= index %>]" class="input-text" required>
                       <% } else if (pregunta.tipo === 'multiple') { %>
                         <% pregunta.options.forEach(option => { %>
-                          <label>
-                            <input type="radio" name="respuestas[<%= index %>]" value="<%= option %>"> <%= option %>
+                          <label class="label-option">
+                            <input type="radio" name="respuestas[<%= index %>]" class="input-radio" value="<%= option %>"> <%= option %>
                           </label>
                         <% }) %>
                       <% } else if (pregunta.tipo === 'checkbox') { %>
                         <% pregunta.options.forEach(option => { %>
-                          <label>
-                            <input type="checkbox" name="respuestas[<%= index %>][]" value="<%= option %>"> <%= option %>
+                          <label class="label-option">
+                            <input type="checkbox" name="respuestas[<%= index %>][]" class="input-checkbox" value="<%= option %>"> <%= option %>
                           </label>
                         <% }) %>
                       <% } %>
                   
-                      <!-- Hidden input to track question titles separately -->
+                      <!-- Campo oculto para rastrear títulos de preguntas -->
                       <input type="hidden" name="preguntas[<%= index %>]" value="<%= pregunta.titulo %>">
                     </div>
                   <% }) %>                  
             </div>
         
-            <!-- Show the selected employee -->
-            <h4>Empleado: <%= empleado.nombre %> <%= empleado.apellido %></h4>
+            <!-- Mostrar información del empleado seleccionado -->
+            <h4 class="employee-info">Empleado: <%= empleado.nombre %> <%= empleado.apellido %></h4>
         
-            <!-- Submit the form -->
-            <button type="submit">Guardar Evaluación</button>
+            <!-- Enviar el formulario -->
+            <button type="submit" class="submit-button">Guardar Evaluación</button>
         </form>
-        
     </div>
+    
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.querySelector('form');
 
             form.addEventListener('submit', (event) => {
-                // Get all radio button groups and checkboxes in the form
+                // Obtener todos los grupos de botones de radio y casillas de verificación en el formulario
                 const radioButtons = form.querySelectorAll('input[type="radio"]:checked');
                 const checkboxes = form.querySelectorAll('input[type="checkbox"]:checked');
 
-                // Convert selected radio buttons into strings
+                // Convertir los botones de radio seleccionados en cadenas
                 radioButtons.forEach((radio) => {
                     console.log(`Selected Radio Value: ${radio.value}`);
                 });
 
-                // Convert selected checkboxes into strings
+                // Convertir las casillas de verificación seleccionadas en cadenas
                 checkboxes.forEach((checkbox) => {
                     console.log(`Selected Checkbox Value: ${checkbox.value}`);
                 });
 
-                // Allow the form to submit after the handling
+                // Permitir que el formulario se envíe después de la manipulación
             });
         });
     </script>
