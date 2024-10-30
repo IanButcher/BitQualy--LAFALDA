@@ -24,23 +24,34 @@
     <!-- Panel principal -->
     <main class="main-content">
         <header>
-            <%- include('../partials/header') %>
+            <%- include('../partials/headerU') %>
+            <div class="search-section">
+                <form action="/empleados/buscar" method="GET" class="search-form">
+                    <input type="text" name="query" placeholder="Buscar ..." value="<%= typeof query !== 'undefined' ? query : '' %>">
+                    <i class="fas fa-search search-icon"></i>
+                    <button type="submit">Buscar</button>
+                </form>             
+            </div> 
         </header>
         
         
         <!-- Lista de empleados -->
         <section class="employee-list">
-            <% for (let empleado of empleados) { %>
-                <div class="employee">
-                    <a href="/empleados/<%= empleado._id %>">
-                        <img src="<%= empleado.imagePath ? '/' + empleado.imagePath : '/img/user.png' %>" alt="Empleado">
-                        <div class="employee-info">
-                            <h3><%= empleado.nombre %> <%= empleado.apellido %></h3>
-                            <p>Rol: <%= empleado.rol %></p>
-                            <p>Legajo: <%= empleado.legajo %></p>
-                        </div>
-                    </a>
-                </div>
+            <% if (empleados.length === 0) { %>
+                <p>No se encontraron empleados que coincidan con "<%= query %>".</p>
+            <% } else {%>
+                <% for (let empleado of empleados) { %>
+                    <div class="employee">
+                        <a href="/empleados/<%= empleado._id %>">
+                            <img src="<%= empleado.imagePath ? '/' + empleado.imagePath : '/img/user.png' %>" alt="Empleado">
+                            <div class="employee-info">
+                                <h3><%= empleado.nombre %> <%= empleado.apellido %></h3>
+                                <p>Rol: <%= empleado.rol %></p>
+                                <p>Legajo: <%= empleado.legajo %></p>
+                            </div>
+                        </a>
+                    </div>
+                <% } %>
             <% } %>
         </section>
     </main>

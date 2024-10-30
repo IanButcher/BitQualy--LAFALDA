@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Evaluaciones</title>
-    <link rel="stylesheet" href="reguladores.css">
+    <link rel="stylesheet" href="/reguladores.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" type="image/png" href="https://ugc.production.linktr.ee/mj5IciCyRk2puUukygYa_kmwAn8AE84X4N3S5?io=true&size=avatar-v3_0">
 
@@ -20,37 +20,41 @@
         <!-- Panel principal -->
         <main class="main-content">
             <header>
-                <%- include('../partials/header') %>
+                <%- include('../partials/headerU') %>
+                <div class="search-section">
+                    <form action="/reguladores/buscar" method="GET" class="search-form">
+                        <input type="text" name="query" placeholder="Buscar ..." value="<%= typeof query !== 'undefined' ? query : '' %>">
+                        <i class="fas fa-search search-icon"></i>
+                        <button type="submit">Buscar</button>
+                    </form>             
+                </div> 
             </header> 
             
             
             <section class="employee-list">
-                <% for (empleado of intermediarios) { %>
-                    <div class="employee">
-                        <a href="/reguladores/<%= empleado.id %>">
-                            <img src="<%= empleado.imagePath ? '/' + empleado.imagePath : '/img/user.png' %>" alt="Empleado">
-                            <div class="employee-info">
-                                <h3><%= empleado.nombre %> <%= empleado.apellido %></h3>
-                                <p>Rol: <%= empleado.rol %></p>
-                                <p>Legajo: <%= empleado.legajo %></p>
-                            </div>
-                        </a>
-                    </div>
-                <% } %>               
+                <% if (intermediarios.length === 0) { %>
+                    <p>No se encontraron empleados que coincidan con "<%= query %>".</p>
+                <% } else {%>
+                    <% for (empleado of intermediarios) { %>
+                        <div class="employee">
+                            <a href="/reguladores/<%= empleado.id %>">
+                                <img src="<%= empleado.imagePath ? '/' + empleado.imagePath : '/img/user.png' %>" alt="Empleado">
+                                <div class="employee-info">
+                                    <h3><%= empleado.nombre %> <%= empleado.apellido %></h3>
+                                    <p>Rol: <%= empleado.rol %></p>
+                                    <p>Legajo: <%= empleado.legajo %></p>
+                                </div>
+                            </a>
+                        </div>
+                    <% } %>
+                <% } %>                
             </section>
             
         </main>
     </div>
 
     <script>
-        // JavaScript para mostrar/ocultar el submenú
-        const dropdownBtn = document.querySelector('.dropdown-btn');
-        const dropdownContainer = document.querySelector('.dropdown-container');
-    
-        dropdownBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            dropdownContainer.classList.toggle('active');
-        });
+        
     
         // JavaScript para desvanecer los empleados al hacer scroll
         const employeeList = document.getElementById('employeeList');

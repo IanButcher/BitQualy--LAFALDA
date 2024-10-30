@@ -13,17 +13,35 @@ const roleAuthorization = require('../middleware/roleAuth')
 app.use(roleAuthorization)
 
 
-//GET route --> All evaluadores
+//GET route --> All empleados
 router.get('/empleados', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async(req, res) => {
     if (req.user) {
         const empleados = await Empleado.find({ estaActivo: true })
         res.render('empls/empleados', { empleados, user: req.user })
     } else {
-        res.redirect('/');
+        res.redirect('/')
     }
 })
 
-// GET route --> Evaluador Especifico
+// GET route --> query
+router.get('/empleados/buscar', async (req, res) => {
+    const { query } = req.query
+    try {
+        const empleados = await Empleado.find({
+            estaActivo: true,
+            $or: [
+                { nombre: { $regex: query, $options: 'i' } },
+                { apellido: { $regex: query, $options: 'i' } }
+            ]
+        })
+        res.render('empls/empleados', { empleados, user: req.user, query })
+    } catch (error) {
+        console.error("Error al buscar empleados:", error)
+        res.redirect('/empleados')
+    }
+})
+
+// GET route --> Empleado Especifico
 router.get('/empleados/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async(req, res) => {
     if (req.user) {
         try {
@@ -45,6 +63,7 @@ router.get('/empleados/:id', roleAuthorization(['Administrador', 'Evaluador', 'I
     }
 })
 
+// POST route --> delete
 router.post('/empleados/eliminar/:id', roleAuthorization(['Administrador']), async(req, res) => {
     const empleadoId = req.params.id
     if (!mongoose.isValidObjectId(empleadoId)) {
@@ -63,6 +82,5 @@ router.post('/empleados/eliminar/:id', roleAuthorization(['Administrador']), asy
         res.redirect(`/empleados/${empleadoId}`)
     }
 })
-
 
 module.exports = router

@@ -11,17 +11,35 @@ const Evaluaciones = require('../Schemas/evaluacionSchema')
 const roleAuthorization = require('../middleware/roleAuth')
 
 
-//GET route --> All evaluadores
+//GET route --> All reguladores
 router.get('/reguladores', roleAuthorization(['Administrador', 'Intermediario']), async (req, res) => {
     if (req.user) {
         const intermediarios = await Intermediario.find({ estaActivo: true })
         res.render('regs/reguladores', { intermediarios, user: req.user })
     } else {
-        res.redirect('/');
+        res.redirect('/')
     }
 })
 
-// GET route --> Evaluador Especifico
+//GET route --> query
+router.get('/reguladores/buscar', async (req, res) => {
+    const { query } = req.query
+    try {
+        const intermediarios = await Intermediario.find({
+            estaActivo: true,
+            $or: [
+                { nombre: { $regex: query, $options: 'i' } },
+                { apellido: { $regex: query, $options: 'i' } }
+            ]
+        })
+        res.render('regs/reguladores', { intermediarios, user: req.user, query })
+    } catch (error) {
+        console.error("Error al buscar intermediarios:", error)
+        res.redirect('/reguladores')
+    }
+})
+
+// GET route --> Regulador Especifico
 router.get('/reguladores/:id', roleAuthorization(['Administrador', 'Intermediario']), async (req, res) => {
     if (req.user) {
         try {
@@ -46,6 +64,7 @@ router.get('/reguladores/:id', roleAuthorization(['Administrador', 'Intermediari
     
 })
 
+// POST route --> delete
 router.post('/reguladores/eliminar/:id', roleAuthorization(['Administrador']), async (req, res) => {
     const reguladoresId = req.params.id  // Use req.params to get the ID
     if (!mongoose.isValidObjectId(reguladoresId)) {
