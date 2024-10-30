@@ -78,9 +78,6 @@
                     <li class="comentario-item">
                         <strong class="comentario-nombre"><%= comentario.intermediario.nombre %>:</strong>
                         <span class="comentario-texto"><%= comentario.texto %></span>
-                        <form action="/evaluaciones/<%= evaluacion._id %>/comentarios/<%= comentario._id %>?_method=DELETE" method="POST" class="comentario-eliminar-form">
-                            <button type="submit" class="comentario-eliminar-boton"><i class="fas fa-trash-alt"></i> Eliminar</button>
-                        </form>
                     </li>
                 <% }) %>
             </ul>

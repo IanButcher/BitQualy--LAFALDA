@@ -11,17 +11,35 @@ const Evaluaciones = require('../Schemas/evaluacionSchema')
 const roleAuthorization = require('../middleware/roleAuth')
 
 
-//GET route --> All evaluadores
+//GET route --> All reguladores
 router.get('/reguladores', roleAuthorization(['Administrador', 'Intermediario']), async (req, res) => {
     if (req.user) {
         const intermediarios = await Intermediario.find({ estaActivo: true })
         res.render('regs/reguladores', { intermediarios, user: req.user })
     } else {
-        res.redirect('/');
+        res.redirect('/')
     }
 })
 
-// GET route --> Evaluador Especifico
+//GET route --> query
+router.get('/reguladores/buscar', roleAuthorization(['Administrador', 'Intermediario']), async (req, res) => {
+    const { query } = req.query
+    try {
+        const intermediarios = await Intermediario.find({
+            estaActivo: true,
+            $or: [
+                { nombre: { $regex: query, $options: 'i' } },
+                { apellido: { $regex: query, $options: 'i' } }
+            ]
+        })
+        res.render('regs/reguladores', { intermediarios, user: req.user, query })
+    } catch (error) {
+        console.error("Error al buscar intermediarios:", error)
+        res.redirect('/reguladores')
+    }
+})
+
+// GET route --> Regulador Especifico
 router.get('/reguladores/:id', roleAuthorization(['Administrador', 'Intermediario']), async (req, res) => {
     if (req.user) {
         try {
@@ -41,11 +59,12 @@ router.get('/reguladores/:id', roleAuthorization(['Administrador', 'Intermediari
             res.status(500).send('Error del servidor')
         }
     } else {
-        res.redirect('/');
+        res.redirect('/')
     }
     
 })
 
+// POST route --> delete
 router.post('/reguladores/eliminar/:id', roleAuthorization(['Administrador']), async (req, res) => {
     const reguladoresId = req.params.id  // Use req.params to get the ID
     if (!mongoose.isValidObjectId(reguladoresId)) {
@@ -53,7 +72,7 @@ router.post('/reguladores/eliminar/:id', roleAuthorization(['Administrador']), a
     }
 
     try {
-        const result = await Intermediario.findByIdAndUpdate(reguladoresId, { estaActivo: false });
+        const result = await Intermediario.findByIdAndUpdate(reguladoresId, { estaActivo: false, endline: Date.now() })
         if (result) {
             res.redirect('/reguladores')
         } else {
@@ -61,7 +80,7 @@ router.post('/reguladores/eliminar/:id', roleAuthorization(['Administrador']), a
         }
     } catch (error) {
         console.error('Error desactivando regulador:', error)
-        res.status(500).send('Error en el servidor')
+        res.redirect(`/reguladores/${reguladoresId}`)
     }
 })
 

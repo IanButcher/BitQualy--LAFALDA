@@ -86,10 +86,6 @@ app.get('/home-eval', roleAuthorization(['Evaluador']), (req,res)=>{
     res.render('home/homeEval')
 })
 
-app.get('/userprofile', (req,res)=>{
-    res.render('userprofile/userprofile')
-})
-
 
 // Use routes
 app.use('/', formularioRoutes)

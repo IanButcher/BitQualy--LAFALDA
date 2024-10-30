@@ -20,6 +20,24 @@ router.get('/evaluadores', roleAuthorization(['Administrador', 'Evaluador', 'Int
     }
 })
 
+// GET route --> query
+router.get('/evaluadores/buscar', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async (req, res) => {
+    const { query } = req.query
+    try {
+        const evaluadores = await Evaluador.find({
+            estaActivo: true,
+            $or: [
+                { nombre: { $regex: query, $options: 'i' } },
+                { apellido: { $regex: query, $options: 'i' } }
+            ]
+        });
+        res.render('evalrs/evaluadores', { evaluadores, user: req.user, query })
+    } catch (error) {
+        console.error("Error al buscar evaluadores:", error)
+        res.redirect('/evaluadores')
+    }
+})
+
 // GET route --> Evaluador Especifico
 router.get('/evaluadores/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async (req, res) => {
     if (req.user) {
@@ -44,13 +62,14 @@ router.get('/evaluadores/:id', roleAuthorization(['Administrador', 'Evaluador', 
     }  
 })
 
+// POST route --> delete
 router.post('/evaluadores/eliminar/:id', roleAuthorization(['Administrador']), async (req, res) => {
     const evaluadoresId = req.params.id  // Use req.params to get the ID
     if (!mongoose.isValidObjectId(evaluadoresId)) {
         return res.status(400).send('ID inválido')
     }
     try {
-        const result = await Evaluador.findByIdAndUpdate(evaluadoresId, { estaActivo: false });
+        const result = await Evaluador.findByIdAndUpdate(evaluadoresId, { estaActivo: false, endline: Date.now() })
         if (result) {
             res.redirect('/evaluadores')
         } else {
@@ -58,7 +77,7 @@ router.post('/evaluadores/eliminar/:id', roleAuthorization(['Administrador']), a
         }
     } catch (error) {
         console.error('Error desactivando Evaluador:', error)
-        res.status(500).send('Error en el servidor')
+        res.redirect(`/evaluadores/${evaluadoresId}`)
     }
 })
 

@@ -1,4 +1,5 @@
 // Modulos
+const PDFDocument = require('pdfkit')
 const express = require('express')
 const app = express()
 const router = express.Router()
@@ -114,7 +115,7 @@ router.post('/evaluaciones/assign-autoevaluacion', roleAuthorization(['Administr
 })
 
 // POST route --> Asignar a todos
-router.post('/evaluaciones/assign-autoevaluacion-to-all', roleAuthorization(['Administrador', 'Evaluador']), async (req, res) => {
+router.post('/evaluaciones/assign-autoevaluacion-to-all', roleAuthorization(['Administrador', 'Evaluador']), async(req, res) => {
     try {
         const { formularioId, deadline } = req.body
         const localDeadline = moment(deadline, 'YYYY-MM-DD').endOf('day').toDate()
@@ -134,10 +135,7 @@ router.post('/evaluaciones/assign-autoevaluacion-to-all', roleAuthorization(['Ad
 
         // Actualizar a todos
         const evaluationIds = evaluations.map(e => e._id)
-        await baseUserSchema.updateMany(
-            { _id: { $in: activeUsers.map(u => u._id) } },
-            { $push: { evaluacionesAsignadas: { $each: evaluationIds } } }
-        );
+        await baseUserSchema.updateMany({ _id: { $in: activeUsers.map(u => u._id) } }, { $push: { evaluacionesAsignadas: { $each: evaluationIds } } });
 
         res.status(200).send('Autoevaluacion asignada a todos los usuarios activos')
     } catch (error) {
@@ -207,8 +205,7 @@ router.post('/evaluaciones/create-evaluacion', roleAuthorization(['Administrador
         console.error('Error creating evaluacion:', error)
         res.status(500).send('Error creating evaluacion')
     }
-});
-
+})
 
 // GET route --> Display form to answer an evaluacion
 router.get('/evaluaciones/answer/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async (req, res) => {
@@ -265,7 +262,7 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
                 formulario: formularioId, 
                 empleado: empleado, 
                 deadline: { $gte: new Date() },
-                completed: false 
+                completed: false
             })
 
             if (!evaluacion) {
@@ -299,7 +296,7 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
                 $addToSet: { evaluacionesHechas: nuevaEvaluacion._id }
             })
         }
-        
+
         res.redirect('/evaluaciones')
     } catch (error) {
         console.error('Error guardando la evaluación:', error)
@@ -360,6 +357,113 @@ router.post('/evaluaciones/:id/comentarios', roleAuthorization(['Intermediario',
     } catch (error) {
         console.error('Error adding comment:', error)
         res.status(500).send('Error interno del servidor')
+    }
+})
+
+router.get('/evaluaciones/:id/pdf', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async(req, res) => {
+            try {
+                const { id } = req.params;
+
+                // Retrieve the evaluation and populate related data
+                const evaluacion = await Evaluacion.findById(id)
+                    .populate({
+                        path: 'formulario',
+                        populate: { path: 'questions' }
+                    })
+                    .populate('empleado')
+                    .populate('assignedBy');
+
+                if (!evaluacion) {
+                    return res.status(404).send('Evaluación no encontrada');
+                }
+
+                // Initialize PDF document
+                const doc = new PDFDocument();
+
+                // Set response headers for PDF
+                res.setHeader('Content-Disposition', `attachment; filename=evaluation_${id}.pdf`);
+                res.setHeader('Content-Type', 'application/pdf');
+
+                // Pipe PDF to the response
+                doc.pipe(res);
+
+                // Title and General Data
+                doc.fontSize(18).text('Evaluación Detallada', { align: 'center' });
+                doc.moveDown();
+                doc.fontSize(12).text(`Código Evaluación: ${id}`, { align: 'left' });
+                doc.text(`Estado: ${evaluacion.completed ? 'Finalizada' : 'Pendiente'}`);
+                doc.text(`Fecha impresión: ${new Date().toLocaleDateString()}`);
+                doc.moveDown();
+
+                // Employee and Form Details
+                doc.fontSize(14).text(`Formulario: ${evaluacion.formulario.titulo || 'N/A'}`);
+                doc.text(`Empleado: ${evaluacion.empleado ? `${evaluacion.empleado.nombre} ${evaluacion.empleado.apellido} legajo: ${evaluacion.empleado.legajo}`   : 'N/A'}`);
+        doc.text(`Asignado por: ${evaluacion.assignedBy ? `${evaluacion.assignedBy.nombre} ${evaluacion.assignedBy.apellido} legajo: ${evaluacion.assignedBy.legajo}` : 'N/A'}`);
+        doc.text(`Fecha límite: ${evaluacion.deadline ? evaluacion.deadline.toDateString() : 'Sin fecha'}`);
+        doc.moveDown();
+
+        // Comments Section
+        if (evaluacion.comentarios && evaluacion.comentarios.length > 0) {
+            doc.fontSize(14).text('Comentarios:', { underline: true });
+            doc.moveDown();
+        
+            evaluacion.comentarios.forEach((comentario, index) => {
+                const { intermediario, texto } = comentario;
+                const commenterName = intermediario.nombre ? `${intermediario.nombre} ${intermediario.apellido || ''}` : 'Anonimo';
+        
+                // Display the commenter's name and comment text without indentation
+                doc.fontSize(12).text(`Comentario ${index + 1} por ${commenterName}:`, { continued: false });
+                doc.fontSize(10).text(texto); // No indent here, so it aligns left
+                doc.moveDown();
+            });
+        }
+        doc.moveDown();
+
+        // Define column positions
+        const tableTop = doc.y;
+        const columnPositions = {
+            title: 50,
+            description: 150,
+            answer: 350,
+            percentage: 500
+        };
+
+        // Draw Header Row
+        doc.fontSize(12).text('Competencia', columnPositions.title, tableTop);
+        doc.text('Descripción', columnPositions.description, tableTop);
+        doc.text('Respuesta', columnPositions.answer, tableTop);
+        doc.text('Pond.', columnPositions.percentage, tableTop);
+        doc.moveDown();
+
+        // Draw a line under the header
+        doc.moveTo(50, doc.y).lineTo(550, doc.y).stroke();
+
+        // Table Rows: Each question and answer
+        evaluacion.formulario.questions.forEach((question, index) => {
+            const respuesta = evaluacion.respuestas[index] || 'N/A';
+            const rowY = doc.y + 5; // Slightly space each row
+
+            // Print question details in each column
+            doc.text(question.titulo || 'Sin título', columnPositions.title, rowY);
+            doc.text(question.descripcion || 'Sin descripción', columnPositions.description, rowY);
+            doc.text(respuesta, columnPositions.answer, rowY);
+            doc.text(`${question.porcentaje || 0}%`, columnPositions.percentage, rowY);
+
+            // Move down for the next row
+            doc.moveDown(1.5);
+        });
+
+        // Final Score Section
+        doc.moveDown();
+        doc.fontSize(14).text(`Puntuación Total: ${evaluacion.score}`);
+        
+
+        // Finalize PDF
+        doc.end();
+
+    } catch (error) {
+        console.error('Error generating PDF:', error);
+        res.status(500).send('Error interno del servidor');
     }
 })
 

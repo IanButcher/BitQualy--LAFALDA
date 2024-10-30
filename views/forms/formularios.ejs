@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Evaluaciones</title>
-    <link rel="stylesheet" href="formularios.css">
+    <link rel="stylesheet" href="/formularios.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Incluir SweetAlert2 -->
     <link rel="icon" type="image/png" href="https://ugc.production.linktr.ee/mj5IciCyRk2puUukygYa_kmwAn8AE84X4N3S5?io=true&size=avatar-v3_0">
@@ -61,16 +61,16 @@
                         <div class="status-buttons">
                             <div class="status-button evaluate2">
                                 <span class="green-dot"></span>
-                                <span>Completas</span>
-                                <span class="count2">0</span>
+                                <span>Autoevaluacion</span>
+                                <span class="count2"><%= totalAutoevaluacion %></span>
                             </div>
                         </div>
                         <br>
                         <div class="status-buttons">
                             <div class="status-button evaluate">
-                                <span class="red-dot"></span>
-                                <span>Incompletas</span>
-                                <span class="count">0</span>
+                                <span class="red-dot"><</span>
+                                <span>Evaluacion</span>
+                                <span class="count"><%= totalEvaluacion %></span>
                             </div>
                         </div>
                     </div>
