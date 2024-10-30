@@ -354,74 +354,78 @@ router.delete('/evaluaciones/:id/comentarios/:comentarioId', roleAuthorization([
 })
 
 router.get('/evaluaciones/:id/pdf', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async(req, res) => {
-    try {
-        const { id } = req.params;
+            try {
+                const { id } = req.params;
 
-        // Retrieve the evaluation and populate related data
-        const evaluacion = await Evaluacion.findById(id)
-            .populate({
-                path: 'formulario',
-                populate: { path: 'questions' }
-            })
-            .populate('empleado')
-            .populate('assignedBy');
+                // Retrieve the evaluation and populate related data
+                const evaluacion = await Evaluacion.findById(id)
+                    .populate({
+                        path: 'formulario',
+                        populate: { path: 'questions' }
+                    })
+                    .populate('empleado')
+                    .populate('assignedBy');
 
-        if (!evaluacion) {
-            return res.status(404).send('Evaluación no encontrada');
-        }
+                if (!evaluacion) {
+                    return res.status(404).send('Evaluación no encontrada');
+                }
 
-        // Initialize PDF document
-        const doc = new PDFDocument();
+                // Initialize PDF document
+                const doc = new PDFDocument();
 
-        // Set response headers for PDF
-        res.setHeader('Content-Disposition', `attachment; filename=evaluation_${id}.pdf`);
-        res.setHeader('Content-Type', 'application/pdf');
+                // Set response headers for PDF
+                res.setHeader('Content-Disposition', `attachment; filename=evaluation_${id}.pdf`);
+                res.setHeader('Content-Type', 'application/pdf');
 
-        // Pipe PDF to the response
-        doc.pipe(res);
+                // Pipe PDF to the response
+                doc.pipe(res);
 
-        // Document title
-        doc.fontSize(18).text('Evaluación Detallada', { align: 'center' });
-        doc.moveDown();
+                // Title and General Data
+                doc.fontSize(18).text('Evaluación Detallada', { align: 'center' });
+                doc.moveDown();
+                doc.fontSize(12).text(`Código Evaluación: ${id}`, { align: 'left' });
+                doc.text(`Estado: ${evaluacion.completed ? 'Finalizada' : 'Pendiente'}`);
+                doc.text(`Fecha impresión: ${new Date().toLocaleDateString()}`);
+                doc.moveDown();
 
-        // Form details
-        doc.fontSize(14).text(`Formulario: ${evaluacion.formulario.titulo || 'N/A'}`);
-        doc.text(`Empleado: ${evaluacion.empleado ? evaluacion.empleado.nombre : 'N/A'}`);
-        doc.text(`Asignado por: ${evaluacion.assignedBy ? evaluacion.assignedBy.nombre : 'N/A'}`);
+                // Employee and Form Details
+                doc.fontSize(14).text(`Formulario: ${evaluacion.formulario.titulo || 'N/A'}`);
+                doc.text(`Empleado: ${evaluacion.empleado ? `${evaluacion.empleado.nombre} ${evaluacion.empleado.apellido}`  : 'N/A'}`);
+        doc.text(`Asignado por: ${evaluacion.assignedBy ? `${evaluacion.assignedBy.nombre} ${evaluacion.assignedBy.apellido}` : 'N/A'}`);
         doc.text(`Fecha límite: ${evaluacion.deadline ? evaluacion.deadline.toDateString() : 'Sin fecha'}`);
         doc.moveDown();
 
-        // Table Header
-        doc.fontSize(14).text('Preguntas y Respuestas:', { underline: true });
+        // Table Header for Questions
+        doc.fontSize(14).text('Indicadores de Desempeño:', { underline: true });
         doc.moveDown();
 
-        // Column positions for table layout
+        // Define column positions
         const tableTop = doc.y;
         const columnPositions = {
             title: 50,
-            description: 200,
+            description: 150,
             answer: 350,
             percentage: 500
         };
 
-        // Draw header row
-        doc.fontSize(12).text('Título', columnPositions.title, tableTop);
+        // Draw Header Row
+        doc.fontSize(12).text('Competencia', columnPositions.title, tableTop);
         doc.text('Descripción', columnPositions.description, tableTop);
         doc.text('Respuesta', columnPositions.answer, tableTop);
-        doc.text('Porcentaje', columnPositions.percentage, tableTop);
+        doc.text('Pond.', columnPositions.percentage, tableTop);
         doc.moveDown();
 
-        // Draw a line under header
+        // Draw a line under the header
         doc.moveTo(50, doc.y).lineTo(550, doc.y).stroke();
 
-        // Table rows for each question
+        // Table Rows: Each question and answer
         evaluacion.formulario.questions.forEach((question, index) => {
-            const respuesta = evaluacion.respuestas[index] || 'N/A'; // Match answers to questions
-            const rowY = doc.y + 5; // Small padding above each row
+            const respuesta = evaluacion.respuestas[index] || 'N/A';
+            const rowY = doc.y + 5; // Slightly space each row
 
-            // Print data in each column
-            doc.text(question.title || 'Sin título', columnPositions.title, rowY);
-            doc.text(question.description || 'Sin descripción', columnPositions.description, rowY);
+            // Print question details in each column
+            doc.text(question.titulo || 'Sin título', columnPositions.title, rowY);
+            doc.text(question.descripcion || 'Sin descripción', columnPositions.description, rowY);
             doc.text(respuesta, columnPositions.answer, rowY);
             doc.text(`${question.porcentaje || 0}%`, columnPositions.percentage, rowY);
 
@@ -429,11 +433,11 @@ router.get('/evaluaciones/:id/pdf', roleAuthorization(['Administrador', 'Evaluad
             doc.moveDown(1.5);
         });
 
-        // Final score
+        // Final Score Section
         doc.moveDown();
         doc.fontSize(14).text(`Puntuación Total: ${evaluacion.score}`, { align: 'left' });
 
-        // Finalize PDF file
+        // Finalize PDF
         doc.end();
 
     } catch (error) {
