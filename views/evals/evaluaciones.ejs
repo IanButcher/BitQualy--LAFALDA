@@ -162,6 +162,12 @@
                             </div>
                             <div class="eval-summary">
                                 <p><%= evaluacion.formulario.titulo %></p>
+                                <div class="eval-icons">
+                                    <a href="/evaluaciones/<%= evaluacion._id %>/pdf" target="_blank">
+                                        <i class="fas fa-download download-icon"></i>
+                                    </a>
+                                    <i class="fas fa-filter filter-icon"></i>
+                                </div>
                                 <a href="/evaluaciones/preview/<%= evaluacion._id %>" class="btn">Ver Evaluación</a>
                             </div>
                         </div>
