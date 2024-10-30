@@ -166,6 +166,15 @@ body, html {
     margin-right: 15px; /* Espacio entre la imagen y el texto */
 }
 
+/* Limitar el tamaño de la imagen en la tarjeta de evaluación */
+.eval-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 2px solid #ddd;
+}
+
 /* Contenedor de los detalles de la evaluación */
 
 

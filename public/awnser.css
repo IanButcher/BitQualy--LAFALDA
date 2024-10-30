@@ -1,73 +1,84 @@
-/* Estilos globales */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f5f5f5;
-    color: #333;
+* {
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
     box-sizing: border-box;
 }
 
+body, html {
+    font-family: Arial, sans-serif;
+    height: 100%;
+    background-color: #f4f4f4;
+}
+
 /* Contenedor principal */
-.container{
+.main-container {
     flex-grow: 1;
     padding: 50px;
     margin-left: 250px;
     background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
+    transition: box-shadow 0.3s ease;
+}
+
+.main-container:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Estilo del título de la evaluación */
+.evaluacion-title {
+    text-align: center;
+    font-size: 2em;
+    font-weight: 900;
+    text-decoration: underline; /* Subrayado del título */
+    margin-bottom: 40px; /* Espaciado inferior */
+    color: #333;
 }
 
 /* Estilo de los títulos de las preguntas */
-h3 {
+.question-title {
     color: #333;
     font-size: 1.4em;
-    margin-top: 20px;
-    margin-bottom: 10px;
+    margin: 4px 0 15px;
     font-weight: 600;
     text-align: left;
-    padding-left: 0;
-    display: flex;
-    align-items: center;
-    margin-left: -200px; /* Alinear a la izquierda */
 }
 
-
-/* Ícono de edición junto al título */
-h3 button {
-    background-color: transparent;
-    border: none;
-    font-size: 1.2em;
-    cursor: pointer;
-    color: #7f8c8d;
-    margin-left: 10px;
-    transition: color 0.3s ease;
+/* Etiquetas para Pregunta y Descripción */
+.label {
+    font-weight: lighter; /* Estilo en negrita */
+    margin-bottom: 5px; /* Espacio debajo de las etiquetas */
+    color: #2c3e50; /* Color más oscuro para mejorar la legibilidad */
 }
 
-h3 button:hover {
-    color: #2ecc71;
+.question-description{
+    font-weight: bold;
+    margin: 2px 0 10px;
+    color: #333;
 }
 
 /* Estilo de los campos de texto */
-input[type="text"] {
-    width: 300%;
+.input-text {
+    width: calc(100% - 30px); /* Ancho relativo al contenedor */
     padding: 12px 15px;
     border: 1px solid #ccc;
     border-radius: 8px;
-    margin-bottom: 20px;
+    margin-bottom: 20px; /* Espacio inferior */
     font-size: 1em;
     color: #333;
     background-color: #fafafa;
-    transition: border 0.3s ease-in-out;
+    transition: border 0.3s ease-in-out, box-shadow 0.3s ease;
     display: block;
-    margin-left: -200px; /* Alinear a la izquierda */
+}
+
+.input-text:focus {
+    border-color: #2ecc71;
+    box-shadow: 0 0 5px rgba(46, 204, 113, 0.5);
 }
 
 /* Estilo de los radio y checkbox */
-label {
+.label-option {
     display: flex;
     align-items: center;
     font-size: 1.2em;
@@ -75,17 +86,17 @@ label {
     color: #333;
     cursor: pointer;
     text-align: left;
-    margin-left: -200px; /* Alinear a la izquierda */
+    padding-left: 20px;
 }
 
-
-input[type="radio"], input[type="checkbox"] {
+.input-radio,
+.input-checkbox {
     margin-right: 10px;
-    transform: scale(1.2); /* Agrandar ligeramente los botones */
+    transform: scale(1.2);
 }
 
 /* Botón de Guardar dentro del contenedor */
-button {
+.submit-button {
     background-color: #2ecc71;
     color: white;
     padding: 12px 30px;
@@ -93,67 +104,52 @@ button {
     border-radius: 25px;
     cursor: pointer;
     font-size: 1.1em;
-    transition: background-color 0.3s ease;
-    position: relative;
+    transition: background-color 0.3s ease, transform 0.2s ease;
     display: block;
-    margin: 20px auto 0; /* Centrar el botón y darle espacio arriba */
+    margin: 20px auto 0;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    margin-left: -200px; /* Alinear a la izquierda */
 }
 
-
-button:hover {
+.submit-button:hover {
     background-color: #27ae60;
+    transform: translateY(-2px);
 }
 
 /* Ajuste del espacio entre los elementos del formulario */
-.form-group {
+.form-section {
     margin-bottom: 20px;
-    padding-left: 0; /* Asegurar que esté alineado a la izquierda */
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
 }
 
 /* Estilo responsive */
 @media (max-width: 600px) {
-    .container {
+    .main-container {
         padding: 20px;
         width: 100vw;
-        max-width: none; /* Asegurarse que ocupe todo el ancho en pantallas pequeñas */
+        max-width: none;
     }
 
-    h2 {
-        font-size: 1.5em;
+    .question-title {
+        font-size: 1.4em;
     }
 
-    h3 {
-        font-size: 1.2em;
-    }
-
-    button {
+    .submit-button {
         font-size: 1em;
     }
 
-    input[type="text"] {
-        width: 100%;
+    .input-text {
+        width: 100%; /* Ocupa todo el ancho en pantallas pequeñas */
     }
 }
-p  {
+
+/* Estilo para información de empleados */
+.employee-info {
     display: block;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    unicode-bidi: isolate;
-    margin-left: -200px; /* Alinear a la izquierda */
-
-}
-
-.pepe {
-    margin-left: 120px;
-}
-h3 {
-    margin-top: 20px;
-    font-size: 1.4rem;
-}
-.nude{
-    margin-left: -200px;
+    margin-top: 1em;
+    margin-left: 20px;
+    font-weight: bold;
+    color: #2c3e50; /* Color más oscuro para resaltar */
 }
