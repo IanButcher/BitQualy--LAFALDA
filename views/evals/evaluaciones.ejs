@@ -9,12 +9,22 @@
     <link rel="icon" type="image/png" href="https://ugc.production.linktr.ee/mj5IciCyRk2puUukygYa_kmwAn8AE84X4N3S5?io=true&size=avatar-v3_0">
     <style>
         .notification-icon, .user-photo { position: absolute; right: 50px; top: 100px; }
-        .busqueda input {
-            width: 100%; padding: 12px 15px; /* Eliminado el espacio del icono */
-            font-size: 18px; border: 1px solid #ccc;
-            border-radius: 25px; transition: width 0.3s ease; height: 50px; margin-top: 30px;
-        }
-        .busqueda { margin-top: 20px; }
+       .busqueda {
+    width: 100%; /* Aseguramos que ocupe el ancho total de su contenedor */
+    margin: 20px 0; /* Espacio superior e inferior para evitar superposición */
+}
+
+.busqueda input {
+    width: 100%;
+    padding: 12px 15px; /* Eliminado el espacio de 45px reservado para el icono */
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    transition: width 0.3s ease;
+    height: 50px;
+    box-sizing: border-box; /* Incluye el padding en el ancho total */
+}
+
     </style>
 </head>
 
