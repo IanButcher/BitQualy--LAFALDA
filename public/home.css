@@ -58,7 +58,7 @@ body, html {
 }
 
 .nav-item span {
-    font-size: 12px;
+    font-size: 15px;
     display: block;
     margin-top: 5px; /* Asegura que el icono esté encima del texto */
 }

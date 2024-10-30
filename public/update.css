@@ -1,62 +1,75 @@
-/* Estilos generales */
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f7fa;
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f0f2f5;
     color: #333;
-    display: flex; /* Habilita flexbox en el body */
-    flex-direction: column; /* Asegura que los hijos se apilen verticalmente */
-    align-items: center; /* Centra horizontalmente los hijos */
 }
 
-/* Contenido principal */
+.container {
+    display: flex; /* Usa flexbox para alinear elementos en fila */
+    justify-content: space-between; /* Espaciado entre los elementos */
+    align-items: flex-start; /* Alinea elementos en la parte superior */
+    width: 80%; /* Puedes ajustar el ancho según sea necesario */
+    max-width: 900px;
+    margin: 40px auto;
+}
+
 .main-content {
-    padding: 40px; /* Ajusta el espacio alrededor del contenido */
-    width: 100%; /* Asegura que ocupe el ancho completo */
-    max-width: 800px; /* Ancho máximo del contenido */
+    flex: 1; /* Permite que el contenido principal ocupe todo el espacio disponible */
     background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 20px; /* Añade un margen superior para espaciarlo del navbar */
-}
-
-/* Estilos del encabezado */
-
-/* Sección de formulario */
-.modify-form-section {
-    margin-top: 20px;
+    padding: 80px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-right: 20px; /* Espacio entre el contenido principal y el panel de botones */
 }
 
 h2 {
+    font-size: 1.8em;
     color: #4a90e2;
+    margin-bottom: 20px;
 }
 
-/* Estilos del formulario */
-.form-editor {
-    margin-top: 20px;
+.form-editor h3 {
+    color: #333;
+    font-size: 1.5em;
+    margin-bottom: 20px;
 }
 
-.form-group {
+.form-group,
+.question-container {
+    background-color: #fafafa;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
     margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
-.form-group label {
+label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     font-weight: bold;
+    color: #555;
 }
 
 input[type="text"],
 input[type="number"],
 textarea,
 select {
-    width: 80%;
+    width: 100%;
     padding: 10px;
+    margin-bottom: 10px;
     border: 1px solid #ccc;
-    border-radius: 20px; /* Aumento del redondeado */
-    box-sizing: border-box;
-    transition: border-color 0.3s, background-color 0.3s;
+    border-radius: 5px;
+    font-size: 1em;
+    color: #333;
+    background-color: #fdfdfd;
+    transition: border-color 0.3s ease;
 }
 
 input[type="text"]:focus,
@@ -64,150 +77,93 @@ input[type="number"]:focus,
 textarea:focus,
 select:focus {
     border-color: #4a90e2;
+    outline: none;
 }
 
-/* Estilos de botones */
-/* Estilos de botones */
-.modify-buttons {
-    display: flex;
-    justify-content: space-between; /* Alinear botones */
-    margin-top: 40px; /* Aumenta este margen para más espacio entre inputs y botones */
+textarea {
+    resize: vertical;
+    min-height: 80px;
 }
 
-
-.btn-download{
-    background-color: #2a36d4;
-    color: white;
-    border: none;
-    border-radius: 20px; /* Aumento del redondeado */
-    padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-.btn-cancel{
-    background-color: #d42a2a;
-    color: white;
-    border: none;
-    border-radius: 20px; /* Aumento del redondeado */
-    padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
-    cursor: pointer;
-    transition: background-color 0.3s;
+.percentage-input {
+    width: 50%;
 }
 
-.btn-add-option {
-    background-color: #38df40;
-    color: white;
-    border: none;
-    border-radius: 20px; /* Aumento del redondeado */
-    padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-
-.btn-add{
-    background-color: #06335a;
-    color: white;
-    border: none;
-    border-radius: 20px; /* Aumento del redondeado */
-    padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-.btn-save{
-    background-color: #063770;
-    color: white;
-    border: none;
-    border-radius: 20px; /* Aumento del redondeado */
-    padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-.btn-delete,
-.btn-add:hover {
-    background-color: #4a90e2;
-    color: white;
-    border: none;
-    border-radius: 20px; /* Aumento del redondeado */
-    padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.btn-save:hover{
-    background-color: #4a90e2;
-    color: white;
-    border: none;
-    border-radius: 20px; /* Aumento del redondeado */
-    padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.btn-download:hover{
-    background-color: #4a90e2;
-    color: white;
-    border: none;
-    border-radius: 20px; /* Aumento del redondeado */
-    padding: 10px 20px; /* Asegúrate de que haya suficiente espacio */
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.btn-cancel:hover{
-    background-color: #9b1616;
-}
-
-.btn-delete:hover{
-    background-color: #c01717;
-}
-.btn-add-option:hover {
-    background-color: #0c6e32;
-}
-
-
-/* Estilos de las opciones */
 .options-group {
-    margin-top: 10px;
-    padding-left: 20px;
-    border-left: 2px solid #e0e0e0;
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
 }
 
 .option-item {
+    display: flex;
+    align-items: center;
     margin-bottom: 10px;
 }
 
-/* Vista previa del formulario */
-.preview-section {
-    margin-top: 20px;
+.option-item input[type="text"] {
+    flex: 1;
+    margin-left: 10px;
 }
 
-iframe {
+.btn-add-option,
+.btn-delete,
+.btn-add,
+.btn-save,
+.btn-download,
+.btn-cancel {
+    padding: 10px 15px;
+    margin-top: 10px;
+    font-size: 1em;
+    font-weight: bold;
     border: none;
     border-radius: 5px;
-}
-/* Estilos para el input de porcentaje */
-.percentage-input {
-    width: 100%;
-    padding: 10px;
-    border: 2px solid #4a90e2; /* Color de borde por defecto */
-    border-radius: 20px;
-    box-sizing: border-box;
-    background-color: #e7f4ff; /* Color de fondo */
-    transition: border-color 0.3s; /* Transición suave para el cambio de color */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-/* Borde rojo para porcentaje < 20 */
-.red-border {
-    border-color: #dc3545; /* Rojo */
+.btn-add-option {
+    background-color: #e7f3ff;
+    color: #4a90e2;
 }
 
-/* Borde azul para 20 <= porcentaje < 70 */
-.blue-border {
-    border-color: #007bff; /* Azul */
+.btn-delete {
+    background-color: #ffe7e7;
+    color: #e94e4e;
 }
 
-/* Borde verde para porcentaje >= 70 */
-.green-border {
-    border-color: #28a745; /* Verde */
+.btn-add {
+    background-color: #4a90e2;
+    color: #fff;
+    display: block;
+    width: 40%;
+    margin-left: 250px;
 }
+
+.btn-save {
+    background-color: #27ae60;
+    color: #fff;
+}
+
+.btn-download {
+    background-color: #2980b9;
+    color: #fff;
+}
+
+.btn-cancel {
+    background-color: #e0e0e0;
+    color: #333;
+    text-decoration: none;
+    text-align: center;
+}
+
+.btn-add:hover,
+.btn-save:hover,
+.btn-download:hover,
+.btn-cancel:hover,
+.btn-delete:hover,
+.btn-add-option:hover {
+    opacity: 0.9;
+}
+
