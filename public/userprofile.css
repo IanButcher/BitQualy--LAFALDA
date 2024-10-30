@@ -35,6 +35,11 @@ body, html {
     overflow-y: auto;
 }
 
+.image-and-info{
+    margin-left: 400px;
+    margin-bottom: 20px;
+}
+
 .profile-section {
     display: flex;
     flex-direction: column;
