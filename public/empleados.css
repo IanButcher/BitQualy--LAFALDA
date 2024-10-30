@@ -57,14 +57,16 @@ body, html {
     width: 450px;
 }
 
+
+
 .search-icon {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #888;
-    pointer-events: none;
+    font-size: 18px;  /* Tamaño del ícono */
+    color: #888;  /* Color del ícono */
+    cursor: pointer;
+    padding: 10px;  /* Sin espaciado adicional */
+    margin-left: 15px; /* Espaciado a la izquierda del ícono */
 }
+
 
 .filters {
     margin-top: 20px;
