@@ -14,11 +14,39 @@ router.get('/formularios', roleAuthorization(['Administrador']), async (req, res
     if (req.user){
         try {
             const formularios = await Formulario.find({ isActive: true })
-            res.render('forms/formularios', { formularios: formularios, user: req.user })
+            const totalAutoevaluacion = formularios.filter(f => f.tipo === 'autoevaluacion').length
+            const totalEvaluacion = formularios.filter(f => f.tipo === 'evaluacion').length
+            res.render('forms/formularios', { formularios: formularios, totalEvaluacion, totalAutoevaluacion, user: req.user })
             console.log(formularios)
         } catch (error) {
             console.error('Error fetching formularios:', error)
             res.redirect('/home')
+        }
+    } else {
+        res.redirect('/')
+    }
+})
+
+// GET route --> query
+router.get('/formularios/buscar', roleAuthorization(['Administrador']), async (req, res) => {
+    const { query } = req.query
+
+    if (req.user) {
+        try {
+            const formularios = await Formulario.find({
+                isActive: true,
+                $or: [
+                    { titulo: { $regex: query, $options: 'i' } },
+                    { tipo: { $regex: query, $options: 'i' } }  
+                ]
+            })
+            const totalAutoevaluacion = formularios.filter(f => f.tipo === 'autoevaluacion').length
+            const totalEvaluacion = formularios.filter(f => f.tipo === 'evaluacion').length
+            // Render the formularios view with filtered results
+            res.render('forms/formularios', { formularios, totalAutoevaluacion, totalEvaluacion, user: req.user, query })
+        } catch (error) {
+            console.error("Error searching formularios:", error)
+            res.redirect('/formularios')
         }
     } else {
         res.redirect('/')

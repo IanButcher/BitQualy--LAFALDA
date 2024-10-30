@@ -22,7 +22,7 @@ router.get('/reguladores', roleAuthorization(['Administrador', 'Intermediario'])
 })
 
 //GET route --> query
-router.get('/reguladores/buscar', async (req, res) => {
+router.get('/reguladores/buscar', roleAuthorization(['Administrador', 'Intermediario']), async (req, res) => {
     const { query } = req.query
     try {
         const intermediarios = await Intermediario.find({

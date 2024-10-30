@@ -24,7 +24,7 @@ router.get('/empleados', roleAuthorization(['Administrador', 'Evaluador', 'Inter
 })
 
 // GET route --> query
-router.get('/empleados/buscar', async (req, res) => {
+router.get('/empleados/buscar', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async (req, res) => {
     const { query } = req.query
     try {
         const empleados = await Empleado.find({
