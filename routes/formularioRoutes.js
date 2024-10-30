@@ -17,7 +17,6 @@ router.get('/formularios', roleAuthorization(['Administrador']), async (req, res
             const totalAutoevaluacion = formularios.filter(f => f.tipo === 'autoevaluacion').length
             const totalEvaluacion = formularios.filter(f => f.tipo === 'evaluacion').length
             res.render('forms/formularios', { formularios: formularios, totalEvaluacion, totalAutoevaluacion, user: req.user })
-            console.log(formularios)
         } catch (error) {
             console.error('Error fetching formularios:', error)
             res.redirect('/home')

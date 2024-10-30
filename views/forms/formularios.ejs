@@ -79,6 +79,11 @@
                     </div>
                 </aside>
                 <!-- Cartas de formularios -->
+                <!-- Hidden delete form to submit when delete is confirmed -->
+                <form id="deleteForm" method="POST" style="display: none;">
+                    <input type="hidden" name="_method" value="POST">
+                </form>
+
                 <div class="form-cards">
                     <% for (formulario of formularios) { %>
                     <div class="card">
