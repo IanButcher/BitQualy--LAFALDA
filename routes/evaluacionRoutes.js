@@ -402,6 +402,23 @@ router.get('/evaluaciones/:id/pdf', roleAuthorization(['Administrador', 'Evaluad
         doc.text(`Fecha límite: ${evaluacion.deadline ? evaluacion.deadline.toDateString() : 'Sin fecha'}`);
         doc.moveDown();
 
+        // Comments Section
+        if (evaluacion.comentarios && evaluacion.comentarios.length > 0) {
+            doc.fontSize(14).text('Comentarios:', { underline: true });
+            doc.moveDown();
+        
+            evaluacion.comentarios.forEach((comentario, index) => {
+                const { intermediario, texto } = comentario;
+                const commenterName = intermediario.nombre ? `${intermediario.nombre} ${intermediario.apellido || ''}` : 'Anonimo';
+        
+                // Display the commenter's name and comment text without indentation
+                doc.fontSize(12).text(`Comentario ${index + 1} por ${commenterName}:`, { continued: false });
+                doc.fontSize(10).text(texto); // No indent here, so it aligns left
+                doc.moveDown();
+            });
+        }
+        doc.moveDown();
+
         // Define column positions
         const tableTop = doc.y;
         const columnPositions = {
@@ -438,23 +455,8 @@ router.get('/evaluaciones/:id/pdf', roleAuthorization(['Administrador', 'Evaluad
 
         // Final Score Section
         doc.moveDown();
-        doc.fontSize(14).text(`Puntuación Total: ${evaluacion.score}`, { align: 'left' });
-        doc.moveDown();
-
-        // Comments Section
-        if (evaluacion.comentarios && evaluacion.comentarios.length > 0) {
-            doc.fontSize(14).text('Comentarios:', { underline: true });
-            doc.moveDown();
-
-            evaluacion.comentarios.forEach((comentario, index) => {
-                const { intermediario, texto } = comentario;
-                const commenterName = intermediario.nombre ? `${intermediario.nombre} ${intermediario.apellido || ''}` : 'Anonimo';
-
-                doc.fontSize(12).text(`Comentario ${index + 1} por ${commenterName}:`, { continued: false });
-                doc.fontSize(10).text(texto, { indent: 20 });
-                doc.moveDown();
-            });
-        }
+        doc.fontSize(14).text(`Puntuación Total: ${evaluacion.score}`);
+        
 
         // Finalize PDF
         doc.end();
