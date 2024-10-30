@@ -397,13 +397,9 @@ router.get('/evaluaciones/:id/pdf', roleAuthorization(['Administrador', 'Evaluad
 
                 // Employee and Form Details
                 doc.fontSize(14).text(`Formulario: ${evaluacion.formulario.titulo || 'N/A'}`);
-                doc.text(`Empleado: ${evaluacion.empleado ? `${evaluacion.empleado.nombre} ${evaluacion.empleado.apellido}`  : 'N/A'}`);
-        doc.text(`Asignado por: ${evaluacion.assignedBy ? `${evaluacion.assignedBy.nombre} ${evaluacion.assignedBy.apellido}` : 'N/A'}`);
+                doc.text(`Empleado: ${evaluacion.empleado ? `${evaluacion.empleado.nombre} ${evaluacion.empleado.apellido} legajo: ${evaluacion.empleado.legajo}`   : 'N/A'}`);
+        doc.text(`Asignado por: ${evaluacion.assignedBy ? `${evaluacion.assignedBy.nombre} ${evaluacion.assignedBy.apellido} legajo: ${evaluacion.assignedBy.legajo}` : 'N/A'}`);
         doc.text(`Fecha límite: ${evaluacion.deadline ? evaluacion.deadline.toDateString() : 'Sin fecha'}`);
-        doc.moveDown();
-
-        // Table Header for Questions
-        doc.fontSize(14).text('Indicadores de Desempeño:', { underline: true });
         doc.moveDown();
 
         // Define column positions
@@ -443,6 +439,22 @@ router.get('/evaluaciones/:id/pdf', roleAuthorization(['Administrador', 'Evaluad
         // Final Score Section
         doc.moveDown();
         doc.fontSize(14).text(`Puntuación Total: ${evaluacion.score}`, { align: 'left' });
+        doc.moveDown();
+
+        // Comments Section
+        if (evaluacion.comentarios && evaluacion.comentarios.length > 0) {
+            doc.fontSize(14).text('Comentarios:', { underline: true });
+            doc.moveDown();
+
+            evaluacion.comentarios.forEach((comentario, index) => {
+                const { intermediario, texto } = comentario;
+                const commenterName = intermediario.nombre ? `${intermediario.nombre} ${intermediario.apellido || ''}` : 'Anonimo';
+
+                doc.fontSize(12).text(`Comentario ${index + 1} por ${commenterName}:`, { continued: false });
+                doc.fontSize(10).text(texto, { indent: 20 });
+                doc.moveDown();
+            });
+        }
 
         // Finalize PDF
         doc.end();
