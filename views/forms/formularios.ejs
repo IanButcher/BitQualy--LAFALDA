@@ -16,29 +16,22 @@
             top: 100px;
         }
 
-        .busqueda input {
-        width: 100%;
-        padding: 12px 45px 12px 15px;
-        font-size: 18px;
-        border: 1px solid #ccc;
-        border-radius: 25px;
-        transition: width 0.3s ease;
-        height: 50px;
-        margin-top: 20px;
-    }
+        .busqueda {
+    width: 100%; /* Aseguramos que ocupe el ancho total de su contenedor */
+    margin: 20px 0; /* Espacio superior e inferior para evitar superposición */
+}
 
-    .icono-busqueda {
-        right: 15px;
-        top: 200px;
-        transform: translateY(-50%);
-        color: #888; /* Ajuste de color */
-    }
+.busqueda input {
+    width: 100%;
+    padding: 12px 15px; /* Eliminado el espacio de 45px reservado para el icono */
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    transition: width 0.3s ease;
+    height: 50px;
+    box-sizing: border-box; /* Incluye el padding en el ancho total */
+}
 
-    /* Ajuste para evitar superposición */
-    .busqueda {
-        margin-top: 20px; /* Agrega un espacio debajo del dropdown */
-    }
-       
     </style>
 </head>
 <body>
@@ -61,11 +54,9 @@
                     <div class="filter-section">
                         <h3>Filtrar por</h3>
                        
-                        
-                        
-                        <div class="busqueda icono-busqueda busqueda-2 seccion-busqueda">
+                        <div class="busqueda busqueda-2 seccion-busqueda">
                             <input type="text" placeholder="Buscar ...">
-                            <i class="fas fa-search search-icon"></i>
+                            <!-- Icono eliminado -->
                         </div>
                         <div class="status-buttons">
                             <div class="status-button evaluate2">
