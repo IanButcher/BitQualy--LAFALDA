@@ -41,7 +41,7 @@ router.get('/reguladores/:id', roleAuthorization(['Administrador', 'Intermediari
             res.status(500).send('Error del servidor')
         }
     } else {
-        res.redirect('/');
+        res.redirect('/')
     }
     
 })
@@ -53,7 +53,7 @@ router.post('/reguladores/eliminar/:id', roleAuthorization(['Administrador']), a
     }
 
     try {
-        const result = await Intermediario.findByIdAndUpdate(reguladoresId, { estaActivo: false });
+        const result = await Intermediario.findByIdAndUpdate(reguladoresId, { estaActivo: false, endline: Date.now() })
         if (result) {
             res.redirect('/reguladores')
         } else {
@@ -61,7 +61,7 @@ router.post('/reguladores/eliminar/:id', roleAuthorization(['Administrador']), a
         }
     } catch (error) {
         console.error('Error desactivando regulador:', error)
-        res.status(500).send('Error en el servidor')
+        res.redirect(`/reguladores/${reguladoresId}`)
     }
 })
 

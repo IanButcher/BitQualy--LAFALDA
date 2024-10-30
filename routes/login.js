@@ -48,16 +48,16 @@ router.post('/save-new-user', upload.single('image'), roleAuthorization(['Admini
             let newUser;
             switch (rol) {
                 case 'empleado':
-                    newUser = new Empleado({ nombre, apellido, legajo, password, email, imagePath, dni })
+                    newUser = new Empleado({ nombre, apellido, legajo, password, email, imagePath, dni, startline: Date.now() })
                     break;
                 case 'evaluador':
-                    newUser = new Evaluador({ nombre, apellido, legajo, password, email, imagePath, dni })
+                    newUser = new Evaluador({ nombre, apellido, legajo, password, email, imagePath, dni, startline: Date.now() })
                     break;
                 case 'regulador':
-                    newUser = new Regulador({ nombre, apellido, legajo, password, email, imagePath, dni })
+                    newUser = new Regulador({ nombre, apellido, legajo, password, email, imagePath, dni, startline: Date.now() })
                     break;
                 case 'administrador':
-                    newUser = new Administrador({ nombre, apellido, legajo, password, email, imagePath, dni })
+                    newUser = new Administrador({ nombre, apellido, legajo, password, email, imagePath, dni, startline: Date.now() })
                     break;
                 default:
                     return res.redirect('/user-creator')

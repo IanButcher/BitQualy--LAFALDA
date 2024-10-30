@@ -50,7 +50,7 @@ router.post('/evaluadores/eliminar/:id', roleAuthorization(['Administrador']), a
         return res.status(400).send('ID inválido')
     }
     try {
-        const result = await Evaluador.findByIdAndUpdate(evaluadoresId, { estaActivo: false });
+        const result = await Evaluador.findByIdAndUpdate(evaluadoresId, { estaActivo: false, endline: Date.now() })
         if (result) {
             res.redirect('/evaluadores')
         } else {
@@ -58,7 +58,7 @@ router.post('/evaluadores/eliminar/:id', roleAuthorization(['Administrador']), a
         }
     } catch (error) {
         console.error('Error desactivando Evaluador:', error)
-        res.status(500).send('Error en el servidor')
+        res.redirect(`/evaluadores/${evaluadoresId}`)
     }
 })
 

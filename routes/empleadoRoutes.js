@@ -52,7 +52,7 @@ router.post('/empleados/eliminar/:id', roleAuthorization(['Administrador']), asy
     }
 
     try {
-        const result = await Empleado.findByIdAndUpdate(empleadoId, { estaActivo: false, endline: Date.now });
+        const result = await Empleado.findByIdAndUpdate(empleadoId, { estaActivo: false, endline: Date.now() })
         if (result) {
             res.redirect('/empleados')
         } else {
@@ -60,7 +60,7 @@ router.post('/empleados/eliminar/:id', roleAuthorization(['Administrador']), asy
         }
     } catch (error) {
         console.error('Error desactivando empleado:', error)
-        res.status(500).send('Error en el servidor')
+        res.redirect(`/empleados/${empleadoId}`)
     }
 })
 
