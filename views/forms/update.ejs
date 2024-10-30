@@ -73,7 +73,10 @@
                                     <button type="button" class="btn-add-option" onclick="addOption('<%= pregunta._id %>')">Añadir Opción</button>
                                 </div>
 
-                                <button type="button" class="btn-delete" onclick="deleteQuestion('<%= pregunta._id %>')">Eliminar Pregunta</button>
+                                <button type="button" class="btn-delete" onclick="deleteQuestion('<%= pregunta._id %>')">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                                
                             </div>
                             <% questionIndex++ %>
                         <% } %>

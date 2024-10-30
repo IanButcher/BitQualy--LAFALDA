@@ -346,98 +346,86 @@ iframe {
     max-width: 180px;
 }
 
+/* Estilos generales para los botones dentro de .right-panel */
 .right-panel button,
 .right-panel a {
-    width: 100%;
-    margin-bottom: 12px;
+    width: 200px; /* Ancho fijo */
+    margin: 0 auto 12px; /* Centrado y margen inferior */
     padding: 12px 0;
     font-size: 16px;
     font-weight: 600;
-    color: #fff;
-    border: none;
-    border-radius: 25px; /* Botones redondeados */
+    color: black; /* Color de texto en negro */
+    border: 2px solid black; /* Borde negro */
+    border-radius: 25px; /* Redondeado */
     text-align: center;
     text-decoration: none;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: block; /* En bloque para que se apilen verticalmente */
     transition: background-color 0.3s ease;
-    color: black; /* Color de texto en negro */
     background-color: transparent; /* Fondo transparente */
-    border: 2px solid black; /* Borde en negro */
 }
 
 /* Botón "Añadir Pregunta" */
 .btn-add {
-    background-color:transparent; /* Verde */
+    background-color: transparent;
+    color: #23c22e; /* Verde suave para el texto */
+    border-color: #23c22e; /* Borde verde */
+    width: 200px; /* Ancho fijo */
+    margin: 0 auto 12px; /* Centrado y margen inferior */
+    padding: 12px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: black; /* Color de texto en negro */
+    border: 2px solid black; /* Borde negro */
+    border-radius: 25px; /* Redondeado */
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    display: block; /* En bloque para que se apilen verticalmente */
+    transition: background-color 0.3s ease;
+    background-color: transparent; /* Fondo transparente */
+    margin-left: 580px;
+    margin-top: -55px;
 }
 
 .btn-add:hover {
-    background-color: #23c22e96;
-}
-
-.btn-add i {
-    margin-right: 8px;
-    font-size: 18px;
+    background-color: #23c22e; /* Fondo verde al pasar el cursor */
+    color: white; /* Texto en blanco al hacer hover */
 }
 
 /* Botón "Guardar Cambios" */
 .btn-save {
-    width: 200px;
-    margin-bottom: 12px;
+    background-color: #3ac23f; /* Verde más oscuro para fondo */
+    color: white; /* Texto en blanco */
+    border: none; /* Sin borde */
+    width: 200px; /* Ancho fijo */
+    margin: 0 auto 12px; /* Centrado y margen inferior */
     padding: 12px 0;
     font-size: 16px;
     font-weight: 600;
-    color: #fff;
-    border: none;
-    border-radius: 25px; /* Botones redondeados */
+    color: black; /* Color de texto en negro */
+    border: 2px solid black; /* Borde negro */
+    border-radius: 25px; /* Redondeado */
     text-align: center;
     text-decoration: none;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: block; /* En bloque para que se apilen verticalmente */
     transition: background-color 0.3s ease;
-    color: black; /* Color de texto en negro */
     background-color: transparent; /* Fondo transparente */
-    border: 2px solid black; /* Borde en negro */
-    margin-top: 10px;
+    margin-left: 10px;
+    
 }
 
-.btn-save {
-    background-color: #3ac23fd0;
-}
-
-.btn-save i {
-    margin-right: 8px;
-    font-size: 18px;
-}
-
-/* Botón "Descargar PDF" */
-.btn-download {
-    background-color:transparent; /* Azul */
-}
-
-.btn-download:hover {
-    background-color: #2b4faab6;
-}
-
-.btn-download i {
-    margin-right: 8px;
-    font-size: 18px;
-}
-
-/* Botón "Cancelar" */
-.btn-cancel {
-    background-color:transparent; /* Rojo */
+.btn-save:hover {
+    background-color: #2e9f2f; /* Fondo verde oscuro al pasar el cursor */
+    color: white; /* Texto blanco */
 }
 
 .btn-cancel:hover {
-    background-color: #b32323;
+    background-color: #c0392b; /* Rojo más oscuro al hacer hover */
+    transform: translateY(-2px); /* Pequeña elevación */
 }
-
-.btn-cancel i {
-    margin-right: 8px;
-    font-size: 18px;
+.btn-download:hover {
+    background-color: #2980b9; /* Azul más oscuro al hacer hover */
+    transform: translateY(-2px); /* Pequeña elevación */
 }
