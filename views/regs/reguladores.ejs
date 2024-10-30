@@ -26,7 +26,7 @@
 
         <!-- Panel principal -->
         <main class="main-content">
-            <header class="notification-icon user-photo<%- include('../partials/headerU') %>  </header> 
+            <header class="notification-icon user-photo"<%- include('../partials/headerU') %></header> 
                 <div class="search-section">
                     <form action="/reguladores/buscar" method="GET" class="search-form">
                         <input type="text" name="query" placeholder="Buscar ..." value="<%= typeof query !== 'undefined' ? query : '' %>">
