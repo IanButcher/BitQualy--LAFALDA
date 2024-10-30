@@ -62,10 +62,10 @@ input[type="search"] {
 
 .search-icon {
     font-size: 18px;  /* Tamaño del ícono */
-    color: #ff0000;  /* Color del ícono */
+    color: #888;  /* Color del ícono */
     cursor: pointer;
-    padding: 0;  /* Sin espaciado adicional */
-    margin-left: 10px; /* Espaciado a la izquierda del ícono */
+    padding: 10px;  /* Sin espaciado adicional */
+    margin-left: 15px; /* Espaciado a la izquierda del ícono */
 }
 
 .search-container:hover {
