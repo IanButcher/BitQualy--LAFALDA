@@ -15,37 +15,20 @@ app.use(express.json())
 
 // GET route --> Todas las evaluaciones
 router.get('/evaluaciones', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async (req, res) => {
-    if (req.user){
+    if (req.user) {
         try {
             let query = {}
-            
-            if (req.user.rol === 'Empleado') {
-                query = { 
-                    empleado: req.user._id, 
-                    'formulario.tipo': 'autoevaluacion', 
-                    $or: [{ completed: true }, { deadline: { $gte: new Date() } }]
-                }
-            } else if (req.user.rol === 'Evaluador') {
-                query = {
-                    $or: [
-                        { empleado: req.user._id, completed: false }, 
-                        { assignedBy: req.user._id },
-                        { completed: true, 'formulario.tipo': 'evaluacion', empleado: req.user._id }
-                    ]
-                }
-            } else if (req.user.rol === 'Intermediario' || req.user.rol === 'Administrador') {
-                query = {}
-            }
-            
+                        
             const evaluaciones = await Evaluacion.find(query)
                 .populate('formulario')
                 .populate('empleado')
                 .populate('assignedBy')
 
+            // Calculate completed and incomplete totals
             const totalCompletas = evaluaciones.filter(e => e.completed).length
             const totalIncompletas = evaluaciones.filter(e => !e.completed).length
-            
-            res.render('evals/evaluaciones', { evaluaciones, user: req.user, totalCompletas, totalIncompletas })
+
+            res.render('evals/evaluaciones', { evaluaciones, user: req.user, totalCompletas, totalIncompletas });
         } catch (error) {
             console.error('Error fetching evaluations:', error)
             res.redirect('/home')
@@ -54,7 +37,6 @@ router.get('/evaluaciones', roleAuthorization(['Administrador', 'Evaluador', 'In
         res.redirect('/')
     }
 })
-
 
 // GET route --> Mostrar evaluacion especifica
 router.get('/evaluaciones/new', roleAuthorization(['Administrador', 'Evaluador']), async(req, res) => {
@@ -73,7 +55,7 @@ router.get('/evaluaciones/new', roleAuthorization(['Administrador', 'Evaluador']
 })
 
 // POST route --> Assign autoevaluacion
-router.post('/evaluaciones/assign-autoevaluacion', roleAuthorization(['Administrador', 'Evaluador']), async(req, res) => {
+router.post('/evaluaciones/assign-autoevaluacion', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async(req, res) => {
     try {
         const { empleadoId, formularioId, deadline } = req.body
 
@@ -88,6 +70,7 @@ router.post('/evaluaciones/assign-autoevaluacion', roleAuthorization(['Administr
         })
 
         await newEvaluacion.save()
+        
 
         const empleado = await baseUserSchema.findById(empleadoId)
 
@@ -163,32 +146,42 @@ router.post('/evaluaciones/assign-autoevaluacion-to-all', roleAuthorization(['Ad
     }
 })
 
-
-
 // GET route --> Ver autoevaluacion
-router.get('/evaluaciones/my-autoevaluacion/:id', roleAuthorization(['Empleado', 'Administrador', 'Intermediario', 'Evaluador']), async(req, res) => {
+router.get('/evaluaciones/my-autoevaluacion/:id', roleAuthorization(['Empleado', 'Administrador', 'Intermediario', 'Evaluador']), async (req, res) => {
     try {
-        const { id } = req.params;
-        const evaluacion = await Evaluacion.findById(id).populate('formulario').populate('empleado')
+        const { id } = req.params
+        const evaluacion = await Evaluacion.findById(id).populate('formulario').populate('empleado').populate('assignedBy')
 
         if (!evaluacion) {
             return res.redirect('/evaluaciones')
         }
-        if (evaluacion.completed == true) {
+
+        // Restrict access to only the assigned empleado or authorized roles
+        if (evaluacion.empleado._id.toString() !== req.user._id.toString() && req.user.rol === 'Empleado') {
+            return res.status(403).send('No autorizado para responder esta evaluación.')
+        }
+
+        if (evaluacion.completed) {
             return res.redirect('/evaluaciones')
         }
 
-        const now = new Date()
+        const now = new Date();
         if (evaluacion.deadline && evaluacion.deadline < now) {
             return res.redirect('/evaluaciones')
         }
 
-        res.render('evals/awnser', { evaluacion, formulario: evaluacion.formulario, user: req.user, empleado: evaluacion.empleado ? evaluacion.empleado.nombre : 'Empleado no asignado' })
+        res.render('evals/awnser', { 
+            evaluacion, 
+            formulario: evaluacion.formulario, 
+            user: req.user, 
+            empleado: evaluacion.empleado ? evaluacion.empleado.nombre : 'Empleado no asignado' 
+        });
     } catch (error) {
         console.error('Error fetching evaluation:', error)
-        res.status(500).send('Error interno del servidor')
+        res.redirect('/evaluaciones')
     }
-})
+});
+
 
 // POST route --> Create & redirect
 router.post('/evaluaciones/create-evaluacion', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async (req, res) => {
@@ -222,7 +215,7 @@ router.get('/evaluaciones/answer/:id', roleAuthorization(['Administrador', 'Eval
     try {
         const { id } = req.params
         
-        const evaluacion = await Evaluacion.findById(id).populate('formulario').populate('empleado')
+        const evaluacion = await Evaluacion.findById(id).populate('formulario').populate('empleado').populate('assignedBy')
         
         if (!evaluacion || evaluacion.completed) {
             return res.redirect('/evaluaciones')
@@ -240,9 +233,7 @@ router.get('/evaluaciones/answer/:id', roleAuthorization(['Administrador', 'Eval
     }
 })
 
-
-
-// POST route --> Enviar nueva evaluación
+// POST route --> Enviar evaluación
 router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async (req, res) => {
     try {
         const { formulario: formularioId, empleado, respuestas, tipo, deadline } = req.body;
@@ -296,6 +287,7 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
             const nuevaEvaluacion = new Evaluacion({
                 formulario: formulario._id,
                 empleado: empleado,
+                assignedBy: req.user._id,
                 respuestas: respuestasFormateadas,
                 deadline: formattedDeadline,
                 completed: true
@@ -315,24 +307,24 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
     }
 })
 
-
-
 // GET route --> Preview evaluacion
-router.get('/evaluaciones/preview/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async(req, res) => {
+router.get('/evaluaciones/preview/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async (req, res) => {
     if (req.user) {
         try {
-            const { id } = req.params; 
+            const { id } = req.params
 
-            const evaluacion = await Evaluacion.findById(id).populate({
-                path: 'formulario',
-                populate: { path: 'questions' } 
-            })
+            const evaluacion = await Evaluacion.findById(id)
+                .populate({
+                    path: 'formulario',
+                    populate: { path: 'questions' }
+                })
+                .populate('empleado')
+                .populate('assignedBy')
 
             if (!evaluacion) {
                 return res.redirect('/evaluaciones')
             }
 
-            
             res.render('evals/evaluacion', { evaluacion, user: req.user })
         } catch (error) {
             console.error('Error fetching evaluation:', error)
@@ -342,6 +334,7 @@ router.get('/evaluaciones/preview/:id', roleAuthorization(['Administrador', 'Eva
         res.redirect('/')
     }
 })
+
 
 // POST route --> Comentarios
 router.post('/evaluaciones/:id/comentarios', roleAuthorization(['Intermediario', 'Administrador']), async (req, res) => {

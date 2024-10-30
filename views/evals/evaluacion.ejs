@@ -34,7 +34,8 @@
         
         <!-- Contenido principal de la evaluación -->
         <div class="evaluation-content">
-            <h4 class="employee-info">Empleado: <%= evaluacion.empleado %></h4>
+            <h4 class="employee-info">Empleado: <%= evaluacion.empleado.nombre %> <%= evaluacion.empleado.apellido %> | <%= evaluacion.empleado.legajo %></h4>
+            <h4 class="employee-info">Evaluador: <%= evaluacion.assignedBy.nombre %> <%= evaluacion.assignedBy.apellido %> | <%= evaluacion.assignedBy.legajo %></h4>
             <div class="respuestas-container">
                 <% evaluacion.formulario.questions.forEach((pregunta, index) => { %>
                     <div class="form-section">

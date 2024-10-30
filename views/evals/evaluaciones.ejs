@@ -44,33 +44,58 @@
                     .filter(evaluacion => evaluacion.formulario.tipo === 'autoevaluacion' && !evaluacion.completed)
                     .sort((a, b) => new Date(b.deadline) - new Date(a.deadline)); 
                 %>
-                
-                <% pendingAutoevaluations.forEach(evaluacion => { %>
-                    <div class="evaluation-card"
-                         data-tipo="<%= evaluacion.formulario.tipo %>"
-                         data-empleado="<%= evaluacion.empleado ? evaluacion.empleado._id : '' %>"
-                         data-assignedBy="<%= evaluacion.assignedBy ? evaluacion.assignedBy._id : '' %>">
-                         
-                        <img src="<%= evaluacion.empleado.imagePath ? '/' + evaluacion.empleado.imagePath : '/img/user.png' %>" class="eval-img">
-                        <div class="eval-info">
-                            <p><strong><%= evaluacion.empleado ? evaluacion.empleado.nombre + ' ' + evaluacion.empleado.apellido : 'Empleado no asignado' %></strong></p>
-                            <p>Asignada por: <%= evaluacion.assignedBy ? evaluacion.assignedBy.nombre + ' ' + evaluacion.assignedBy.apellido : 'N/A' %> | Fecha Fin: <%= moment(evaluacion.deadline).format('ddd MMM DD YYYY') %></p>
-                            <br>
-                            <p class="eval-status"><%= evaluacion.formulario ? evaluacion.formulario.titulo : 'Formulario no asignado' %></p>
-                        </div>  
-                        <div class="eval-summary">
-                            <% if (user.rol === 'Administrador' || user.rol === 'Evaluador' || user.rol === 'Intermediario' && String(evaluacion.empleado._id) === String(user._id)) { %>
-                                <p>No Respondida</p>
-                            <% } %>
-                            <% const now = new Date() %>
-                            <% if (evaluacion.deadline < now) { %>
-                                <p>La fecha limite fue superada</p>
-                            <% } else if (user.rol === 'Empleado' || user.rol === 'Administrador' || user.rol === 'Evaluador' || user.rol === 'Intermediario' && String(evaluacion.empleado._id) === String(user._id)) { %>
-                                <a href="/evaluaciones/my-autoevaluacion/<%= evaluacion._id %>" class="btn">Responder Evaluación</a>
-                            <% } %>
+                <% if (user && (user.rol == 'Empleado' || user.rol == 'Administrador' || user.rol == 'Intermediario' || user.rol == 'Evaluador')) { %>
+                    <% evaluaciones.forEach(evaluacion => { %>
+                        <% if (evaluacion.formulario.tipo === 'autoevaluacion'&& String(evaluacion.empleado._id) === String(user._id) && evaluacion.completed != true) { %>
+                            <div class="evaluation-card">
+                                <img src="empleado1.jpg" class="eval-img">
+                                <div class="eval-info">
+                                    <p><strong><%= evaluacion.empleado ? evaluacion.empleado.nombre : 'Empleado no asignado' %></strong></p>
+                                    <p>Fecha Inicio: <%= evaluacion.fechaInicio ? evaluacion.fechaInicio.toDateString() : 'N/A' %> | Fecha Fin: <%= evaluacion.deadline ? evaluacion.deadline.toDateString() : 'Sin fecha' %></p>
+                                    <br>
+                                    <p class="eval-status"><%= evaluacion.formulario ? evaluacion.formulario.titulo : 'Formulario no asignado' %></p>
+                                </div>
+                                <div class="eval-summary">
+                                    <a href="/evaluaciones/my-autoevaluacion/<%= evaluacion._id %>" class="btn">Responder Evaluación</a>
+                                </div>
+                            </div>
+                        <% } %>    
+                    <% }) %>
+                <% } %>
+                <% if (user && (user.rol == 'Administrador' || user.rol == 'Intermediario' || (user.rol == 'Evaluador' && String(evaluacion.assignedBy._id) === String(user._id)))) {%>
+                    <% pendingAutoevaluations.forEach(evaluacion => { %>
+                        <div class="evaluation-card"
+                            data-tipo="<%= evaluacion.formulario.tipo %>"
+                            data-empleado="<%= evaluacion.empleado ? evaluacion.empleado._id : '' %>"
+                            data-assignedBy="<%= evaluacion.assignedBy ? evaluacion.assignedBy._id : '' %>">
+                            
+                            <img src="<%= evaluacion.empleado && evaluacion.empleado.imagePath ? '/' + evaluacion.empleado.imagePath : '/img/user.png' %>" class="eval-img">
+                            <div class="eval-info">
+                                <p><strong><%= evaluacion.empleado ? evaluacion.empleado.nombre + ' ' + evaluacion.empleado.apellido : 'Empleado no asignado' %></strong></p>
+                                <p>Asignada por: <%= evaluacion.assignedBy ? evaluacion.assignedBy.nombre + ' ' + evaluacion.assignedBy.apellido : 'N/A' %> | Fecha Fin: <%= moment(evaluacion.deadline).format('ddd MMM DD YYYY') %></p>
+                                <br>
+                                <p class="eval-status"><%= evaluacion.formulario ? evaluacion.formulario.titulo : 'Formulario no asignado' %></p>
+                            </div>  
+                            <div class="eval-summary">
+                                <!-- For roles that can view, but not answer if they are not the assigned user -->
+                                <% if ((user.rol === 'Administrador' || user.rol === 'Evaluador' || user.rol === 'Intermediario') && String(evaluacion.empleado._id) !== String(user._id)) { %>
+                                    <p>No Respondida</p>
+                                <% } %>
+                    
+                                <!-- If the deadline has passed, show an alert -->
+                                <% const now = new Date(); %>
+                                <% if (evaluacion.deadline < now) { %>
+                                    <p>La fecha límite fue superada</p>
+                                <% } else if (String(evaluacion.empleado._id) === String(user._id)) { %>
+                                    <!-- Only the assigned employee can answer pending evaluations -->
+                                    <a href="/evaluaciones/my-autoevaluacion/<%= evaluacion._id %>" class="btn">Responder Evaluación</a>
+                                <% } else { %>
+                                    <p>Evaluación en espera</p>
+                                <% } %>
+                            </div>
                         </div>
-                    </div>
-                <% }) %>
+                    <% }) %>
+                <% } %>
             </section>
 
             <% if (user && (user.rol === 'Administrador' || user.rol === 'Intermediario' || user.rol === 'Evaluador')) { %>    
@@ -119,24 +144,28 @@
                 .sort((a, b) => new Date(b.deadline) - new Date(a.deadline));
             %>
 
-            <% completedEvaluations.forEach(evaluacion => { %>
-                <div class="evaluation-card" 
-                     data-tipo="<%= evaluacion.formulario.tipo %>" 
-                     data-empleado="<%= evaluacion.empleado ? evaluacion.empleado._id : '' %>" 
-                     data-assignedBy="<%= evaluacion.assignedBy ? evaluacion.assignedBy._id : '' %>">
-                     
-                    <img src="<%= evaluacion.empleado.imagePath ? '/' + evaluacion.empleado.imagePath : '/img/user.png' %>" class="eval-img">
-                    <div class="eval-info">
-                        <p><strong><%= evaluacion.empleado ? evaluacion.empleado.nombre + ' ' + evaluacion.empleado.apellido : 'Empleado no asignado' %></strong></p>
-                        <p>Fecha Fin: <%= moment(evaluacion.deadline).format('ddd MMM DD YYYY') %></p>
-                        <br>
-                        <p class="eval-status"><%= evaluacion.formulario ? evaluacion.formulario.titulo : 'Formulario no asignado' %></p>
-                    </div>
-                    <div class="eval-summary">
-                        <p><%= evaluacion.formulario.titulo %></p>
-                        <a href="/evaluaciones/preview/<%= evaluacion._id %>" class="btn">Ver Evaluaciones</a>
-                    </div>
-                </div>
+            <% evaluaciones.forEach(evaluacion => { %>
+                <% if (user && (user.rol == 'Administrador' || user.rol == 'Intermediario' || (user.rol == 'Evaluador' && String(evaluacion.assignedBy._id) === String(user._id)) || (user.rol == 'Empleado' && String(evaluacion.empleado._id) === String(user._id) && evaluacion.formulario.tipo == 'autoevaluacion'))) {%>
+                    <% if (evaluacion.completed == true) {%>
+                        <div class="evaluation-card" 
+                            data-tipo="<%= evaluacion.formulario.tipo %>" 
+                            data-empleado="<%= evaluacion.empleado ? evaluacion.empleado._id : '' %>" 
+                            data-assignedBy="<%= evaluacion.assignedBy ? evaluacion.assignedBy._id : '' %>">
+                            
+                            <img src="<%= evaluacion.empleado.imagePath ? '/' + evaluacion.empleado.imagePath : '/img/user.png' %>" class="eval-img">
+                            <div class="eval-info">
+                                <p><strong><%= evaluacion.empleado ? evaluacion.empleado.nombre + ' ' + evaluacion.empleado.apellido : 'Empleado no asignado' %></strong></p>
+                                <p>Fecha Fin: <%= moment(evaluacion.deadline).format('ddd MMM DD YYYY') %></p>
+                                <br>
+                                <p class="eval-status"><%= evaluacion.formulario ? evaluacion.formulario.titulo : 'Formulario no asignado' %></p>
+                            </div>
+                            <div class="eval-summary">
+                                <p><%= evaluacion.formulario.titulo %></p>
+                                <a href="/evaluaciones/preview/<%= evaluacion._id %>" class="btn">Ver Evaluación</a>
+                            </div>
+                        </div>
+                    <% } %>
+                <% } %>
             <% }) %>
         </section>
     </main>
