@@ -72,8 +72,9 @@
                         <% } %>    
                     <% }) %>
                 <% } %>
-                <% if (user && (user.rol == 'Administrador' || user.rol == 'Intermediario' || (user.rol == 'Evaluador' && String(evaluacion.assignedBy._id) === String(user._id)))) {%>
+                <% if (user && (user.rol == 'Administrador' || user.rol == 'Intermediario' || user.rol == 'Evaluador')) { %>
                     <% pendingAutoevaluations.forEach(evaluacion => { %>
+                        <% if (user.rol == 'Administrador' || user.rol == 'Intermediario' || (user.rol == 'Evaluador' && String(evaluacion.assignedBy._id) === String(user._id))) { %>
                         <div class="evaluation-card"
                             data-tipo="<%= evaluacion.formulario.tipo %>"
                             data-empleado="<%= evaluacion.empleado ? evaluacion.empleado._id : '' %>"
@@ -104,6 +105,7 @@
                                 <% } %>
                             </div>
                         </div>
+                        <% } %>
                     <% }) %>
                 <% } %>
             </section>
@@ -154,7 +156,7 @@
             %>
 
             <% evaluaciones.forEach(evaluacion => { %>
-                <% if (user && (user.rol == 'Administrador' || user.rol == 'Intermediario' || (user.rol == 'Evaluador' && String(evaluacion.assignedBy._id) === String(user._id)) || (user.rol == 'Empleado' && String(evaluacion.empleado._id) === String(user._id) && evaluacion.formulario.tipo == 'autoevaluacion'))) {%>
+                <% if (user && (user.rol == 'Administrador' || user.rol == 'Intermediario' || (user.rol == 'Evaluador' && String(evaluacion.assignedBy?._id) === String(user._id)) || (user.rol == 'Empleado' && String(evaluacion.empleado?._id) === String(user._id) && evaluacion.formulario.tipo == 'autoevaluacion'))) {%>
                     <% if (evaluacion.completed == true) {%>
                         <div class="evaluation-card" 
                             data-tipo="<%= evaluacion.formulario.tipo %>" 
