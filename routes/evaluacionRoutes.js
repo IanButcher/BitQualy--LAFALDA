@@ -137,10 +137,35 @@ router.post('/evaluaciones/assign-autoevaluacion-to-all', roleAuthorization(['Ad
         const evaluationIds = evaluations.map(e => e._id)
         await baseUserSchema.updateMany({ _id: { $in: activeUsers.map(u => u._id) } }, { $push: { evaluacionesAsignadas: { $each: evaluationIds } } });
 
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS
+            }
+        })
+
+        for (let user of activeUsers) {
+            const mailOptions = {
+                from: process.env.EMAIL_USER,
+                to: user.email,
+                subject: '¡Te han asignado una evaluación!',
+                text: `Hola ${user.nombre},\n\n¡Te han asignado una nueva evaluación que debes realizar!\n\nTienes hasta ${localDeadline} para completarla.\n`
+            }
+
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    console.error(`Error sending email to ${user.email}:`, error)
+                } else {
+                    console.log(`Correo enviado a ${user.email}:`, info.response)
+                }
+            })
+        }
+
         res.status(200).send('Autoevaluacion asignada a todos los usuarios activos')
     } catch (error) {
         console.error('Error assigning autoevaluacion to all:', error)
-        res.status(500).send('Error al asignar autoevaluacion a todos')
+        res.status(200).send('Error al asignar autoevaluacion a todos')
     }
 })
 
