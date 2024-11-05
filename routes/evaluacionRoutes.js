@@ -11,15 +11,16 @@ const mongoose = require('mongoose')
 const roleAuthorization = require('../middleware/roleAuth')
 const nodemailer = require('nodemailer')
 const moment = require('moment')
+const path = require('path')
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 // GET route --> Todas las evaluaciones
-router.get('/evaluaciones', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async (req, res) => {
+router.get('/evaluaciones', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async(req, res) => {
     if (req.user) {
         try {
             let query = {}
-                        
+
             const evaluaciones = await Evaluacion.find(query)
                 .populate('formulario')
                 .populate('empleado')
@@ -71,7 +72,7 @@ router.post('/evaluaciones/assign-autoevaluacion', roleAuthorization(['Administr
         })
 
         await newEvaluacion.save()
-        
+
 
         const empleado = await baseUserSchema.findById(empleadoId)
 
@@ -145,7 +146,7 @@ router.post('/evaluaciones/assign-autoevaluacion-to-all', roleAuthorization(['Ad
 })
 
 // GET route --> Ver autoevaluacion
-router.get('/evaluaciones/my-autoevaluacion/:id', roleAuthorization(['Empleado', 'Administrador', 'Intermediario', 'Evaluador']), async (req, res) => {
+router.get('/evaluaciones/my-autoevaluacion/:id', roleAuthorization(['Empleado', 'Administrador', 'Intermediario', 'Evaluador']), async(req, res) => {
     try {
         const { id } = req.params
         const evaluacion = await Evaluacion.findById(id).populate('formulario').populate('empleado').populate('assignedBy')
@@ -168,11 +169,11 @@ router.get('/evaluaciones/my-autoevaluacion/:id', roleAuthorization(['Empleado',
             return res.redirect('/evaluaciones')
         }
 
-        res.render('evals/awnser', { 
-            evaluacion, 
-            formulario: evaluacion.formulario, 
-            user: req.user, 
-            empleado: evaluacion.empleado ? evaluacion.empleado.nombre : 'Empleado no asignado' 
+        res.render('evals/awnser', {
+            evaluacion,
+            formulario: evaluacion.formulario,
+            user: req.user,
+            empleado: evaluacion.empleado ? evaluacion.empleado.nombre : 'Empleado no asignado'
         });
     } catch (error) {
         console.error('Error fetching evaluation:', error)
@@ -182,7 +183,7 @@ router.get('/evaluaciones/my-autoevaluacion/:id', roleAuthorization(['Empleado',
 
 
 // POST route --> Create & redirect
-router.post('/evaluaciones/create-evaluacion', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async (req, res) => {
+router.post('/evaluaciones/create-evaluacion', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async(req, res) => {
     try {
         const { formularioId, empleadoId, deadline } = req.body
         const localDeadline = deadline ? moment(deadline, 'YYYY-MM-DD').endOf('day').toDate() : null
@@ -194,7 +195,7 @@ router.post('/evaluaciones/create-evaluacion', roleAuthorization(['Administrador
             assignedBy: req.user._id,
             deadline: localDeadline,
             completed: false,
-            respuestas: [] 
+            respuestas: []
         })
 
         await newEvaluacion.save()
@@ -208,12 +209,12 @@ router.post('/evaluaciones/create-evaluacion', roleAuthorization(['Administrador
 })
 
 // GET route --> Display form to answer an evaluacion
-router.get('/evaluaciones/answer/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async (req, res) => {
+router.get('/evaluaciones/answer/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async(req, res) => {
     try {
         const { id } = req.params
-        
+
         const evaluacion = await Evaluacion.findById(id).populate('formulario').populate('empleado').populate('assignedBy')
-        
+
         if (!evaluacion || evaluacion.completed) {
             return res.redirect('/evaluaciones')
         }
@@ -231,7 +232,7 @@ router.get('/evaluaciones/answer/:id', roleAuthorization(['Administrador', 'Eval
 })
 
 // POST route --> Enviar evaluación
-router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async (req, res) => {
+router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async(req, res) => {
     try {
         const { formulario: formularioId, empleado, respuestas, tipo, deadline } = req.body;
         const formattedDeadline = deadline ? moment(deadline, 'YYYY-MM-DD', true).endOf('day').toDate() : new Date(); // Default to current date if undefined
@@ -258,9 +259,9 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
 
         // Autoevaluacion
         if (formulario.tipo === 'autoevaluacion') {
-            const evaluacion = await Evaluacion.findOne({ 
-                formulario: formularioId, 
-                empleado: empleado, 
+            const evaluacion = await Evaluacion.findOne({
+                formulario: formularioId,
+                empleado: empleado,
                 deadline: { $gte: new Date() },
                 completed: false
             })
@@ -279,7 +280,7 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
                 $addToSet: { completedEvaluations: evaluacion._id }
             })
 
-        // Evaluacion
+            // Evaluacion
         } else if (formulario.tipo === 'evaluacion') {
             const nuevaEvaluacion = new Evaluacion({
                 formulario: formulario._id,
@@ -305,7 +306,7 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
 })
 
 // GET route --> Preview evaluacion
-router.get('/evaluaciones/preview/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async (req, res) => {
+router.get('/evaluaciones/preview/:id', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario']), async(req, res) => {
     if (req.user) {
         try {
             const { id } = req.params
@@ -334,7 +335,7 @@ router.get('/evaluaciones/preview/:id', roleAuthorization(['Administrador', 'Eva
 
 
 // POST route --> Comentarios
-router.post('/evaluaciones/:id/comentarios', roleAuthorization(['Intermediario', 'Administrador']), async (req, res) => {
+router.post('/evaluaciones/:id/comentarios', roleAuthorization(['Intermediario', 'Administrador']), async(req, res) => {
     try {
         const { id } = req.params
         const { texto } = req.body
@@ -386,6 +387,11 @@ router.get('/evaluaciones/:id/pdf', roleAuthorization(['Administrador', 'Evaluad
 
                 // Pipe PDF to the response
                 doc.pipe(res);
+
+                doc.image('public\\img\\Logo_Bitsion.png', 50, 30, { width: 100 })
+                    .text('Proportional to width', 0, 0)
+
+                doc.moveDown()
 
                 // Title and General Data
                 doc.fontSize(18).text('Evaluación Detallada', { align: 'center' });
