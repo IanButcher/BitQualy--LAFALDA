@@ -388,7 +388,7 @@ router.get('/evaluaciones/:id/pdf', roleAuthorization(['Administrador', 'Evaluad
                 // Pipe PDF to the response
                 doc.pipe(res);
 
-                doc.image('./public/img/Logo_Bitsion.png', 50, 30, { width: 100 })
+                doc.image('../public/img/Logo_Bitsion.png', 50, 30, { width: 100 })
                     .text('Proportional to width', 0, 0)
 
                 doc.moveDown()
