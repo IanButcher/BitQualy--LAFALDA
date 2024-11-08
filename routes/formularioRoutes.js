@@ -80,52 +80,45 @@ router.get('/formularios/preview/:id', roleAuthorization(['Administrador']), asy
 router.post('/formularios/save-form', roleAuthorization(['Administrador']), async (req, res) => {
     if (req.user){
         try {
-            // Extraer toda la informacion del ejs
             const { 'form-title': titulo, 'form-type': tipo, ...formData } = req.body
 
-            // Procesar preguntas
             const questions = []
-
-            let questionIndex = 1;
+            let questionIndex = 1
             while (formData[`question${questionIndex}`]) {
                 const question = {
-                    titulo: formData[`question${questionIndex}`],  // (preguntaSchema.titulo)
-                    descripcion: formData[`description${questionIndex}`],  // (preguntaSchema.descripcion)
-                    porcentaje: formData[`percentage${questionIndex}`],  //  (preguntaSchema.porcentaje)
-                    tipo: formData[`type${questionIndex}`], // (preguntaSchema.tipo)
+                    titulo: formData[`question${questionIndex}`],
+                    descripcion: formData[`description${questionIndex}`],
+                    porcentaje: formData[`percentage${questionIndex}`],
+                    tipo: formData[`type${questionIndex}`],
                     options: []
-                };
+                }
 
-                // Tipo multiple o checkbox
                 if (question.tipo === 'multiple' || question.tipo === 'checkbox') {
-                    let optionIndex = 1;
+                    let optionIndex = 1
                     while (formData[`option${questionIndex}_${optionIndex}`]) {
-                        question.options.push(formData[`option${questionIndex}_${optionIndex}`]);
-                        optionIndex++;
+                        question.options.push({
+                            text: formData[`option${questionIndex}_${optionIndex}`],
+                            score: parseFloat(formData[`option${questionIndex}_${optionIndex}_score`]) || 0
+                        })
+                        optionIndex++
                     }
                 }
 
-                // Sumar al array
-                questions.push(question);
-                questionIndex++;
+                questions.push(question)
+                questionIndex++
             }
 
-            // Crear instancia Formulario 
             const newFormulario = new Formulario({
                 titulo,
                 tipo,  
                 questions  
-            });
+            })
 
-            // Save the Formulario to the database
-            await newFormulario.save()
-
-            // Save into admin created users
+            await newFormulario.save();
             await baseUserSchema.findByIdAndUpdate(req.user._id, {
                 $push: { formsCreados: newFormulario._id }
             })
 
-            // Redirect to the formularios list after saving
             res.redirect('/formularios')
         } catch (error) {
             console.error('Error saving formulario:', error)
@@ -135,6 +128,7 @@ router.post('/formularios/save-form', roleAuthorization(['Administrador']), asyn
         res.redirect('/')
     }
 })
+
 
 // PUT route --> Delete Form
 router.post('/formularios/eliminar/:id', roleAuthorization(['Administrador']), async (req, res) => {

@@ -54,13 +54,13 @@
                       <% } else if (pregunta.tipo === 'multiple') { %>
                         <% pregunta.options.forEach(option => { %>
                           <label class="label-option">
-                            <input type="radio" name="respuestas[<%= index %>]" value="<%= option %>" class="input-radio"> <%= option %>
+                            <input type="radio" name="respuestas[<%= index %>]" value="<%= option.text %>" class="input-radio"> <%= option.text %>
                           </label>
                         <% }) %>
                       <% } else if (pregunta.tipo === 'checkbox') { %>
                         <% pregunta.options.forEach(option => { %>
                           <label class="label-option">
-                            <input type="checkbox" name="respuestas[<%= index %>][]" value="<%= option %>" class="input-checkbox"> <%= option %>
+                            <input type="checkbox" name="respuestas[<%= index %>][]" value="<%= option.text %>" class="input-checkbox"> <%= option.text %>
                           </label>
                         <% }) %>
                       <% } %>

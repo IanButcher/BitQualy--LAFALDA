@@ -21,8 +21,11 @@ const preguntaSchema = new mongoose.Schema({
         required: true,
         enum: ['texto', 'multiple', 'checkbox']
     },
-    options: [String]  // Opcional para multiple y checkbox
-});
+    options: [{
+        text: String,
+        score: Number
+    }]  
+})
 
 const formularioSchema = new mongoose.Schema({
     titulo: {

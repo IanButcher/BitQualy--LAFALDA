@@ -55,13 +55,13 @@
                             <% } else if (pregunta.tipo === 'multiple') { %>
                                 <% pregunta.options.forEach(option => { %>
                                     <label class="label-option">
-                                        <input type="radio" disabled <%= respuesta.includes(option) ? 'checked' : '' %>> <%= option %>
+                                        <input type="radio" disabled <%= respuesta.includes(option) ? 'checked' : '' %>> <%= option.text %>
                                     </label><br>
                                 <% }) %>
                             <% } else if (pregunta.tipo === 'checkbox') { %>
                                 <% pregunta.options.forEach(option => { %>
                                     <label class="label-option">
-                                        <input type="checkbox" disabled <%= respuesta.includes(option) ? 'checked' : '' %>> <%= option %>
+                                        <input type="checkbox" disabled <%= respuesta.includes(option) ? 'checked' : '' %>> <%= option.text %>
                                     </label><br>
                                 <% }) %>
                             <% } %>
@@ -69,6 +69,7 @@
                     </div>
                 <% }) %>
             </div>
+            <p>Puntaje total: <%= evaluacion.score %></p>
         </div>
 
         <% if (user.rol === 'Intermediario' || user.rol === 'Administrador') { %>
