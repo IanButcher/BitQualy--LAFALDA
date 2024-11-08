@@ -259,30 +259,28 @@ router.get('/evaluaciones/answer/:id', roleAuthorization(['Administrador', 'Eval
 router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador', 'Evaluador', 'Intermediario', 'Empleado']), async (req, res) => {
     try {
         const { formulario: formularioId, empleado, respuestas, tipo, deadline } = req.body;
-        const formattedDeadline = deadline ? moment(deadline, 'YYYY-MM-DD', true).endOf('day').toDate() : new Date(); // Default to current date if undefined
-        console.log('Received deadline:', formattedDeadline);
+        const formattedDeadline = deadline ? moment(deadline, 'YYYY-MM-DD').endOf('day').toDate() : new Date()
 
-        console.log('Received deadline:', deadline)
+        // Fetch the formulario with questions and options
         const formulario = await Formulario.findById(formularioId).populate('questions')
         if (!formulario) {
             return res.status(404).send('Formulario no encontrado')
         }
 
         let totalScore = 0
-        // Respuestas
         const respuestasFormateadas = formulario.questions.map((question, index) => {
-            const respuesta = respuestas[index];
+            const respuesta = respuestas[index]
             let questionScore = 0
 
-            
             if (question.tipo === 'multiple' || question.tipo === 'checkbox') {
                 const selectedOptions = Array.isArray(respuesta) ? respuesta : [respuesta]
+                
                 selectedOptions.forEach(selectedOption => {
                     const option = question.options.find(opt => opt.text === selectedOption)
                     if (option) {
                         questionScore += option.score
                     }
-                });
+                })
             } else {
                 // For text-type or numeric answers
                 const numericAnswer = parseFloat(respuesta)
@@ -291,55 +289,25 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
                 }
             }
 
-            // Apply question's porcentaje to its score
+            // Apply question's porcentaje weight
             totalScore += (questionScore * question.porcentaje) / 100
 
-            // Return formatted response as string for storage
+            // Return formatted response as a string
             return Array.isArray(respuesta) ? respuesta.join(', ') : respuesta.toString()
         })
 
-        // Autoevaluacion
-        if (formulario.tipo === 'autoevaluacion') {
-            const evaluacion = await Evaluacion.findOne({ 
-                formulario: formularioId, 
-                empleado: empleado, 
-                deadline: { $gte: new Date() },
-                completed: false
-            })
-
-            if (!evaluacion) {
-                console.log('Evaluacion no encontrada')
-                return res.redirect('/evaluaciones')
-            }
-
-            evaluacion.respuestas = respuestasFormateadas
-            evaluacion.completed = true
-            evaluacion.score = totalScore
-            await evaluacion.save()
-
-            // Añadir a completadas 
-            await baseUserSchema.findByIdAndUpdate(empleado, {
-                $addToSet: { completedEvaluations: evaluacion._id }
-            })
-
-        // Evaluacion
-        } else if (formulario.tipo === 'evaluacion') {
-            const nuevaEvaluacion = new Evaluacion({
-                formulario: formulario._id,
-                empleado: empleado,
-                assignedBy: req.user._id,
-                respuestas: respuestasFormateadas,
-                deadline: formattedDeadline,
-                completed: true,
-                score: totalScore
-            })
-            await nuevaEvaluacion.save()
-            console.log(nuevaEvaluacion)
-
-            await baseUserSchema.findByIdAndUpdate(req.user._id, {
-                $addToSet: { evaluacionesHechas: nuevaEvaluacion._id }
-            })
-        }
+        // Save evaluation with calculated total score
+        const newEvaluacion = new Evaluacion({
+            formulario: formulario._id,
+            empleado,
+            assignedBy: req.user._id,
+            respuestas: respuestasFormateadas,
+            completed: true,
+            score: totalScore,
+            deadline: formattedDeadline
+        })
+        
+        await newEvaluacion.save()
 
         res.redirect('/evaluaciones')
     } catch (error) {
