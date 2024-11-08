@@ -379,94 +379,111 @@ router.get('/evaluaciones/:id/pdf', roleAuthorization(['Administrador', 'Evaluad
                 }
 
                 // Initialize PDF document
-                const doc = new PDFDocument();
+                const doc = new PDFDocument({ margin: 40 });
 
-                // Set response headers for PDF
                 res.setHeader('Content-Disposition', `attachment; filename=evaluation_${id}.pdf`);
                 res.setHeader('Content-Type', 'application/pdf');
 
-                // Pipe PDF to the response
                 doc.pipe(res);
 
-                doc.image('../public/img/Logo_Bitsion.png', 50, 30, { width: 100 })
-                    .text('Proportional to width', 0, 0)
+                const textStartX = 20;
+                const logoWidth = 100;
+                doc.image('./public/img/Logo-Bitsion.jpeg', doc.page.width - logoWidth - 20, 20, { width: logoWidth });
 
-                doc.moveDown()
+                doc.fontSize(18).text('Evaluación Detallada', 20, 20, { align: 'left' }).moveDown();
 
-                // Title and General Data
-                doc.fontSize(18).text('Evaluación Detallada', { align: 'center' });
-                doc.moveDown();
-                doc.fontSize(12).text(`Código Evaluación: ${id}`, { align: 'left' });
-                doc.text(`Estado: ${evaluacion.completed ? 'Finalizada' : 'Pendiente'}`);
-                doc.text(`Fecha impresión: ${new Date().toLocaleDateString()}`);
-                doc.moveDown();
+                doc.fontSize(12)
+                    .text(`Código Evaluación: ${id}`, 20)
+                    .text(`Estado: ${evaluacion.completed ? 'Finalizada' : 'Pendiente'}`, 20)
+                    .text(`Fecha impresión: ${new Date().toLocaleDateString()}`, 20)
+                    .moveDown();
 
-                // Employee and Form Details
-                doc.fontSize(14).text(`Formulario: ${evaluacion.formulario.titulo || 'N/A'}`);
-                doc.text(`Empleado: ${evaluacion.empleado ? `${evaluacion.empleado.nombre} ${evaluacion.empleado.apellido} legajo: ${evaluacion.empleado.legajo}`   : 'N/A'}`);
-        doc.text(`Asignado por: ${evaluacion.assignedBy ? `${evaluacion.assignedBy.nombre} ${evaluacion.assignedBy.apellido} legajo: ${evaluacion.assignedBy.legajo}` : 'N/A'}`);
-        doc.text(`Fecha límite: ${evaluacion.deadline ? evaluacion.deadline.toDateString() : 'Sin fecha'}`);
+                doc.fontSize(14)
+                    .text(`Formulario: ${evaluacion.formulario.titulo || 'N/A'}`)
+                    .text(`Empleado: ${evaluacion.empleado ? `${evaluacion.empleado.nombre} ${evaluacion.empleado.apellido} legajo: ${evaluacion.empleado.legajo}` : 'N/A'}`)
+    .text(`Asignado por: ${evaluacion.assignedBy ? `${evaluacion.assignedBy.nombre} ${evaluacion.assignedBy.apellido} legajo: ${evaluacion.assignedBy.legajo}` : 'N/A'}`)
+    .text(`Fecha límite: ${evaluacion.deadline ? evaluacion.deadline.toDateString() : 'Sin fecha'}`)
+    .moveDown();
+
+if (evaluacion.comentarios && evaluacion.comentarios.length > 0) {
+    doc.fontSize(14).text('Comentarios:', { underline: true }).moveDown();
+    evaluacion.comentarios.forEach((comentario, index) => {
+        const { intermediario, texto } = comentario;
+        const commenterName = intermediario.nombre ? `${intermediario.nombre} ${intermediario.apellido || ''}` : 'Anónimo';
+        doc.fontSize(12).text(`Comentario ${index + 1} por ${commenterName}:`);
+        doc.fontSize(10).text(texto, { width: 500, align: 'justify' }).moveDown();
+    });
+}
+doc.moveDown();
+
+const tableTop = doc.y;
+const rowPadding = 5;
+const cellPaddingTop = 3;  // Top padding for rows
+const columnWidths = { title: 90, description: 180, answer: 150, percentage: 40 };
+const columnPositions = {
+    title: 50,
+    description: 150,
+    answer: 350,
+    percentage: 500
+};
+
+// Function to draw the table header
+const drawTableHeader = (y) => {
+    doc.fontSize(12)
+       .text('Competencia', columnPositions.title, y)
+       .text('Descripción', columnPositions.description, y)
+       .text('Respuesta', columnPositions.answer, y)
+       .text('Pond.', columnPositions.percentage, y);
+    doc.moveTo(50, y + 15).lineTo(550, y + 15).stroke();
+};
+
+// Draw the initial header
+drawTableHeader(tableTop);
+
+// Function to calculate dynamic row height based on the longest cell content
+const getMaxRowHeight = (texts, widths) => {
+    return texts.reduce((maxHeight, text, index) => {
+        const cellHeight = doc.fontSize(10).heightOfString(text, { width: widths[index] });
+        return Math.max(maxHeight, cellHeight + rowPadding * 2);
+    }, rowPadding * 2);
+};
+
+// Table Rows with Page Break Check and Top Padding
+evaluacion.formulario.questions.forEach((question, index) => {
+    const respuesta = evaluacion.respuestas[index] || 'N/A';
+    const rowHeight = getMaxRowHeight(
+        [question.titulo || 'Sin título', question.descripcion || 'Sin descripción', respuesta, `${question.porcentaje || 0}%`],
+        [columnWidths.title, columnWidths.description, columnWidths.answer, columnWidths.percentage]
+    );
+
+    // Check if there's enough space for the row; if not, add a page
+    if (doc.y + rowHeight > doc.page.height - doc.page.margins.bottom) {
+        doc.addPage();
+        // Redraw the table header at the top of the new page
+        drawTableHeader(doc.y);
         doc.moveDown();
+    }
 
-        // Comments Section
-        if (evaluacion.comentarios && evaluacion.comentarios.length > 0) {
-            doc.fontSize(14).text('Comentarios:', { underline: true });
-            doc.moveDown();
-        
-            evaluacion.comentarios.forEach((comentario, index) => {
-                const { intermediario, texto } = comentario;
-                const commenterName = intermediario.nombre ? `${intermediario.nombre} ${intermediario.apellido || ''}` : 'Anonimo';
-        
-                // Display the commenter's name and comment text without indentation
-                doc.fontSize(12).text(`Comentario ${index + 1} por ${commenterName}:`, { continued: false });
-                doc.fontSize(10).text(texto); // No indent here, so it aligns left
-                doc.moveDown();
-            });
-        }
-        doc.moveDown();
+    // Get current Y position for the row with top padding
+    const rowY = doc.y + cellPaddingTop;
 
-        // Define column positions
-        const tableTop = doc.y;
-        const columnPositions = {
-            title: 50,
-            description: 150,
-            answer: 350,
-            percentage: 500
-        };
+    // Draw each cell with the calculated row height
+    doc.fontSize(10)
+        .text(question.titulo || 'Sin título', columnPositions.title, rowY, { width: columnWidths.title, align: 'justify' })
+        .text(question.descripcion || 'Sin descripción', columnPositions.description, rowY, { width: columnWidths.description, align: 'justify' })
+        .text(respuesta, columnPositions.answer, rowY, { width: columnWidths.answer, align: 'justify' })
+        .text(`${question.porcentaje || 0}%`, columnPositions.percentage, rowY, { width: columnWidths.percentage, align: 'center' });
 
-        // Draw Header Row
-        doc.fontSize(12).text('Competencia', columnPositions.title, tableTop);
-        doc.text('Descripción', columnPositions.description, tableTop);
-        doc.text('Respuesta', columnPositions.answer, tableTop);
-        doc.text('Pond.', columnPositions.percentage, tableTop);
-        doc.moveDown();
+    // Draw a horizontal line below the row
+    doc.moveTo(50, rowY + rowHeight - cellPaddingTop).lineTo(550, rowY + rowHeight - cellPaddingTop).stroke();
 
-        // Draw a line under the header
-        doc.moveTo(50, doc.y).lineTo(550, doc.y).stroke();
+    // Move down to the next row starting position
+    doc.y = rowY + rowHeight - cellPaddingTop;
+});
 
-        // Table Rows: Each question and answer
-        evaluacion.formulario.questions.forEach((question, index) => {
-            const respuesta = evaluacion.respuestas[index] || 'N/A';
-            const rowY = doc.y + 5; // Slightly space each row
-
-            // Print question details in each column
-            doc.text(question.titulo || 'Sin título', columnPositions.title, rowY);
-            doc.text(question.descripcion || 'Sin descripción', columnPositions.description, rowY);
-            doc.text(respuesta, columnPositions.answer, rowY);
-            doc.text(`${question.porcentaje || 0}%`, columnPositions.percentage, rowY);
-
-            // Move down for the next row
-            doc.moveDown(1.5);
-        });
-
-        // Final Score Section
-        doc.moveDown();
-        doc.fontSize(14).text(`Puntuación Total: ${evaluacion.score}`);
-        
-
-        // Finalize PDF
-        doc.end();
-
+doc.moveDown();
+doc.fontSize(14).text(`Puntuación Total: ${evaluacion.score}`, textStartX);
+doc.end()
     } catch (error) {
         console.error('Error generating PDF:', error);
         res.status(500).send('Error interno del servidor');
