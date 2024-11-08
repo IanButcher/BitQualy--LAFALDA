@@ -268,17 +268,34 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
             return res.status(404).send('Formulario no encontrado')
         }
 
+        let totalScore = 0
         // Respuestas
         const respuestasFormateadas = formulario.questions.map((question, index) => {
-            const respuesta = respuestas[index]
+            const respuesta = respuestas[index];
+            let questionScore = 0
 
-            if (Array.isArray(respuesta)) {
-                return respuesta.join(', ')
-            } else if (typeof respuesta === 'object' && respuesta !== null) {
-                return Object.values(respuesta).join(', ')
+            
+            if (question.tipo === 'multiple' || question.tipo === 'checkbox') {
+                const selectedOptions = Array.isArray(respuesta) ? respuesta : [respuesta]
+                selectedOptions.forEach(selectedOption => {
+                    const option = question.options.find(opt => opt.text === selectedOption)
+                    if (option) {
+                        questionScore += option.score
+                    }
+                });
             } else {
-                return respuesta ? respuesta.toString() : ''
+                // For text-type or numeric answers
+                const numericAnswer = parseFloat(respuesta)
+                if (!isNaN(numericAnswer)) {
+                    questionScore = numericAnswer
+                }
             }
+
+            // Apply question's porcentaje to its score
+            totalScore += (questionScore * question.porcentaje) / 100
+
+            // Return formatted response as string for storage
+            return Array.isArray(respuesta) ? respuesta.join(', ') : respuesta.toString()
         })
 
         // Autoevaluacion
@@ -297,6 +314,7 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
 
             evaluacion.respuestas = respuestasFormateadas
             evaluacion.completed = true
+            evaluacion.score = totalScore
             await evaluacion.save()
 
             // Añadir a completadas 
@@ -312,7 +330,8 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
                 assignedBy: req.user._id,
                 respuestas: respuestasFormateadas,
                 deadline: formattedDeadline,
-                completed: true
+                completed: true,
+                score: totalScore
             })
             await nuevaEvaluacion.save()
             console.log(nuevaEvaluacion)

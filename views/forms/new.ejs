@@ -87,7 +87,8 @@
                                 <!-- Contenedor de preguntas adicionales -->
                                 <div id="additional-questions">
                                 </div>
-                        
+                                <!-- Add this part inside the existing `options-group` div in the `new.ejs` file for each option -->
+
                                 <!-- Sección de botones de modificación -->
                                 
                             </div>
@@ -121,68 +122,77 @@
        // Incremento de contador
         let questionCount = 1;
 
-// Obtén elementos del DOM
+        // Obtén elementos del DOM
         const addQuestionBtn = document.getElementById('add-question-btn');
         const additionalQuestions = document.getElementById('additional-questions');
 
-// Evento de botón para añadir preguntas
-    addQuestionBtn.addEventListener('click', () => {
-        const questionNumber = questionCount++;
-        const newQuestion = `
-        <div class="form-group question-container" id="question-group-${questionNumber}">
-            <div class="alineados2">
-                <label for="question${questionNumber}">Pregunta ${questionNumber}:</label>
-                <input type="text" id="question${questionNumber}" name="question${questionNumber}" placeholder="Escribe tu pregunta aquí" required>
-                <label for="type${questionNumber}">Tipo de Pregunta:</label>
-                <select name="type${questionNumber}" id="type${questionNumber}" onchange="toggleOptions(${questionNumber})">
-                    <option value="texto">Texto</option>
-                    <option value="multiple">Opción Múltiple</option>
-                    <option value="checkbox">Checkbox</option>
-                </select>
-                <button type="button" class="btn-delete" onclick="deleteQuestion(${questionNumber})">
-                    <i class="fas fa-trash"></i>
-                </button>
-            </div>
-
-            <label for="description${questionNumber}">Descripción:</label>
-            <textarea id="description${questionNumber}" name="description${questionNumber}" placeholder="Descripción ..."></textarea>
-
-            <div class="alineados">
-                <label for="percentage${questionNumber}">Porcentaje:</label>
-                <input type="number" class="percentage-input" id="percentage${questionNumber}" name="percentage${questionNumber}" min="0" max="100" required oninput="updateColor(${questionNumber}), maxPorcentage(${questionNumber})">
-            </div>
-
-            <div class="options-group" id="options${questionNumber}" style="display: none;">
-                <div id="options-container-${questionNumber}">
-                    <div class="option-item">
-                        <label>Opción 1:</label>
-                        <input type="text" name="option${questionNumber}_1" placeholder="Escribe una opción">
-                    </div>
+        // Evento de botón para añadir preguntas
+    
+        addQuestionBtn.addEventListener('click', () => {
+            const questionNumber = questionCount++;
+            const newQuestion = `
+            <div class="form-group question-container" id="question-group-${questionNumber}">
+                <div class="alineados2">
+                    <label for="question${questionNumber}">Pregunta ${questionNumber}:</label>
+                    <input type="text" id="question${questionNumber}" name="question${questionNumber}" placeholder="Escribe tu pregunta aquí" required>
+                    <label for="type${questionNumber}">Tipo de Pregunta:</label>
+                    <select name="type${questionNumber}" id="type${questionNumber}" onchange="toggleOptions(${questionNumber})">
+                        <option value="texto">Texto</option>
+                        <option value="multiple">Opción Múltiple</option>
+                        <option value="checkbox">Checkbox</option>
+                    </select>
+                    <button type="button" class="btn-delete" onclick="deleteQuestion(${questionNumber})">
+                        <i class="fas fa-trash"></i>
+                    </button>
                 </div>
-                <button type="button" class="btn-add-option" onclick="addOption(${questionNumber})">
-                    <i class="fas fa-plus"></i> Añadir Opción
-                </button>
-            </div>
-        </div>
-    `;
-    additionalQuestions.insertAdjacentHTML('beforeend', newQuestion);
-});
 
-// Función para agregar opciones dinámicas
-function addOption(questionNumber) {
-    const optionsContainer = document.getElementById(`options-container-${questionNumber}`);
-    const optionCount = optionsContainer.querySelectorAll('.option-item').length + 1;
-    const newOption = `
-        <div class="option-item">
-            <label>Opción ${optionCount}:</label>
-            <input type="text" name="option${questionNumber}_${optionCount}" placeholder="Escribe una opción">
-            <button type="button" class="btn-delete-option" onclick="deleteOption(this)">
-                <i class="fas fa-trash"></i>
-            </button>
-        </div>
-    `;
-    optionsContainer.insertAdjacentHTML('beforeend', newOption);
-}
+                <label for="description${questionNumber}">Descripción:</label>
+                <textarea id="description${questionNumber}" name="description${questionNumber}" placeholder="Descripción ..."></textarea>
+
+                <div class="alineados">
+                    <label for="percentage${questionNumber}">Porcentaje:</label>
+                    <input type="number" class="percentage-input" id="percentage${questionNumber}" name="percentage${questionNumber}" min="0" max="100" required oninput="updateColor(${questionNumber}), maxPorcentage(${questionNumber})">
+                </div>
+
+                <!-- Options with scores -->
+                <div class="options-group" id="options${questionNumber}" style="display: none;">
+                    <div id="options-container-${questionNumber}">
+                        <div class="option-item">
+                            <label>Opción 1:</label>
+                            <input type="text" name="option${questionNumber}_1" placeholder="Escribe una opción" required>
+                            <label>Puntuación:</label>
+                            <input type="number" name="option${questionNumber}_1_score" placeholder="Puntuación" min="0" step="1" required>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-add-option" onclick="addOption(${questionNumber})">
+                        <i class="fas fa-plus"></i> Añadir Opción
+                    </button>
+                </div>
+            </div>
+            `;
+            additionalQuestions.insertAdjacentHTML('beforeend', newQuestion)
+        })
+
+
+
+        // Función para agregar opciones dinámicas
+        function addOption(questionNumber) {
+            const optionsContainer = document.getElementById(`options-container-${questionNumber}`);
+            const optionCount = optionsContainer.querySelectorAll('.option-item').length + 1;
+            const newOption = `
+                <div class="option-item">
+                    <label>Opción ${optionCount}:</label>
+                    <input type="text" name="option${questionNumber}_${optionCount}" placeholder="Escribe una opción" required>
+                    <label>Puntuación:</label>
+                    <input type="number" name="option${questionNumber}_${optionCount}_score" placeholder="Puntuación" min="0" step="1" required>
+                    <button type="button" class="btn-delete-option" onclick="deleteOption(this)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+            optionsContainer.insertAdjacentHTML('beforeend', newOption);
+        }
+
 
 // Función para eliminar una pregunta
 function deleteQuestion(questionNumber) {
@@ -192,15 +202,46 @@ function deleteQuestion(questionNumber) {
 
 // Función para eliminar una opción
 function deleteOption(optionElement) {
-    optionElement.parentElement.remove();
+    optionElement.parentElement.remove()
 }
 
-// Mostrar u ocultar opciones dependiendo del tipo de pregunta
+// Toggle visibility and required attribute for options based on question type
 function toggleOptions(questionNumber) {
-    const typeSelect = document.getElementById(`type${questionNumber}`);
-    const optionsGroup = document.getElementById(`options${questionNumber}`);
-    optionsGroup.style.display = typeSelect.value === 'multiple' || typeSelect.value === 'checkbox' ? 'block' : 'none';
+    const typeSelect = document.getElementById(`type${questionNumber}`)
+    const optionsGroup = document.getElementById(`options${questionNumber}`)
+    
+    // Determine visibility based on question type
+    const isOptionsVisible = typeSelect.value === 'multiple' || typeSelect.value === 'checkbox'
+    optionsGroup.style.display = isOptionsVisible ? 'block' : 'none'
+
+    // Get all inputs within options group
+    const optionInputs = optionsGroup.querySelectorAll('input[type="text"], input[type="number"]')
+    
+    // Add or remove required attribute based on visibility
+    optionInputs.forEach(input => {
+        if (isOptionsVisible) {
+            input.setAttribute('required', 'required')
+        } else {
+            input.removeAttribute('required')
+        }
+    })
 }
+
+// Add a submit event listener to handle hidden required fields
+document.getElementById('form-modification').addEventListener('submit', function(event) {
+    // Get all option groups
+    const optionGroups = document.querySelectorAll('.options-group')
+    
+    // Remove required attributes from inputs in hidden option groups
+    optionGroups.forEach(group => {
+        if (group.style.display === 'none') {
+            const inputs = group.querySelectorAll('input')
+            inputs.forEach(input => input.removeAttribute('required'))
+        }
+    })
+})
+
+
 
 // Restricciones de porcentaje (Max 100)
 function maxPorcentage(questionNumber) {

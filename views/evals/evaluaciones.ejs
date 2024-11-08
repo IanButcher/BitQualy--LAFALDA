@@ -168,6 +168,8 @@
                                 <p><strong><%= evaluacion.empleado ? evaluacion.empleado.nombre + ' ' + evaluacion.empleado.apellido : 'Empleado no asignado' %></strong></p>
                                 <p>Fecha Fin: <%= moment(evaluacion.deadline).format('ddd MMM DD YYYY') %></p>
                                 <br>
+                                <p>Puntaje: <%= evaluacion.score ? evaluacion.score : 'S/P' %></p>
+                                <br>
                                 <p class="eval-status"><%= evaluacion.formulario ? evaluacion.formulario.titulo : 'Formulario no asignado' %></p>
                             </div>
                             <div class="eval-summary">
