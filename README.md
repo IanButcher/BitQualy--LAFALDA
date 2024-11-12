@@ -90,24 +90,34 @@ Cada rol tiene acceso limitado a determinadas funcionalidades según sus permiso
 - **GET /**: página de login (todos los usuarios).
 - **GET /user-creator**: nuevo usuario creado (solo administrador).
 - **POST /save-new-users**: Crea un nuevo usuario (solo administrador).
+- **GET /my-account**: Pagina propia de usuario para cambiar contraseña, mail y/o foto de perfil.
+- **POST /my-account/update**: Actualiza los datos del usuario "logueado".
 
 2. Route - Empleado:
 - **GET /empleados**: Visualiza todos los empleados (para administración, evaluadores e intermediarios).
 - **GET /empleados/:id**: Obtiene el empleado por ID (para administración, evaluadores e intermediarios).
+- **POST /empleados/eliminar/:id**: Realiza un "soft-delete" del usuario seleccionado (solo administrador).
 
 3. Route - Evaluador:
 - **GET /evaluadores**: Visualiza todos los evaluadores (solo administración).
 - **GET /evaluadores/:id**: Obtiene el evaluador por ID (solo administración).
-
+- **POST /evaluadores/eliminar/:id**: Realiza un "soft-delete" del usuario seleccionado (solo administrador).
+  
 4. Route -Intermediario:
 - **GET /reguladores**: Visualiza todos los reguladores (solo administración).
 - **GET /reguladores/:id**: Obtiene el reguladores por ID (solo administración).
+- **POST /reguladores/eliminar/:id**: Realiza un "soft-delete" del usuario seleccionado (solo administrador).
 
 5. Route - Evaluación:
 - **GET /evaluaciones/new**: Muestra la evaluación específica (para todos los usuarios).
+- **POST /evaluaciones/assign-autoevaluacion**: Asigna una autoevaluacion a un usuario seleccionado (para evaluadores y administradores).
+- **POST /evaluaciones/assign-autoevaluacion-to-all**: Asigna una autoevaluacion a todos los usuarios activos (para todos los usuarios).
+- **GET /evaluaciones/my-autoevaluacion/:id**: Pagina de responder una autoevaluacion asignada.
 - **GET /evaluaciones/answer/:id/**: Obtiene las preguntas por ID (solo administración).
 - **POST /evaluaciones/save-evaluacion**: Crea una nueva evaluación (solo administrador).
 - **GET /evaluaciones/preview/:id**: Obtiene una evaluación por ID (solo administración).
+- **POST /evaluaciones/:id/comentarios**: Escribir y enviar un comentario en la evaluacion actual (para administradores e intermediarios).
+- **GET /evaluaciones/:id/pdf**: Descargar evaluacion como pdf (para administrador, evaluador e intermediario).
 
 6. Route - Formularios:
 - **GET /formularios**: Muestra los formularios (solo administración).
