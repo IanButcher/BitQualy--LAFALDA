@@ -42,13 +42,15 @@
                       <% } else if (pregunta.tipo === 'multiple') { %>
                         <% pregunta.options.forEach(option => { %>
                           <label class="label-option">
-                            <input type="radio" name="respuestas[<%= index %>]" class="input-radio" value="<%= option.text %>"> <%= option.text %>
+                            <input type="radio" name="respuestas[<%= index %>]" class="input-radio" value="<%= option.text %>">
+                            <%= option.text %> (Puntos: <%= option.score %>)
                           </label>
                         <% }) %>
                       <% } else if (pregunta.tipo === 'checkbox') { %>
                         <% pregunta.options.forEach(option => { %>
                           <label class="label-option">
-                            <input type="checkbox" name="respuestas[<%= index %>][]" class="input-checkbox" value="<%= option.text %>"> <%= option.text %>
+                            <input type="checkbox" name="respuestas[<%= index %>][]" class="input-checkbox" value="<%= option.text %>" data-score="<%= option.score %>">
+                            <%= option.text %>
                           </label>
                         <% }) %>
                       <% } %>
@@ -77,14 +79,13 @@
                 const radioButtons = form.querySelectorAll('input[type="radio"]:checked');
                 const checkboxes = form.querySelectorAll('input[type="checkbox"]:checked');
 
-                // Convertir los botones de radio seleccionados en cadenas
+                // Mostrar valores seleccionados en consola para depuración
                 radioButtons.forEach((radio) => {
                     console.log(`Selected Radio Value: ${radio.value}`);
                 });
 
-                // Convertir las casillas de verificación seleccionadas en cadenas
                 checkboxes.forEach((checkbox) => {
-                    console.log(`Selected Checkbox Value: ${checkbox.value}`);
+                    console.log(`Selected Checkbox Value: ${checkbox.value}, Score: ${checkbox.getAttribute('data-score')}`);
                 });
 
                 // Permitir que el formulario se envíe después de la manipulación

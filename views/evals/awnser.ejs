@@ -54,13 +54,15 @@
                       <% } else if (pregunta.tipo === 'multiple') { %>
                         <% pregunta.options.forEach(option => { %>
                           <label class="label-option">
-                            <input type="radio" name="respuestas[<%= index %>]" value="<%= option.text %>" class="input-radio"> <%= option.text %>
+                            <input type="radio" name="respuestas[<%= index %>]" value="<%= option.text %>" class="input-radio"> 
+                            <%= option.text %> (Puntos: <%= option.score %>)
                           </label>
                         <% }) %>
                       <% } else if (pregunta.tipo === 'checkbox') { %>
                         <% pregunta.options.forEach(option => { %>
                           <label class="label-option">
-                            <input type="checkbox" name="respuestas[<%= index %>][]" value="<%= option.text %>" class="input-checkbox"> <%= option.text %>
+                            <input type="checkbox" name="respuestas[<%= index %>][]" value="<%= option.text %>" class="input-checkbox" data-score="<%= option.score %>"> 
+                            <%= option.text %> (Puntos: <%= option.score %>)
                           </label>
                         <% }) %>
                       <% } %>
@@ -89,13 +91,13 @@
               const radioButtons = form.querySelectorAll('input[type="radio"]:checked');
               const checkboxes = form.querySelectorAll('input[type="checkbox"]:checked');
 
-              // Imprimir valores seleccionados en la consola
+              // Imprimir valores seleccionados en la consola para depuración
               radioButtons.forEach((radio) => {
                   console.log(`Selected Radio Value: ${radio.value}`);
               });
 
               checkboxes.forEach((checkbox) => {
-                  console.log(`Selected Checkbox Value: ${checkbox.value}`);
+                  console.log(`Selected Checkbox Value: ${checkbox.value}, Score: ${checkbox.getAttribute('data-score')}`);
               });
           });
       });
