@@ -38,7 +38,13 @@
                         <textarea name="description<%= questionIndex + 1 %>"><%= question.descripcion %></textarea>
 
                         <label>Porcentaje:</label>
-                        <input type="number" name="percentage<%= questionIndex + 1 %>" value="<%= question.porcentaje %>" min="0" max="100" required>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" data-value="low" style="width: <%= question.porcentaje %>%;">
+                                <%= question.porcentaje %>%
+                            </div>
+                        </div>
+                        <input type="number" name="percentage<%= questionIndex + 1 %>" value="<%= question.porcentaje %>" min="0" max="100" required>                        
+
 
                         <label>Tipo de Pregunta:</label>
                         <select name="type<%= questionIndex + 1 %>" onchange="toggleOptions('<%= question._id %>', <%= questionIndex + 1 %>)">
@@ -135,6 +141,34 @@
             `
             document.getElementById('additional-questions').insertAdjacentHTML('beforeend', newQuestion)
         })
+
+        function updateProgressBar(percentage, progressBarElement) {
+            progressBarElement.style.width = percentage + '%';
+            progressBarElement.textContent = percentage + '%';
+
+            if (percentage < 50) {
+                progressBarElement.setAttribute('data-value', 'low');
+            } else if (percentage < 80) {
+                progressBarElement.setAttribute('data-value', 'medium');
+            } else {
+                progressBarElement.setAttribute('data-value', 'high');
+            }
+        }
+
+        // Ejemplo: actualiza la barra con el valor de un campo de entrada
+        document.querySelectorAll('input[name^="percentage"]').forEach(input => {
+            const progressBar = input.parentElement.querySelector('.progress-bar');
+
+            input.addEventListener('input', () => {
+                const percentage = Math.min(Math.max(input.value, 0), 100); // Asegura que esté entre 0 y 100
+                updateProgressBar(percentage, progressBar);
+            });
+
+            // Inicializa el valor actual de la barra de progreso
+            const initialPercentage = parseInt(input.value) || 0;
+            updateProgressBar(initialPercentage, progressBar);
+        });
+
     </script>
 </body>
 </html>
