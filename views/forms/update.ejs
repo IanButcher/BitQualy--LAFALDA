@@ -5,221 +5,136 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modificar Formulario</title>
     <link rel="stylesheet" href="/update.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
-    <link rel="icon" type="image/png" href="https://ugc.production.linktr.ee/mj5IciCyRk2puUukygYa_kmwAn8AE84X4N3S5?io=true&size=avatar-v3_0">
 </head>
 <body>
     <nav> <%- include('../partials/navbar') %> </nav>
-        
-    <!-- Panel principal -->
+
+    <!-- Main content -->
     <div class="main-content">
-        <div class="header">
-            <header class="notification-icon user-photo"> <%- include('../partials/headerU') %> </header>
-        </div>
+        <h2>Modificar Formulario</h2>
 
-        <div class="modify-form-section">
-            <h2>Crear Formulario</h2>
+        <!-- Formulario for updating questions and options -->
+        <form id="form-modification" method="POST" action="/formularios/<%= formulario._id %>?_method=PUT">
+            <input type="hidden" id="deleted-questions" name="deleted-questions">
 
-            <!-- Formulario para editar las preguntas y opciones -->
-            <div class="form-editor">
-                <!-- Formulario -->
-                <form id="form-modification" method="POST" action="/formularios/<%= formulario._id %>?_method=PUT">
-                    <h3>Editor de Preguntas</h3>
-                    
-                    <div class="form-group">
-                        <label for="titulo">Título del Formulario:</label>
-                        <input type="text" id="form-title" name="form-title" value="<%= formulario.titulo %>" required>
-                    </div>
+            <!-- Form Title and Type -->
+            <label for="form-title">Título del Formulario:</label>
+            <input type="text" id="form-title" name="form-title" value="<%= formulario.titulo %>" required>
 
-                    <input type="hidden" id="deleted-questions" name="deleted-questions">
+            <label for="form-type">Tipo de Formulario:</label>
+            <select id="form-type" name="form-type" required>
+                <option value="evaluacion" <%= formulario.tipo === 'evaluacion' ? 'selected' : '' %>>Evaluacion</option>
+                <option value="autoevaluacion" <%= formulario.tipo === 'autoevaluacion' ? 'selected' : '' %>>Autoevaluacion</option>
+            </select>
 
-                    <div id="additional-questions">
-                        <% let questionIndex = 1 %>
-                        <% for (pregunta of formulario.questions) {%>
-                            <div class="question-container" id="question-group-<%= pregunta._id %>">
-                                <div class="question-title">Pregunta <%= questionIndex %>:</div>
-                                <input type="text" id="question<%= pregunta._id %>" name="question<%= pregunta._id %>" value="<%= pregunta.titulo %>" required>
+            <!-- Existing Questions -->
+            <div id="additional-questions">
+                <% formulario.questions.forEach((question, questionIndex) => { %>
+                    <div class="question-container" id="question-group-<%= question._id %>">
+                        <input type="hidden" name="question<%= questionIndex + 1 %>_id" value="<%= question._id %>">
 
-                                <div class="question-description">
-                                    <label for="description<%= pregunta._id %>">Descripción:</label>
-                                    <textarea id="description<%= pregunta._id %>" name="description<%= pregunta._id %>"><%= pregunta.descripcion %></textarea>
-                                </div>
+                        <label>Pregunta <%= questionIndex + 1 %>:</label>
+                        <input type="text" name="question<%= questionIndex + 1 %>" value="<%= question.titulo %>" required>
+                        <textarea name="description<%= questionIndex + 1 %>"><%= question.descripcion %></textarea>
 
-                                <label for="percentage<%= pregunta._id %>">Porcentaje:</label>
-                                <input type="number" class="percentage-input" id="percentage<%= pregunta._id %>" name="percentage<%= pregunta._id %>" min="0" max="100" required oninput="updateColor('<%= pregunta._id %>')" value="<%= pregunta.porcentaje %>">
+                        <label>Porcentaje:</label>
+                        <input type="number" name="percentage<%= questionIndex + 1 %>" value="<%= question.porcentaje %>" min="0" max="100" required>
 
-                                <div class="question-type">
-                                    <label for="type<%= pregunta._id %>">Tipo de Pregunta:</label>
-                                    <select name="type<%= pregunta._id %>" id="type<%= pregunta._id %>" onchange="toggleOptions('<%= pregunta._id %>')">
-                                        <option value="texto" <%= pregunta.tipo === 'texto' ? 'selected' : '' %>>Texto</option>
-                                        <option value="multiple" <%= pregunta.tipo === 'multiple' ? 'selected' : '' %>>Opción Múltiple</option>
-                                        <option value="checkbox" <%= pregunta.tipo === 'checkbox' ? 'selected' : '' %>>Checkbox</option>
-                                    </select>
-                                </div>
+                        <label>Tipo de Pregunta:</label>
+                        <select name="type<%= questionIndex + 1 %>" onchange="toggleOptions('<%= question._id %>', <%= questionIndex + 1 %>)">
+                            <option value="texto" <%= question.tipo === 'texto' ? 'selected' : '' %>>Texto</option>
+                            <option value="multiple" <%= question.tipo === 'multiple' ? 'selected' : '' %>>Opción Múltiple</option>
+                            <option value="checkbox" <%= question.tipo === 'checkbox' ? 'selected' : '' %>>Checkbox</option>
+                        </select>
 
-                                <div class="options-group" id="options<%= pregunta._id %>" style="display: <%= (pregunta.tipo === 'multiple' || pregunta.tipo === 'checkbox') ? 'block' : 'none' %>;">
-                                    <div id="options-container-<%= pregunta._id %>">
-                                        <% let opcionIndex = 1 %>
-                                        <% for (opcion of pregunta.options) {%>
-                                            <div class="option-item">
-                                                <label>Opción <%= opcionIndex %>:</label>
-                                                <input type="text" name="option<%= pregunta._id %>_<%= opcionIndex %>" value="<%= opcion %>">
-                                            </div>
-                                            <% opcionIndex++ %>
-                                        <% } %>
+                        <!-- Options for Checkbox or Multiple -->
+                        <div class="options-group" id="options-<%= question._id %>" style="<%= (question.tipo === 'multiple' || question.tipo === 'checkbox') ? '' : 'display:none' %>">
+                            <div id="options-container-<%= question._id %>">
+                                <% question.options.forEach((option, optionIndex) => { %>
+                                    <div class="option-item">
+                                        <label>Opción <%= optionIndex + 1 %>:</label>
+                                        <input type="text" name="option<%= questionIndex + 1 %>_<%= optionIndex + 1 %>" value="<%= option.text %>" required>
+                                        <input type="number" name="option<%= questionIndex + 1 %>_<%= optionIndex + 1 %>_score" value="<%= option.score %>" min="0" required>
                                     </div>
-                                    <button type="button" class="btn-add-option" onclick="addOption('<%= pregunta._id %>')">Añadir Opción</button>
-                                </div>
-
-                                <button type="button" class="btn-delete" onclick="deleteQuestion('<%= pregunta._id %>')">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                                
+                                <% }) %>
                             </div>
-                            <% questionIndex++ %>
-                        <% } %>
+                            <button type="button" class="btn-add-option" onclick="addOption('<%= question._id %>', <%= questionIndex + 1 %>)">Añadir Opción</button>
+                        </div>
+
+                        <button type="button" class="btn-delete" onclick="deleteQuestion('<%= question._id %>')">Eliminar Pregunta</button>
                     </div>
-
-                    <button type="button" class="btn-add" id="add-question-btn">Añadir Pregunta</button>
-                </form>
-
-                <!-- Panel de botones a la derecha -->
-                <div class="button-panel">
-                    <button type="submit" form="form-modification" class="btn-save">Guardar Cambios</button>
-                    <button type="button" class="btn-download" id="download-pdf-btn">Descargar PDF</button>
-                    <a href="/formularios" class="btn-cancel">Cancelar</a>
-                </div>
+                <% }) %>
             </div>
 
-            <!-- Vista previa del formulario -->
-            <div class="preview-section">
-                <h3>Vista Previa del Formulario</h3>
-                <iframe id="preview-frame" src="" width="100%" height="400" frameborder="0" style="display: none;"></iframe>
-            </div>
-        </div>
+            <button type="button" id="add-question-btn" class="btn-add">Añadir Pregunta</button>
+            <button type="submit" class="btn-save">Guardar Cambios</button>
+        </form>
     </div>
 
     <script>
-        // Incremento de contador
-        let questionCount = 1;
+        let questionCount = <%= formulario.questions.length %>
 
-// Obtén elementos del DOM
-        const addQuestionBtn = document.getElementById('add-question-btn');
-        const additionalQuestions = document.getElementById('additional-questions');
+        function toggleOptions(questionId, questionIndex) {
+            const typeSelect = document.querySelector(`[name="type${questionIndex}"]`)
+            const optionsGroup = document.getElementById(`options-${questionId}`)
+            optionsGroup.style.display = (typeSelect.value === 'multiple' || typeSelect.value === 'checkbox') ? 'block' : 'none'
+        }
 
-// Evento de botón para añadir preguntas
-    addQuestionBtn.addEventListener('click', () => {
-        const questionNumber = questionCount++;
-        const newQuestion = `
-        <div class="form-group question-container" id="question-group-${questionNumber}">
-            <div class="alineados2">
-                <label for="question${questionNumber}">Pregunta ${questionNumber}:</label>
-                <input type="text" id="question${questionNumber}" name="question${questionNumber}" placeholder="Escribe tu pregunta aquí" required>
-                <label for="type${questionNumber}">Tipo de Pregunta:</label>
-                <select name="type${questionNumber}" id="type${questionNumber}" onchange="toggleOptions(${questionNumber})">
-                    <option value="texto">Texto</option>
-                    <option value="multiple">Opción Múltiple</option>
-                    <option value="checkbox">Checkbox</option>
-                </select>
-                <button type="button" class="btn-delete" onclick="deleteQuestion(${questionNumber})">
-                    <i class="fas fa-trash"></i>
-                </button>
-            </div>
-
-            <label for="description${questionNumber}">Descripción:</label>
-            <textarea id="description${questionNumber}" name="description${questionNumber}" placeholder="Descripción ..."></textarea>
-
-            <div class="alineados">
-                <label for="percentage${questionNumber}">Porcentaje:</label>
-                <input type="number" class="percentage-input" id="percentage${questionNumber}" name="percentage${questionNumber}" min="0" max="100" required oninput="updateColor(${questionNumber}), maxPorcentage(${questionNumber})">
-            </div>
-
-            <div class="options-group" id="options${questionNumber}" style="display: none;">
-                <div id="options-container-${questionNumber}">
-                    <div class="option-item">
-                        <label>Opción 1:</label>
-                        <input type="text" name="option${questionNumber}_1" placeholder="Escribe una opción">
-                    </div>
+        function addOption(questionId, questionIndex) {
+            const optionsContainer = document.getElementById(`options-container-${questionId}`)
+            const optionCount = optionsContainer.querySelectorAll('.option-item').length + 1
+            const newOption = `
+                <div class="option-item">
+                    <label>Opción ${optionCount}:</label>
+                    <input type="text" name="option${questionIndex}_${optionCount}" required>
+                    <input type="number" name="option${questionIndex}_${optionCount}_score" min="0" required>
                 </div>
-                <button type="button" class="btn-add-option" onclick="addOption(${questionNumber})">
-                    <i class="fas fa-plus"></i> Añadir Opción
-                </button>
-            </div>
-        </div>
-    `;
-    additionalQuestions.insertAdjacentHTML('beforeend', newQuestion);
-});
+            `
+            optionsContainer.insertAdjacentHTML('beforeend', newOption)
+        }
 
-// Función para agregar opciones dinámicas
-function addOption(questionNumber) {
-    const optionsContainer = document.getElementById(`options-container-${questionNumber}`);
-    const optionCount = optionsContainer.querySelectorAll('.option-item').length + 1;
-    const newOption = `
-        <div class="option-item">
-            <label>Opción ${optionCount}:</label>
-            <input type="text" name="option${questionNumber}_${optionCount}" placeholder="Escribe una opción">
-            <button type="button" class="btn-delete-option" onclick="deleteOption(this)">
-                <i class="fas fa-trash"></i>
-            </button>
-        </div>
-    `;
-    optionsContainer.insertAdjacentHTML('beforeend', newOption);
-}
+        function deleteQuestion(questionId) {
+            document.getElementById(`question-group-${questionId}`).remove()
+            const deletedQuestions = document.getElementById('deleted-questions')
+            deletedQuestions.value += `${questionId},`
+        }
 
-// Función para eliminar una pregunta
-function deleteQuestion(questionNumber) {
-    const questionGroup = document.getElementById(`question-group-${questionNumber}`);
-    questionGroup.remove();
-}
+        document.getElementById('add-question-btn').addEventListener('click', () => {
+            questionCount++
+            const newQuestion = `
+                <div class="question-container" id="question-group-${questionCount}">
+                    <input type="hidden" name="question${questionCount}_id" value="">
 
-// Función para eliminar una opción
-function deleteOption(optionElement) {
-    optionElement.parentElement.remove();
-}
+                    <label>Pregunta ${questionCount}:</label>
+                    <input type="text" name="question${questionCount}" required>
+                    <textarea name="description${questionCount}"></textarea>
 
-// Mostrar u ocultar opciones dependiendo del tipo de pregunta
-function toggleOptions(questionNumber) {
-    const typeSelect = document.getElementById(`type${questionNumber}`);
-    const optionsGroup = document.getElementById(`options${questionNumber}`);
-    optionsGroup.style.display = typeSelect.value === 'multiple' || typeSelect.value === 'checkbox' ? 'block' : 'none';
-}
+                    <label>Porcentaje:</label>
+                    <input type="number" name="percentage${questionCount}" min="0" max="100" required>
 
-// Restricciones de porcentaje (Max 100)
-function maxPorcentage(questionNumber) {
-    const percentageInput = document.getElementById(`percentage${questionNumber}`);
-    if (parseFloat(percentageInput.value) > 100) {
-        alert("El porcentaje no puede ser mayor a 100%.");
-        percentageInput.value = 0;  
-    } else if (!TotalMaxPorcentaje()) {
-        percentageInput.value = 0;
-    }
-}
+                    <label>Tipo de Pregunta:</label>
+                    <select name="type${questionCount}" onchange="toggleOptions(${questionCount}, ${questionCount})">
+                        <option value="texto">Texto</option>
+                        <option value="multiple">Opción Múltiple</option>
+                        <option value="checkbox">Checkbox</option>
+                    </select>
 
-// Total de porcentaje máximo
-function TotalMaxPorcentaje() {
-    let total = Array.from(document.querySelectorAll('.percentage-input')).reduce((acc, input) => {
-        return acc + (parseFloat(input.value) || 0);
-    }, 0);
-    if (total > 100) {
-        alert("La suma total de los porcentajes no puede exceder el 100%.");
-        return false;
-    }
-    return true;
-}
+                    <div class="options-group" id="options-${questionCount}" style="display: none;">
+                        <div id="options-container-${questionCount}">
+                            <div class="option-item">
+                                <label>Opción 1:</label>
+                                <input type="text" name="option${questionCount}_1" required>
+                                <input type="number" name="option${questionCount}_1_score" min="0" required>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-add-option" onclick="addOption(${questionCount}, ${questionCount})">Añadir Opción</button>
+                    </div>
 
-// Función de color para porcentaje
-function updateColor(questionNumber) {
-    const input = document.getElementById(`percentage${questionNumber}`);
-    const value = input.value;
-    input.style.backgroundColor = value < 10 ? "#f8d7da" :
-                                  value <= 20 ? "#f5c6cb" :
-                                  value <= 30 ? "#ffeeba" :
-                                  value <= 40 ? "#fff3cd" :
-                                  value <= 50 ? "#d4edda" : "#c3e6cb";
-}
-
+                    <button type="button" class="btn-delete" onclick="deleteQuestion(${questionCount})">Eliminar Pregunta</button>
+                </div>
+            `
+            document.getElementById('additional-questions').insertAdjacentHTML('beforeend', newQuestion)
+        })
     </script>
 </body>
 </html>

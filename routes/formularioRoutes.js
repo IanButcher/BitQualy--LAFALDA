@@ -155,77 +155,76 @@ router.post('/formularios/eliminar/:id', roleAuthorization(['Administrador']), a
 
 // PUT route --> Update Formulario
 router.put('/formularios/:id', roleAuthorization(['Administrador']), async (req, res) => {
-    if (req.user){
-        try {
-            const { id } = req.params;
-            const { 'form-title': titulo, 'form-type': tipo, 'deleted-questions': deletedQuestionIds, ...formData } = req.body
+    try {
+        const { 'form-title': titulo, 'form-type': tipo, 'deleted-questions': deletedQuestionIds, ...formData } = req.body
 
-            // Find the Formulario
-            const formulario = await Formulario.findById(id)
-
-            if (!formulario) {
-                return res.status(404).send('Formulario not found')
-            }
-
-            // Existing questions
-            let updatedQuestions = [...formulario.questions]
-
-            // Questions
-            let questionIndex = 1;
-            while (formData[`question${questionIndex}`]) {
-                const questionId = formData[`question${questionIndex}_id`] 
-
-                const question = {
-                    titulo: formData[`question${questionIndex}`],
-                    descripcion: formData[`description${questionIndex}`],
-                    porcentaje: formData[`percentage${questionIndex}`],
-                    tipo: formData[`type${questionIndex}`],
-                    options: []
-                }
-
-                if (question.tipo === 'multiple' || question.tipo === 'checkbox') {
-                    let optionIndex = 1
-                    while (formData[`option${questionIndex}_${optionIndex}`]) {
-                        question.options.push(formData[`option${questionIndex}_${optionIndex}`])
-                        optionIndex++
-                    }
-                }
-
-                if (questionId) {
-                    const existingQuestionIndex = updatedQuestions.findIndex(q => q._id.toString() === questionId)
-                    if (existingQuestionIndex !== -1) {
-                        updatedQuestions[existingQuestionIndex] = { ...updatedQuestions[existingQuestionIndex], ...question }
-                    }
-                } else {
-                    // Otherwise, it's a new question
-                    updatedQuestions.push(question)
-                }
-
-                questionIndex++
-            }
-
-            if (deletedQuestionIds) {
-                const idsToDelete = deletedQuestionIds.split(',')  // Convert string into array of IDs
-                updatedQuestions = updatedQuestions.filter(q => !idsToDelete.includes(q._id.toString()))
-            }
-
-            // Update 
-            formulario.titulo = titulo
-            formulario.questions = updatedQuestions
-            formulario.tipo = tipo
-
-            // Save updated
-            await formulario.save();
-
-            res.redirect('/formularios');
-        } catch (error) {
-            console.error('Error updating formulario:', error);
-            res.redirect('/formularios/:id')
+        // Retrieve the existing Formulario
+        const formulario = await Formulario.findById(req.params.id)
+        if (!formulario) {
+            return res.status(404).send('Formulario not found')
         }
-    } else {
-        res.redirect('/')
+
+        // Initialize updated questions array
+        let updatedQuestions = []
+
+        // Iterate through each question in the form data
+        let questionIndex = 1
+        while (formData[`question${questionIndex}`]) {
+            const questionId = formData[`question${questionIndex}_id`]
+            const question = {
+                titulo: formData[`question${questionIndex}`],
+                descripcion: formData[`description${questionIndex}`],
+                porcentaje: formData[`percentage${questionIndex}`],
+                tipo: formData[`type${questionIndex}`],
+                options: []
+            }
+
+            // Process options for each question if it is multiple or checkbox
+            if (question.tipo === 'multiple' || question.tipo === 'checkbox') {
+                let optionIndex = 1
+                while (formData[`option${questionIndex}_${optionIndex}`]) {
+                    question.options.push({
+                        text: formData[`option${questionIndex}_${optionIndex}`],
+                        score: parseFloat(formData[`option${questionIndex}_${optionIndex}_score`]) || 0
+                    })
+                    optionIndex++
+                }
+            }
+
+            // If questionId exists, update the existing question; otherwise, add as a new question
+            if (questionId) {
+                const existingQuestionIndex = formulario.questions.findIndex(q => q._id.toString() === questionId)
+                if (existingQuestionIndex !== -1) {
+                    formulario.questions[existingQuestionIndex] = { ...formulario.questions[existingQuestionIndex], ...question }
+                }
+            } else {
+                // Add new question if no questionId
+                formulario.questions.push(question)
+            }
+
+            questionIndex++
+        }
+
+        // Handle deleted questions
+        if (deletedQuestionIds) {
+            const idsToDelete = deletedQuestionIds.split(',')
+            formulario.questions = formulario.questions.filter(q => !idsToDelete.includes(q._id.toString()))
+        }
+
+        // Update Formulario details
+        formulario.titulo = titulo
+        formulario.tipo = tipo
+
+        // Save the updated Formulario
+        await formulario.save()
+
+        res.redirect('/formularios')
+    } catch (error) {
+        console.error('Error updating formulario:', error)
+        res.redirect(`/formularios/preview/${req.params.id}`)
     }
 })
+
 
 
 module.exports = router

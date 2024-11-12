@@ -55,6 +55,7 @@ label {
     margin-bottom: 8px;
     font-weight: bold;
     color: #555;
+
 }
 
 input[type="text"],
@@ -63,6 +64,7 @@ textarea,
 select {
     width: 100%;
     padding: 10px;
+    margin-right: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
