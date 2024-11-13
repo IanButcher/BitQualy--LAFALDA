@@ -28,7 +28,7 @@ router.get('/evaluaciones', roleAuthorization(['Administrador', 'Evaluador', 'In
 
             // Calculate completed and incomplete totals
             const totalCompletas = evaluaciones.filter(e => e.completed).length
-            const totalIncompletas = evaluaciones.filter(e => !e.completed).length
+            const totalIncompletas = evaluaciones.filter(e => !e.completed && e.formulario.tipo === 'autoevaluacion').length
 
             res.render('evals/evaluaciones', { evaluaciones, user: req.user, totalCompletas, totalIncompletas });
         } catch (error) {
