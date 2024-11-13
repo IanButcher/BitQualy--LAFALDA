@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modificar Formulario</title>
     <link rel="stylesheet" href="/update.css">
+    <link rel="icon" type="image/png" href="https://ugc.production.linktr.ee/mj5IciCyRk2puUukygYa_kmwAn8AE84X4N3S5?io=true&size=avatar-v3_0">
 </head>
 <body>
     <nav> <%- include('../partials/navbar') %> </nav>
@@ -60,7 +61,7 @@
                                     <div class="option-item">
                                         <label>Opción <%= optionIndex + 1 %>:</label>
                                         <input type="text" name="option<%= questionIndex + 1 %>_<%= optionIndex + 1 %>" value="<%= option.text %>" required>
-                                        <input type="number" name="option<%= questionIndex + 1 %>_<%= optionIndex + 1 %>_score" value="<%= option.score %>" min="0" required>
+                                        <input style="width: 20%;" type="number" name="option<%= questionIndex + 1 %>_<%= optionIndex + 1 %>_score" value="<%= option.score %>" min="0" required>
                                     </div>
                                 <% }) %>
                             </div>
@@ -74,6 +75,7 @@
 
             <button type="button" id="add-question-btn" class="btn-add">Añadir Pregunta</button>
             <button type="submit" class="btn-save">Guardar Cambios</button>
+            <a href="/home" class="btn-cancel">Cancelar</a>
         </form>
     </div>
 
@@ -93,7 +95,7 @@
                 <div class="option-item">
                     <label>Opción ${optionCount}:</label>
                     <input type="text" name="option${questionIndex}_${optionCount}" required>
-                    <input type="number" name="option${questionIndex}_${optionCount}_score" min="0" required>
+                    <input type="number" style="width: 20%;" name="option${questionIndex}_${optionCount}_score" min="0" required>
                 </div>
             `
             optionsContainer.insertAdjacentHTML('beforeend', newOption)

@@ -192,6 +192,7 @@ textarea {
     color: #333;
     text-decoration: none;
     text-align: center;
+    margin-left: 10px;
 }
 
 .btn-add:hover,
