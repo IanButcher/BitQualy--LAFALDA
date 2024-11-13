@@ -75,13 +75,13 @@ router.post('/save-new-user', upload.single('image'), roleAuthorization(['Admini
             const transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
-                    user: process.env.EMAIL_USER,
-                    pass: process.env.EMAIL_PASS
+                    user: 'bitqualypassmanager@gmail.com',
+                    pass: 'yoif nkxt bqkl zsrf'
                 }
             })
 
             const mailOptions = {
-                from: process.env.EMAIL_USER,
+                from: 'bitqualypassmanager@gmail.com',
                 to: email,
                 subject: 'Cuenta creada - Tu contraseña',
                 text: `Hola ${nombre},\n\nTu cuenta de BitQualy ha sido creada. Tu contraseña es: ${password}\nPor favor cámbiala después de iniciar sesión.`
