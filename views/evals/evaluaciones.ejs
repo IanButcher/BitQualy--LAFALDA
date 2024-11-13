@@ -60,7 +60,7 @@
                             <div class="evaluation-card">
                                 <img src="empleado1.jpg" class="eval-img">
                                 <div class="eval-info">
-                                    <p><strong><%= evaluacion.empleado ? evaluacion.empleado.nombre : 'Empleado no asignado' %></strong></p>
+                                    <p><strong><%= evaluacion.empleado ? evaluacion.empleado.nombre : 'Empleado no asignado' %></strong></p><br>
                                     <p>Fecha Inicio: <%= evaluacion.fechaInicio ? evaluacion.fechaInicio.toDateString() : 'N/A' %> | Fecha Fin: <%= evaluacion.deadline ? evaluacion.deadline.toDateString() : 'Sin fecha' %></p>
                                     <br>
                                     <p class="eval-status"><%= evaluacion.formulario ? evaluacion.formulario.titulo : 'Formulario no asignado' %></p>
@@ -177,7 +177,7 @@
                                 <br>
                                 <p class="eval-status"><%= evaluacion.formulario ? evaluacion.formulario.titulo : 'Formulario no asignado' %></p>
                             </div>
-                            <div class="eval-summary">
+                            <div class="eval-summary1">
                                 <p><%= evaluacion.formulario.titulo %></p>
                                 <div class="eval-icons">
                                     <a href="/evaluaciones/<%= evaluacion._id %>/pdf" target="_blank">
