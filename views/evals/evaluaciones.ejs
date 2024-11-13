@@ -173,7 +173,15 @@
                                 <p><strong><%= evaluacion.empleado ? evaluacion.empleado.nombre + ' ' + evaluacion.empleado.apellido : 'Empleado no asignado' %></strong></p>
                                 <p>Fecha Fin: <%= moment(evaluacion.deadline).format('ddd MMM DD YYYY') %></p>
                                 <br>
-                                <p>Puntaje: <%= evaluacion.score ? evaluacion.score : 'S/P' %></p>
+                                <p>Puntaje: <%= evaluacion.score ? '' : 'Sin Puntaje' %></p>
+                                <% if (evaluacion.score) { %>
+                                    <div class="progress-bar">
+                                        <div class="progress 
+                                            <%= evaluacion.score < 50 ? 'low' : (evaluacion.score < 80 ? 'medium' : 'high') %>"
+                                            style="width: <%= evaluacion.score %>%;">
+                                        </div>
+                                    </div>
+                                <% } %>
                                 <br>
                                 <p class="eval-status"><%= evaluacion.formulario ? evaluacion.formulario.titulo : 'Formulario no asignado' %></p>
                             </div>
@@ -194,6 +202,18 @@
     </main>
 
     <script>
+
+        document.querySelectorAll('.progress').forEach(bar => {
+                const score = parseInt(bar.style.width);
+                if (score < 50) {
+                    bar.classList.add('low');
+                } else if (score < 80) {
+                    bar.classList.add('medium');
+                } else {
+                    bar.classList.add('high');
+                }
+        });
+        
         function filterMyEvaluaciones() {
             const evaluationCards = document.querySelectorAll('.evaluation-card')
             evaluationCards.forEach(card => {
