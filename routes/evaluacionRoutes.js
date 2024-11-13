@@ -399,6 +399,8 @@ router.post('/evaluaciones/:id/comentarios', roleAuthorization(['Intermediario',
 
         evaluacion.comentarios.push(comentario)
         await evaluacion.save()
+        req.user.evaluacionesIn.push(evaluacion._id)
+        await req.user.save()
 
         res.redirect(`/evaluaciones/preview/${id}`)
     } catch (error) {
