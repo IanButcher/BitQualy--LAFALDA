@@ -46,9 +46,10 @@
         
                         <div>
                             <%
-                            const rawRespuesta = evaluacion.respuestas[index]; 
-                            const respuesta = rawRespuesta.split(/Respuesta: |Seleccionado\(s\): /).pop().trim();
+                                const rawRespuesta = evaluacion.respuestas[index] || ''
+                                const respuesta = rawRespuesta ? rawRespuesta.split(/Respuesta: |Seleccionado\(s\):/).pop().trim() : 'Sin respuesta'
                             %>
+
         
                             <% if (pregunta.tipo === 'texto') { %>
                                 <input class="input-text" type="text" value="<%= respuesta %>" disabled>

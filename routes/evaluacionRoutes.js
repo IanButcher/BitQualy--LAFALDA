@@ -5,7 +5,7 @@ const app = express()
 const router = express.Router()
 const Formulario = require('../Schemas/formularioSchema')
 const Evaluacion = require('../Schemas/evaluacionSchema')
-const Comentario = require('../Schemas/comentarioSchema')
+const {Comentario} = require('../Schemas/comentarioSchema')
 const baseUserSchema = require('../Schemas/baseUserSchema')
 const mongoose = require('mongoose')
 const roleAuthorization = require('../middleware/roleAuth')
@@ -141,14 +141,14 @@ router.post('/evaluaciones/assign-autoevaluacion-to-all', roleAuthorization(['Ad
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS
+                user: 'bitqualypassmanager@gmail.com',
+                pass: 'yoif nkxt bqkl zsrf'
             }
         })
 
         for (let user of activeUsers) {
             const mailOptions = {
-                from: process.env.EMAIL_USER,
+                from: 'bitqualypassmanager@gmail.com',
                 to: user.email,
                 subject: '¡Te han asignado una evaluación!',
                 text: `Hola ${user.nombre},\n\n¡Te han asignado una nueva evaluación que debes realizar!\n\nTienes hasta ${localDeadline} para completarla.\n`
@@ -204,7 +204,7 @@ router.get('/evaluaciones/my-autoevaluacion/:id', roleAuthorization(['Empleado',
         console.error('Error fetching evaluation:', error)
         res.redirect('/evaluaciones')
     }
-});
+})
 
 
 // POST route --> Create & redirect
@@ -346,7 +346,7 @@ router.post('/evaluaciones/save-evaluacion', roleAuthorization(['Administrador',
         res.redirect('/evaluaciones')
     } catch (error) {
         console.error('Error guardando la evaluación:', error)
-        res.status(500).send('Error interno del servidor')
+        res.redirect('/evaluaciones')
     }
 })
 
@@ -381,7 +381,7 @@ router.get('/evaluaciones/preview/:id', roleAuthorization(['Administrador', 'Eva
 
 
 // POST route --> Comentarios
-router.post('/evaluaciones/:id/comentarios', roleAuthorization(['Intermediario', 'Administrador']), async(req, res) => {
+router.post('/evaluaciones/:id/comentarios', roleAuthorization(['Intermediario', 'Administrador']), async (req, res) => {
     try {
         const { id } = req.params
         const { texto } = req.body
@@ -391,21 +391,26 @@ router.post('/evaluaciones/:id/comentarios', roleAuthorization(['Intermediario',
             return res.status(404).send('Evaluación no encontrada')
         }
 
-        // Create and add the comment
         const comentario = {
             intermediario: { _id: req.user._id, nombre: req.user.nombre },
-            texto
+            texto: texto.trim()
         }
 
-        evaluacion.comentarios.push(comentario)
-        await evaluacion.save()
-        req.user.evaluacionesIn.push(evaluacion._id)
-        await req.user.save()
+        // Validate comentario against schema
+        const validationError = new Comentario(comentario).validateSync()
+        if (validationError) {
+            console.error('Comentario validation error:', validationError)
+            return res.redirect('')
+        }
 
+        // Add comment
+        evaluacion.comentarios.push(comentario)
+
+        await evaluacion.save()
         res.redirect(`/evaluaciones/preview/${id}`)
     } catch (error) {
         console.error('Error adding comment:', error)
-        res.status(500).send('Error interno del servidor')
+        res.redirect(`/evaluaciones/preview/${id}`)
     }
 })
 
