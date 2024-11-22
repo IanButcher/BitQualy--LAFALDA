@@ -26,6 +26,30 @@ router.get('/formularios', roleAuthorization(['Administrador']), async (req, res
     }
 })
 
+// GET route --> Mostrar creador de formularios
+router.get('/formularios/new', roleAuthorization(['Administrador']), (req, res) => {
+    if (req.user){
+        res.render('forms/new', { user: req.user })  
+    } else {
+        res.redirect('/')
+    }  
+})
+
+// Get route --> Mostrar updater de formulario
+router.get('/formularios/preview/:id', roleAuthorization(['Administrador']), async (req, res)=>{
+    if (req.user){
+        const { id } = req.params
+        const formulario = await Formulario.findById(id)
+        if (formulario) {
+            res.render('forms/update', { formulario, user: req.user })
+        } else {
+            res.redirect('/formularios')
+        } 
+    } else {
+        res.redirect('/')
+    }
+})
+
 // GET route --> query
 router.get('/formularios/buscar', roleAuthorization(['Administrador']), async (req, res) => {
     const { query } = req.query
@@ -47,30 +71,6 @@ router.get('/formularios/buscar', roleAuthorization(['Administrador']), async (r
             console.error("Error searching formularios:", error)
             res.redirect('/formularios')
         }
-    } else {
-        res.redirect('/')
-    }
-})
-
-// GET route --> Mostrar creador de formularios
-router.get('/formularios/new', roleAuthorization(['Administrador']), (req, res) => {
-    if (req.user){
-        res.render('forms/new', { user: req.user })  
-    } else {
-        res.redirect('/')
-    }  
-})
-
-// Get route --> Mostrar updater de formulario
-router.get('/formularios/preview/:id', roleAuthorization(['Administrador']), async (req, res)=>{
-    if (req.user){
-        const { id } = req.params
-        const formulario = await Formulario.findById(id)
-        if (formulario) {
-            res.render('forms/update', { formulario, user: req.user })
-        } else {
-            res.redirect('/formularios')
-        } 
     } else {
         res.redirect('/')
     }
