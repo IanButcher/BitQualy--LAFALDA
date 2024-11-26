@@ -1,4 +1,5 @@
 // Modulos
+require('dotenv').config()
 const PDFDocument = require('pdfkit')
 const express = require('express')
 const app = express()
@@ -88,13 +89,13 @@ router.post('/evaluaciones/assign-autoevaluacion', roleAuthorization(['Administr
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: 'bitqualypassmanager@gmail.com',
-                pass: 'yoif nkxt bqkl zsrf'
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS
             }
         })
 
         const mailOptions = {
-            from: 'bitqualypassmanager@gmail.com',
+            from: process.env.EMAIL_USER,
             to: empleado.email,
             subject: '¡Te han asignado una evaluación!',
             text: `Hola ${empleado.nombre},\n\n¡Te han asignado una nueva evaluación que debes realizar!\n\nTienes hasta ${newEvaluacion.deadline} para completarla.\n`
@@ -141,14 +142,14 @@ router.post('/evaluaciones/assign-autoevaluacion-to-all', roleAuthorization(['Ad
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: 'bitqualypassmanager@gmail.com',
-                pass: 'yoif nkxt bqkl zsrf'
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS
             }
         })
 
         for (let user of activeUsers) {
             const mailOptions = {
-                from: 'bitqualypassmanager@gmail.com',
+                from: process.env.EMAIL_USER,
                 to: user.email,
                 subject: '¡Te han asignado una evaluación!',
                 text: `Hola ${user.nombre},\n\n¡Te han asignado una nueva evaluación que debes realizar!\n\nTienes hasta ${localDeadline} para completarla.\n`

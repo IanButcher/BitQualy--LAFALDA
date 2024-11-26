@@ -1,4 +1,5 @@
 // Modulos
+require('dotenv').config()
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const session = require('express-session')
@@ -44,7 +45,7 @@ passport.deserializeUser(async (id, done) => {
 function initializePassportSession(app) {
     // Set up express-session
     app.use(session({
-      secret: 'yourSecretKey',     
+      secret:  process.env.SECRET || 'yourSecretKey',     
       resave: false,               
       saveUninitialized: false,    
       cookie: { secure: false }    
